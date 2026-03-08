@@ -140,8 +140,9 @@ class RadiolariaDatabase:
     
     def _get_references(self, taxonomy_id: int) -> List[Dict]:
         """Get literature references for a taxon"""
+        # Note: "references" is a SQL reserved word, use quotes
         self.cursor.execute(
-            "SELECT * FROM references WHERE taxonomy_id = ?",
+            'SELECT * FROM "references" WHERE taxonomy_id = ?',
             [taxonomy_id]
         )
         

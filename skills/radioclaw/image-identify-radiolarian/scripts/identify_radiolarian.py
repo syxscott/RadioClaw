@@ -90,6 +90,8 @@ def analyze_radiolarian_image(
     
     # Build prompt based on language and detail level
     if language == "zh-CN":
+        detailed_line = "5. 请提供非常详细的分析，包括测量数据和对比文献。" if detailed else ""
+        level_line = f"请重点分析到{level}级分类。" if level else ""
         prompt = f"""请分析这张放射虫 SEM/显微照片。
 
 要求：
@@ -97,12 +99,14 @@ def analyze_radiolarian_image(
 2. 提供分类建议（目、科、属、种）及置信度
 3. 给出地层范围和生物带信息
 4. 提供进一步分析的建议
-{"5. 请提供非常详细的分析，包括测量数据和对比文献。" if detailed else ""}
-{"请重点分析到" + level + "级分类。" if level else ""}
+{detailed_line}
+{level_line}
 
 图像路径：{image_path}
 """
     else:
+        detailed_line = "5. Please provide a very detailed analysis including measurements and literature references." if detailed else ""
+        level_line = f"Focus on {level} level taxonomy." if level else ""
         prompt = f"""Please analyze this radiolarian SEM/microscope image.
 
 Requirements:
@@ -110,8 +114,8 @@ Requirements:
 2. Provide taxonomic suggestions (order, family, genus, species) with confidence levels
 3. Include stratigraphic range and biozone information
 4. Give recommendations for further analysis
-{"5. Please provide a very detailed analysis including measurements and literature references." if detailed else ""}
-{"Focus on " + level + " level taxonomy." if level else ""}
+{detailed_line}
+{level_line}
 
 Image path: {image_path}
 """
@@ -265,10 +269,9 @@ Examples:
             print(result["analysis"])
             print("=" * 60)
             print(f"\n📊 Token usage: {result['usage']['total_tokens']} total")
-        
-        # Print MEDIA line for RadioClaw integration
-        if args.output:
-            print(f"\nMEDIA: {args.output}")
+
+        # Print MEDIA line for RadioClaw integration (always print for attachment)
+        print(f"\nMEDIA: {args.output if args.output else 'stdout'}")
         
     except Exception as e:
         print(f"❌ Error: {str(e)}")

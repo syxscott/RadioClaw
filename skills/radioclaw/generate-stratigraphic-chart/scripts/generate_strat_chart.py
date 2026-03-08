@@ -20,7 +20,6 @@ from typing import List, Dict, Any, Optional
 try:
     import matplotlib.pyplot as plt
     import matplotlib.patches as mpatches
-    from matplotlib.collections import PatchCollection
 except ImportError:
     print("Error: matplotlib not installed. Run: pip install matplotlib")
     sys.exit(1)
@@ -109,8 +108,7 @@ def generate_stratigraphic_chart(
     
     # Get unique species
     species_list = df['species'].unique()
-    genus_list = df['genus'].unique()
-    
+
     # Generate colors for species
     if color_scheme == "vibrant":
         cmap = plt.get_cmap('tab20')
@@ -118,18 +116,15 @@ def generate_stratigraphic_chart(
         cmap = plt.get_cmap('gray_r')
     else:
         cmap = plt.get_cmap('Set1')
-    
+
     species_colors = {sp: cmap(i % cmap.N) for i, sp in enumerate(species_list)}
-    
+
     # Plot species ranges
-    patches = []
     for i, species in enumerate(species_list):
         sp_data = df[df['species'] == species]
-        min_age = sp_data['age_ma'].min()
-        max_age = sp_data['age_ma'].max()
         min_depth = sp_data['depth_m'].min()
         max_depth = sp_data['depth_m'].max()
-        
+
         # Create range bar
         x_pos = i + 1
         rect = mpatches.Rectangle(
@@ -138,11 +133,10 @@ def generate_stratigraphic_chart(
             max_depth - min_depth,
             linewidth=0,
             facecolor=species_colors[species],
-            alpha=0.7,
-            label=species
+            alpha=0.7
         )
-        patches.append(rect)
-        
+        ax.add_patch(rect)
+
         # Add species label
         ax.text(
             x_pos,
@@ -155,10 +149,6 @@ def generate_stratigraphic_chart(
             color='white',
             fontweight='bold'
         )
-    
-    # Add patches to plot
-    for patch in patches:
-        ax.add_patch(patch)
     
     # Set axis limits
     ax.set_xlim(0, len(species_list) + 1)
@@ -264,7 +254,8 @@ def generate_latex_code(
         sp_data = df[df['species'] == species]
         min_depth = sp_data['depth_m'].min()
         max_depth = sp_data['depth_m'].max()
-        latex_code += f"  \\draw[blue,thick] ({i + 1},{-min_depth}) -- ({i + 1},{-max_depth});  % {species}\n"
+        # Use negative values for depth in LaTeX (coordinate system)
+        latex_code += f"  \\draw[blue,thick] ({i + 1},{-min_depth:.1f}) -- ({i + 1},{-max_depth:.1f});  % {species}\n"
     
     # Add sample markers
     latex_code += """
