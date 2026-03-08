@@ -264,8 +264,8 @@ def generate_latex_code(
     for _, row in df.iterrows():
         latex_code += f"  \\node[circle,fill,inner sep=2pt] at ({len(species_list)/2},{-row['depth_m']}) {{}};  % {row['sample_id']}\n"
     
-    latex_code += """
-\\end{tikzpicture}
+    latex_code += r"""
+\end{tikzpicture}
 \end{center}
 \end{document}
 """
