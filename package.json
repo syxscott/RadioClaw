@@ -1,8 +1,18 @@
 {
   "name": "RadioClaw",
   "version": "2026.3.7-beta.1",
-  "description": "Multi-channel AI gateway with extensible messaging integrations",
-  "keywords": [],
+  "description": "RadioClaw - The world's first AI agent dedicated to Radiolaria research 🦞🦠",
+  "keywords": [
+    "radiolaria",
+    "radiolarian",
+    "paleontology",
+    "paleoceanography",
+    "biostratigraphy",
+    "sem-image-analysis",
+    "stratigraphic-chart",
+    "ai-assistant",
+    "fossil-analysis"
+  ],
   "homepage": "https://github.com/RadioClaw/RadioClaw#readme",
   "bugs": {
     "url": "https://github.com/RadioClaw/RadioClaw/issues"
