@@ -1,6 +1,6 @@
 import AppKit
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized) struct VoicePushToTalkHotkeyTests {
     actor Counter {

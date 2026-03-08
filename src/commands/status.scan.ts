@@ -1,7 +1,7 @@
 import { resolveCommandSecretRefsViaGateway } from "../cli/command-secret-gateway.js";
 import { getStatusCommandSecretTargetIds } from "../cli/command-secret-targets.js";
 import { withProgress } from "../cli/progress.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { readBestEffortConfig } from "../config/config.js";
 import { buildGatewayConnectionDetails, callGateway } from "../gateway/call.js";
 import { normalizeControlUiBasePath } from "../gateway/control-ui-shared.js";
@@ -60,7 +60,7 @@ function unwrapDeferredResult<T>(result: DeferredResult<T>): T {
   return result.value;
 }
 
-function resolveMemoryPluginStatus(cfg: OpenClawConfig): MemoryPluginStatus {
+function resolveMemoryPluginStatus(cfg: RadioClawConfig): MemoryPluginStatus {
   const pluginsEnabled = cfg.plugins?.enabled !== false;
   if (!pluginsEnabled) {
     return { enabled: false, slot: null, reason: "plugins disabled" };
@@ -73,7 +73,7 @@ function resolveMemoryPluginStatus(cfg: OpenClawConfig): MemoryPluginStatus {
 }
 
 async function resolveGatewayProbeSnapshot(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   opts: { timeoutMs?: number; all?: boolean };
 }): Promise<GatewayProbeSnapshot> {
   const gatewayConnection = buildGatewayConnectionDetails({ config: params.cfg });
@@ -108,7 +108,7 @@ async function resolveGatewayProbeSnapshot(params: {
 }
 
 async function resolveChannelsStatus(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   gatewayReachable: boolean;
   opts: { timeoutMs?: number; all?: boolean };
 }) {
@@ -127,8 +127,8 @@ async function resolveChannelsStatus(params: {
 }
 
 export type StatusScanResult = {
-  cfg: OpenClawConfig;
-  sourceConfig: OpenClawConfig;
+  cfg: RadioClawConfig;
+  sourceConfig: RadioClawConfig;
   secretDiagnostics: string[];
   osSummary: ReturnType<typeof resolveOsSummary>;
   tailscaleMode: string;
@@ -155,7 +155,7 @@ export type StatusScanResult = {
 };
 
 async function resolveMemoryStatusSnapshot(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentStatus: Awaited<ReturnType<typeof getAgentLocalStatuses>>;
   memoryPlugin: MemoryPluginStatus;
 }): Promise<MemoryStatusSnapshot | null> {
@@ -280,12 +280,12 @@ export async function scanStatus(
   }
   return await withProgress(
     {
-      label: "Scanning statusâ€¦",
+      label: "Scanning statusâ€?,
       total: 10,
       enabled: true,
     },
     async (progress) => {
-      progress.setLabel("Loading configâ€¦");
+      progress.setLabel("Loading configâ€?);
       const loadedRaw = await readBestEffortConfig();
       const { resolvedConfig: cfg, diagnostics: secretDiagnostics } =
         await resolveCommandSecretRefsViaGateway({
@@ -316,7 +316,7 @@ export async function scanStatus(
       );
       progress.tick();
 
-      progress.setLabel("Checking Tailscaleâ€¦");
+      progress.setLabel("Checking Tailscaleâ€?);
       const tailscaleDns = await tailscaleDnsPromise;
       const tailscaleHttpsUrl =
         tailscaleMode !== "off" && tailscaleDns
@@ -324,15 +324,15 @@ export async function scanStatus(
           : null;
       progress.tick();
 
-      progress.setLabel("Checking for updatesâ€¦");
+      progress.setLabel("Checking for updatesâ€?);
       const update = unwrapDeferredResult(await updatePromise);
       progress.tick();
 
-      progress.setLabel("Resolving agentsâ€¦");
+      progress.setLabel("Resolving agentsâ€?);
       const agentStatus = unwrapDeferredResult(await agentStatusPromise);
       progress.tick();
 
-      progress.setLabel("Probing gatewayâ€¦");
+      progress.setLabel("Probing gatewayâ€?);
       const {
         gatewayConnection,
         remoteUrlMissing,
@@ -347,12 +347,12 @@ export async function scanStatus(
         : null;
       progress.tick();
 
-      progress.setLabel("Querying channel statusâ€¦");
+      progress.setLabel("Querying channel statusâ€?);
       const channelsStatus = await resolveChannelsStatus({ cfg, gatewayReachable, opts });
       const channelIssues = channelsStatus ? collectChannelStatusIssues(channelsStatus) : [];
       progress.tick();
 
-      progress.setLabel("Summarizing channelsâ€¦");
+      progress.setLabel("Summarizing channelsâ€?);
       const channels = await buildChannelsTable(cfg, {
         // Show token previews in regular status; keep `status --all` redacted.
         // Set `CLAWDBOT_SHOW_SECRETS=0` to force redaction.
@@ -361,16 +361,16 @@ export async function scanStatus(
       });
       progress.tick();
 
-      progress.setLabel("Checking memoryâ€¦");
+      progress.setLabel("Checking memoryâ€?);
       const memoryPlugin = resolveMemoryPluginStatus(cfg);
       const memory = await resolveMemoryStatusSnapshot({ cfg, agentStatus, memoryPlugin });
       progress.tick();
 
-      progress.setLabel("Reading sessionsâ€¦");
+      progress.setLabel("Reading sessionsâ€?);
       const summary = unwrapDeferredResult(await summaryPromise);
       progress.tick();
 
-      progress.setLabel("Renderingâ€¦");
+      progress.setLabel("Renderingâ€?);
       progress.tick();
 
       return {

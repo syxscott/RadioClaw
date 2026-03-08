@@ -221,11 +221,11 @@ export async function fetchDiscordApplicationId(
         return json.id;
       }
     }
-    // Non-ok HTTP response (401, 403, etc.) â€” fail fast so credential
+    // Non-ok HTTP response (401, 403, etc.) â€?fail fast so credential
     // errors surface immediately rather than being masked by the fallback.
     return undefined;
   } catch {
-    // Transport / timeout error â€” fall back to extracting the application
+    // Transport / timeout error â€?fall back to extracting the application
     // ID directly from the token to keep the bot starting.
     return parseApplicationIdFromToken(token);
   }

@@ -1,14 +1,14 @@
 {
-  "name": "@openclaw/llm-task",
+  "name": "@RadioClaw/llm-task",
   "version": "2026.3.7",
   "private": true,
-  "description": "OpenClaw JSON-only LLM task plugin",
+  "description": "RadioClaw JSON-only LLM task plugin",
   "type": "module",
   "dependencies": {
     "@sinclair/typebox": "0.34.48",
     "ajv": "^8.18.0"
   },
-  "openclaw": {
+  "RadioClaw": {
     "extensions": [
       "./index.ts"
     ]

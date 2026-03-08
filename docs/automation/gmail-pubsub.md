@@ -1,20 +1,20 @@
 ---
-summary: "Gmail Pub/Sub push wired into OpenClaw webhooks via gogcli"
+summary: "Gmail Pub/Sub push wired into RadioClaw webhooks via gogcli"
 read_when:
-  - Wiring Gmail inbox triggers to OpenClaw
+  - Wiring Gmail inbox triggers to RadioClaw
   - Setting up Pub/Sub push for agent wake
 title: "Gmail PubSub"
 ---
 
-# Gmail Pub/Sub -> OpenClaw
+# Gmail Pub/Sub -> RadioClaw
 
-Goal: Gmail watch -> Pub/Sub push -> `gog gmail watch serve` -> OpenClaw webhook.
+Goal: Gmail watch -> Pub/Sub push -> `gog gmail watch serve` -> RadioClaw webhook.
 
 ## Prereqs
 
 - `gcloud` installed and logged in ([install guide](https://docs.cloud.google.com/sdk/docs/install-sdk)).
 - `gog` (gogcli) installed and authorized for the Gmail account ([gogcli.sh](https://gogcli.sh/)).
-- OpenClaw hooks enabled (see [Webhooks](/automation/webhook)).
+- RadioClaw hooks enabled (see [Webhooks](/automation/webhook)).
 - `tailscale` logged in ([tailscale.com](https://tailscale.com/)). Supported setup uses Tailscale Funnel for the public HTTPS endpoint.
   Other tunnel services can work, but are DIY/unsupported and require manual wiring.
   Right now, Tailscale is what we support.
@@ -25,7 +25,7 @@ Example hook config (enable Gmail preset mapping):
 {
   hooks: {
     enabled: true,
-    token: "OPENCLAW_HOOK_TOKEN",
+    token: "RadioClaw_HOOK_TOKEN",
     path: "/hooks",
     presets: ["gmail"],
   },
@@ -39,7 +39,7 @@ that sets `deliver` + optional `channel`/`to`:
 {
   hooks: {
     enabled: true,
-    token: "OPENCLAW_HOOK_TOKEN",
+    token: "RadioClaw_HOOK_TOKEN",
     presets: ["gmail"],
     mappings: [
       {
@@ -82,30 +82,30 @@ To set a default model and thinking level specifically for Gmail hooks, add
 Notes:
 
 - Per-hook `model`/`thinking` in the mapping still overrides these defaults.
-- Fallback order: `hooks.gmail.model` â†’ `agents.defaults.model.fallbacks` â†’ primary (auth/rate-limit/timeouts).
+- Fallback order: `hooks.gmail.model` â†?`agents.defaults.model.fallbacks` â†?primary (auth/rate-limit/timeouts).
 - If `agents.defaults.models` is set, the Gmail model must be in the allowlist.
 - Gmail hook content is wrapped with external-content safety boundaries by default.
   To disable (dangerous), set `hooks.gmail.allowUnsafeExternalContent: true`.
 
 To customize payload handling further, add `hooks.mappings` or a JS/TS transform module
-under `~/.openclaw/hooks/transforms` (see [Webhooks](/automation/webhook)).
+under `~/.RadioClaw/hooks/transforms` (see [Webhooks](/automation/webhook)).
 
 ## Wizard (recommended)
 
-Use the OpenClaw helper to wire everything together (installs deps on macOS via brew):
+Use the RadioClaw helper to wire everything together (installs deps on macOS via brew):
 
 ```bash
-openclaw webhooks gmail setup \
-  --account openclaw@gmail.com
+RadioClaw webhooks gmail setup \
+  --account RadioClaw@gmail.com
 ```
 
 Defaults:
 
 - Uses Tailscale Funnel for the public push endpoint.
-- Writes `hooks.gmail` config for `openclaw webhooks gmail run`.
+- Writes `hooks.gmail` config for `RadioClaw webhooks gmail run`.
 - Enables the Gmail hook preset (`hooks.presets: ["gmail"]`).
 
-Path note: when `tailscale.mode` is enabled, OpenClaw automatically sets
+Path note: when `tailscale.mode` is enabled, RadioClaw automatically sets
 `hooks.gmail.serve.path` to `/` and keeps the public path at
 `hooks.gmail.tailscale.path` (default `/gmail-pubsub`) because Tailscale
 strips the set-path prefix before proxying.
@@ -122,14 +122,14 @@ Gateway auto-start (recommended):
 
 - When `hooks.enabled=true` and `hooks.gmail.account` is set, the Gateway starts
   `gog gmail watch serve` on boot and auto-renews the watch.
-- Set `OPENCLAW_SKIP_GMAIL_WATCHER=1` to opt out (useful if you run the daemon yourself).
+- Set `RadioClaw_SKIP_GMAIL_WATCHER=1` to opt out (useful if you run the daemon yourself).
 - Do not run the manual daemon at the same time, or you will hit
   `listen tcp 127.0.0.1:8788: bind: address already in use`.
 
 Manual daemon (starts `gog gmail watch serve` + auto-renew):
 
 ```bash
-openclaw webhooks gmail run
+RadioClaw webhooks gmail run
 ```
 
 ## One-time setup
@@ -167,7 +167,7 @@ gcloud pubsub topics add-iam-policy-binding gog-gmail-watch \
 
 ```bash
 gog gmail watch start \
-  --account openclaw@gmail.com \
+  --account RadioClaw@gmail.com \
   --label INBOX \
   --topic projects/<project-id>/topics/gog-gmail-watch
 ```
@@ -180,13 +180,13 @@ Local example (shared token auth):
 
 ```bash
 gog gmail watch serve \
-  --account openclaw@gmail.com \
+  --account RadioClaw@gmail.com \
   --bind 127.0.0.1 \
   --port 8788 \
   --path /gmail-pubsub \
   --token <shared> \
   --hook-url http://127.0.0.1:18789/hooks/gmail \
-  --hook-token OPENCLAW_HOOK_TOKEN \
+  --hook-token RadioClaw_HOOK_TOKEN \
   --include-body \
   --max-bytes 20000
 ```
@@ -194,10 +194,10 @@ gog gmail watch serve \
 Notes:
 
 - `--token` protects the push endpoint (`x-gog-token` or `?token=`).
-- `--hook-url` points to OpenClaw `/hooks/gmail` (mapped; isolated run + summary to main).
-- `--include-body` and `--max-bytes` control the body snippet sent to OpenClaw.
+- `--hook-url` points to RadioClaw `/hooks/gmail` (mapped; isolated run + summary to main).
+- `--include-body` and `--max-bytes` control the body snippet sent to RadioClaw.
 
-Recommended: `openclaw webhooks gmail run` wraps the same flow and auto-renews the watch.
+Recommended: `RadioClaw webhooks gmail run` wraps the same flow and auto-renews the watch.
 
 ## Expose the handler (advanced, unsupported)
 
@@ -228,8 +228,8 @@ Send a message to the watched inbox:
 
 ```bash
 gog gmail send \
-  --account openclaw@gmail.com \
-  --to openclaw@gmail.com \
+  --account RadioClaw@gmail.com \
+  --to RadioClaw@gmail.com \
   --subject "watch test" \
   --body "ping"
 ```
@@ -237,8 +237,8 @@ gog gmail send \
 Check watch state and history:
 
 ```bash
-gog gmail watch status --account openclaw@gmail.com
-gog gmail history --account openclaw@gmail.com --since <historyId>
+gog gmail watch status --account RadioClaw@gmail.com
+gog gmail history --account RadioClaw@gmail.com --since <historyId>
 ```
 
 ## Troubleshooting
@@ -250,7 +250,7 @@ gog gmail history --account openclaw@gmail.com --since <historyId>
 ## Cleanup
 
 ```bash
-gog gmail watch stop --account openclaw@gmail.com
+gog gmail watch stop --account RadioClaw@gmail.com
 gcloud pubsub subscriptions delete gog-gmail-watch-push
 gcloud pubsub topics delete gog-gmail-watch
 ```

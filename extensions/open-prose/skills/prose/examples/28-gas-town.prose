@@ -64,7 +64,7 @@
 # PATROLS: Ephemeral workflows run in loops by patrol agents
 #   - Use wisps (not persisted to Git)
 #   - Exponential backoff when idle
-#   - Deacon → Witness → Polecats/Refinery
+#   - Deacon �?Witness �?Polecats/Refinery
 #
 # =============================================================================
 # PERSISTENT STATE (in .prose/gas-town/)
@@ -1191,26 +1191,21 @@ Create Gas Town state structure:
 ├── activity-feed.jsonl       # Live activity stream
 ├── patrol-state.json         # Patrol agent states
 ├── wisp-digest.jsonl         # Burned wisp summaries
-│
-├── workers/                  # Persistent worker identities
-│   ├── mayor.json
-│   ├── deacon.json
-│   ├── dogs/
-│   │   └── boot.json
-│   └── polecats/             # Polecat CV chains
-│
-├── convoys/                  # Work orders
-│   ├── active/
-│   └── archive/
-│
-├── formulas/                 # Workflow templates (TOML)
+�?├── workers/                  # Persistent worker identities
+�?  ├── mayor.json
+�?  ├── deacon.json
+�?  ├── dogs/
+�?  �?  └── boot.json
+�?  └── polecats/             # Polecat CV chains
+�?├── convoys/                  # Work orders
+�?  ├── active/
+�?  └── archive/
+�?├── formulas/                 # Workflow templates (TOML)
 ├── protomolecules/           # Cooked templates
 ├── wisps/                    # Ephemeral beads (NOT in Git)
-│
-├── plugins/
-│   └── town/                 # Town-level plugins
-│
-└── rigs/                     # Per-project state
+�?├── plugins/
+�?  └── town/                 # Town-level plugins
+�?└── rigs/                     # Per-project state
     └── {rig-name}/
         ├── rig-beads.jsonl   # Project issues
         ├── merge-queue.json  # Pending MRs

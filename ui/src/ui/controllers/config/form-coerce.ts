@@ -52,7 +52,7 @@ export function coerceFormValues(value: unknown, schema: JsonSchema): unknown {
 
   const type = schemaType(schema);
 
-  // Handle anyOf/oneOf â€” try to match the value against a variant
+  // Handle anyOf/oneOf â€?try to match the value against a variant
   if (schema.anyOf || schema.oneOf) {
     const variants = (schema.anyOf ?? schema.oneOf ?? []).filter(
       (v) => !(v.type === "null" || (Array.isArray(v.type) && v.type.includes("null"))),
@@ -129,7 +129,7 @@ export function coerceFormValues(value: unknown, schema: JsonSchema): unknown {
     for (const [key, val] of Object.entries(obj)) {
       const propSchema = props[key] ?? additional;
       const coerced = propSchema ? coerceFormValues(val, propSchema) : val;
-      // Omit undefined â€” "clear field = unset" for optional properties
+      // Omit undefined â€?"clear field = unset" for optional properties
       if (coerced !== undefined) {
         result[key] = coerced;
       }

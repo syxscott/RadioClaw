@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { ReplyPayload } from "../../auto-reply/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { resolveStateDir } from "../../config/paths.js";
 import { generateSecureUuid } from "../secure-random.js";
 import type { OutboundChannel } from "./targets.js";
@@ -31,7 +31,7 @@ type QueuedDeliveryPayload = {
   accountId?: string;
   /**
    * Original payloads before plugin hooks. On recovery, hooks re-run on these
-   * payloads â€” this is intentional since hooks are stateless transforms and
+   * payloads â€?this is intentional since hooks are stateless transforms and
    * should produce the same result on replay.
    */
   payloads: ReplyPayload[];
@@ -139,7 +139,7 @@ export async function enqueueDelivery(
  *
  * Uses a two-phase approach so that a crash between delivery and cleanup
  * does not cause the message to be replayed on the next recovery scan:
- *   Phase 1: atomic rename  {id}.json â†’ {id}.delivered
+ *   Phase 1: atomic rename  {id}.json â†?{id}.delivered
  *   Phase 2: unlink the .delivered marker
  * If the process dies between phase 1 and phase 2 the marker is cleaned up
  * by {@link loadPendingDeliveries} on the next startup without re-sending.
@@ -152,7 +152,7 @@ export async function ackDelivery(id: string, stateDir?: string): Promise<void> 
   } catch (err) {
     const code = getErrnoCode(err);
     if (code === "ENOENT") {
-      // .json already gone â€” may have been renamed by a previous ack attempt.
+      // .json already gone â€?may have been renamed by a previous ack attempt.
       // Try to clean up a leftover .delivered marker if present.
       await unlinkBestEffort(deliveredPath);
       return;
@@ -304,7 +304,7 @@ function normalizeLegacyQueuedDeliveryEntry(entry: QueuedDelivery): {
 
 export type DeliverFn = (
   params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
   } & QueuedDeliveryParams & {
       skipQueue?: boolean;
     },
@@ -323,7 +323,7 @@ export interface RecoveryLogger {
 export async function recoverPendingDeliveries(opts: {
   deliver: DeliverFn;
   log: RecoveryLogger;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   stateDir?: string;
   /** Maximum wall-clock time for recovery in ms. Remaining entries are deferred to next restart. Default: 60 000. */
   maxRecoveryMs?: number;
@@ -336,7 +336,7 @@ export async function recoverPendingDeliveries(opts: {
   // Process oldest first.
   pending.sort((a, b) => a.enqueuedAt - b.enqueuedAt);
 
-  opts.log.info(`Found ${pending.length} pending delivery entries â€” starting recovery`);
+  opts.log.info(`Found ${pending.length} pending delivery entries â€?starting recovery`);
 
   const deadline = Date.now() + (opts.maxRecoveryMs ?? 60_000);
 
@@ -349,12 +349,12 @@ export async function recoverPendingDeliveries(opts: {
     const now = Date.now();
     if (now >= deadline) {
       const deferred = pending.length - recovered - failed - skippedMaxRetries - deferredBackoff;
-      opts.log.warn(`Recovery time budget exceeded â€” ${deferred} entries deferred to next restart`);
+      opts.log.warn(`Recovery time budget exceeded â€?${deferred} entries deferred to next restart`);
       break;
     }
     if (entry.retryCount >= MAX_RETRIES) {
       opts.log.warn(
-        `Delivery ${entry.id} exceeded max retries (${entry.retryCount}/${MAX_RETRIES}) â€” moving to failed/`,
+        `Delivery ${entry.id} exceeded max retries (${entry.retryCount}/${MAX_RETRIES}) â€?moving to failed/`,
       );
       try {
         await moveToFailed(entry.id, opts.stateDir);
@@ -369,7 +369,7 @@ export async function recoverPendingDeliveries(opts: {
     if (!retryEligibility.eligible) {
       deferredBackoff += 1;
       opts.log.info(
-        `Delivery ${entry.id} not ready for retry yet â€” backoff ${retryEligibility.remainingBackoffMs}ms remaining`,
+        `Delivery ${entry.id} not ready for retry yet â€?backoff ${retryEligibility.remainingBackoffMs}ms remaining`,
       );
       continue;
     }
@@ -395,7 +395,7 @@ export async function recoverPendingDeliveries(opts: {
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : String(err);
       if (isPermanentDeliveryError(errMsg)) {
-        opts.log.warn(`Delivery ${entry.id} hit permanent error â€” moving to failed/: ${errMsg}`);
+        opts.log.warn(`Delivery ${entry.id} hit permanent error â€?moving to failed/: ${errMsg}`);
         try {
           await moveToFailed(entry.id, opts.stateDir);
         } catch (moveErr) {

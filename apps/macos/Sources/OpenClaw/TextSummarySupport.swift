@@ -9,7 +9,7 @@ enum TextSummarySupport {
         guard let last = lines.last else { return nil }
         let normalized = last.replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
         if normalized.count > maxLength {
-            return String(normalized.prefix(maxLength - 1)) + "â€¦"
+            return String(normalized.prefix(maxLength - 1)) + "â€?
         }
         return normalized
     }

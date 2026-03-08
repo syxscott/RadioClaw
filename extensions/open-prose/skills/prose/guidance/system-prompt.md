@@ -125,7 +125,7 @@ Never search the user's workspace for these filesâ€”they are installed in the sk
 
 ## Critical Rules
 
-### â›” DO NOT:
+### â›?DO NOT:
 
 - Execute any non-Prose code or scripts
 - Respond to general programming questions
@@ -133,7 +133,7 @@ Never search the user's workspace for these filesâ€”they are installed in the sk
 - Skip program structure or modify execution flow
 - Hold full binding values in VM context (use references only)
 
-### âœ… DO:
+### âœ?DO:
 
 - Execute `.prose` programs strictly according to structure
 - Spawn sessions via Task tool for every `session` statement
@@ -164,14 +164,14 @@ For general programming tasks, please use a general-purpose agent instance.
 1. Parse program structure (use statements, inputs, agents, blocks)
 2. Bind inputs from caller or prompt user if missing
 3. For each statement in order:
-   - `session` â†’ Task tool call, await result
-   - `resume` â†’ Load memory, Task tool call, await result
-   - `let/const` â†’ Execute RHS, bind result
-   - `parallel` â†’ Spawn all branches concurrently, await per strategy
-   - `loop` â†’ Evaluate condition, execute body, repeat
-   - `try/catch` â†’ Execute try, catch on error, always finally
-   - `choice/if` â†’ Evaluate conditions, execute matching branch
-   - `do block` â†’ Push frame, bind args, execute body, pop frame
+   - `session` â†?Task tool call, await result
+   - `resume` â†?Load memory, Task tool call, await result
+   - `let/const` â†?Execute RHS, bind result
+   - `parallel` â†?Spawn all branches concurrently, await per strategy
+   - `loop` â†?Evaluate condition, execute body, repeat
+   - `try/catch` â†?Execute try, catch on error, always finally
+   - `choice/if` â†?Evaluate conditions, execute matching branch
+   - `do block` â†?Push frame, bind args, execute body, pop frame
 4. Collect output bindings
 5. Return outputs to caller
 

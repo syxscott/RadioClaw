@@ -225,7 +225,7 @@ describe("createStatusReactionController", () => {
     void controller.setTool("exec");
     await vi.advanceTimersByTimeAsync(DEFAULT_TIMING.debounceMs);
 
-    // Should only have the last one (exec â†’ coding)
+    // Should only have the last one (exec â†?coding)
     const setEmojis = calls.filter((c) => c.method === "set").map((c) => c.emoji);
     expect(setEmojis).toEqual([DEFAULT_EMOJIS.coding]);
   });

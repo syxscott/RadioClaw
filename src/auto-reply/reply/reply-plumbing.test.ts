@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { SubagentRunRecord } from "../../agents/subagent-registry.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { formatDurationCompact } from "../../infra/format-time/format-duration.js";
 import type { TemplateContext } from "../templating.js";
 import { buildThreadingToolContext } from "./agent-runner-utils.js";
@@ -13,7 +13,7 @@ import {
 } from "./subagents-utils.js";
 
 describe("buildThreadingToolContext", () => {
-  const cfg = {} as OpenClawConfig;
+  const cfg = {} as RadioClawConfig;
 
   it("uses conversation id for WhatsApp", () => {
     const sessionCtx = {
@@ -138,7 +138,7 @@ describe("buildThreadingToolContext", () => {
 
     const result = buildThreadingToolContext({
       sessionCtx,
-      config: { channels: { slack: { replyToMode: "all" } } } as OpenClawConfig,
+      config: { channels: { slack: { replyToMode: "all" } } } as RadioClawConfig,
       hasRepliedRef: undefined,
     });
 
@@ -257,7 +257,7 @@ describe("subagents utils", () => {
     const run = { ...baseRun, label: long };
     const formatted = formatRunLabel(run, { maxLength: 10 });
     expect(formatted.startsWith("x".repeat(10))).toBe(true);
-    expect(formatted.endsWith("â€¦")).toBe(true);
+    expect(formatted.endsWith("â€?)).toBe(true);
   });
 
   it("sorts subagent runs by newest start/created time", () => {

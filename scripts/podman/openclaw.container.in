@@ -1,18 +1,18 @@
-# OpenClaw gateway â€” Podman Quadlet (rootless)
-# Installed by setup-podman.sh into openclaw's ~/.config/containers/systemd/
-# {{OPENCLAW_HOME}} is replaced at install time.
+# RadioClaw gateway â€?Podman Quadlet (rootless)
+# Installed by setup-podman.sh into RadioClaw's ~/.config/containers/systemd/
+# {{RadioClaw_HOME}} is replaced at install time.
 
 [Unit]
-Description=OpenClaw gateway (rootless Podman)
+Description=RadioClaw gateway (rootless Podman)
 
 [Container]
-Image=openclaw:local
-ContainerName=openclaw
+Image=RadioClaw:local
+ContainerName=RadioClaw
 UserNS=keep-id
 # Keep container UID/GID aligned with the invoking user so mounted config is readable.
 User=%U:%G
-Volume={{OPENCLAW_HOME}}/.openclaw:/home/node/.openclaw
-EnvironmentFile={{OPENCLAW_HOME}}/.openclaw/.env
+Volume={{RadioClaw_HOME}}/.RadioClaw:/home/node/.RadioClaw
+EnvironmentFile={{RadioClaw_HOME}}/.RadioClaw/.env
 Environment=HOME=/home/node
 Environment=TERM=xterm-256color
 PublishPort=18789:18789

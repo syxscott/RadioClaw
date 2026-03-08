@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { SessionBindingRecord } from "../infra/outbound/session-binding-service.js";
 
-function createDefaultSpawnConfig(): OpenClawConfig {
+function createDefaultSpawnConfig(): RadioClawConfig {
   return {
     acp: {
       enabled: true,

@@ -39,7 +39,7 @@ runs:
           if git -c protocol.version=2 submodule update --init --force --depth=1 --recursive; then
             exit 0
           fi
-          echo "Submodule update failed (attempt $attempt/5). Retryingâ€¦"
+          echo "Submodule update failed (attempt $attempt/5). Retryingâ€?
           sleep $((attempt * 10))
         done
         exit 1

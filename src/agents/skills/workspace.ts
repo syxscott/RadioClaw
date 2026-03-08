@@ -6,7 +6,7 @@ import {
   loadSkillsFromDir,
   type Skill,
 } from "@mariozechner/pi-coding-agent";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { isPathInside } from "../../infra/path-guards.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { CONFIG_DIR, resolveUserPath } from "../../utils.js";
@@ -16,7 +16,7 @@ import { shouldIncludeSkill } from "./config.js";
 import { normalizeSkillFilter } from "./filter.js";
 import {
   parseFrontmatter,
-  resolveOpenClawMetadata,
+  resolveRadioClawMetadata,
   resolveSkillInvocationPolicy,
 } from "./frontmatter.js";
 import { resolvePluginSkillDirs } from "./plugin-skills.js";
@@ -39,9 +39,9 @@ const skillCommandDebugOnce = new Set<string>();
  * and the read tool resolves `~` to the home directory.
  *
  * Example: `/Users/alice/.bun/.../skills/github/SKILL.md`
- *       → `~/.bun/.../skills/github/SKILL.md`
+ *       �?`~/.bun/.../skills/github/SKILL.md`
  *
- * Saves ~5–6 tokens per skill path × N skills ≈ 400–600 tokens total.
+ * Saves ~5�? tokens per skill path × N skills �?400�?00 tokens total.
  */
 function compactSkillPaths(skills: Skill[]): Skill[] {
   const home = os.homedir();
@@ -67,7 +67,7 @@ function debugSkillCommandOnce(
 
 function filterSkillEntries(
   entries: SkillEntry[],
-  config?: OpenClawConfig,
+  config?: RadioClawConfig,
   skillFilter?: string[],
   eligibility?: SkillEligibilityContext,
 ): SkillEntry[] {
@@ -90,7 +90,7 @@ function filterSkillEntries(
 
 const SKILL_COMMAND_MAX_LENGTH = 32;
 const SKILL_COMMAND_FALLBACK = "skill";
-// Discord command descriptions must be ≤100 characters
+// Discord command descriptions must be �?00 characters
 const SKILL_COMMAND_DESCRIPTION_MAX_LENGTH = 100;
 
 const DEFAULT_MAX_CANDIDATES_PER_ROOT = 300;
@@ -136,7 +136,7 @@ type ResolvedSkillsLimits = {
   maxSkillFileBytes: number;
 };
 
-function resolveSkillsLimits(config?: OpenClawConfig): ResolvedSkillsLimits {
+function resolveSkillsLimits(config?: RadioClawConfig): ResolvedSkillsLimits {
   const limits = config?.skills?.limits;
   return {
     maxCandidatesPerRoot: limits?.maxCandidatesPerRoot ?? DEFAULT_MAX_CANDIDATES_PER_ROOT,
@@ -292,7 +292,7 @@ function unwrapLoadedSkills(loaded: unknown): Skill[] {
 function loadSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: OpenClawConfig;
+    config?: RadioClawConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -458,19 +458,19 @@ function loadSkillEntries(
   const bundledSkills = bundledSkillsDir
     ? loadSkills({
         dir: bundledSkillsDir,
-        source: "openclaw-bundled",
+        source: "RadioClaw-bundled",
       })
     : [];
   const extraSkills = mergedExtraDirs.flatMap((dir) => {
     const resolved = resolveUserPath(dir);
     return loadSkills({
       dir: resolved,
-      source: "openclaw-extra",
+      source: "RadioClaw-extra",
     });
   });
   const managedSkills = loadSkills({
     dir: managedSkillsDir,
-    source: "openclaw-managed",
+    source: "RadioClaw-managed",
   });
   const personalAgentsSkillsDir = path.resolve(os.homedir(), ".agents", "skills");
   const personalAgentsSkills = loadSkills({
@@ -484,7 +484,7 @@ function loadSkillEntries(
   });
   const workspaceSkills = loadSkills({
     dir: workspaceSkillsDir,
-    source: "openclaw-workspace",
+    source: "RadioClaw-workspace",
   });
 
   const merged = new Map<string, Skill>();
@@ -519,14 +519,14 @@ function loadSkillEntries(
     return {
       skill,
       frontmatter,
-      metadata: resolveOpenClawMetadata(frontmatter),
+      metadata: resolveRadioClawMetadata(frontmatter),
       invocation: resolveSkillInvocationPolicy(frontmatter),
     };
   });
   return skillEntries;
 }
 
-function applySkillsPromptLimits(params: { skills: Skill[]; config?: OpenClawConfig }): {
+function applySkillsPromptLimits(params: { skills: Skill[]; config?: RadioClawConfig }): {
   skillsForPrompt: Skill[];
   truncated: boolean;
   truncatedReason: "count" | "chars" | null;
@@ -591,7 +591,7 @@ export function buildWorkspaceSkillsPrompt(
 }
 
 type WorkspaceSkillBuildOptions = {
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   managedSkillsDir?: string;
   bundledSkillsDir?: string;
   entries?: SkillEntry[];
@@ -625,7 +625,7 @@ function resolveWorkspaceSkillPromptState(
     config: opts?.config,
   });
   const truncationNote = truncated
-    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`openclaw skills check\` to audit.`
+    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`RadioClaw skills check\` to audit.`
     : "";
   const prompt = [
     remoteNote,
@@ -640,7 +640,7 @@ function resolveWorkspaceSkillPromptState(
 export function resolveSkillsPromptForRun(params: {
   skillsSnapshot?: SkillSnapshot;
   entries?: SkillEntry[];
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   workspaceDir: string;
 }): string {
   const snapshotPrompt = params.skillsSnapshot?.prompt?.trim();
@@ -660,7 +660,7 @@ export function resolveSkillsPromptForRun(params: {
 export function loadWorkspaceSkillEntries(
   workspaceDir: string,
   opts?: {
-    config?: OpenClawConfig;
+    config?: RadioClawConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
   },
@@ -710,7 +710,7 @@ function resolveSyncedSkillDestinationPath(params: {
 export async function syncSkillsToWorkspace(params: {
   sourceWorkspaceDir: string;
   targetWorkspaceDir: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   managedSkillsDir?: string;
   bundledSkillsDir?: string;
 }) {
@@ -767,7 +767,7 @@ export async function syncSkillsToWorkspace(params: {
 
 export function filterWorkspaceSkillEntries(
   entries: SkillEntry[],
-  config?: OpenClawConfig,
+  config?: RadioClawConfig,
 ): SkillEntry[] {
   return filterSkillEntries(entries, config);
 }
@@ -775,7 +775,7 @@ export function filterWorkspaceSkillEntries(
 export function buildWorkspaceSkillCommandSpecs(
   workspaceDir: string,
   opts?: {
-    config?: OpenClawConfig;
+    config?: RadioClawConfig;
     managedSkillsDir?: string;
     bundledSkillsDir?: string;
     entries?: SkillEntry[];
@@ -820,7 +820,7 @@ export function buildWorkspaceSkillCommandSpecs(
     const rawDescription = entry.skill.description?.trim() || rawName;
     const description =
       rawDescription.length > SKILL_COMMAND_DESCRIPTION_MAX_LENGTH
-        ? rawDescription.slice(0, SKILL_COMMAND_DESCRIPTION_MAX_LENGTH - 1) + "…"
+        ? rawDescription.slice(0, SKILL_COMMAND_DESCRIPTION_MAX_LENGTH - 1) + "�?
         : rawDescription;
     const dispatch = (() => {
       const kindRaw = (

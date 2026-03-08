@@ -62,7 +62,7 @@ export function renderLogs(props: LogsProps) {
         </div>
         <div class="row" style="gap: 8px;">
           <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-            ${props.loading ? "Loadingâ€¦" : "Refresh"}
+            ${props.loading ? "Loadingâ€? : "Refresh"}
           </button>
           <button
             class="btn"

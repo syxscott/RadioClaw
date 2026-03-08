@@ -2,7 +2,7 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { runPluginCommandWithTimeout, type RuntimeEnv } from "openclaw/plugin-sdk/matrix";
+import { runPluginCommandWithTimeout, type RuntimeEnv } from "RadioClaw/plugin-sdk/matrix";
 
 const MATRIX_SDK_PACKAGE = "@vector-im/matrix-bot-sdk";
 const MATRIX_CRYPTO_DOWNLOAD_HELPER = "@matrix-org/matrix-sdk-crypto-nodejs/download-lib.js";
@@ -67,7 +67,7 @@ export async function ensureMatrixCryptoRuntime(
   }
 
   const scriptPath = resolveFn(MATRIX_CRYPTO_DOWNLOAD_HELPER);
-  params.log?.("matrix: crypto runtime missing; downloading platform libraryâ€¦");
+  params.log?.("matrix: crypto runtime missing; downloading platform libraryâ€?);
   const result = await runCommand({
     argv: [nodeExecutable, scriptPath],
     cwd: path.dirname(scriptPath),

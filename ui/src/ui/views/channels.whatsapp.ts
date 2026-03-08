@@ -84,7 +84,7 @@ export function renderWhatsAppCard(params: {
           ?disabled=${props.whatsappBusy}
           @click=${() => props.onWhatsAppStart(false)}
         >
-          ${props.whatsappBusy ? "Workingâ€¦" : "Show QR"}
+          ${props.whatsappBusy ? "Workingâ€? : "Show QR"}
         </button>
         <button
           class="btn"

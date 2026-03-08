@@ -15,7 +15,7 @@ should use the unified Gateway WebSocket protocol instead.
 If you are building an operator or node client, use the
 [Gateway protocol](/gateway/protocol).
 
-**Note:** Current OpenClaw builds no longer ship the TCP bridge listener; this document is kept for historical reference.
+**Note:** Current RadioClaw builds no longer ship the TCP bridge listener; this document is kept for historical reference.
 Legacy `bridge.*` config keys are no longer part of the config schema.
 
 ## Why we have both
@@ -50,12 +50,12 @@ authoritative pin without explicit user intent or other out-of-band verification
 
 ## Frames
 
-Client â†’ Gateway:
+Client â†?Gateway:
 
 - `req` / `res`: scoped gateway RPC (chat, sessions, config, health, voicewake, skills.bins)
 - `event`: node signals (voice transcript, agent request, chat subscribe, exec lifecycle)
 
-Gateway â†’ Client:
+Gateway â†?Client:
 
 - `invoke` / `invoke-res`: node commands (`canvas.*`, `camera.*`, `screen.record`,
   `location.get`, `sms.send`)
@@ -80,7 +80,7 @@ Payload fields (all optional unless noted):
 ## Tailnet usage
 
 - Bind the bridge to a tailnet IP: `bridge.bind: "tailnet"` in
-  `~/.openclaw/openclaw.json`.
+  `~/.RadioClaw/RadioClaw.json`.
 - Clients connect via MagicDNS name or tailnet IP.
 - Bonjour does **not** cross networks; use manual host/port or wide-area DNSâ€‘SD
   when needed.

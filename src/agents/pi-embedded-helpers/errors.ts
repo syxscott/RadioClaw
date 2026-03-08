@@ -1,5 +1,5 @@
 import type { AssistantMessage } from "@mariozechner/pi-ai";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { formatSandboxToolPolicyBlockedMessage } from "../sandbox.js";
 import { stableStringify } from "../stable-stringify.js";
@@ -32,9 +32,9 @@ export function formatBillingErrorMessage(provider?: string, model?: string): st
   const providerLabel =
     providerName && modelName ? `${providerName} (${modelName})` : providerName || undefined;
   if (providerLabel) {
-    return `⚠️ ${providerLabel} returned a billing error — your API key has run out of credits or has an insufficient balance. Check your ${providerName} billing dashboard and top up or switch to a different API key.`;
+    return `⚠️ ${providerLabel} returned a billing error �?your API key has run out of credits or has an insufficient balance. Check your ${providerName} billing dashboard and top up or switch to a different API key.`;
   }
-  return "⚠️ API provider returned a billing error — your API key has run out of credits or has an insufficient balance. Check your provider's billing dashboard and top up or switch to a different API key.";
+  return "⚠️ API provider returned a billing error �?your API key has run out of credits or has an insufficient balance. Check your provider's billing dashboard and top up or switch to a different API key.";
 }
 
 export const BILLING_ERROR_USER_MESSAGE = formatBillingErrorMessage();
@@ -110,8 +110,8 @@ export function isContextOverflowError(errorMessage?: string): boolean {
     // when the context window is exceeded. pi-ai surfaces it as "Unhandled stop reason: model_context_window_exceeded".
     lower.includes("context_window_exceeded") ||
     // Chinese proxy error messages for context overflow
-    errorMessage.includes("上下文过长") ||
-    errorMessage.includes("上下文超出") ||
+    errorMessage.includes("上下文过�?) ||
+    errorMessage.includes("上下文超�?) ||
     errorMessage.includes("上下文长度超") ||
     errorMessage.includes("超出最大上下文") ||
     errorMessage.includes("请压缩上下文")
@@ -547,7 +547,7 @@ export function formatRawAssistantErrorForUi(raw?: string): string {
 
 export function formatAssistantErrorText(
   msg: AssistantMessage,
-  opts?: { cfg?: OpenClawConfig; sessionKey?: string; provider?: string; model?: string },
+  opts?: { cfg?: RadioClawConfig; sessionKey?: string; provider?: string; model?: string },
 ): string | undefined {
   // Also format errors if errorMessage is present, even if stopReason isn't "error"
   const raw = (msg.errorMessage ?? "").trim();
@@ -799,7 +799,7 @@ export function isModelNotFoundErrorMessage(raw: string): boolean {
   }
   const lower = raw.toLowerCase();
 
-  // Direct pattern matches from OpenClaw internals and common providers.
+  // Direct pattern matches from RadioClaw internals and common providers.
   if (
     lower.includes("unknown model") ||
     lower.includes("model not found") ||

@@ -15,7 +15,7 @@ const WORK_BATCH_SIZE = 500;
 const STATE_VERSION = 1;
 const STATE_FILE_NAME = "issue-labeler-state.json";
 const CONFIG_BASE_DIR = process.env.XDG_CONFIG_HOME ?? join(homedir(), ".config");
-const STATE_FILE_PATH = join(CONFIG_BASE_DIR, "openclaw", STATE_FILE_NAME);
+const STATE_FILE_PATH = join(CONFIG_BASE_DIR, "RadioClaw", STATE_FILE_NAME);
 
 const ISSUE_QUERY = `
   query($owner: String!, $name: String!, $after: String, $pageSize: Int!) {
@@ -239,12 +239,12 @@ function logHeader(title: string) {
 
 function logStep(message: string) {
   // eslint-disable-next-line no-console
-  console.log(`â€¢ ${message}`);
+  console.log(`â€?${message}`);
 }
 
 function logSuccess(message: string) {
   // eslint-disable-next-line no-console
-  console.log(`âœ“ ${message}`);
+  console.log(`âœ?${message}`);
 }
 
 function logInfo(message: string) {
@@ -617,7 +617,7 @@ async function classifyItem(
         {
           role: "system",
           content:
-            "You classify GitHub issues and pull requests for OpenClaw. Respond with JSON only, no extra text.",
+            "You classify GitHub issues and pull requests for RadioClaw. Respond with JSON only, no extra text.",
         },
         {
           role: "user",
@@ -696,7 +696,7 @@ async function main() {
     throw new Error("OPENAI_API_KEY is required to classify issues and pull requests.");
   }
 
-  logHeader("OpenClaw Issue Label Audit");
+  logHeader("RadioClaw Issue Label Audit");
   logStep(`Mode: ${dryRun ? "dry-run" : "apply labels"}`);
   logStep(`Model: ${model}`);
   logStep(`Issue limit: ${Number.isFinite(limit) ? limit : "unlimited"}`);
@@ -749,7 +749,7 @@ async function main() {
 
     for (const issue of pendingIssues) {
       // eslint-disable-next-line no-console
-      console.log(`\n#${issue.number} â€” ${issue.title}`);
+      console.log(`\n#${issue.number} â€?${issue.title}`);
 
       const labels = new Set(issue.labels.map((label) => label.name));
       logInfo(`Existing labels: ${Array.from(labels).toSorted().join(", ") || "none"}`);
@@ -825,7 +825,7 @@ async function main() {
 
     for (const pullRequest of pendingPullRequests) {
       // eslint-disable-next-line no-console
-      console.log(`\n#${pullRequest.number} â€” ${pullRequest.title}`);
+      console.log(`\n#${pullRequest.number} â€?${pullRequest.title}`);
 
       const labels = new Set(pullRequest.labels.map((label) => label.name));
       logInfo(`Existing labels: ${Array.from(labels).toSorted().join(", ") || "none"}`);

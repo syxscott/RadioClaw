@@ -300,10 +300,10 @@
 
       const gutter = gutters.find((g) => g.position === level);
       if (gutter) {
-        prefixChars.push(posInLevel === 0 ? (gutter.show ? "â”‚" : " ") : " ");
+        prefixChars.push(posInLevel === 0 ? (gutter.show ? "â”? : " ") : " ");
       } else if (connector && level === connectorPosition) {
         if (posInLevel === 0) {
-          prefixChars.push(isLast ? "â””" : "â”œ");
+          prefixChars.push(isLast ? "â”? : "â”?);
         } else if (posInLevel === 1) {
           prefixChars.push("â”€");
         } else {
@@ -515,7 +515,7 @@
     const visibleRootIds = visibleChildren.get(null);
     const multipleRoots = visibleRootIds.length > 1;
 
-    // Build a map for quick lookup: nodeId â†’ FlatNode
+    // Build a map for quick lookup: nodeId â†?FlatNode
     const filteredNodeMap = new Map();
     for (const flatNode of filteredNodes) {
       filteredNodeMap.set(flatNode.node.entry.id, flatNode);
@@ -834,7 +834,7 @@
 
         const marker = document.createElement("span");
         marker.className = "tree-marker";
-        marker.textContent = isOnPath ? "â€¢" : " ";
+        marker.textContent = isOnPath ? "â€? : " ";
 
         const content = document.createElement("span");
         content.className = "tree-content";
@@ -866,7 +866,7 @@
 
         const marker = node.querySelector(".tree-marker");
         if (marker) {
-          marker.textContent = isOnPath ? "â€¢" : " ";
+          marker.textContent = isOnPath ? "â€? : " ";
         }
       }
     }
@@ -1296,7 +1296,7 @@
 
     if (success && button) {
       const originalHtml = button.innerHTML;
-      button.innerHTML = "âœ“";
+      button.innerHTML = "âœ?;
       button.classList.add("copied");
       setTimeout(() => {
         button.innerHTML = originalHtml;
@@ -1513,10 +1513,10 @@
 
     const tokenParts = [];
     if (globalStats.tokens.input) {
-      tokenParts.push(`â†‘${formatTokens(globalStats.tokens.input)}`);
+      tokenParts.push(`â†?{formatTokens(globalStats.tokens.input)}`);
     }
     if (globalStats.tokens.output) {
-      tokenParts.push(`â†“${formatTokens(globalStats.tokens.output)}`);
+      tokenParts.push(`â†?{formatTokens(globalStats.tokens.output)}`);
     }
     if (globalStats.tokens.cacheRead) {
       tokenParts.push(`R${formatTokens(globalStats.tokens.cacheRead)}`);
@@ -1550,7 +1550,7 @@
             <h1>Session: ${escapeHtml(header?.id || "unknown")}</h1>
             <div class="help-bar">
               <span>Ctrl+T toggle thinking Â· Ctrl+O toggle tools</span>
-              <button class="download-json-btn" onclick="downloadSessionJson()" title="Download session as JSONL">â†“ JSONL</button>
+              <button class="download-json-btn" onclick="downloadSessionJson()" title="Download session as JSONL">â†?JSONL</button>
             </div>
             <div class="header-info">
               <div class="info-item"><span class="info-label">Date:</span><span class="info-value">${header?.timestamp ? new Date(header.timestamp).toLocaleString() : "unknown"}</span></div>

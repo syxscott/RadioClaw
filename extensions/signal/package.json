@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/signal",
+  "name": "@RadioClaw/signal",
   "version": "2026.3.7",
   "private": true,
-  "description": "OpenClaw Signal channel plugin",
+  "description": "RadioClaw Signal channel plugin",
   "type": "module",
-  "openclaw": {
+  "RadioClaw": {
     "extensions": [
       "./index.ts"
     ]

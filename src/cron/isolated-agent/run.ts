@@ -37,7 +37,7 @@ import {
   supportsXHighThinking,
 } from "../../auto-reply/thinking.js";
 import type { CliDeps } from "../../cli/outbound-send-deps.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   resolveSessionTranscriptPath,
   setSessionRuntimeModel,
@@ -82,7 +82,7 @@ export type RunCronAgentTurnResult = {
    * channel (via outbound payloads, the subagent announce flow, or a matching
    * messaging-tool send). Callers should skip posting a summary to the main
    * session to avoid duplicate
-   * messages.  See: https://github.com/openclaw/openclaw/issues/15692
+   * messages.  See: https://github.com/RadioClaw/RadioClaw/issues/15692
    */
   delivered?: boolean;
   /**
@@ -158,7 +158,7 @@ function resolveCronToolPolicy(params: {
 }
 
 async function resolveCronDeliveryContext(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   job: CronJob;
   agentId: string;
 }) {
@@ -191,7 +191,7 @@ function appendCronDeliveryInstruction(params: {
 }
 
 export async function runCronIsolatedAgentTurn(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   deps: CliDeps;
   job: CronJob;
   message: string;
@@ -209,7 +209,7 @@ export async function runCronIsolatedAgentTurn(params: {
       ? reason.trim()
       : "cron: job execution timed out";
   };
-  const isFastTestEnv = process.env.OPENCLAW_TEST_FAST === "1";
+  const isFastTestEnv = process.env.RadioClaw_TEST_FAST === "1";
   const defaultAgentId = resolveDefaultAgentId(params.cfg);
   const requestedAgentId =
     typeof params.agentId === "string" && params.agentId.trim()
@@ -223,13 +223,13 @@ export async function runCronIsolatedAgentTurn(params: {
     : undefined;
   // Use the requested agentId even when there is no explicit agent config entry.
   // This ensures auth-profiles, workspace, and agentDir all resolve to the
-  // correct per-agent paths (e.g. ~/.openclaw/agents/<agentId>/agent/).
+  // correct per-agent paths (e.g. ~/.RadioClaw/agents/<agentId>/agent/).
   const agentId = normalizedRequested ?? defaultAgentId;
   const agentCfg = buildCronAgentDefaultsConfig({
     defaults: params.cfg.agents?.defaults,
     agentConfigOverride,
   });
-  const cfgWithAgentDefaults: OpenClawConfig = {
+  const cfgWithAgentDefaults: RadioClawConfig = {
     ...params.cfg,
     agents: Object.assign({}, params.cfg.agents, { defaults: agentCfg }),
   };
@@ -260,7 +260,7 @@ export async function runCronIsolatedAgentTurn(params: {
     }
     return catalog;
   };
-  // Isolated cron sessions are subagents â€” prefer subagents.model when set,
+  // Isolated cron sessions are subagents â€?prefer subagents.model when set,
   // but only if it passes the model allowlist.  #11461
   const subagentModelRaw =
     normalizeModelSelection(agentConfigOverride?.subagents?.model) ??
@@ -368,7 +368,7 @@ export async function runCronIsolatedAgentTurn(params: {
     cronSession.sessionEntry.label = `Cron: ${labelSuffix}`;
   }
 
-  // Respect session model override â€” check session.modelOverride before falling
+  // Respect session model override â€?check session.modelOverride before falling
   // back to the default config model. This ensures /model changes are honoured
   // by cron and isolated agent runs.
   if (!modelOverride && !hooksGmailModelApplied) {
@@ -557,7 +557,7 @@ export async function runCronIsolatedAgentTurn(params: {
             // Passing an existing ID activates the resume watchdog profile
             // (noOutputTimeoutRatio 0.3, maxMs 180 s) instead of the fresh profile
             // (ratio 0.8, maxMs 600 s), causing jobs to time out at roughly 1/3 of
-            // the configured timeoutSeconds. See: https://github.com/openclaw/openclaw/issues/29774
+            // the configured timeoutSeconds. See: https://github.com/RadioClaw/RadioClaw/issues/29774
             const cliSessionId = cronSession.isNewSession
               ? undefined
               : getCliSessionId(cronSession.sessionEntry, providerOverride);

@@ -11,18 +11,15 @@ title: "Thinking Levels"
 
 - Inline directive in any inbound body: `/t <level>`, `/think:<level>`, or `/thinking <level>`.
 - Levels (aliases): `off | minimal | low | medium | high | xhigh | adaptive`
-  - minimal ‚Üí ‚Äúthink‚Äù
-  - low ‚Üí ‚Äúthink hard‚Äù
-  - medium ‚Üí ‚Äúthink harder‚Äù
-  - high ‚Üí ‚Äúultrathink‚Äù (max budget)
-  - xhigh ‚Üí ‚Äúultrathink+‚Äù (GPT-5.2 + Codex models only)
-  - adaptive ‚Üí provider-managed adaptive reasoning budget (supported for Anthropic Claude 4.6 model family)
+  - minimal ‚Ü?‚Äúthink‚Ä?  - low ‚Ü?‚Äúthink hard‚Ä?  - medium ‚Ü?‚Äúthink harder‚Ä?  - high ‚Ü?‚Äúultrathink‚Ä?(max budget)
+  - xhigh ‚Ü?‚Äúultrathink+‚Ä?(GPT-5.2 + Codex models only)
+  - adaptive ‚Ü?provider-managed adaptive reasoning budget (supported for Anthropic Claude 4.6 model family)
   - `x-high`, `x_high`, `extra-high`, `extra high`, and `extra_high` map to `xhigh`.
   - `highest`, `max` map to `high`.
 - Provider notes:
   - Anthropic Claude 4.6 models default to `adaptive` when no explicit thinking level is set.
   - Z.AI (`zai/*`) only supports binary thinking (`on`/`off`). Any non-`off` level is treated as `on` (mapped to `low`).
-  - Moonshot (`moonshot/*`) maps `/think off` to `thinking: { type: "disabled" }` and any non-`off` level to `thinking: { type: "enabled" }`. When thinking is enabled, Moonshot only accepts `tool_choice` `auto|none`; OpenClaw normalizes incompatible values to `auto`.
+  - Moonshot (`moonshot/*`) maps `/think off` to `thinking: { type: "disabled" }` and any non-`off` level to `thinking: { type: "enabled" }`. When thinking is enabled, Moonshot only accepts `tool_choice` `auto|none`; RadioClaw normalizes incompatible values to `auto`.
 
 ## Resolution order
 

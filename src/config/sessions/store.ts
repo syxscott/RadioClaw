@@ -57,7 +57,7 @@ function isSessionStoreRecord(value: unknown): value is Record<string, SessionEn
 
 function getSessionStoreTtl(): number {
   return resolveCacheTtlMs({
-    envValue: process.env.OPENCLAW_SESSION_CACHE_TTL_MS,
+    envValue: process.env.RadioClaw_SESSION_CACHE_TTL_MS,
     defaultTtlMs: DEFAULT_SESSION_STORE_TTL_MS,
   });
 }
@@ -226,7 +226,7 @@ export function loadSessionStore(
     try {
       const raw = fs.readFileSync(storePath, "utf-8");
       if (raw.length === 0 && attempt < maxReadAttempts - 1) {
-        // File is empty â€” likely caught mid-write; retry after a brief pause.
+        // File is empty â€?likely caught mid-write; retry after a brief pause.
         Atomics.wait(retryBuf!, 0, 0, 50);
         continue;
       }
@@ -239,7 +239,7 @@ export function loadSessionStore(
       mtimeMs = fileStat?.mtimeMs;
       break;
     } catch {
-      // File missing, locked, or transiently corrupt â€” retry on Windows.
+      // File missing, locked, or transiently corrupt â€?retry on Windows.
       if (attempt < maxReadAttempts - 1) {
         Atomics.wait(retryBuf!, 0, 0, 50);
         continue;
@@ -476,7 +476,7 @@ async function saveSessionStoreUnlocked(
           await new Promise((r) => setTimeout(r, 50 * (i + 1)));
           continue;
         }
-        // Final attempt failed â€” skip this save. The write lock ensures
+        // Final attempt failed â€?skip this save. The write lock ensures
         // the next save will retry with fresh data. Log for diagnostics.
         log.warn(`atomic write failed after 5 attempts: ${storePath}`);
       }

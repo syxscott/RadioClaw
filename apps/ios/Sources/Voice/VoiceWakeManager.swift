@@ -1,7 +1,7 @@
 import AVFAudio
 import Foundation
 import Observation
-import OpenClawKit
+import RadioClawKit
 import Speech
 import SwabbleKit
 
@@ -176,7 +176,7 @@ final class VoiceWakeManager: NSObject {
             return
         }
 
-        self.statusText = "Requesting permissionsâ€¦"
+        self.statusText = "Requesting permissionsâ€?
 
         let micOk = await Self.requestMicrophonePermission()
         guard micOk else {

@@ -91,7 +91,7 @@ export async function applyAuthChoiceHuggingface(
 
   if (isHuggingfacePolicyLocked(selectedModelRef)) {
     await params.prompter.note(
-      "Provider locked â€” router will choose backend by cost or speed.",
+      "Provider locked â€?router will choose backend by cost or speed.",
       "Hugging Face",
     );
   }

@@ -3,7 +3,7 @@ name: coding-agent
 description: 'Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:"acp"), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.'
 metadata:
   {
-    "openclaw": { "emoji": "🧩", "requires": { "anyBins": ["claude", "codex", "opencode", "pi"] } },
+    "RadioClaw": { "emoji": "🧩", "requires": { "anyBins": ["claude", "codex", "opencode", "pi"] } },
   }
 ---
 
@@ -16,7 +16,7 @@ Use **bash** (with optional background mode) for all coding agent work. Simple a
 For **Codex, Pi, and OpenCode**, PTY is still required (interactive terminal apps):
 
 ```bash
-# ✅ Correct for Codex/Pi/OpenCode
+# �?Correct for Codex/Pi/OpenCode
 bash pty:true command:"codex exec 'Your prompt'"
 ```
 
@@ -25,12 +25,12 @@ For **Claude Code** (`claude` CLI), use `--print --permission-mode bypassPermiss
 `--print` mode keeps full tool access and avoids interactive confirmation:
 
 ```bash
-# ✅ Correct for Claude Code (no PTY needed)
+# �?Correct for Claude Code (no PTY needed)
 cd /path/to/project && claude --permission-mode bypassPermissions --print 'Your task'
 
 # For background execution: use background:true on the exec tool
 
-# ❌ Wrong for Claude Code
+# �?Wrong for Claude Code
 bash pty:true command:"claude --dangerously-skip-permissions 'task'"
 ```
 
@@ -129,7 +129,7 @@ bash pty:true workdir:~/project background:true command:"codex --yolo 'Refactor 
 
 ### Reviewing PRs
 
-**⚠️ CRITICAL: Never review PRs in OpenClaw's own project folder!**
+**⚠️ CRITICAL: Never review PRs in RadioClaw's own project folder!**
 Clone to temp folder or use git worktree.
 
 ```bash
@@ -242,8 +242,8 @@ git worktree remove /tmp/issue-99
 5. **--full-auto for building** - auto-approves changes
 6. **vanilla for reviewing** - no special flags needed
 7. **Parallel is OK** - run many Codex processes at once for batch work
-8. **NEVER start Codex in ~/.openclaw/** - it'll read your soul docs and get weird ideas about the org chart!
-9. **NEVER checkout branches in ~/Projects/openclaw/** - that's the LIVE OpenClaw instance!
+8. **NEVER start Codex in ~/.RadioClaw/** - it'll read your soul docs and get weird ideas about the org chart!
+9. **NEVER checkout branches in ~/Projects/RadioClaw/** - that's the LIVE RadioClaw instance!
 
 ---
 
@@ -265,13 +265,13 @@ This prevents the user from seeing only "Agent failed before reply" and having n
 
 ## Auto-Notify on Completion
 
-For long-running background tasks, append a wake trigger to your prompt so OpenClaw gets notified immediately when the agent finishes (instead of waiting for the next heartbeat):
+For long-running background tasks, append a wake trigger to your prompt so RadioClaw gets notified immediately when the agent finishes (instead of waiting for the next heartbeat):
 
 ```
 ... your task here.
 
 When completely finished, run this command to notify me:
-openclaw system event --text "Done: [brief summary of what was built]" --mode now
+RadioClaw system event --text "Done: [brief summary of what was built]" --mode now
 ```
 
 **Example:**
@@ -279,10 +279,10 @@ openclaw system event --text "Done: [brief summary of what was built]" --mode no
 ```bash
 bash pty:true workdir:~/project background:true command:"codex --yolo exec 'Build a REST API for todos.
 
-When completely finished, run: openclaw system event --text \"Done: Built todos REST API with CRUD endpoints\" --mode now'"
+When completely finished, run: RadioClaw system event --text \"Done: Built todos REST API with CRUD endpoints\" --mode now'"
 ```
 
-This triggers an immediate wake event — Skippy gets pinged in seconds, not 10 minutes.
+This triggers an immediate wake event �?Skippy gets pinged in seconds, not 10 minutes.
 
 ---
 

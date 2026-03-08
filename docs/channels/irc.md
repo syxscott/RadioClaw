@@ -1,18 +1,18 @@
 ---
 title: IRC
-description: Connect OpenClaw to IRC channels and direct messages.
+description: Connect RadioClaw to IRC channels and direct messages.
 summary: "IRC plugin setup, access controls, and troubleshooting"
 read_when:
-  - You want to connect OpenClaw to IRC channels or DMs
+  - You want to connect RadioClaw to IRC channels or DMs
   - You are configuring IRC allowlists, group policy, or mention gating
 ---
 
-Use IRC when you want OpenClaw in classic channels (`#room`) and direct messages.
+Use IRC when you want RadioClaw in classic channels (`#room`) and direct messages.
 IRC ships as an extension plugin, but it is configured in the main config under `channels.irc`.
 
 ## Quick start
 
-1. Enable IRC config in `~/.openclaw/openclaw.json`.
+1. Enable IRC config in `~/.RadioClaw/RadioClaw.json`.
 2. Set at least:
 
 ```json
@@ -23,8 +23,8 @@ IRC ships as an extension plugin, but it is configured in the main config under 
       "host": "irc.libera.chat",
       "port": 6697,
       "tls": true,
-      "nick": "openclaw-bot",
-      "channels": ["#openclaw"]
+      "nick": "RadioClaw-bot",
+      "channels": ["#RadioClaw"]
     }
   }
 }
@@ -33,7 +33,7 @@ IRC ships as an extension plugin, but it is configured in the main config under 
 3. Start/restart gateway:
 
 ```bash
-openclaw gateway run
+RadioClaw gateway run
 ```
 
 ## Security defaults
@@ -45,7 +45,7 @@ openclaw gateway run
 
 ## Access control
 
-There are two separate “gates” for IRC channels:
+There are two separate “gates�?for IRC channels:
 
 1. **Channel access** (`groupPolicy` + `groups`): whether the bot accepts messages from a channel at all.
 2. **Sender access** (`groupAllowFrom` / per-channel `groups["#channel"].allowFrom`): who is allowed to trigger the bot inside that channel.
@@ -88,9 +88,9 @@ Example (allow anyone in `#tuirc-dev` to talk to the bot):
 
 ## Reply triggering (mentions)
 
-Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, OpenClaw defaults to **mention-gating** in group contexts.
+Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, RadioClaw defaults to **mention-gating** in group contexts.
 
-That means you may see logs like `drop channel … (missing-mention)` unless the message includes a mention pattern that matches the bot.
+That means you may see logs like `drop channel �?(missing-mention)` unless the message includes a mention pattern that matches the bot.
 
 To make the bot reply in an IRC channel **without needing a mention**, disable mention gating for that channel:
 

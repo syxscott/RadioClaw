@@ -70,7 +70,7 @@ describe("msteams attachment allowlists", () => {
     ["-1.0.0.1", false],
     ["1.2.3.4.5", false],
     ["0:0:0:0:0:0:0:1", true],
-  ] as const)("malformed/expanded %s â†’ %s (SDK fails closed)", (ip, expected) => {
+  ] as const)("malformed/expanded %s â†?%s (SDK fails closed)", (ip, expected) => {
     expect(isPrivateOrReservedIP(ip)).toBe(expected);
   });
 });

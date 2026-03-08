@@ -40,7 +40,7 @@ Send `/queue collect` as a standalone command (per-session) or set `messages.que
 
 Defaults (when unset in config):
 
-- All surfaces → `collect`
+- All surfaces �?`collect`
 
 Configure globally or per channel via `messages.queue`:
 
@@ -62,7 +62,7 @@ Configure globally or per channel via `messages.queue`:
 
 Options apply to `followup`, `collect`, and `steer-backlog` (and to `steer` when it falls back to followup):
 
-- `debounceMs`: wait for quiet before starting a followup turn (prevents “continue, continue”).
+- `debounceMs`: wait for quiet before starting a followup turn (prevents “continue, continue�?.
 - `cap`: max queued messages per session.
 - `drop`: overflow policy (`old`, `new`, `summarize`).
 
@@ -85,5 +85,5 @@ Defaults: `debounceMs: 1000`, `cap: 20`, `drop: summarize`.
 
 ## Troubleshooting
 
-- If commands seem stuck, enable verbose logs and look for “queued for …ms” lines to confirm the queue is draining.
+- If commands seem stuck, enable verbose logs and look for “queued for …ms�?lines to confirm the queue is draining.
 - If you need queue depth, enable verbose logs and watch for queue timing lines.

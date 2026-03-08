@@ -518,7 +518,7 @@ export async function runReplyAgent(params: {
         hasUnbackedReminderCommitment(payload.text),
     );
     // Suppress the guard note when an existing cron job (created in a prior
-    // turn) already covers the commitment â€” avoids false positives (#32228).
+    // turn) already covers the commitment â€?avoids false positives (#32228).
     const coveredByExistingCron =
       hasReminderCommitment && successfulCronAdds === 0
         ? await hasSessionRelatedCronJobs({
@@ -680,7 +680,7 @@ export async function runReplyAgent(params: {
             }
           })
           .catch(() => {
-            // Silent failure â€” post-compaction context is best-effort
+            // Silent failure â€?post-compaction context is best-effort
           });
       }
 
@@ -713,7 +713,7 @@ export async function runReplyAgent(params: {
     // markDispatchIdle(), but if the dispatcher exits early, errors,
     // or the reply path doesn't go through it cleanly, the second
     // signal never fires and the typing keepalive loop runs forever.
-    // Calling this twice is harmless â€” cleanup() is guarded by the
+    // Calling this twice is harmless â€?cleanup() is guarded by the
     // `active` flag.  Same pattern as the followup runner fix (#26881).
     typing.markDispatchIdle();
   }

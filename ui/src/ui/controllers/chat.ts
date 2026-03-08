@@ -19,7 +19,7 @@ function isAssistantSilentReply(message: unknown): boolean {
   if (role !== "assistant") {
     return false;
   }
-  // entry.text takes precedence â€” matches gateway extractAssistantTextForSilentCheck
+  // entry.text takes precedence â€?matches gateway extractAssistantTextForSilentCheck
   if (typeof entry.text === "string") {
     return isSilentReplyStream(entry.text);
   }
@@ -80,7 +80,7 @@ export async function loadChatHistory(state: ChatState) {
     const messages = Array.isArray(res.messages) ? res.messages : [];
     state.chatMessages = messages.filter((message) => !isAssistantSilentReply(message));
     state.chatThinkingLevel = res.thinkingLevel ?? null;
-    // Clear all streaming state â€” history includes tool results and text
+    // Clear all streaming state â€?history includes tool results and text
     // inline, so keeping streaming artifacts would cause duplicates.
     maybeResetToolStream(state);
     state.chatStream = null;
@@ -268,7 +268,7 @@ export function handleChatEvent(state: ChatState, payload?: ChatEventPayload) {
   }
 
   // Final from another run (e.g. sub-agent announce): refresh history to show new message.
-  // See https://github.com/openclaw/openclaw/issues/1909
+  // See https://github.com/RadioClaw/RadioClaw/issues/1909
   if (payload.runId && state.chatRunId && payload.runId !== state.chatRunId) {
     if (payload.state === "final") {
       const finalMessage = normalizeFinalAssistantMessage(payload.message);

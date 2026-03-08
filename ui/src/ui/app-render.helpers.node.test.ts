@@ -13,7 +13,7 @@ function row(overrides: Partial<SessionRow> & { key: string }): SessionRow {
 }
 
 /* ================================================================
- *  parseSessionKey â€“ low-level key â†’ type / fallback mapping
+ *  parseSessionKey â€?low-level key â†?type / fallback mapping
  * ================================================================ */
 
 describe("parseSessionKey", () => {
@@ -101,7 +101,7 @@ describe("parseSessionKey", () => {
 });
 
 /* ================================================================
- *  resolveSessionDisplayName â€“ full resolution with row data
+ *  resolveSessionDisplayName â€?full resolution with row data
  * ================================================================ */
 
 describe("resolveSessionDisplayName", () => {

@@ -64,7 +64,7 @@ interface WsSession {
   broken: boolean;
 }
 
-/** Module-level registry: sessionId → WsSession */
+/** Module-level registry: sessionId �?WsSession */
 const wsRegistry = new Map<string, WsSession>();
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ export function releaseWsSession(sessionId: string): void {
     try {
       session.manager.close();
     } catch {
-      // Ignore close errors — connection may already be gone.
+      // Ignore close errors �?connection may already be gone.
     }
     wsRegistry.delete(sessionId);
   }
@@ -208,7 +208,7 @@ export function convertMessagesToInputItems(messages: Message[]): InputItem[] {
           if (block.type === "text" && typeof block.text === "string") {
             textParts.push(block.text);
           } else if (block.type === "thinking" && typeof block.thinking === "string") {
-            // Skip thinking blocks — not sent back to the model
+            // Skip thinking blocks �?not sent back to the model
           } else if (block.type === "toolCall") {
             // Push accumulated text first
             if (textParts.length > 0) {
@@ -281,7 +281,7 @@ export function convertMessagesToInputItems(messages: Message[]): InputItem[] {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Response object → AssistantMessage
+// Response object �?AssistantMessage
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function buildAssistantMessageFromResponse(
@@ -530,7 +530,7 @@ export function createOpenAIWebSocketStreamFn(
       if (prevResponseId && session.lastContextLength > 0) {
         // Subsequent turn: only send new messages (tool results) since last call
         const newMessages = context.messages.slice(session.lastContextLength);
-        // Filter to only tool results — the assistant message is already in server context
+        // Filter to only tool results �?the assistant message is already in server context
         const toolResults = newMessages.filter((m) => (m as AnyMessage).role === "toolResult");
         if (toolResults.length === 0) {
           // Shouldn't happen in a well-formed turn, but fall back to full context
@@ -589,7 +589,7 @@ export function createOpenAIWebSocketStreamFn(
         extraParams.reasoning = reasoning;
       }
 
-      // Respect compat.supportsStore — providers like Gemini reject unknown
+      // Respect compat.supportsStore �?providers like Gemini reject unknown
       // fields such as `store` with a 400 error.  Fixes #39086.
       const supportsStore = (model as { compat?: { supportsStore?: boolean } }).compat
         ?.supportsStore;

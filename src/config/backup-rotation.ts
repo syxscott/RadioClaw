@@ -64,7 +64,7 @@ export async function hardenBackupPermissions(
 /**
  * Remove orphan .bak files that fall outside the managed rotation ring.
  * These can accumulate from interrupted writes, manual copies, or PID-stamped
- * backups (e.g. openclaw.json.bak.1772352289, openclaw.json.bak.before-marketing).
+ * backups (e.g. RadioClaw.json.bak.1772352289, RadioClaw.json.bak.before-marketing).
  *
  * Only files matching `<configBasename>.bak.*` are considered; the primary
  * `.bak` and numbered `.bak.1` through `.bak.{N-1}` are preserved.
@@ -101,7 +101,7 @@ export async function cleanOrphanBackups(
     if (validSuffixes.has(suffix)) {
       continue;
     }
-    // This is an orphan â€” remove it
+    // This is an orphan â€?remove it
     await ioFs.unlink(path.join(dir, entry)).catch(() => {
       // best-effort
     });

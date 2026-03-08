@@ -43,7 +43,7 @@ export function renderSkills(props: SkillsProps) {
           <div class="card-sub">Bundled, managed, and workspace skills.</div>
         </div>
         <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-          ${props.loading ? "Loadingâ€¦" : "Refresh"}
+          ${props.loading ? "Loadingâ€? : "Refresh"}
         </button>
       </div>
 
@@ -98,7 +98,7 @@ function renderSkill(skill: SkillStatusEntry, props: SkillsProps) {
   const apiKey = props.edits[skill.skillKey] ?? "";
   const message = props.messages[skill.skillKey] ?? null;
   const canInstall = skill.install.length > 0 && skill.missing.bins.length > 0;
-  const showBundledBadge = Boolean(skill.bundled && skill.source !== "openclaw-bundled");
+  const showBundledBadge = Boolean(skill.bundled && skill.source !== "RadioClaw-bundled");
   const missing = computeSkillMissing(skill);
   const reasons = computeSkillReasons(skill);
   return html`
@@ -144,7 +144,7 @@ function renderSkill(skill: SkillStatusEntry, props: SkillsProps) {
                 ?disabled=${busy}
                 @click=${() => props.onInstall(skill.skillKey, skill.name, skill.install[0].id)}
               >
-                ${busy ? "Installingâ€¦" : skill.install[0].label}
+                ${busy ? "Installingâ€? : skill.install[0].label}
               </button>`
               : nothing
           }

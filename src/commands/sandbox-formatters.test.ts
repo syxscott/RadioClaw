@@ -15,7 +15,7 @@ describe("sandbox-formatters", () => {
   describe("formatStatus", () => {
     it.each([
       { running: true, expected: "🟢 running" },
-      { running: false, expected: "⚫ stopped" },
+      { running: false, expected: "�?stopped" },
     ])("formats running=$running", ({ running, expected }) => {
       expect(formatStatus(running)).toBe(expected);
     });
@@ -32,7 +32,7 @@ describe("sandbox-formatters", () => {
 
   describe("formatImageMatch", () => {
     it.each([
-      { imageMatch: true, expected: "✓" },
+      { imageMatch: true, expected: "�? },
       { imageMatch: false, expected: "⚠️  mismatch" },
     ])("formats imageMatch=$imageMatch", ({ imageMatch, expected }) => {
       expect(formatImageMatch(imageMatch)).toBe(expected);

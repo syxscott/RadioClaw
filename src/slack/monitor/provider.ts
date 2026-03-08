@@ -333,7 +333,7 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
                 unresolved.push(entry.input);
                 continue;
               }
-              mapping.push(`${entry.input}â†’${entry.id}${entry.archived ? " (archived)" : ""}`);
+              mapping.push(`${entry.input}â†?{entry.id}${entry.archived ? " (archived)" : ""}`);
               const existing = nextChannels[entry.id] ?? {};
               nextChannels[entry.id] = { ...source, ...existing };
             }
@@ -360,7 +360,7 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
                 const note = (entry as { note?: string }).note
                   ? ` (${(entry as { note?: string }).note})`
                   : "";
-                return `${entry.input}â†’${entry.id}${note}`;
+                return `${entry.input}â†?{entry.id}${note}`;
               },
             },
           );
@@ -421,11 +421,10 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
           publishSlackConnectedStatus(opts.setStatus);
           runtime.log?.("slack socket mode connected");
         } catch (err) {
-          // Auth errors (account_inactive, invalid_auth, etc.) are permanent â€”
-          // retrying will never succeed and blocks the entire gateway.  Fail fast.
+          // Auth errors (account_inactive, invalid_auth, etc.) are permanent â€?          // retrying will never succeed and blocks the entire gateway.  Fail fast.
           if (isNonRecoverableSlackAuthError(err)) {
             runtime.error?.(
-              `slack socket mode failed to start due to non-recoverable auth error â€” skipping channel (${formatUnknownError(err)})`,
+              `slack socket mode failed to start due to non-recoverable auth error â€?skipping channel (${formatUnknownError(err)})`,
             );
             throw err;
           }
@@ -438,7 +437,7 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
           }
           const delayMs = computeBackoff(SLACK_SOCKET_RECONNECT_POLICY, reconnectAttempts);
           runtime.error?.(
-            `slack socket mode failed to start. retry ${reconnectAttempts}/${SLACK_SOCKET_RECONNECT_POLICY.maxAttempts || "âˆž"} in ${Math.round(delayMs / 1000)}s (${formatUnknownError(err)})`,
+            `slack socket mode failed to start. retry ${reconnectAttempts}/${SLACK_SOCKET_RECONNECT_POLICY.maxAttempts || "âˆ?} in ${Math.round(delayMs / 1000)}s (${formatUnknownError(err)})`,
           );
           try {
             await sleepWithAbort(delayMs, opts.abortSignal);
@@ -461,7 +460,7 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
         // Bail immediately on non-recoverable auth errors during reconnect too.
         if (disconnect.error && isNonRecoverableSlackAuthError(disconnect.error)) {
           runtime.error?.(
-            `slack socket mode disconnected due to non-recoverable auth error â€” skipping channel (${formatUnknownError(disconnect.error)})`,
+            `slack socket mode disconnected due to non-recoverable auth error â€?skipping channel (${formatUnknownError(disconnect.error)})`,
           );
           throw disconnect.error instanceof Error
             ? disconnect.error
@@ -480,7 +479,7 @@ export async function monitorSlackProvider(opts: MonitorSlackOpts = {}) {
 
         const delayMs = computeBackoff(SLACK_SOCKET_RECONNECT_POLICY, reconnectAttempts);
         runtime.error?.(
-          `slack socket disconnected (${disconnect.event}). retry ${reconnectAttempts}/${SLACK_SOCKET_RECONNECT_POLICY.maxAttempts || "âˆž"} in ${Math.round(delayMs / 1000)}s${
+          `slack socket disconnected (${disconnect.event}). retry ${reconnectAttempts}/${SLACK_SOCKET_RECONNECT_POLICY.maxAttempts || "âˆ?} in ${Math.round(delayMs / 1000)}s${
             disconnect.error ? ` (${formatUnknownError(disconnect.error)})` : ""
           }`,
         );

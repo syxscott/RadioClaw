@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-openclaw status
-openclaw gateway status
-openclaw logs --follow
-openclaw doctor
-openclaw channels status --probe
+RadioClaw status
+RadioClaw gateway status
+RadioClaw logs --follow
+RadioClaw doctor
+RadioClaw channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-openclaw cron status
-openclaw cron list
-openclaw system heartbeat last
+RadioClaw cron status
+RadioClaw cron list
+RadioClaw system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-openclaw cron status
-openclaw cron list
-openclaw cron runs --id <jobId> --limit 20
-openclaw logs --follow
+RadioClaw cron status
+RadioClaw cron list
+RadioClaw cron runs --id <jobId> --limit 20
+RadioClaw logs --follow
 ```
 
 Good output looks like:
@@ -46,17 +46,17 @@ Good output looks like:
 
 Common signatures:
 
-- `cron: scheduler disabled; jobs will not run automatically` â†’ cron disabled in config/env.
-- `cron: timer tick failed` â†’ scheduler tick crashed; inspect surrounding stack/log context.
-- `reason: not-due` in run output â†’ manual run called without `--force` and job not due yet.
+- `cron: scheduler disabled; jobs will not run automatically` â†?cron disabled in config/env.
+- `cron: timer tick failed` â†?scheduler tick crashed; inspect surrounding stack/log context.
+- `reason: not-due` in run output â†?manual run called without `--force` and job not due yet.
 
 ## Cron fired but no delivery
 
 ```bash
-openclaw cron runs --id <jobId> --limit 20
-openclaw cron list
-openclaw channels status --probe
-openclaw logs --follow
+RadioClaw cron runs --id <jobId> --limit 20
+RadioClaw cron list
+RadioClaw channels status --probe
+RadioClaw logs --follow
 ```
 
 Good output looks like:
@@ -67,17 +67,17 @@ Good output looks like:
 
 Common signatures:
 
-- Run succeeded but delivery mode is `none` â†’ no external message is expected.
-- Delivery target missing/invalid (`channel`/`to`) â†’ run may succeed internally but skip outbound.
-- Channel auth errors (`unauthorized`, `missing_scope`, `Forbidden`) â†’ delivery blocked by channel credentials/permissions.
+- Run succeeded but delivery mode is `none` â†?no external message is expected.
+- Delivery target missing/invalid (`channel`/`to`) â†?run may succeed internally but skip outbound.
+- Channel auth errors (`unauthorized`, `missing_scope`, `Forbidden`) â†?delivery blocked by channel credentials/permissions.
 
 ## Heartbeat suppressed or skipped
 
 ```bash
-openclaw system heartbeat last
-openclaw logs --follow
-openclaw config get agents.defaults.heartbeat
-openclaw channels status --probe
+RadioClaw system heartbeat last
+RadioClaw logs --follow
+RadioClaw config get agents.defaults.heartbeat
+RadioClaw channels status --probe
 ```
 
 Good output looks like:
@@ -87,19 +87,19 @@ Good output looks like:
 
 Common signatures:
 
-- `heartbeat skipped` with `reason=quiet-hours` â†’ outside `activeHours`.
-- `requests-in-flight` â†’ main lane busy; heartbeat deferred.
-- `empty-heartbeat-file` â†’ interval heartbeat skipped because `HEARTBEAT.md` has no actionable content and no tagged cron event is queued.
-- `alerts-disabled` â†’ visibility settings suppress outbound heartbeat messages.
+- `heartbeat skipped` with `reason=quiet-hours` â†?outside `activeHours`.
+- `requests-in-flight` â†?main lane busy; heartbeat deferred.
+- `empty-heartbeat-file` â†?interval heartbeat skipped because `HEARTBEAT.md` has no actionable content and no tagged cron event is queued.
+- `alerts-disabled` â†?visibility settings suppress outbound heartbeat messages.
 
 ## Timezone and activeHours gotchas
 
 ```bash
-openclaw config get agents.defaults.heartbeat.activeHours
-openclaw config get agents.defaults.heartbeat.activeHours.timezone
-openclaw config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-openclaw cron list
-openclaw logs --follow
+RadioClaw config get agents.defaults.heartbeat.activeHours
+RadioClaw config get agents.defaults.heartbeat.activeHours.timezone
+RadioClaw config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+RadioClaw cron list
+RadioClaw logs --follow
 ```
 
 Quick rules:

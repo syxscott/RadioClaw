@@ -31,7 +31,7 @@ export function getTruncatedPreview(text: string): string {
   const lines = allLines.slice(0, PREVIEW_MAX_LINES);
   const preview = lines.join("\n");
   if (preview.length > PREVIEW_MAX_CHARS) {
-    return preview.slice(0, PREVIEW_MAX_CHARS) + "â€¦";
+    return preview.slice(0, PREVIEW_MAX_CHARS) + "â€?;
   }
-  return lines.length < allLines.length ? preview + "â€¦" : preview;
+  return lines.length < allLines.length ? preview + "â€? : preview;
 }

@@ -1,21 +1,21 @@
 {
-  "name": "@openclaw/googlechat",
+  "name": "@RadioClaw/googlechat",
   "version": "2026.3.7",
   "private": true,
-  "description": "OpenClaw Google Chat channel plugin",
+  "description": "RadioClaw Google Chat channel plugin",
   "type": "module",
   "dependencies": {
     "google-auth-library": "^10.6.1"
   },
   "peerDependencies": {
-    "openclaw": ">=2026.3.2"
+    "RadioClaw": ">=2026.3.2"
   },
   "peerDependenciesMeta": {
-    "openclaw": {
+    "RadioClaw": {
       "optional": true
     }
   },
-  "openclaw": {
+  "RadioClaw": {
     "extensions": [
       "./index.ts"
     ],
@@ -34,7 +34,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@openclaw/googlechat",
+      "npmSpec": "@RadioClaw/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }

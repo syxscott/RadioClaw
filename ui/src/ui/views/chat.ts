@@ -137,7 +137,7 @@ function renderFallbackIndicator(status: FallbackIndicatorStatus | null | undefi
     status.attempts.length > 0 ? `Attempts: ${status.attempts.slice(0, 3).join(" | ")}` : null,
   ]
     .filter(Boolean)
-    .join(" â€¢ ");
+    .join(" â€?");
   const message =
     phase === "cleared"
       ? `Fallback cleared: ${status.selected}`
@@ -254,8 +254,8 @@ export function renderChat(props: ChatProps) {
   const composePlaceholder = props.connected
     ? hasAttachments
       ? "Add a message or paste more images..."
-      : "Message (â†© to send, Shift+â†© for line breaks, paste images)"
-    : "Connect to the gateway to start chattingâ€¦";
+      : "Message (â†?to send, Shift+â†?for line breaks, paste images)"
+    : "Connect to the gateway to start chattingâ€?;
 
   const splitRatio = props.splitRatio ?? 0.6;
   const sidebarOpen = Boolean(props.sidebarOpen && props.onCloseSidebar);
@@ -269,7 +269,7 @@ export function renderChat(props: ChatProps) {
       ${
         props.loading
           ? html`
-              <div class="muted">Loading chatâ€¦</div>
+              <div class="muted">Loading chatâ€?/div>
             `
           : nothing
       }
@@ -471,7 +471,7 @@ export function renderChat(props: ChatProps) {
               ?disabled=${!props.connected}
               @click=${props.onSend}
             >
-              ${isBusy ? "Queue" : "Send"}<kbd class="btn-kbd">â†µ</kbd>
+              ${isBusy ? "Queue" : "Send"}<kbd class="btn-kbd">â†?/kbd>
             </button>
           </div>
         </div>
@@ -549,7 +549,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
     const msg = history[i];
     const normalized = normalizeMessage(msg);
     const raw = msg as Record<string, unknown>;
-    const marker = raw.__openclaw as Record<string, unknown> | undefined;
+    const marker = raw.__RadioClaw as Record<string, unknown> | undefined;
     if (marker && marker.kind === "compaction") {
       items.push({
         kind: "divider",
@@ -575,7 +575,7 @@ function buildChatItems(props: ChatProps): Array<ChatItem | MessageGroup> {
   }
   // Interleave stream segments and tool cards in order. Each segment
   // contains text that was streaming before the corresponding tool started.
-  // This ensures correct visual ordering: text â†’ tool â†’ text â†’ tool â†’ ...
+  // This ensures correct visual ordering: text â†?tool â†?text â†?tool â†?...
   const segments = props.streamSegments ?? [];
   const maxLen = Math.max(segments.length, tools.length);
   for (let i = 0; i < maxLen; i++) {

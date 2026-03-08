@@ -1,14 +1,14 @@
-import OpenClawDiscovery
+import RadioClawDiscovery
 import SwiftUI
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized)
 @MainActor
 struct MasterDiscoveryMenuSmokeTests {
     @Test func inlineListBuildsBodyWhenEmpty() {
         let discovery = GatewayDiscoveryModel(localDisplayName: InstanceIdentity.displayName)
-        discovery.statusText = "Searchingâ€¦"
+        discovery.statusText = "Searchingâ€?
         discovery.gateways = []
 
         let view = GatewayDiscoveryInlineList(

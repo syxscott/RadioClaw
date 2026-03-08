@@ -1,6 +1,6 @@
 import type { AgentSession } from "@mariozechner/pi-coding-agent";
 import type { ReasoningLevel, VerboseLevel } from "../auto-reply/thinking.js";
-import type { OpenClawConfig } from "../config/types.openclaw.js";
+import type { RadioClawConfig } from "../config/types.RadioClaw.js";
 import type { HookRunner } from "../plugins/hooks.js";
 import type { BlockReplyChunking } from "./pi-embedded-block-chunker.js";
 import type { BlockReplyPayload } from "./pi-embedded-payloads.js";
@@ -29,11 +29,11 @@ export type SubscribeEmbeddedPiSessionParams = {
   onAssistantMessageStart?: () => void | Promise<void>;
   onAgentEvent?: (evt: { stream: string; data: Record<string, unknown> }) => void | Promise<void>;
   enforceFinalTag?: boolean;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   sessionKey?: string;
-  /** Ephemeral session UUID â€” regenerated on /new and /reset. */
+  /** Ephemeral session UUID â€?regenerated on /new and /reset. */
   sessionId?: string;
-  /** Agent identity for hook context â€” resolved from session config in attempt.ts. */
+  /** Agent identity for hook context â€?resolved from session config in attempt.ts. */
   agentId?: string;
 };
 

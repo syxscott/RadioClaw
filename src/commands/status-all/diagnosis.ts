@@ -66,7 +66,7 @@ export async function appendStatusAllDiagnosis(params: {
   const { lines, muted, ok, warn, fail } = params;
 
   const emitCheck = (label: string, status: "ok" | "warn" | "fail") => {
-    const icon = status === "ok" ? ok("âœ“") : status === "warn" ? warn("!") : fail("âœ—");
+    const icon = status === "ok" ? ok("âœ?) : status === "warn" ? warn("!") : fail("âœ?);
     const colored = status === "ok" ? ok(label) : status === "warn" ? warn(label) : fail(label);
     lines.push(`${icon} ${colored}`);
   };
@@ -92,7 +92,7 @@ export async function appendStatusAllDiagnosis(params: {
       lines.push(`  ${formatConfigIssueLine(issue, "-")}`);
     }
     if (uniqueIssues.length > 12) {
-      lines.push(`  ${muted(`â€¦ +${uniqueIssues.length - 12} more`)}`);
+      lines.push(`  ${muted(`â€?+${uniqueIssues.length - 12} more`)}`);
     }
   } else {
     emitCheck("Config: read failed", "warn");
@@ -145,7 +145,7 @@ export async function appendStatusAllDiagnosis(params: {
     }
     if (params.tailscale.ips.length > 0) {
       lines.push(
-        `  ${muted(`ips: ${params.tailscale.ips.slice(0, 3).join(", ")}${params.tailscale.ips.length > 3 ? "â€¦" : ""}`)}`,
+        `  ${muted(`ips: ${params.tailscale.ips.slice(0, 3).join(", ")}${params.tailscale.ips.length > 3 ? "â€? : ""}`)}`,
       );
     }
     if (params.tailscaleHttpsUrl) {
@@ -164,7 +164,7 @@ export async function appendStatusAllDiagnosis(params: {
     );
   }
 
-  params.progress.setLabel("Reading logsâ€¦");
+  params.progress.setLabel("Reading logsâ€?);
   const logPaths = (() => {
     try {
       return resolveGatewayLogPaths(process.env);
@@ -173,7 +173,7 @@ export async function appendStatusAllDiagnosis(params: {
     }
   })();
   if (logPaths) {
-    params.progress.setLabel("Reading logsâ€¦");
+    params.progress.setLabel("Reading logsâ€?);
     const [stderrTail, stdoutTail] = await Promise.all([
       readFileTailLines(logPaths.stderrPath, 40).catch(() => []),
       readFileTailLines(logPaths.stdoutPath, 40).catch(() => []),
@@ -205,7 +205,7 @@ export async function appendStatusAllDiagnosis(params: {
       );
     }
     if (params.channelIssues.length > 12) {
-      lines.push(`  ${muted(`â€¦ +${params.channelIssues.length - 12} more`)}`);
+      lines.push(`  ${muted(`â€?+${params.channelIssues.length - 12} more`)}`);
     }
   } else {
     emitCheck(
@@ -243,6 +243,6 @@ export async function appendStatusAllDiagnosis(params: {
 
   lines.push("");
   lines.push(muted("Pasteable debug report. Auth tokens redacted."));
-  lines.push("Troubleshooting: https://docs.openclaw.ai/troubleshooting");
+  lines.push("Troubleshooting: https://docs.RadioClaw.ai/troubleshooting");
   lines.push("");
 }

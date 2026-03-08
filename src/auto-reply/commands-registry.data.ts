@@ -245,14 +245,14 @@ function buildChatCommands(): ChatCommandDefinition[] {
         arg: "action",
         title:
           "TTS Actions:\n" +
-          "â€¢ On â€“ Enable TTS for responses\n" +
-          "â€¢ Off â€“ Disable TTS\n" +
-          "â€¢ Status â€“ Show current settings\n" +
-          "â€¢ Provider â€“ Set voice provider (edge, elevenlabs, openai)\n" +
-          "â€¢ Limit â€“ Set max characters for TTS\n" +
-          "â€¢ Summary â€“ Toggle AI summary for long texts\n" +
-          "â€¢ Audio â€“ Generate TTS from custom text\n" +
-          "â€¢ Help â€“ Show usage guide",
+          "â€?On â€?Enable TTS for responses\n" +
+          "â€?Off â€?Disable TTS\n" +
+          "â€?Status â€?Show current settings\n" +
+          "â€?Provider â€?Set voice provider (edge, elevenlabs, openai)\n" +
+          "â€?Limit â€?Set max characters for TTS\n" +
+          "â€?Summary â€?Toggle AI summary for long texts\n" +
+          "â€?Audio â€?Generate TTS from custom text\n" +
+          "â€?Help â€?Show usage guide",
       },
     }),
     defineChatCommand({
@@ -498,7 +498,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart OpenClaw.",
+      description: "Restart RadioClaw.",
       textAlias: "/restart",
       category: "tools",
     }),

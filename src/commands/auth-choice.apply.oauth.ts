@@ -43,7 +43,7 @@ export async function applyAuthChoiceOAuth(
       "Chutes OAuth",
     );
 
-    const spin = params.prompter.progress("Starting OAuth flowâ€¦");
+    const spin = params.prompter.progress("Starting OAuth flowâ€?);
     try {
       const { onAuth, onPrompt } = createVpsAwareOAuthHandlers({
         isRemote,
@@ -51,7 +51,7 @@ export async function applyAuthChoiceOAuth(
         runtime: params.runtime,
         spin,
         openUrl,
-        localBrowserMessage: "Complete sign-in in browserâ€¦",
+        localBrowserMessage: "Complete sign-in in browserâ€?,
       });
 
       const creds = await loginChutes({

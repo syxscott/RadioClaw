@@ -29,7 +29,7 @@ function resolveDefaultStoreBase(config: VoiceCallConfig, storePath?: string): s
   if (rawOverride) {
     return resolveUserPath(rawOverride);
   }
-  const preferred = path.join(os.homedir(), ".openclaw", "voice-calls");
+  const preferred = path.join(os.homedir(), ".RadioClaw", "voice-calls");
   const candidates = [preferred].map((dir) => resolveUserPath(dir));
   const existing =
     candidates.find((dir) => {
@@ -101,7 +101,7 @@ export class CallManager {
         const elapsed = Date.now() - call.answeredAt;
         const maxDurationMs = this.config.maxDurationSeconds * 1000;
         if (elapsed >= maxDurationMs) {
-          // Already expired â€” remove instead of keeping
+          // Already expired â€?remove instead of keeping
           verified.delete(callId);
           if (call.providerCallId) {
             this.providerCallIdMap.delete(call.providerCallId);
@@ -146,7 +146,7 @@ export class CallManager {
     const verifyTasks: Array<{ callId: CallId; call: CallRecord; promise: Promise<void> }> = [];
 
     for (const [callId, call] of candidates) {
-      // Skip calls without a provider ID â€” can't verify
+      // Skip calls without a provider ID â€?can't verify
       if (!call.providerCallId) {
         console.log(`[voice-call] Skipping restored call ${callId} (no providerCallId)`);
         continue;
@@ -180,7 +180,7 @@ export class CallManager {
             }
           })
           .catch(() => {
-            // Verification failed entirely â€” keep the call, rely on timer
+            // Verification failed entirely â€?keep the call, rely on timer
             console.log(
               `[voice-call] Keeping restored call ${callId} (verification failed, relying on timer)`,
             );

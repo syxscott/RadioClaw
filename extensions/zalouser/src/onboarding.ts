@@ -1,9 +1,9 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  OpenClawConfig,
+  RadioClawConfig,
   WizardPrompter,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   DEFAULT_ACCOUNT_ID,
   formatResolvedUnresolvedNote,
@@ -12,7 +12,7 @@ import {
   promptChannelAccessConfig,
   resolveAccountIdForConfigure,
   setTopLevelChannelDmPolicyWithAllowFrom,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   listZalouserAccountIds,
   resolveDefaultZalouserAccountId,
@@ -31,11 +31,11 @@ import {
 const channel = "zalouser" as const;
 
 function setZalouserAccountScopedConfig(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   accountId: string,
   defaultPatch: Record<string, unknown>,
   accountPatch: Record<string, unknown> = defaultPatch,
-): OpenClawConfig {
+): RadioClawConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -47,7 +47,7 @@ function setZalouserAccountScopedConfig(
           ...defaultPatch,
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
   }
   return {
     ...cfg,
@@ -66,18 +66,18 @@ function setZalouserAccountScopedConfig(
         },
       },
     },
-  } as OpenClawConfig;
+  } as RadioClawConfig;
 }
 
 function setZalouserDmPolicy(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
-): OpenClawConfig {
+): RadioClawConfig {
   return setTopLevelChannelDmPolicyWithAllowFrom({
     cfg,
     channel: "zalouser",
     dmPolicy,
-  }) as OpenClawConfig;
+  }) as RadioClawConfig;
 }
 
 async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
@@ -87,17 +87,17 @@ async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
       "",
       "This plugin uses zca-js directly (no external CLI dependency).",
       "",
-      "Docs: https://docs.openclaw.ai/channels/zalouser",
+      "Docs: https://docs.RadioClaw.ai/channels/zalouser",
     ].join("\n"),
     "Zalo Personal Setup",
   );
 }
 
 async function promptZalouserAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<OpenClawConfig> {
+}): Promise<RadioClawConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZalouserAccountSync({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -149,20 +149,20 @@ async function promptZalouserAllowFrom(params: {
 }
 
 function setZalouserGroupPolicy(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): OpenClawConfig {
+): RadioClawConfig {
   return setZalouserAccountScopedConfig(cfg, accountId, {
     groupPolicy,
   });
 }
 
 function setZalouserGroupAllowlist(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   accountId: string,
   groupKeys: string[],
-): OpenClawConfig {
+): RadioClawConfig {
   const groups = Object.fromEntries(groupKeys.map((key) => [key, { allow: true }]));
   return setZalouserAccountScopedConfig(cfg, accountId, {
     groups,

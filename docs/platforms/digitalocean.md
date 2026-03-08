@@ -1,16 +1,16 @@
 ---
-summary: "OpenClaw on DigitalOcean (simple paid VPS option)"
+summary: "RadioClaw on DigitalOcean (simple paid VPS option)"
 read_when:
-  - Setting up OpenClaw on DigitalOcean
-  - Looking for cheap VPS hosting for OpenClaw
+  - Setting up RadioClaw on DigitalOcean
+  - Looking for cheap VPS hosting for RadioClaw
 title: "DigitalOcean"
 ---
 
-# OpenClaw on DigitalOcean
+# RadioClaw on DigitalOcean
 
 ## Goal
 
-Run a persistent OpenClaw Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
+Run a persistent RadioClaw Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
 
 If you want a $0/month option and donâ€™t mind ARM + provider-specific setup, see the [Oracle Cloud guide](/platforms/oracle).
 
@@ -19,7 +19,7 @@ If you want a $0/month option and donâ€™t mind ARM + provider-specific setup, se
 | Provider     | Plan            | Specs                  | Price/mo    | Notes                                 |
 | ------------ | --------------- | ---------------------- | ----------- | ------------------------------------- |
 | Oracle Cloud | Always Free ARM | up to 4 OCPU, 24GB RAM | $0          | ARM, limited capacity / signup quirks |
-| Hetzner      | CX22            | 2 vCPU, 4GB RAM        | â‚¬3.79 (~$4) | Cheapest paid option                  |
+| Hetzner      | CX22            | 2 vCPU, 4GB RAM        | â‚?.79 (~$4) | Cheapest paid option                  |
 | DigitalOcean | Basic           | 1 vCPU, 1GB RAM        | $6          | Easy UI, good docs                    |
 | Vultr        | Cloud Compute   | 1 vCPU, 1GB RAM        | $6          | Many locations                        |
 | Linode       | Nanode          | 1 vCPU, 1GB RAM        | $5          | Now part of Akamai                    |
@@ -45,11 +45,11 @@ Use a clean base image (Ubuntu 24.04 LTS). Avoid third-party Marketplace 1-click
 </Warning>
 
 1. Log into [DigitalOcean](https://cloud.digitalocean.com/)
-2. Click **Create â†’ Droplets**
+2. Click **Create â†?Droplets**
 3. Choose:
    - **Region:** Closest to you (or your users)
    - **Image:** Ubuntu 24.04 LTS
-   - **Size:** Basic â†’ Regular â†’ **$6/mo** (1 vCPU, 1GB RAM, 25GB SSD)
+   - **Size:** Basic â†?Regular â†?**$6/mo** (1 vCPU, 1GB RAM, 25GB SSD)
    - **Authentication:** SSH key (recommended) or password
 4. Click **Create Droplet**
 5. Note the IP address
@@ -60,7 +60,7 @@ Use a clean base image (Ubuntu 24.04 LTS). Avoid third-party Marketplace 1-click
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) Install OpenClaw
+## 3) Install RadioClaw
 
 ```bash
 # Update system
@@ -70,17 +70,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
-# Install OpenClaw
-curl -fsSL https://openclaw.ai/install.sh | bash
+# Install RadioClaw
+curl -fsSL https://RadioClaw.ai/install.sh | bash
 
 # Verify
-openclaw --version
+RadioClaw --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-openclaw onboard --install-daemon
+RadioClaw onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -94,13 +94,13 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-openclaw status
+RadioClaw status
 
 # Check service
-systemctl --user status openclaw-gateway.service
+systemctl --user status RadioClaw-gateway.service
 
 # View logs
-journalctl --user -u openclaw-gateway.service -f
+journalctl --user -u RadioClaw-gateway.service -f
 ```
 
 ## 6) Access the Dashboard
@@ -124,8 +124,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-openclaw config set gateway.tailscale.mode serve
-openclaw gateway restart
+RadioClaw config set gateway.tailscale.mode serve
+RadioClaw gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -138,8 +138,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-openclaw config set gateway.bind tailnet
-openclaw gateway restart
+RadioClaw config set gateway.bind tailnet
+RadioClaw gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -149,14 +149,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-openclaw pairing list telegram
-openclaw pairing approve telegram <CODE>
+RadioClaw pairing list telegram
+RadioClaw pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-openclaw channels login whatsapp
+RadioClaw channels login whatsapp
 # Scan QR code
 ```
 
@@ -198,20 +198,20 @@ htop
 
 All state lives in:
 
-- `~/.openclaw/` â€” config, credentials, session data
-- `~/.openclaw/workspace/` â€” workspace (SOUL.md, memory, etc.)
+- `~/.RadioClaw/` â€?config, credentials, session data
+- `~/.RadioClaw/workspace/` â€?workspace (SOUL.md, memory, etc.)
 
 These survive reboots. Back them up periodically:
 
 ```bash
-tar -czvf openclaw-backup.tar.gz ~/.openclaw ~/.openclaw/workspace
+tar -czvf RadioClaw-backup.tar.gz ~/.RadioClaw ~/.RadioClaw/workspace
 ```
 
 ---
 
 ## Oracle Cloud Free Alternative
 
-Oracle Cloud offers **Always Free** ARM instances that are significantly more powerful than any paid option here â€” for $0/month.
+Oracle Cloud offers **Always Free** ARM instances that are significantly more powerful than any paid option here â€?for $0/month.
 
 | What you get      | Specs                  |
 | ----------------- | ---------------------- |
@@ -223,7 +223,7 @@ Oracle Cloud offers **Always Free** ARM instances that are significantly more po
 **Caveats:**
 
 - Signup can be finicky (retry if it fails)
-- ARM architecture â€” most things work, but some binaries need ARM builds
+- ARM architecture â€?most things work, but some binaries need ARM builds
 
 For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips and troubleshooting the enrollment process, see this [community guide](https://gist.github.com/rssnyder/51e3cfedd730e7dd5f4a816143b25dbd).
 
@@ -234,9 +234,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-openclaw gateway status
-openclaw doctor --non-interactive
-journalctl -u openclaw --no-pager -n 50
+RadioClaw gateway status
+RadioClaw doctor --non-interactive
+journalctl -u RadioClaw --no-pager -n 50
 ```
 
 ### Port already in use
@@ -260,7 +260,7 @@ free -h
 
 ## See Also
 
-- [Hetzner guide](/install/hetzner) â€” cheaper, more powerful
-- [Docker install](/install/docker) â€” containerized setup
-- [Tailscale](/gateway/tailscale) â€” secure remote access
-- [Configuration](/gateway/configuration) â€” full config reference
+- [Hetzner guide](/install/hetzner) â€?cheaper, more powerful
+- [Docker install](/install/docker) â€?containerized setup
+- [Tailscale](/gateway/tailscale) â€?secure remote access
+- [Configuration](/gateway/configuration) â€?full config reference

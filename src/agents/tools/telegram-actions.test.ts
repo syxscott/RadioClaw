@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { captureEnv } from "../../test-utils/env.js";
 import { handleTelegramAction, readTelegramButtons } from "./telegram-actions.js";
 
@@ -37,16 +37,16 @@ describe("handleTelegramAction", () => {
     action: "react",
     chatId: "123",
     messageId: "456",
-    emoji: "âœ…",
+    emoji: "âœ?,
   } as const;
 
-  function reactionConfig(reactionLevel: "minimal" | "extensive" | "off" | "ack"): OpenClawConfig {
+  function reactionConfig(reactionLevel: "minimal" | "extensive" | "off" | "ack"): RadioClawConfig {
     return {
       channels: { telegram: { botToken: "tok", reactionLevel } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
   }
 
-  function telegramConfig(overrides?: Record<string, unknown>): OpenClawConfig {
+  function telegramConfig(overrides?: Record<string, unknown>): RadioClawConfig {
     return {
       channels: {
         telegram: {
@@ -54,7 +54,7 @@ describe("handleTelegramAction", () => {
           ...overrides,
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
   }
 
   async function sendInlineButtonsMessage(params: {
@@ -78,7 +78,7 @@ describe("handleTelegramAction", () => {
     expect(reactMessageTelegram).toHaveBeenCalledWith(
       "123",
       456,
-      "âœ…",
+      "âœ?,
       expect.objectContaining({ token: "tok", remove: false }),
     );
   }
@@ -104,7 +104,7 @@ describe("handleTelegramAction", () => {
   it("surfaces non-fatal reaction warnings", async () => {
     reactMessageTelegram.mockResolvedValueOnce({
       ok: false,
-      warning: "Reaction unavailable: âœ…",
+      warning: "Reaction unavailable: âœ?,
     } as unknown as Awaited<ReturnType<typeof reactMessageTelegram>>);
     const result = await handleTelegramAction(defaultReactionAction, reactionConfig("minimal"));
     const textPayload = result.content.find((item) => item.type === "text");
@@ -116,8 +116,8 @@ describe("handleTelegramAction", () => {
     };
     expect(parsed).toMatchObject({
       ok: false,
-      warning: "Reaction unavailable: âœ…",
-      added: "âœ…",
+      warning: "Reaction unavailable: âœ?,
+      added: "âœ?,
     });
   });
 
@@ -131,14 +131,14 @@ describe("handleTelegramAction", () => {
         action: "react",
         chatId: "123",
         message_id: "456",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       reactionConfig("minimal"),
     );
     expect(reactMessageTelegram).toHaveBeenCalledWith(
       "123",
       456,
-      "âœ…",
+      "âœ?,
       expect.objectContaining({ token: "tok", remove: false }),
     );
   });
@@ -146,12 +146,12 @@ describe("handleTelegramAction", () => {
   it("soft-fails when messageId is missing", async () => {
     const cfg = {
       channels: { telegram: { botToken: "tok", reactionLevel: "minimal" } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     const result = await handleTelegramAction(
       {
         action: "react",
         chatId: "123",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       cfg,
     );
@@ -181,7 +181,7 @@ describe("handleTelegramAction", () => {
   });
 
   it("rejects sticker actions when disabled by default", async () => {
-    const cfg = { channels: { telegram: { botToken: "tok" } } } as OpenClawConfig;
+    const cfg = { channels: { telegram: { botToken: "tok" } } } as RadioClawConfig;
     await expect(
       handleTelegramAction(
         {
@@ -198,7 +198,7 @@ describe("handleTelegramAction", () => {
   it("sends stickers when enabled", async () => {
     const cfg = {
       channels: { telegram: { botToken: "tok", actions: { sticker: true } } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await handleTelegramAction(
       {
         action: "sendSticker",
@@ -221,7 +221,7 @@ describe("handleTelegramAction", () => {
         action: "react",
         chatId: "123",
         messageId: "456",
-        emoji: "âœ…",
+        emoji: "âœ?,
         remove: true,
       },
       cfg,
@@ -229,7 +229,7 @@ describe("handleTelegramAction", () => {
     expect(reactMessageTelegram).toHaveBeenCalledWith(
       "123",
       456,
-      "âœ…",
+      "âœ?,
       expect.objectContaining({ token: "tok", remove: true }),
     );
   });
@@ -242,7 +242,7 @@ describe("handleTelegramAction", () => {
           action: "react",
           chatId: "123",
           messageId: "456",
-          emoji: "âœ…",
+          emoji: "âœ?,
         },
         reactionConfig(level),
       );
@@ -262,13 +262,13 @@ describe("handleTelegramAction", () => {
           actions: { reactions: false },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     const result = await handleTelegramAction(
       {
         action: "react",
         chatId: "123",
         messageId: "456",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       cfg,
     );
@@ -448,7 +448,7 @@ describe("handleTelegramAction", () => {
       channels: {
         telegram: { botToken: "tok", actions: { sendMessage: false } },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await expect(
       handleTelegramAction(
         {
@@ -466,7 +466,7 @@ describe("handleTelegramAction", () => {
       channels: {
         telegram: { botToken: "tok", actions: { poll: false } },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await expect(
       handleTelegramAction(
         {
@@ -483,7 +483,7 @@ describe("handleTelegramAction", () => {
   it("deletes a message", async () => {
     const cfg = {
       channels: { telegram: { botToken: "tok" } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await handleTelegramAction(
       {
         action: "deleteMessage",
@@ -504,7 +504,7 @@ describe("handleTelegramAction", () => {
       channels: {
         telegram: { botToken: "tok", actions: { deleteMessage: false } },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await expect(
       handleTelegramAction(
         {
@@ -519,7 +519,7 @@ describe("handleTelegramAction", () => {
 
   it("throws on missing bot token for sendMessage", async () => {
     delete process.env.TELEGRAM_BOT_TOKEN;
-    const cfg = {} as OpenClawConfig;
+    const cfg = {} as RadioClawConfig;
     await expect(
       handleTelegramAction(
         {
@@ -535,7 +535,7 @@ describe("handleTelegramAction", () => {
   it("allows inline buttons by default (allowlist)", async () => {
     const cfg = {
       channels: { telegram: { botToken: "tok" } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await handleTelegramAction(
       {
         action: "sendMessage",
@@ -688,7 +688,7 @@ describe("handleTelegramAction per-account gating", () => {
     >;
     topLevelBotToken?: string;
     topLevelActions?: { reactions?: boolean };
-  }): OpenClawConfig {
+  }): RadioClawConfig {
     return {
       channels: {
         telegram: {
@@ -697,10 +697,10 @@ describe("handleTelegramAction per-account gating", () => {
           accounts: params.accounts,
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
   }
 
-  async function expectAccountStickerSend(cfg: OpenClawConfig, accountId = "media") {
+  async function expectAccountStickerSend(cfg: RadioClawConfig, accountId = "media") {
     await handleTelegramAction(
       { action: "sendSticker", to: "123", fileId: "sticker-id", accountId },
       cfg,
@@ -730,7 +730,7 @@ describe("handleTelegramAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await expect(
       handleTelegramAction(

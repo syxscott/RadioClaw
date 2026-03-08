@@ -22,10 +22,10 @@ actor PortGuardian {
     }
 
     private var records: [Record] = []
-    private let logger = Logger(subsystem: "ai.openclaw", category: "portguard")
+    private let logger = Logger(subsystem: "ai.RadioClaw", category: "portguard")
     private nonisolated static let appSupportDir: URL = {
         let base = FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return base.appendingPathComponent("OpenClaw", isDirectory: true)
+        return base.appendingPathComponent("RadioClaw", isDirectory: true)
     }()
 
     private nonisolated static var recordPath: URL {
@@ -50,7 +50,7 @@ actor PortGuardian {
                 if self.isExpected(listener, port: port, mode: mode) {
                     let message = """
                     port \(port) already served by expected \(listener.command)
-                    (pid \(listener.pid)) â€” keeping
+                    (pid \(listener.pid)) â€?keeping
                     """
                     self.logger.info("\(message, privacy: .public)")
                     continue
@@ -267,7 +267,7 @@ actor PortGuardian {
     {
         let expectedDesc: String
         let okPredicate: (Listener) -> Bool
-        let expectedCommands = ["node", "openclaw", "tsx", "pnpm", "bun"]
+        let expectedCommands = ["node", "RadioClaw", "tsx", "pnpm", "bun"]
 
         switch mode {
         case .remote:
@@ -361,10 +361,10 @@ actor PortGuardian {
             if port == GatewayEnvironment.gatewayPort() { return cmd.contains("ssh") }
             return false
         case .local:
-            // The gateway daemon may listen as `openclaw` or as its runtime (`node`, `bun`, etc).
+            // The gateway daemon may listen as `RadioClaw` or as its runtime (`node`, `bun`, etc).
             if full.contains("gateway-daemon") { return true }
             // If args are unavailable, treat a CLI listener as expected.
-            if cmd.contains("openclaw"), full == cmd { return true }
+            if cmd.contains("RadioClaw"), full == cmd { return true }
             return false
         case .unconfigured:
             return false

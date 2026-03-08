@@ -1,5 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { SsrFBlockedError } from "../../infra/net/ssrf.js";
 import { logDebug } from "../../logger.js";
 import { wrapExternalContent, wrapWebContent } from "../../security/external-content.js";
@@ -62,7 +62,7 @@ const WebFetchSchema = Type.Object({
   ),
 });
 
-type WebFetchConfig = NonNullable<OpenClawConfig["tools"]>["web"] extends infer Web
+type WebFetchConfig = NonNullable<RadioClawConfig["tools"]>["web"] extends infer Web
   ? Web extends { fetch?: infer Fetch }
     ? Fetch
     : undefined
@@ -79,7 +79,7 @@ type FirecrawlFetchConfig =
     }
   | undefined;
 
-function resolveFetchConfig(cfg?: OpenClawConfig): WebFetchConfig {
+function resolveFetchConfig(cfg?: RadioClawConfig): WebFetchConfig {
   const fetch = cfg?.tools?.web?.fetch;
   if (!fetch || typeof fetch !== "object") {
     return undefined;
@@ -539,7 +539,7 @@ async function runWebFetch(params: WebFetchRuntimeParams): Promise<Record<string
     finalUrl = result.finalUrl;
     release = result.release;
 
-    // Cloudflare Markdown for Agents â€” log token budget hint when present
+    // Cloudflare Markdown for Agents â€?log token budget hint when present
     const markdownTokens = res.headers.get("x-markdown-tokens");
     if (markdownTokens) {
       logDebug(
@@ -710,7 +710,7 @@ function resolveFirecrawlEndpoint(baseUrl: string): string {
 }
 
 export function createWebFetchTool(options?: {
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   sandboxed?: boolean;
 }): AnyAgentTool | null {
   const fetch = resolveFetchConfig(options?.config);
@@ -736,7 +736,7 @@ export function createWebFetchTool(options?: {
     label: "Web Fetch",
     name: "web_fetch",
     description:
-      "Fetch and extract readable content from a URL (HTML â†’ markdown/text). Use for lightweight page access without browser automation.",
+      "Fetch and extract readable content from a URL (HTML â†?markdown/text). Use for lightweight page access without browser automation.",
     parameters: WebFetchSchema,
     execute: async (_toolCallId, args) => {
       const params = args as Record<string, unknown>;

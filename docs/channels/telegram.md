@@ -47,16 +47,16 @@ Status: production-ready for bot DMs + groups via grammY. Long polling is the de
 ```
 
     Env fallback: `TELEGRAM_BOT_TOKEN=...` (default account only).
-    Telegram does **not** use `openclaw channels login telegram`; configure token in config/env, then start gateway.
+    Telegram does **not** use `RadioClaw channels login telegram`; configure token in config/env, then start gateway.
 
   </Step>
 
   <Step title="Start gateway and approve first DM">
 
 ```bash
-openclaw gateway
-openclaw pairing list telegram
-openclaw pairing approve telegram <CODE>
+RadioClaw gateway
+RadioClaw pairing list telegram
+RadioClaw pairing approve telegram <CODE>
 ```
 
     Pairing codes expire after 1 hour.
@@ -116,8 +116,8 @@ Token resolution order is account-aware. In practice, config values win over env
     `channels.telegram.allowFrom` accepts numeric Telegram user IDs. `telegram:` / `tg:` prefixes are accepted and normalized.
     `dmPolicy: "allowlist"` with empty `allowFrom` blocks all DMs and is rejected by config validation.
     The onboarding wizard accepts `@username` input and resolves it to numeric IDs.
-    If you upgraded and your config contains `@username` allowlist entries, run `openclaw doctor --fix` to resolve them (best-effort; requires a Telegram bot token).
-    If you previously relied on pairing-store allowlist files, `openclaw doctor --fix` can recover entries into `channels.telegram.allowFrom` in allowlist flows (for example when `dmPolicy: "allowlist"` has no explicit IDs yet).
+    If you upgraded and your config contains `@username` allowlist entries, run `RadioClaw doctor --fix` to resolve them (best-effort; requires a Telegram bot token).
+    If you previously relied on pairing-store allowlist files, `RadioClaw doctor --fix` can recover entries into `channels.telegram.allowFrom` in allowlist flows (for example when `dmPolicy: "allowlist"` has no explicit IDs yet).
 
     For one-owner bots, prefer `dmPolicy: "allowlist"` with explicit numeric `allowFrom` IDs to keep access policy durable in config (instead of depending on previous pairing approvals).
 
@@ -126,7 +126,7 @@ Token resolution order is account-aware. In practice, config values win over env
     Safer (no third-party bot):
 
     1. DM your bot.
-    2. Run `openclaw logs --follow`.
+    2. Run `RadioClaw logs --follow`.
     3. Read `from.id`.
 
     Official Bot API method:
@@ -213,7 +213,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     Getting the group chat ID:
 
     - forward a group message to `@userinfobot` / `@getidsbot`
-    - or read `chat.id` from `openclaw logs --follow`
+    - or read `chat.id` from `RadioClaw logs --follow`
     - or inspect Bot API `getUpdates`
 
   </Tab>
@@ -225,7 +225,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 - Routing is deterministic: Telegram inbound replies back to Telegram (the model does not pick channels).
 - Inbound messages normalize into the shared channel envelope with reply metadata and media placeholders.
 - Group sessions are isolated by group ID. Forum topics append `:topic:<threadId>` to keep topics isolated.
-- DM messages can carry `message_thread_id`; OpenClaw routes them with thread-aware session keys and preserves thread ID for replies.
+- DM messages can carry `message_thread_id`; RadioClaw routes them with thread-aware session keys and preserves thread ID for replies.
 - Long polling uses grammY runner with per-chat/per-thread sequencing. Overall runner sink concurrency uses `agents.defaults.maxConcurrent`.
 - Telegram Bot API has no read-receipt support (`sendReadReceipts` does not apply).
 
@@ -233,7 +233,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
 <AccordionGroup>
   <Accordion title="Live stream preview (native drafts + message edits)">
-    OpenClaw can stream partial replies in real time:
+    RadioClaw can stream partial replies in real time:
 
     - direct chats: Telegram native draft streaming via `sendMessageDraft`
     - groups/topics: preview message + `editMessageText`
@@ -248,14 +248,14 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     For text-only replies:
 
-    - DM: OpenClaw updates the draft in place (no extra preview message)
-    - group/topic: OpenClaw keeps the same preview message and performs a final edit in place (no second message)
+    - DM: RadioClaw updates the draft in place (no extra preview message)
+    - group/topic: RadioClaw keeps the same preview message and performs a final edit in place (no second message)
 
-    For complex replies (for example media payloads), OpenClaw falls back to normal final delivery and then cleans up the preview message.
+    For complex replies (for example media payloads), RadioClaw falls back to normal final delivery and then cleans up the preview message.
 
-    Preview streaming is separate from block streaming. When block streaming is explicitly enabled for Telegram, OpenClaw skips the preview stream to avoid double-streaming.
+    Preview streaming is separate from block streaming. When block streaming is explicitly enabled for Telegram, RadioClaw skips the preview stream to avoid double-streaming.
 
-    If native draft transport is unavailable/rejected, OpenClaw automatically falls back to `sendMessage` + `editMessageText`.
+    If native draft transport is unavailable/rejected, RadioClaw automatically falls back to `sendMessage` + `editMessageText`.
 
     Telegram-only reasoning stream:
 
@@ -269,7 +269,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     - Markdown-ish text is rendered to Telegram-safe HTML.
     - Raw model HTML is escaped to reduce Telegram parse failures.
-    - If Telegram rejects parsed HTML, OpenClaw retries as plain text.
+    - If Telegram rejects parsed HTML, RadioClaw retries as plain text.
 
     Link previews are enabled by default and can be disabled with `channels.telegram.linkPreview: false`.
 
@@ -458,9 +458,9 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
           groups: {
             "-1001234567890": {
               topics: {
-                "1": { agentId: "main" },      // General topic ‚Üí main agent
-                "3": { agentId: "zu" },        // Dev topic ‚Üí zu agent
-                "5": { agentId: "coder" }      // Code review ‚Üí coder agent
+                "1": { agentId: "main" },      // General topic ‚Ü?main agent
+                "3": { agentId: "zu" },        // Dev topic ‚Ü?zu agent
+                "5": { agentId: "coder" }      // Code review ‚Ü?coder agent
               }
             }
           }
@@ -489,7 +489,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
                 agent: "codex",
                 backend: "acpx",
                 mode: "persistent",
-                cwd: "/workspace/openclaw",
+                cwd: "/workspace/RadioClaw",
               },
             },
           },
@@ -528,7 +528,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     - `/acp spawn <agent> --thread here|auto` can bind the current Telegram topic to a new ACP session.
     - Follow-up topic messages route to the bound ACP session directly (no `/acp steer` required).
-    - OpenClaw pins the spawn confirmation message in-topic after a successful bind.
+    - RadioClaw pins the spawn confirmation message in-topic after a successful bind.
     - Requires `channels.telegram.threadBindings.spawnAcpSessions=true`.
 
     Template context includes:
@@ -598,7 +598,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
 
     Sticker cache file:
 
-    - `~/.openclaw/telegram/sticker-cache.json`
+    - `~/.RadioClaw/telegram/sticker-cache.json`
 
     Stickers are described once (when possible) and cached to reduce repeated vision calls.
 
@@ -643,7 +643,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
   <Accordion title="Reaction notifications">
     Telegram reactions arrive as `message_reaction` updates (separate from message payloads).
 
-    When enabled, OpenClaw enqueues system events like:
+    When enabled, RadioClaw enqueues system events like:
 
     - `Telegram reaction added: üëç by Alice (@alice) on msg 42`
 
@@ -665,7 +665,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
   </Accordion>
 
   <Accordion title="Ack reactions">
-    `ackReaction` sends an acknowledgement emoji while OpenClaw is processing an inbound message.
+    `ackReaction` sends an acknowledgement emoji while RadioClaw is processing an inbound message.
 
     Resolution order:
 
@@ -735,16 +735,16 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     CLI send target can be numeric chat ID or username:
 
 ```bash
-openclaw message send --channel telegram --target 123456789 --message "hi"
-openclaw message send --channel telegram --target @name --message "hi"
+RadioClaw message send --channel telegram --target 123456789 --message "hi"
+RadioClaw message send --channel telegram --target @name --message "hi"
 ```
 
-    Telegram polls use `openclaw message poll` and support forum topics:
+    Telegram polls use `RadioClaw message poll` and support forum topics:
 
 ```bash
-openclaw message poll --channel telegram --target 123456789 \
+RadioClaw message poll --channel telegram --target 123456789 \
   --poll-question "Ship it?" --poll-option "Yes" --poll-option "No"
-openclaw message poll --channel telegram --target -1001234567890:topic:42 \
+RadioClaw message poll --channel telegram --target -1001234567890:topic:42 \
   --poll-question "Pick a time" --poll-option "10am" --poll-option "2pm" \
   --poll-duration-seconds 300 --poll-public
 ```
@@ -772,8 +772,8 @@ openclaw message poll --channel telegram --target -1001234567890:topic:42 \
     - If `requireMention=false`, Telegram privacy mode must allow full visibility.
       - BotFather: `/setprivacy` -> Disable
       - then remove + re-add bot to group
-    - `openclaw channels status` warns when config expects unmentioned group messages.
-    - `openclaw channels status --probe` can check explicit numeric group IDs; wildcard `"*"` cannot be membership-probed.
+    - `RadioClaw channels status` warns when config expects unmentioned group messages.
+    - `RadioClaw channels status --probe` can check explicit numeric group IDs; wildcard `"*"` cannot be membership-probed.
     - quick session test: `/activation always`.
 
   </Accordion>
@@ -782,7 +782,7 @@ openclaw message poll --channel telegram --target -1001234567890:topic:42 \
 
     - when `channels.telegram.groups` exists, group must be listed (or include `"*"`)
     - verify bot membership in group
-    - review logs: `openclaw logs --follow` for skip reasons
+    - review logs: `RadioClaw logs --follow` for skip reasons
 
   </Accordion>
 
@@ -798,7 +798,7 @@ openclaw message poll --channel telegram --target -1001234567890:topic:42 \
 
     - Node 22+ + custom fetch/proxy can trigger immediate abort behavior if AbortSignal types mismatch.
     - Some hosts resolve `api.telegram.org` to IPv6 first; broken IPv6 egress can cause intermittent Telegram API failures.
-    - If logs include `TypeError: fetch failed` or `Network request for 'getUpdates' failed!`, OpenClaw now retries these as recoverable network errors.
+    - If logs include `TypeError: fetch failed` or `Network request for 'getUpdates' failed!`, RadioClaw now retries these as recoverable network errors.
     - On VPS hosts with unstable direct egress/TLS, route Telegram API calls through `channels.telegram.proxy`:
 
 ```yaml
@@ -818,9 +818,9 @@ channels:
 ```
 
     - Environment overrides (temporary):
-      - `OPENCLAW_TELEGRAM_DISABLE_AUTO_SELECT_FAMILY=1`
-      - `OPENCLAW_TELEGRAM_ENABLE_AUTO_SELECT_FAMILY=1`
-      - `OPENCLAW_TELEGRAM_DNS_RESULT_ORDER=ipv4first`
+      - `RadioClaw_TELEGRAM_DISABLE_AUTO_SELECT_FAMILY=1`
+      - `RadioClaw_TELEGRAM_ENABLE_AUTO_SELECT_FAMILY=1`
+      - `RadioClaw_TELEGRAM_DNS_RESULT_ORDER=ipv4first`
     - Validate DNS answers:
 
 ```bash
@@ -841,14 +841,14 @@ Primary reference:
 - `channels.telegram.botToken`: bot token (BotFather).
 - `channels.telegram.tokenFile`: read token from file path.
 - `channels.telegram.dmPolicy`: `pairing | allowlist | open | disabled` (default: pairing).
-- `channels.telegram.allowFrom`: DM allowlist (numeric Telegram user IDs). `allowlist` requires at least one sender ID. `open` requires `"*"`. `openclaw doctor --fix` can resolve legacy `@username` entries to IDs and can recover allowlist entries from pairing-store files in allowlist migration flows.
+- `channels.telegram.allowFrom`: DM allowlist (numeric Telegram user IDs). `allowlist` requires at least one sender ID. `open` requires `"*"`. `RadioClaw doctor --fix` can resolve legacy `@username` entries to IDs and can recover allowlist entries from pairing-store files in allowlist migration flows.
 - `channels.telegram.actions.poll`: enable or disable Telegram poll creation (default: enabled; still requires `sendMessage`).
 - `channels.telegram.defaultTo`: default Telegram target used by CLI `--deliver` when no explicit `--reply-to` is provided.
 - `channels.telegram.groupPolicy`: `open | allowlist | disabled` (default: allowlist).
-- `channels.telegram.groupAllowFrom`: group sender allowlist (numeric Telegram user IDs). `openclaw doctor --fix` can resolve legacy `@username` entries to IDs. Non-numeric entries are ignored at auth time. Group auth does not use DM pairing-store fallback (`2026.2.25+`).
+- `channels.telegram.groupAllowFrom`: group sender allowlist (numeric Telegram user IDs). `RadioClaw doctor --fix` can resolve legacy `@username` entries to IDs. Non-numeric entries are ignored at auth time. Group auth does not use DM pairing-store fallback (`2026.2.25+`).
 - Multi-account precedence:
   - When two or more account IDs are configured, set `channels.telegram.defaultAccount` (or include `channels.telegram.accounts.default`) to make default routing explicit.
-  - If neither is set, OpenClaw falls back to the first normalized account ID and `openclaw doctor` warns.
+  - If neither is set, RadioClaw falls back to the first normalized account ID and `RadioClaw doctor` warns.
   - `channels.telegram.accounts.default.allowFrom` and `channels.telegram.accounts.default.groupAllowFrom` apply only to the `default` account.
   - Named accounts inherit `channels.telegram.allowFrom` and `channels.telegram.groupAllowFrom` when account-level values are unset.
   - Named accounts do not inherit `channels.telegram.accounts.default.allowFrom` / `groupAllowFrom`.
@@ -886,9 +886,9 @@ Primary reference:
 - `channels.telegram.actions.reactions`: gate Telegram tool reactions.
 - `channels.telegram.actions.sendMessage`: gate Telegram tool message sends.
 - `channels.telegram.actions.deleteMessage`: gate Telegram tool message deletes.
-- `channels.telegram.actions.sticker`: gate Telegram sticker actions ‚Äî send and search (default: false).
-- `channels.telegram.reactionNotifications`: `off | own | all` ‚Äî control which reactions trigger system events (default: `own` when not set).
-- `channels.telegram.reactionLevel`: `off | ack | minimal | extensive` ‚Äî control agent's reaction capability (default: `minimal` when not set).
+- `channels.telegram.actions.sticker`: gate Telegram sticker actions ‚Ä?send and search (default: false).
+- `channels.telegram.reactionNotifications`: `off | own | all` ‚Ä?control which reactions trigger system events (default: `own` when not set).
+- `channels.telegram.reactionLevel`: `off | ack | minimal | extensive` ‚Ä?control agent's reaction capability (default: `minimal` when not set).
 
 - [Configuration reference - Telegram](/gateway/configuration-reference#telegram)
 

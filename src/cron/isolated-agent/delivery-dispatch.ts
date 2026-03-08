@@ -3,7 +3,7 @@ import { countActiveDescendantRuns } from "../../agents/subagent-registry.js";
 import { SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
 import type { ReplyPayload } from "../../auto-reply/types.js";
 import { createOutboundSendDeps, type CliDeps } from "../../cli/outbound-send-deps.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { resolveAgentMainSessionKey } from "../../config/sessions.js";
 import { deliverOutboundPayloads } from "../../infra/outbound/deliver.js";
 import { resolveAgentOutboundIdentity } from "../../infra/outbound/identity.js";
@@ -72,7 +72,7 @@ export function resolveCronDeliveryBestEffort(job: CronJob): boolean {
 }
 
 async function resolveCronAnnounceSessionKey(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   fallbackSessionKey: string;
   delivery: {
@@ -121,8 +121,8 @@ async function resolveCronAnnounceSessionKey(params: {
 export type SuccessfulDeliveryTarget = Extract<DeliveryTargetResolution, { ok: true }>;
 
 type DispatchCronDeliveryParams = {
-  cfg: OpenClawConfig;
-  cfgWithAgentDefaults: OpenClawConfig;
+  cfg: RadioClawConfig;
+  cfgWithAgentDefaults: RadioClawConfig;
   deps: CliDeps;
   job: CronJob;
   agentId: string;
@@ -174,8 +174,7 @@ export async function dispatchCronDelivery(
   let deliveryAttempted = params.skipMessagingToolDelivery;
   // Tracks whether `runSubagentAnnounceFlow` was actually called.  Early
   // returns from `deliverViaAnnounce` (active subagents, interim suppression,
-  // SILENT_REPLY_TOKEN) are intentional suppressions â€” not delivery failures â€”
-  // so the direct-delivery fallback must only fire when the announce send was
+  // SILENT_REPLY_TOKEN) are intentional suppressions â€?not delivery failures â€?  // so the direct-delivery fallback must only fire when the announce send was
   // actually attempted and failed.
   let announceDeliveryWasAttempted = false;
   const failDeliveryTarget = (error: string) =>
@@ -500,7 +499,7 @@ export async function dispatchCronDelivery(
       // Fall back to direct delivery only when the announce send was actually
       // attempted and failed. Early returns from deliverViaAnnounce (active
       // subagents, interim suppression, SILENT_REPLY_TOKEN) are intentional
-      // suppressions that must NOT trigger direct delivery â€” doing so would
+      // suppressions that must NOT trigger direct delivery â€?doing so would
       // bypass the suppression guard and leak partial/stale content.
       if (announceDeliveryWasAttempted && !delivered && !params.isAborted()) {
         const directFallback = await deliverViaDirect(params.resolvedDelivery);

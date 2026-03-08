@@ -1,5 +1,5 @@
 import type { ChannelId } from "../../channels/plugins/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   loadSessionStore,
   resolveAgentMainSessionKey,
@@ -37,12 +37,12 @@ export type DeliveryTargetResolution =
     };
 
 export async function resolveDeliveryTarget(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   agentId: string,
   jobPayload: {
     channel?: "last" | ChannelId;
     to?: string;
-    /** Explicit accountId from job.delivery â€” overrides session-derived and binding-derived values. */
+    /** Explicit accountId from job.delivery â€?overrides session-derived and binding-derived values. */
     accountId?: string;
     sessionKey?: string;
   },
@@ -119,7 +119,7 @@ export async function resolveDeliveryTarget(
     }
   }
 
-  // job.delivery.accountId takes highest precedence â€” explicitly set by the job author.
+  // job.delivery.accountId takes highest precedence â€?explicitly set by the job author.
   if (jobPayload.accountId) {
     accountId = jobPayload.accountId;
   }

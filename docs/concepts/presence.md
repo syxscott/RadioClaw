@@ -1,5 +1,5 @@
 ---
-summary: "How OpenClaw presence entries are produced, merged, and displayed"
+summary: "How RadioClaw presence entries are produced, merged, and displayed"
 read_when:
   - Debugging the Instances tab
   - Investigating duplicate or stale instance rows
@@ -9,7 +9,7 @@ title: "Presence"
 
 # Presence
 
-OpenClaw “presence” is a lightweight, best‑effort view of:
+RadioClaw “presence�?is a lightweight, best‑effort view of:
 
 - the **Gateway** itself, and
 - **clients connected to the Gateway** (mac app, WebChat, CLI, etc.)
@@ -27,7 +27,7 @@ Presence entries are structured objects with fields like:
 - `version`: client version string
 - `deviceFamily` / `modelIdentifier`: hardware hints
 - `mode`: `ui`, `webchat`, `cli`, `backend`, `probe`, `test`, `node`, ...
-- `lastInputSeconds`: “seconds since last user input” (if known)
+- `lastInputSeconds`: “seconds since last user input�?(if known)
 - `reason`: `self`, `connect`, `node-connected`, `periodic`, ...
 - `ts`: last update timestamp (ms since epoch)
 
@@ -37,7 +37,7 @@ Presence entries are produced by multiple sources and **merged**.
 
 ### 1) Gateway self entry
 
-The Gateway always seeds a “self” entry at startup so UIs show the gateway host
+The Gateway always seeds a “self�?entry at startup so UIs show the gateway host
 even before any clients connect.
 
 ### 2) WebSocket connect

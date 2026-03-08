@@ -45,7 +45,7 @@ export function formatLocationText(location: NormalizedLocation): string {
   if (resolved.source === "live" || resolved.isLive) {
     header = `🛰 Live location: ${coords}${accuracy}`;
   } else if (resolved.name || resolved.address) {
-    const label = [resolved.name, resolved.address].filter(Boolean).join(" — ");
+    const label = [resolved.name, resolved.address].filter(Boolean).join(" �?");
     header = `📍 ${label} (${coords}${accuracy})`;
   } else {
     header = `📍 ${coords}${accuracy}`;

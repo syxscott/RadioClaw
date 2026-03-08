@@ -2,7 +2,7 @@
  * Build an import URL for a hook handler module.
  *
  * Bundled hooks (shipped in dist/) are immutable between installs, so they
- * can be imported without a cache-busting suffix â€” letting V8 reuse its
+ * can be imported without a cache-busting suffix â€?letting V8 reuse its
  * module cache across gateway restarts.
  *
  * Workspace, managed, and plugin hooks may be edited by the user between
@@ -18,7 +18,7 @@ import type { HookSource } from "./types.js";
  * Sources whose handler files never change between `npm install` runs.
  * Imports from these sources skip cache busting entirely.
  */
-const IMMUTABLE_SOURCES: ReadonlySet<HookSource> = new Set(["openclaw-bundled"]);
+const IMMUTABLE_SOURCES: ReadonlySet<HookSource> = new Set(["RadioClaw-bundled"]);
 
 export function buildImportUrl(handlerPath: string, source: HookSource): string {
   const base = pathToFileURL(handlerPath).href;

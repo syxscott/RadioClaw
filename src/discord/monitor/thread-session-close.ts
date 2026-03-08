@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { resolveStorePath, updateSessionStore } from "../../config/sessions.js";
 
 /**
@@ -11,7 +11,7 @@ import { resolveStorePath, updateSessionStore } from "../../config/sessions.js";
  * any on-disk transcript history.
  */
 export async function closeDiscordThreadSessions(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
   threadId: string;
 }): Promise<number> {

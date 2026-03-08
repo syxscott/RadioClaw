@@ -170,7 +170,7 @@ describe("resolveDiscordUserAllowlist", () => {
     expect(results[1]).toMatchObject({ resolved: true, id: "u-bob" });
   });
 
-  it("handles mixed ids and usernames â€” ids resolve even if guilds fail", async () => {
+  it("handles mixed ids and usernames â€?ids resolve even if guilds fail", async () => {
     const fetcher = createGuildsForbiddenFetcher();
 
     // IDs should succeed, username should fail (listGuilds throws)

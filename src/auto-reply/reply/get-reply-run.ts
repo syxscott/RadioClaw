@@ -7,7 +7,7 @@ import {
   isEmbeddedPiRunStreaming,
   resolveEmbeddedSessionLane,
 } from "../../agents/pi-embedded.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   resolveGroupSessionKey,
   resolveSessionFilePath,
@@ -50,7 +50,7 @@ import { resolveRunTypingPolicy } from "./typing-policy.js";
 import type { TypingController } from "./typing.js";
 import { appendUntrustedContext } from "./untrusted-context.js";
 
-type AgentDefaults = NonNullable<OpenClawConfig["agents"]>["defaults"];
+type AgentDefaults = NonNullable<RadioClawConfig["agents"]>["defaults"];
 type ExecOverrides = Pick<ExecToolDefaults, "host" | "security" | "ask" | "node">;
 
 function buildResetSessionNoticeText(params: {
@@ -62,8 +62,8 @@ function buildResetSessionNoticeText(params: {
   const modelLabel = `${params.provider}/${params.model}`;
   const defaultLabel = `${params.defaultProvider}/${params.defaultModel}`;
   return modelLabel === defaultLabel
-    ? `✅ New session started · model: ${modelLabel}`
-    : `✅ New session started · model: ${modelLabel} (default: ${defaultLabel})`;
+    ? `�?New session started · model: ${modelLabel}`
+    : `�?New session started · model: ${modelLabel} (default: ${defaultLabel})`;
 }
 
 function resolveResetSessionNoticeRoute(params: {
@@ -90,7 +90,7 @@ async function sendResetSessionNotice(params: {
   ctx: MsgContext;
   command: ReturnType<typeof buildCommandContext>;
   sessionKey: string;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string | undefined;
   threadId: string | number | undefined;
   provider: string;
@@ -126,11 +126,11 @@ async function sendResetSessionNotice(params: {
 type RunPreparedReplyParams = {
   ctx: MsgContext;
   sessionCtx: TemplateContext;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   agentDir: string;
   agentCfg: AgentDefaults;
-  sessionCfg: OpenClawConfig["session"];
+  sessionCfg: RadioClawConfig["session"];
   commandAuthorized: boolean;
   command: ReturnType<typeof buildCommandContext>;
   commandSource: string;
@@ -381,7 +381,7 @@ export async function runPreparedReply(
   const prefixedBody = [threadContextNote, prefixedBodyBase].filter(Boolean).join("\n\n");
   const mediaNote = buildInboundMediaNote(ctx);
   const mediaReplyHint = mediaNote
-    ? "To send an image back, prefer the message tool (media/path/filePath). If you must inline, use MEDIA:https://example.com/image.jpg (spaces ok, quote if needed) or a safe relative path like MEDIA:./image.jpg. Avoid absolute paths (MEDIA:/...) and ~ paths — they are blocked for security. Keep caption in the text body."
+    ? "To send an image back, prefer the message tool (media/path/filePath). If you must inline, use MEDIA:https://example.com/image.jpg (spaces ok, quote if needed) or a safe relative path like MEDIA:./image.jpg. Avoid absolute paths (MEDIA:/...) and ~ paths �?they are blocked for security. Keep caption in the text body."
     : undefined;
   let prefixedCommandBody = mediaNote
     ? [mediaNote, mediaReplyHint, prefixedBody ?? ""].filter(Boolean).join("\n").trim()

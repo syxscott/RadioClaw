@@ -1,9 +1,9 @@
 import com.android.build.api.variant.impl.VariantOutputImpl
 
-val androidStoreFile = providers.gradleProperty("OPENCLAW_ANDROID_STORE_FILE").orNull?.takeIf { it.isNotBlank() }
-val androidStorePassword = providers.gradleProperty("OPENCLAW_ANDROID_STORE_PASSWORD").orNull?.takeIf { it.isNotBlank() }
-val androidKeyAlias = providers.gradleProperty("OPENCLAW_ANDROID_KEY_ALIAS").orNull?.takeIf { it.isNotBlank() }
-val androidKeyPassword = providers.gradleProperty("OPENCLAW_ANDROID_KEY_PASSWORD").orNull?.takeIf { it.isNotBlank() }
+val androidStoreFile = providers.gradleProperty("RadioClaw_ANDROID_STORE_FILE").orNull?.takeIf { it.isNotBlank() }
+val androidStorePassword = providers.gradleProperty("RadioClaw_ANDROID_STORE_PASSWORD").orNull?.takeIf { it.isNotBlank() }
+val androidKeyAlias = providers.gradleProperty("RadioClaw_ANDROID_KEY_ALIAS").orNull?.takeIf { it.isNotBlank() }
+val androidKeyPassword = providers.gradleProperty("RadioClaw_ANDROID_KEY_PASSWORD").orNull?.takeIf { it.isNotBlank() }
 val resolvedAndroidStoreFile =
     androidStoreFile?.let { storeFilePath ->
         if (storeFilePath.startsWith("~/")) {
@@ -24,9 +24,9 @@ val wantsAndroidReleaseBuild =
 
 if (wantsAndroidReleaseBuild && !hasAndroidReleaseSigning) {
     error(
-        "Missing Android release signing properties. Set OPENCLAW_ANDROID_STORE_FILE, " +
-            "OPENCLAW_ANDROID_STORE_PASSWORD, OPENCLAW_ANDROID_KEY_ALIAS, and " +
-            "OPENCLAW_ANDROID_KEY_PASSWORD in ~/.gradle/gradle.properties.",
+        "Missing Android release signing properties. Set RadioClaw_ANDROID_STORE_FILE, " +
+            "RadioClaw_ANDROID_STORE_PASSWORD, RadioClaw_ANDROID_KEY_ALIAS, and " +
+            "RadioClaw_ANDROID_KEY_PASSWORD in ~/.gradle/gradle.properties.",
     )
 }
 
@@ -38,7 +38,7 @@ plugins {
 }
 
 android {
-    namespace = "ai.openclaw.app"
+    namespace = "ai.RadioClaw.app"
     compileSdk = 36
 
     // Release signing is local-only; keep the keystore path and passwords out of the repo.
@@ -55,18 +55,18 @@ android {
 
     sourceSets {
         getByName("main") {
-            assets.directories.add("../../shared/OpenClawKit/Sources/OpenClawKit/Resources")
+            assets.directories.add("../../shared/RadioClawKit/Sources/RadioClawKit/Resources")
         }
     }
 
     defaultConfig {
-        applicationId = "ai.openclaw.app"
+        applicationId = "ai.RadioClaw.app"
         minSdk = 31
         targetSdk = 36
         versionCode = 202603070
         versionName = "2026.3.7"
         ndk {
-            // Support all major ABIs â€” native libs are tiny (~47 KB per ABI)
+            // Support all major ABIs â€?native libs are tiny (~47 KB per ABI)
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
     }
@@ -132,7 +132,7 @@ androidComponents {
                 val versionName = output.versionName.orNull ?: "0"
                 val buildType = variant.buildType
 
-                val outputFileName = "openclaw-$versionName-$buildType.apk"
+                val outputFileName = "RadioClaw-$versionName-$buildType.apk"
                 output.outputFileName = outputFileName
             }
     }

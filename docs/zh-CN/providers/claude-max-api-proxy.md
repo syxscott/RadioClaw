@@ -1,9 +1,7 @@
 ---
 read_when:
-  - 你想将 Claude Max 订阅与 OpenAI 兼容工具配合使用
-  - 你想要一个封装 Claude Code CLI 的本地 API 服务器
-  - 你想通过使用订阅而非 API 密钥来节省费用
-summary: 将 Claude Max/Pro 订阅用作 OpenAI 兼容的 API 端点
+  - 你想�?Claude Max 订阅�?OpenAI 兼容工具配合使用
+  - 你想要一个封�?Claude Code CLI 的本�?API 服务�?  - 你想通过使用订阅而非 API 密钥来节省费�?summary: �?Claude Max/Pro 订阅用作 OpenAI 兼容�?API 端点
 title: Claude Max API 代理
 x-i18n:
   generated_at: "2026-02-01T21:34:52Z"
@@ -16,44 +14,37 @@ x-i18n:
 
 # Claude Max API 代理
 
-**claude-max-api-proxy** 是一个社区工具，将你的 Claude Max/Pro 订阅暴露为 OpenAI 兼容的 API 端点。这使你可以将订阅与任何支持 OpenAI API 格式的工具配合使用。
-
-## 为什么使用它？
-
+**claude-max-api-proxy** 是一个社区工具，将你�?Claude Max/Pro 订阅暴露�?OpenAI 兼容�?API 端点。这使你可以将订阅与任何支持 OpenAI API 格式的工具配合使用�?
+## 为什么使用它�?
 | 方式            | 费用                                            | 适用场景                 |
 | --------------- | ----------------------------------------------- | ------------------------ |
-| Anthropic API   | 按 token 计费（Opus 约 $15/M 输入，$75/M 输出） | 生产应用、高流量场景     |
-| Claude Max 订阅 | 每月固定 $200                                   | 个人使用、开发、无限用量 |
+| Anthropic API   | �?token 计费（Opus �?$15/M 输入�?75/M 输出�?| 生产应用、高流量场景     |
+| Claude Max 订阅 | 每月固定 $200                                   | 个人使用、开发、无限用�?|
 
-如果你有 Claude Max 订阅并希望与 OpenAI 兼容工具配合使用，这个代理可以帮你节省大量费用。
-
+如果你有 Claude Max 订阅并希望与 OpenAI 兼容工具配合使用，这个代理可以帮你节省大量费用�?
 ## 工作原理
 
 ```
-你的应用 → claude-max-api-proxy → Claude Code CLI → Anthropic（通过订阅）
-     （OpenAI 格式）              （转换格式）           （使用你的登录凭据）
+你的应用 �?claude-max-api-proxy �?Claude Code CLI �?Anthropic（通过订阅�?     （OpenAI 格式�?             （转换格式）           （使用你的登录凭据）
 ```
 
 该代理：
 
-1. 在 `http://localhost:3456/v1/chat/completions` 接受 OpenAI 格式的请求
-2. 将其转换为 Claude Code CLI 命令
-3. 以 OpenAI 格式返回响应（支持流式传输）
+1. �?`http://localhost:3456/v1/chat/completions` 接受 OpenAI 格式的请�?2. 将其转换�?Claude Code CLI 命令
+3. �?OpenAI 格式返回响应（支持流式传输）
 
 ## 安装
 
 ```bash
-# 需要 Node.js 20+ 和 Claude Code CLI
+# 需�?Node.js 20+ �?Claude Code CLI
 npm install -g claude-max-api-proxy
 
-# 验证 Claude CLI 已认证
-claude --version
+# 验证 Claude CLI 已认�?claude --version
 ```
 
 ## 使用方法
 
-### 启动服务器
-
+### 启动服务�?
 ```bash
 claude-max-api
 # 服务器运行在 http://localhost:3456
@@ -62,8 +53,7 @@ claude-max-api
 ### 测试
 
 ```bash
-# 健康检查
-curl http://localhost:3456/health
+# 健康检�?curl http://localhost:3456/health
 
 # 列出模型
 curl http://localhost:3456/v1/models
@@ -77,10 +67,9 @@ curl http://localhost:3456/v1/chat/completions \
   }'
 ```
 
-### 与 OpenClaw 配合使用
+### �?RadioClaw 配合使用
 
-你可以将 OpenClaw 指向该代理作为自定义 OpenAI 兼容端点：
-
+你可以将 RadioClaw 指向该代理作为自定义 OpenAI 兼容端点�?
 ```json5
 {
   env: {
@@ -144,12 +133,12 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.claude-max-api.plist
 
 ## 注意事项
 
-- 这是一个**社区工具**，并非由 Anthropic 或 OpenClaw 官方支持
+- 这是一�?*社区工具**，并非由 Anthropic �?RadioClaw 官方支持
 - 需要有效的 Claude Max/Pro 订阅并已认证 Claude Code CLI
 - 代理在本地运行，不会将数据发送到任何第三方服务器
 - 完全支持流式响应
 
 ## 另请参阅
 
-- [Anthropic 提供商](/providers/anthropic) - OpenClaw 与 Claude 的原生集成，使用 setup-token 或 API 密钥
-- [OpenAI 提供商](/providers/openai) - 适用于 OpenAI/Codex 订阅
+- [Anthropic 提供商](/providers/anthropic) - RadioClaw �?Claude 的原生集成，使用 setup-token �?API 密钥
+- [OpenAI 提供商](/providers/openai) - 适用�?OpenAI/Codex 订阅

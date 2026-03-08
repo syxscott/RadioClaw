@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { RadioClawConfig } from "../../../config/config.js";
 import { hasConfiguredSecretInput } from "../../../config/types.secrets.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../routing/session-key.js";
 import { inspectSlackAccount } from "../../../slack/account-inspect.js";
@@ -31,11 +31,11 @@ import {
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "OpenClaw";
+  const safeName = botName.trim() || "RadioClaw";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for OpenClaw`,
+      description: `${safeName} connector for RadioClaw`,
     },
     features: {
       bot_user: {
@@ -48,8 +48,8 @@ function buildSlackManifest(botName: string) {
       },
       slash_commands: [
         {
-          command: "/openclaw",
-          description: "Send a message to OpenClaw",
+          command: "/RadioClaw",
+          description: "Send a message to RadioClaw",
           should_escape: false,
         },
       ],
@@ -103,11 +103,11 @@ async function noteSlackTokenHelp(prompter: WizardPrompter, botName: string): Pr
   const manifest = buildSlackManifest(botName);
   await prompter.note(
     [
-      "1) Slack API â†’ Create App â†’ From scratch or From manifest (with the JSON below)",
+      "1) Slack API â†?Create App â†?From scratch or From manifest (with the JSON below)",
       "2) Add Socket Mode + enable it to get the app-level token (xapp-...)",
       "3) Install App to workspace to get the xoxb- bot token",
       "4) Enable Event Subscriptions (socket) for message events",
-      "5) App Home â†’ enable the Messages tab for DMs",
+      "5) App Home â†?enable the Messages tab for DMs",
       "Tip: set SLACK_BOT_TOKEN + SLACK_APP_TOKEN in your env.",
       `Docs: ${formatDocsLink("/slack", "slack")}`,
       "",
@@ -119,10 +119,10 @@ async function noteSlackTokenHelp(prompter: WizardPrompter, botName: string): Pr
 }
 
 function setSlackChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   accountId: string,
   channelKeys: string[],
-): OpenClawConfig {
+): RadioClawConfig {
   const channels = Object.fromEntries(channelKeys.map((key) => [key, { allow: true }]));
   return patchChannelConfigForAccount({
     cfg,
@@ -133,10 +133,10 @@ function setSlackChannelAllowlist(
 }
 
 async function promptSlackAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<RadioClawConfig> {
   const accountId = resolveOnboardingAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultSlackAccountId(params.cfg),
@@ -251,7 +251,7 @@ export const slackOnboardingAdapter: ChannelOnboardingAdapter = {
     const slackBotName = String(
       await prompter.text({
         message: "Slack bot display name (used for manifest)",
-        initialValue: "OpenClaw",
+        initialValue: "RadioClaw",
       }),
     ).trim();
     if (!accountConfigured) {

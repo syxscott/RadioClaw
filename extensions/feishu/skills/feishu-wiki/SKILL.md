@@ -10,7 +10,7 @@ Single tool `feishu_wiki` for knowledge base operations.
 
 ## Token Extraction
 
-From URL `https://xxx.feishu.cn/wiki/ABC123def` â†’ `token` = `ABC123def`
+From URL `https://xxx.feishu.cn/wiki/ABC123def` â†?`token` = `ABC123def`
 
 ## Actions
 
@@ -90,7 +90,7 @@ To different location:
 
 To edit a wiki page:
 
-1. Get node: `{ "action": "get", "token": "wiki_token" }` â†’ returns `obj_token`
+1. Get node: `{ "action": "get", "token": "wiki_token" }` â†?returns `obj_token`
 2. Read doc: `feishu_doc { "action": "read", "doc_token": "obj_token" }`
 3. Write doc: `feishu_doc { "action": "write", "doc_token": "obj_token", "content": "..." }`
 

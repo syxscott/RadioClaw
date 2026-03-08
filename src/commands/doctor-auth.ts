@@ -14,14 +14,14 @@ import {
 } from "../agents/auth-profiles.js";
 import { updateAuthProfileStoreWithLock } from "../agents/auth-profiles/store.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { note } from "../terminal/note.js";
 import type { DoctorPrompter } from "./doctor-prompter.js";
 
 export async function maybeRepairAnthropicOAuthProfileId(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   prompter: DoctorPrompter,
-): Promise<OpenClawConfig> {
+): Promise<RadioClawConfig> {
   const store = ensureAuthProfileStore();
   const repair = repairOAuthProfileIdMismatch({
     cfg,
@@ -66,9 +66,9 @@ function pruneAuthOrder(
 }
 
 function pruneAuthProfiles(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   profileIds: Set<string>,
-): { next: OpenClawConfig; changed: boolean } {
+): { next: RadioClawConfig; changed: boolean } {
   const profiles = cfg.auth?.profiles;
   const order = cfg.auth?.order;
   const nextProfiles = profiles ? { ...profiles } : undefined;
@@ -111,9 +111,9 @@ function pruneAuthProfiles(
 }
 
 export async function maybeRemoveDeprecatedCliAuthProfiles(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   prompter: DoctorPrompter,
-): Promise<OpenClawConfig> {
+): Promise<RadioClawConfig> {
   const store = ensureAuthProfileStore(undefined, { allowKeychainPrompt: false });
   const deprecated = new Set<string>();
   if (store.profiles[CLAUDE_CLI_PROFILE_ID] || cfg.auth?.profiles?.[CLAUDE_CLI_PROFILE_ID]) {
@@ -130,13 +130,13 @@ export async function maybeRemoveDeprecatedCliAuthProfiles(
   const lines = ["Deprecated external CLI auth profiles detected (no longer supported):"];
   if (deprecated.has(CLAUDE_CLI_PROFILE_ID)) {
     lines.push(
-      `- ${CLAUDE_CLI_PROFILE_ID} (Anthropic): use setup-token â†’ ${formatCliCommand("openclaw models auth setup-token")}`,
+      `- ${CLAUDE_CLI_PROFILE_ID} (Anthropic): use setup-token â†?${formatCliCommand("RadioClaw models auth setup-token")}`,
     );
   }
   if (deprecated.has(CODEX_CLI_PROFILE_ID)) {
     lines.push(
-      `- ${CODEX_CLI_PROFILE_ID} (OpenAI Codex): use OAuth â†’ ${formatCliCommand(
-        "openclaw models auth login --provider openai-codex",
+      `- ${CODEX_CLI_PROFILE_ID} (OpenAI Codex): use OAuth â†?${formatCliCommand(
+        "RadioClaw models auth login --provider openai-codex",
       )}`,
     );
   }
@@ -228,16 +228,16 @@ function formatAuthIssueHint(issue: AuthIssue): string | null {
     return "Invalid token expires metadata. Set a future Unix ms timestamp or remove expires.";
   }
   if (issue.provider === "anthropic" && issue.profileId === CLAUDE_CLI_PROFILE_ID) {
-    return `Deprecated profile. Use ${formatCliCommand("openclaw models auth setup-token")} or ${formatCliCommand(
-      "openclaw configure",
+    return `Deprecated profile. Use ${formatCliCommand("RadioClaw models auth setup-token")} or ${formatCliCommand(
+      "RadioClaw configure",
     )}.`;
   }
   if (issue.provider === "openai-codex" && issue.profileId === CODEX_CLI_PROFILE_ID) {
     return `Deprecated profile. Use ${formatCliCommand(
-      "openclaw models auth login --provider openai-codex",
-    )} or ${formatCliCommand("openclaw configure")}.`;
+      "RadioClaw models auth login --provider openai-codex",
+    )} or ${formatCliCommand("RadioClaw configure")}.`;
   }
-  return `Re-auth via \`${formatCliCommand("openclaw configure")}\` or \`${formatCliCommand("openclaw onboard")}\`.`;
+  return `Re-auth via \`${formatCliCommand("RadioClaw configure")}\` or \`${formatCliCommand("RadioClaw onboard")}\`.`;
 }
 
 function formatAuthIssueLine(issue: AuthIssue): string {
@@ -245,11 +245,11 @@ function formatAuthIssueLine(issue: AuthIssue): string {
     issue.remainingMs !== undefined ? ` (${formatRemainingShort(issue.remainingMs)})` : "";
   const hint = formatAuthIssueHint(issue);
   const reason = issue.reasonCode ? ` [${issue.reasonCode}]` : "";
-  return `- ${issue.profileId}: ${issue.status}${reason}${remaining}${hint ? ` â€” ${hint}` : ""}`;
+  return `- ${issue.profileId}: ${issue.status}${reason}${remaining}${hint ? ` â€?${hint}` : ""}`;
 }
 
 export async function noteAuthProfileHealth(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   prompter: DoctorPrompter;
   allowKeychainPrompt: boolean;
 }): Promise<void> {
@@ -274,7 +274,7 @@ export async function noteAuthProfileHealth(params: {
         kind: disabledActive ? "disabled" : "cooldown",
         reason: stats?.disabledReason,
       });
-      out.push(`- ${profileId}: ${kind} (${remaining})${hint ? ` â€” ${hint}` : ""}`);
+      out.push(`- ${profileId}: ${kind} (${remaining})${hint ? ` â€?${hint}` : ""}`);
     }
     return out;
   })();

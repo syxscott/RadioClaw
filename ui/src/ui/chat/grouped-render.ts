@@ -166,7 +166,7 @@ function renderAvatar(role: string, assistant?: Pick<AssistantIdentity, "name" |
       : normalized === "assistant"
         ? assistantName.charAt(0).toUpperCase() || "A"
         : normalized === "tool"
-          ? "âš™"
+          ? "âš?
           : "?";
   const className =
     normalized === "user"

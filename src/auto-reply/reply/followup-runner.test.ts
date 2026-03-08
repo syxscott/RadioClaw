@@ -120,7 +120,7 @@ function createAsyncReplySpy() {
 describe("createFollowupRunner compaction", () => {
   it("adds verbose auto-compaction notice and tracks count", async () => {
     const storePath = path.join(
-      await fs.mkdtemp(path.join(tmpdir(), "openclaw-compaction-")),
+      await fs.mkdtemp(path.join(tmpdir(), "RadioClaw-compaction-")),
       "sessions.json",
     );
     const sessionEntry: SessionEntry = {
@@ -358,7 +358,7 @@ describe("createFollowupRunner messaging tool dedupe", () => {
       },
     });
 
-    // Media stripped â†’ payload becomes non-renderable â†’ not delivered.
+    // Media stripped â†?payload becomes non-renderable â†?not delivered.
     expect(onBlockReply).not.toHaveBeenCalled();
   });
 
@@ -375,7 +375,7 @@ describe("createFollowupRunner messaging tool dedupe", () => {
 
   it("persists usage even when replies are suppressed", async () => {
     const storePath = path.join(
-      await fs.mkdtemp(path.join(tmpdir(), "openclaw-followup-usage-")),
+      await fs.mkdtemp(path.join(tmpdir(), "RadioClaw-followup-usage-")),
       "sessions.json",
     );
     const sessionKey = "main";

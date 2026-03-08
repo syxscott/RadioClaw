@@ -58,7 +58,7 @@ describe("skills-cli", () => {
       const output = formatSkillsList(report, {});
       expect(output).toContain("peekaboo");
       expect(output).toContain("📸");
-      expect(output).toContain("✓");
+      expect(output).toContain("�?);
     });
 
     it("formats skills list with disabled skill", () => {

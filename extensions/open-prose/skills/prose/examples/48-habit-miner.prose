@@ -1,15 +1,15 @@
 # Habit Miner
 # Excavates your AI session history to find recurring workflows worth automating
-# Scans .claude, .opencode, .cursor, etc. â€” discovers patterns, writes .prose programs
+# Scans .claude, .opencode, .cursor, etc. â€?discovers patterns, writes .prose programs
 #
 # BACKEND: Run with sqlite+ or postgres for incremental processing across runs
 #   prose run 48-habit-miner.prose --backend sqlite+
 #
 # KEY VM FEATURES USED:
-# - persist: true on miner â€” remembers patterns across runs, watches them mature
-# - resume: â€” incremental processing, only analyzes new logs since last run
-# - recursive blocks â€” handles arbitrarily large log corpora
-# - reference-based context â€” agents read from storage, not everything in memory
+# - persist: true on miner â€?remembers patterns across runs, watches them mature
+# - resume: â€?incremental processing, only analyzes new logs since last run
+# - recursive blocks â€?handles arbitrarily large log corpora
+# - reference-based context â€?agents read from storage, not everything in memory
 
 input mode: "Mode: 'full' (analyze everything), 'incremental' (new logs only), 'check' (see what's new)"
 input min_frequency: "Minimum times a pattern must appear to qualify (default: 3)"
@@ -86,7 +86,7 @@ agent miner:
 
     Your memory contains patterns from previous runs. Each pattern has:
     - name: descriptive identifier
-    - maturity: emerging (3-5 hits) â†’ established (6-15) â†’ proven (16+)
+    - maturity: emerging (3-5 hits) â†?established (6-15) â†?proven (16+)
     - examples: representative instances
     - last_seen: when pattern last appeared
     - trend: growing / stable / declining

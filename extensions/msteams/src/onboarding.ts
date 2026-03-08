@@ -1,11 +1,11 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  OpenClawConfig,
+  RadioClawConfig,
   DmPolicy,
   WizardPrompter,
   MSTeamsTeamConfig,
-} from "openclaw/plugin-sdk/msteams";
+} from "RadioClaw/plugin-sdk/msteams";
 import {
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
@@ -15,7 +15,7 @@ import {
   setTopLevelChannelDmPolicyWithAllowFrom,
   setTopLevelChannelGroupPolicy,
   splitOnboardingEntries,
-} from "openclaw/plugin-sdk/msteams";
+} from "RadioClaw/plugin-sdk/msteams";
 import {
   parseMSTeamsTeamEntry,
   resolveMSTeamsChannelAllowlist,
@@ -26,7 +26,7 @@ import { hasConfiguredMSTeamsCredentials, resolveMSTeamsCredentials } from "./to
 
 const channel = "msteams" as const;
 
-function setMSTeamsDmPolicy(cfg: OpenClawConfig, dmPolicy: DmPolicy) {
+function setMSTeamsDmPolicy(cfg: RadioClawConfig, dmPolicy: DmPolicy) {
   return setTopLevelChannelDmPolicyWithAllowFrom({
     cfg,
     channel: "msteams",
@@ -34,7 +34,7 @@ function setMSTeamsDmPolicy(cfg: OpenClawConfig, dmPolicy: DmPolicy) {
   });
 }
 
-function setMSTeamsAllowFrom(cfg: OpenClawConfig, allowFrom: string[]): OpenClawConfig {
+function setMSTeamsAllowFrom(cfg: RadioClawConfig, allowFrom: string[]): RadioClawConfig {
   return setTopLevelChannelAllowFrom({
     cfg,
     channel: "msteams",
@@ -73,9 +73,9 @@ async function promptMSTeamsCredentials(prompter: WizardPrompter): Promise<{
 }
 
 async function promptMSTeamsAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   prompter: WizardPrompter;
-}): Promise<OpenClawConfig> {
+}): Promise<RadioClawConfig> {
   const existing = params.cfg.channels?.msteams?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -138,7 +138,7 @@ async function promptMSTeamsAllowFrom(params: {
 async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void> {
   await prompter.note(
     [
-      "1) Azure Bot registration â†’ get App ID + Tenant ID",
+      "1) Azure Bot registration â†?get App ID + Tenant ID",
       "2) Add a client secret (App Password)",
       "3) Set webhook URL + messaging endpoint",
       "Tip: you can also set MSTEAMS_APP_ID / MSTEAMS_APP_PASSWORD / MSTEAMS_TENANT_ID.",
@@ -149,9 +149,9 @@ async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void
 }
 
 function setMSTeamsGroupPolicy(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): OpenClawConfig {
+): RadioClawConfig {
   return setTopLevelChannelGroupPolicy({
     cfg,
     channel: "msteams",
@@ -161,9 +161,9 @@ function setMSTeamsGroupPolicy(
 }
 
 function setMSTeamsTeamsAllowlist(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   entries: Array<{ teamKey: string; channelKey?: string }>,
-): OpenClawConfig {
+): RadioClawConfig {
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {

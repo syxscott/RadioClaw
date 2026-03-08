@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import readline from "node:readline";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import { writeFileWithinRoot } from "../infra/fs-safe.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -173,7 +173,7 @@ type QmdManagerMode = "full" | "status";
 
 export class QmdMemoryManager implements MemorySearchManager {
   static async create(params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     agentId: string;
     resolved: ResolvedMemoryBackendConfig;
     mode?: QmdManagerMode;
@@ -187,7 +187,7 @@ export class QmdMemoryManager implements MemorySearchManager {
     return manager;
   }
 
-  private readonly cfg: OpenClawConfig;
+  private readonly cfg: RadioClawConfig;
   private readonly agentId: string;
   private readonly qmd: ResolvedQmdConfig;
   private readonly workspaceDir: string;
@@ -229,7 +229,7 @@ export class QmdMemoryManager implements MemorySearchManager {
   private attemptedDuplicateDocumentRepair = false;
 
   private constructor(params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     agentId: string;
     resolved: ResolvedQmdConfig;
   }) {
@@ -917,7 +917,7 @@ export class QmdMemoryManager implements MemorySearchManager {
     progress?: (update: MemorySyncProgressUpdate) => void;
   }): Promise<void> {
     if (params?.progress) {
-      params.progress({ completed: 0, total: 1, label: "Updating QMD indexâ€¦" });
+      params.progress({ completed: 0, total: 1, label: "Updating QMD indexâ€? });
     }
     await this.runUpdate(params?.reason ?? "manual", params?.force);
     if (params?.progress) {
@@ -1177,7 +1177,7 @@ export class QmdMemoryManager implements MemorySearchManager {
    * is a no-op.
    */
   private async symlinkSharedModels(): Promise<void> {
-    // process.env is never modified â€” only this.env (passed to child_process
+    // process.env is never modified â€?only this.env (passed to child_process
     // spawn) overrides XDG_CACHE_HOME.  So reading it here gives us the
     // user's original value, which is where `qmd` downloaded its models.
     //
@@ -1205,10 +1205,10 @@ export class QmdMemoryManager implements MemorySearchManager {
       // Check if something already exists at the target path
       try {
         await fs.lstat(targetModelsDir);
-        // Already exists (directory, symlink, or file) â€“ leave it alone
+        // Already exists (directory, symlink, or file) â€?leave it alone
         return;
       } catch {
-        // Does not exist â€“ proceed to create symlink
+        // Does not exist â€?proceed to create symlink
       }
       // On Windows, creating directory symlinks requires either Administrator
       // privileges or Developer Mode.  Fall back to a directory junction which
@@ -1224,7 +1224,7 @@ export class QmdMemoryManager implements MemorySearchManager {
           throw symlinkErr;
         }
       }
-      log.debug(`symlinked qmd models: ${defaultModelsDir} â†’ ${targetModelsDir}`);
+      log.debug(`symlinked qmd models: ${defaultModelsDir} â†?${targetModelsDir}`);
     } catch (err) {
       // Non-fatal: if we can't symlink, qmd will fall back to downloading
       log.warn(`failed to symlink qmd models directory: ${String(err)}`);
@@ -1308,11 +1308,11 @@ export class QmdMemoryManager implements MemorySearchManager {
     }
     if (!mcporter.startDaemon) {
       type McporterWarnGlobal = typeof globalThis & {
-        __openclawMcporterColdStartWarned?: boolean;
+        __RadioClawMcporterColdStartWarned?: boolean;
       };
       const g: McporterWarnGlobal = globalThis;
-      if (!g.__openclawMcporterColdStartWarned) {
-        g.__openclawMcporterColdStartWarned = true;
+      if (!g.__RadioClawMcporterColdStartWarned) {
+        g.__RadioClawMcporterColdStartWarned = true;
         log.warn(
           "mcporter qmd bridge enabled but startDaemon=false; each query may cold-start QMD MCP. Consider setting memory.qmd.mcporter.startDaemon=true to keep it warm.",
         );
@@ -1320,21 +1320,21 @@ export class QmdMemoryManager implements MemorySearchManager {
       return;
     }
     type McporterGlobal = typeof globalThis & {
-      __openclawMcporterDaemonStart?: Promise<void>;
+      __RadioClawMcporterDaemonStart?: Promise<void>;
     };
     const g: McporterGlobal = globalThis;
-    if (!g.__openclawMcporterDaemonStart) {
-      g.__openclawMcporterDaemonStart = (async () => {
+    if (!g.__RadioClawMcporterDaemonStart) {
+      g.__RadioClawMcporterDaemonStart = (async () => {
         try {
           await this.runMcporter(["daemon", "start"], { timeoutMs: 10_000 });
         } catch (err) {
           log.warn(`mcporter daemon start failed: ${String(err)}`);
           // Allow future searches to retry daemon start on transient failures.
-          delete g.__openclawMcporterDaemonStart;
+          delete g.__RadioClawMcporterDaemonStart;
         }
       })();
     }
-    await g.__openclawMcporterDaemonStart;
+    await g.__RadioClawMcporterDaemonStart;
   }
 
   private async runMcporter(

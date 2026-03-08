@@ -30,9 +30,9 @@ const NOW = Date.now();
 
 function createContainer(overrides: Partial<SandboxContainerInfo> = {}): SandboxContainerInfo {
   return {
-    containerName: "openclaw-sandbox-test",
+    containerName: "RadioClaw-sandbox-test",
     sessionKey: "test-session",
-    image: "openclaw/sandbox:latest",
+    image: "RadioClaw/sandbox:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,
@@ -43,9 +43,9 @@ function createContainer(overrides: Partial<SandboxContainerInfo> = {}): Sandbox
 
 function createBrowser(overrides: Partial<SandboxBrowserInfo> = {}): SandboxBrowserInfo {
   return {
-    containerName: "openclaw-browser-test",
+    containerName: "RadioClaw-browser-test",
     sessionKey: "test-session",
-    image: "openclaw/browser:latest",
+    image: "RadioClaw/browser:latest",
     imageMatch: true,
     running: true,
     createdAtMs: NOW - 3600000,
@@ -320,7 +320,7 @@ describe("sandboxRecreateCommand", () => {
 
       await sandboxRecreateCommand({ all: true, browser: false, force: true }, runtime as never);
 
-      expectLogContains(runtime, "âœ“ Removed");
+      expectLogContains(runtime, "âœ?Removed");
       expectLogContains(runtime, "1 removed, 0 failed");
       expectLogContains(runtime, "automatically recreated");
     });

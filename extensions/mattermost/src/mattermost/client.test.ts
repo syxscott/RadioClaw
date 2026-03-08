@@ -268,13 +268,13 @@ describe("updateMattermostPost", () => {
     await updateMattermostPost(client, "post1", {
       message: "Original message",
       props: {
-        attachments: [{ text: "âœ“ **do_now** selected by @tony" }],
+        attachments: [{ text: "âœ?**do_now** selected by @tony" }],
       },
     });
 
     const body = JSON.parse(calls[0].init?.body as string);
     expect(body.message).toBe("Original message");
-    expect(body.props.attachments[0].text).toContain("âœ“");
+    expect(body.props.attachments[0].text).toContain("âœ?);
     expect(body.props.attachments[0].text).toContain("do_now");
   });
 

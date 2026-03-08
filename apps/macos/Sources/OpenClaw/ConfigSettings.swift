@@ -150,7 +150,7 @@ extension ConfigSettings {
             .font(.title3.weight(.semibold))
         Text(self.isNixMode
             ? "This tab is read-only in Nix mode. Edit config via Nix and rebuild."
-            : "Edit ~/.openclaw/openclaw.json using the schema-driven form.")
+            : "Edit ~/.RadioClaw/RadioClaw.json using the schema-driven form.")
             .font(.callout)
             .foregroundStyle(.secondary)
     }
@@ -174,7 +174,7 @@ extension ConfigSettings {
             }
             .disabled(!self.store.configLoaded)
 
-            Button(self.store.isSavingConfig ? "Savingâ€¦" : "Save") {
+            Button(self.store.isSavingConfig ? "Savingâ€? : "Save") {
                 Task { await self.store.saveConfigDraft() }
             }
             .disabled(self.isNixMode || self.store.isSavingConfig || !self.store.configDirty)

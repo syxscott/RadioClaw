@@ -27,23 +27,13 @@ Core programs that ship with OpenProse. Production-quality, well-tested programs
 The evaluation programs form a recursive improvement cycle:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│   Run Program  ──►  Inspector  ──►  VM Improver ──► PR     │
-│        ▲                │                                   │
-│        │                ▼                                   │
-│        │         Program Improver ──► PR                    │
-│        │                │                                   │
-│        └────────────────┘                                   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+┌─────────────────────────────────────────────────────────────�?�?                                                            �?�?  Run Program  ──�? Inspector  ──�? VM Improver ──�?PR     �?�?       �?               �?                                  �?�?       �?               �?                                  �?�?       �?        Program Improver ──�?PR                    �?�?       �?               �?                                  �?�?       └────────────────�?                                  �?�?                                                            �?└─────────────────────────────────────────────────────────────�?```
 
 Supporting analysis:
 
-- **cost-analyzer** — Where does the money go? Optimization opportunities.
-- **calibrator** — Are cheap evaluations reliable proxies for expensive ones?
-- **error-forensics** — Why did a run fail? Root cause analysis.
+- **cost-analyzer** �?Where does the money go? Optimization opportunities.
+- **calibrator** �?Are cheap evaluations reliable proxies for expensive ones?
+- **error-forensics** �?Why did a run fail? Root cause analysis.
 
 ## Usage
 
@@ -100,9 +90,9 @@ Both recommend `--backend sqlite+` for durable persistence.
 
 ## Design Principles
 
-1. **Production-ready** — Tested, documented, handles edge cases
-2. **Composable** — Can be imported via `use` in other programs
-3. **User-scoped state** — Cross-project utilities use `persist: user`
-4. **Minimal dependencies** — No external services required
-5. **Clear contracts** — Well-defined inputs and outputs
-6. **Incremental value** — Useful in simple mode, more powerful with depth
+1. **Production-ready** �?Tested, documented, handles edge cases
+2. **Composable** �?Can be imported via `use` in other programs
+3. **User-scoped state** �?Cross-project utilities use `persist: user`
+4. **Minimal dependencies** �?No external services required
+5. **Clear contracts** �?Well-defined inputs and outputs
+6. **Incremental value** �?Useful in simple mode, more powerful with depth

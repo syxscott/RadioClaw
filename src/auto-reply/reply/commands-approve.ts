@@ -86,7 +86,7 @@ export const handleApproveCommand: CommandHandler = async (params, allowTextComm
   const missingScope = requireGatewayClientScopeForInternalChannel(params, {
     label: "/approve",
     allowedScopes: ["operator.approvals", "operator.admin"],
-    missingText: "‚ùå /approve requires operator.approvals for gateway clients.",
+    missingText: "‚ù?/approve requires operator.approvals for gateway clients.",
   });
   if (missingScope) {
     return missingScope;
@@ -105,13 +105,13 @@ export const handleApproveCommand: CommandHandler = async (params, allowTextComm
     return {
       shouldContinue: false,
       reply: {
-        text: `‚ùå Failed to submit approval: ${String(err)}`,
+        text: `‚ù?Failed to submit approval: ${String(err)}`,
       },
     };
   }
 
   return {
     shouldContinue: false,
-    reply: { text: `‚úÖ Exec approval ${parsed.decision} submitted for ${parsed.id}.` },
+    reply: { text: `‚ú?Exec approval ${parsed.decision} submitted for ${parsed.id}.` },
   };
 };

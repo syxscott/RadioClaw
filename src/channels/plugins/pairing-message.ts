@@ -1,2 +1,2 @@
 export const PAIRING_APPROVED_MESSAGE =
-  "âœ… OpenClaw access approved. Send a message to start chatting.";
+  "âœ?RadioClaw access approved. Send a message to start chatting.";

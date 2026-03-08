@@ -262,7 +262,7 @@ export function formatBlockedList(ships: string[]): string {
   if (ships.length === 0) {
     return "No ships are currently blocked.";
   }
-  return `Blocked ships (${ships.length}):\n${ships.map((s) => `â€¢ ${s}`).join("\n")}`;
+  return `Blocked ships (${ships.length}):\n${ships.map((s) => `â€?${s}`).join("\n")}`;
 }
 
 /**
@@ -273,6 +273,6 @@ export function formatPendingList(approvals: PendingApproval[]): string {
     return "No pending approval requests.";
   }
   return `Pending approvals (${approvals.length}):\n${approvals
-    .map((a) => `â€¢ ${a.id}: ${a.type} from ${a.requestingShip}`)
+    .map((a) => `â€?${a.id}: ${a.type} from ${a.requestingShip}`)
     .join("\n")}`;
 }

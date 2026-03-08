@@ -1,15 +1,15 @@
 ---
 title: "Node.js"
-summary: "Install and configure Node.js for OpenClaw â€” version requirements, install options, and PATH troubleshooting"
+summary: "Install and configure Node.js for RadioClaw â€?version requirements, install options, and PATH troubleshooting"
 read_when:
-  - "You need to install Node.js before installing OpenClaw"
-  - "You installed OpenClaw but `openclaw` is command not found"
+  - "You need to install Node.js before installing RadioClaw"
+  - "You installed RadioClaw but `RadioClaw` is command not found"
   - "npm install -g fails with permissions or PATH issues"
 ---
 
 # Node.js
 
-OpenClaw requires **Node 22 or newer**. The [installer script](/install#install-methods) will detect and install Node automatically â€” this page is for when you want to set up Node yourself and make sure everything is wired up correctly (versions, PATH, global installs).
+RadioClaw requires **Node 22 or newer**. The [installer script](/install#install-methods) will detect and install Node automatically â€?this page is for when you want to set up Node yourself and make sure everything is wired up correctly (versions, PATH, global installs).
 
 ## Check your version
 
@@ -70,9 +70,9 @@ If this prints `v22.x.x` or higher, you're good. If Node isn't installed or the 
 <Accordion title="Using a version manager (nvm, fnm, mise, asdf)">
   Version managers let you switch between Node versions easily. Popular options:
 
-- [**fnm**](https://github.com/Schniz/fnm) â€” fast, cross-platform
-- [**nvm**](https://github.com/nvm-sh/nvm) â€” widely used on macOS/Linux
-- [**mise**](https://mise.jdx.dev/) â€” polyglot (Node, Python, Ruby, etc.)
+- [**fnm**](https://github.com/Schniz/fnm) â€?fast, cross-platform
+- [**nvm**](https://github.com/nvm-sh/nvm) â€?widely used on macOS/Linux
+- [**mise**](https://mise.jdx.dev/) â€?polyglot (Node, Python, Ruby, etc.)
 
 Example with fnm:
 
@@ -82,13 +82,13 @@ fnm use 22
 ```
 
   <Warning>
-  Make sure your version manager is initialized in your shell startup file (`~/.zshrc` or `~/.bashrc`). If it isn't, `openclaw` may not be found in new terminal sessions because the PATH won't include Node's bin directory.
+  Make sure your version manager is initialized in your shell startup file (`~/.zshrc` or `~/.bashrc`). If it isn't, `RadioClaw` may not be found in new terminal sessions because the PATH won't include Node's bin directory.
   </Warning>
 </Accordion>
 
 ## Troubleshooting
 
-### `openclaw: command not found`
+### `RadioClaw: command not found`
 
 This almost always means npm's global bin directory isn't on your PATH.
 
@@ -118,7 +118,7 @@ This almost always means npm's global bin directory isn't on your PATH.
         Then open a new terminal (or run `rehash` in zsh / `hash -r` in bash).
       </Tab>
       <Tab title="Windows">
-        Add the output of `npm prefix -g` to your system PATH via Settings â†’ System â†’ Environment Variables.
+        Add the output of `npm prefix -g` to your system PATH via Settings â†?System â†?Environment Variables.
       </Tab>
     </Tabs>
 

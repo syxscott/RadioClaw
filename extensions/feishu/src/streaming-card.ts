@@ -3,7 +3,7 @@
  */
 
 import type { Client } from "@larksuiteoapi/node-sdk";
-import { fetchWithSsrFGuard } from "openclaw/plugin-sdk/feishu";
+import { fetchWithSsrFGuard } from "RadioClaw/plugin-sdk/feishu";
 import type { FeishuDomain } from "./types.js";
 
 type Credentials = { appId: string; appSecret: string; domain?: FeishuDomain };
@@ -121,7 +121,7 @@ export function mergeStreamingText(
     return previous;
   }
 
-  // Merge partial overlaps, e.g. "这" + "这是" => "这是".
+  // Merge partial overlaps, e.g. "�? + "这是" => "这是".
   const maxOverlap = Math.min(previous.length, next.length);
   for (let overlap = maxOverlap; overlap > 0; overlap -= 1) {
     if (previous.slice(-overlap) === next.slice(0, overlap)) {
@@ -178,7 +178,7 @@ export class FeishuStreamingSession {
         streaming_config: { print_frequency_ms: { default: 50 }, print_step: { default: 1 } },
       },
       body: {
-        elements: [{ tag: "markdown", content: "⏳ Thinking...", element_id: "content" }],
+        elements: [{ tag: "markdown", content: "�?Thinking...", element_id: "content" }],
       },
     };
     if (options?.header) {
@@ -218,7 +218,7 @@ export class FeishuStreamingSession {
     const cardId = createData.data.card_id;
     const cardContent = JSON.stringify({ type: "card", data: { card_id: cardId } });
 
-    // Prefer message.reply when we have a reply target — reply_in_thread
+    // Prefer message.reply when we have a reply target �?reply_in_thread
     // reliably routes streaming cards into Feishu topics, whereas
     // message.create with root_id may silently ignore root_id for card
     // references (card_id format).

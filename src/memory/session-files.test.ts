@@ -24,7 +24,7 @@ describe("buildSessionEntry", () => {
     // Line 7: user message
     const jsonlLines = [
       JSON.stringify({ type: "custom", customType: "model-snapshot", data: {} }),
-      JSON.stringify({ type: "custom", customType: "openclaw.cache-ttl", data: {} }),
+      JSON.stringify({ type: "custom", customType: "RadioClaw.cache-ttl", data: {} }),
       JSON.stringify({ type: "session-meta", agentId: "test" }),
       JSON.stringify({ type: "message", message: { role: "user", content: "Hello world" } }),
       JSON.stringify({ type: "custom", customType: "tool-result", data: {} }),
@@ -48,9 +48,9 @@ describe("buildSessionEntry", () => {
     expect(contentLines[2]).toContain("User: Tell me a joke");
 
     // lineMap should map each content line to its original JSONL line (1-indexed)
-    // Content line 0 â†’ JSONL line 4 (the first user message)
-    // Content line 1 â†’ JSONL line 6 (the assistant message)
-    // Content line 2 â†’ JSONL line 7 (the second user message)
+    // Content line 0 â†?JSONL line 4 (the first user message)
+    // Content line 1 â†?JSONL line 6 (the assistant message)
+    // Content line 2 â†?JSONL line 7 (the second user message)
     expect(entry!.lineMap).toBeDefined();
     expect(entry!.lineMap).toEqual([4, 6, 7]);
   });

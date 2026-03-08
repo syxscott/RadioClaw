@@ -131,7 +131,7 @@ describe("FeishuBackoffError", () => {
         throw new FeishuBackoffError(99991403);
       } catch (err) {
         if (isFeishuBackoffError(err)) {
-          throw err; // re-thrown â€” this is the fix
+          throw err; // re-thrown â€?this is the fix
         }
         // would be silently swallowed with plain Error
         caught = "swallowed";

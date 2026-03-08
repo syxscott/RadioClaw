@@ -74,16 +74,16 @@ struct VoiceWakeTestCard: View {
             "Press start, say a trigger word, and wait for detection."
 
         case .requesting:
-            "Requesting mic & speech permissionâ€¦"
+            "Requesting mic & speech permissionâ€?
 
         case .listening:
-            "Listeningâ€¦ say your trigger word."
+            "Listeningâ€?say your trigger word."
 
         case let .hearing(text):
             "Heard: \(text)"
 
         case .finalizing:
-            "Finalizingâ€¦"
+            "Finalizingâ€?
 
         case .detected:
             "Voice wake detected!"

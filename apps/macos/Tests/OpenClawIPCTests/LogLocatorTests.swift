@@ -1,17 +1,17 @@
 import Darwin
 import Foundation
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite struct LogLocatorTests {
     @Test func launchdGatewayLogPathEnsuresTmpDirExists() {
         let fm = FileManager()
         let baseDir = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-        let logDir = baseDir.appendingPathComponent("openclaw-tests-\(UUID().uuidString)")
+        let logDir = baseDir.appendingPathComponent("RadioClaw-tests-\(UUID().uuidString)")
 
-        setenv("OPENCLAW_LOG_DIR", logDir.path, 1)
+        setenv("RadioClaw_LOG_DIR", logDir.path, 1)
         defer {
-            unsetenv("OPENCLAW_LOG_DIR")
+            unsetenv("RadioClaw_LOG_DIR")
             try? fm.removeItem(at: logDir)
         }
 

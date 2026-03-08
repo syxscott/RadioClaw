@@ -5,7 +5,7 @@ export function elide(text?: string, limit = 400) {
   if (text.length <= limit) {
     return text;
   }
-  return `${text.slice(0, limit)}â€¦ (truncated ${text.length - limit} chars)`;
+  return `${text.slice(0, limit)}â€?(truncated ${text.length - limit} chars)`;
 }
 
 export function isLikelyWhatsAppCryptoError(reason: unknown) {

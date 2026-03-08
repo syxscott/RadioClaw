@@ -17,7 +17,7 @@ describe("mergeStreamingText", () => {
   });
 
   it("merges overlap between adjacent partial snapshots", () => {
-    expect(mergeStreamingText("好的，让我", "让我再读取一遍")).toBe("好的，让我再读取一遍");
+    expect(mergeStreamingText("好的，让�?, "让我再读取一�?)).toBe("好的，让我再读取一�?);
     expect(mergeStreamingText("revision_id: 552", "2，一点变化都没有")).toBe(
       "revision_id: 552，一点变化都没有",
     );

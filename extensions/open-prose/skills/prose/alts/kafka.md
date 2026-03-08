@@ -82,12 +82,12 @@ An alternative register for OpenProse that draws from the works of Franz Kafkaâ€
 
 These keywords already work or are too functional to replace sensibly:
 
-- `**...**` discretion markers â€” the inscrutable judgment of the apparatus
-- `until`, `while` â€” already work
-- `map`, `filter`, `reduce`, `pmap` â€” pipeline operators
-- `max` â€” constraint modifier
-- `as` â€” aliasing
-- Model names: `sonnet`, `opus`, `haiku` â€” retained (or see "authority" above)
+- `**...**` discretion markers â€?the inscrutable judgment of the apparatus
+- `until`, `while` â€?already work
+- `map`, `filter`, `reduce`, `pmap` â€?pipeline operators
+- `max` â€?constraint modifier
+- `as` â€?aliasing
+- Model names: `sonnet`, `opus`, `haiku` â€?retained (or see "authority" above)
 
 ---
 
@@ -303,9 +303,9 @@ statute config = { authority: "opus", resubmit: 3 }
 | K.            | The protagonist, never fully named | The user                 |
 | The Trial     | Process without clear rules        | Program execution        |
 | The Castle    | Unreachable authority              | Higher-level systems     |
-| Clerk         | Functionary who processes          | `agent` â†’ `clerk`        |
-| Proceeding    | Official action                    | `session` â†’ `proceeding` |
-| Dossier       | Accumulated file                   | `context` â†’ `dossier`    |
+| Clerk         | Functionary who processes          | `agent` â†?`clerk`        |
+| Proceeding    | Official action                    | `session` â†?`proceeding` |
+| Dossier       | Accumulated file                   | `context` â†?`dossier`    |
 
 ---
 
@@ -368,6 +368,6 @@ Not recommended for:
 ## Closing Note
 
 > "Someone must have slandered Josef K., for one morning, without having done anything wrong, he was arrested."
-> â€” _The Trial_
+> â€?_The Trial_
 
 In the Kafka register, your program is Josef K. The apparatus will process it. Whether it succeeds or fails, no one can say for certain. But the proceedings will continue.

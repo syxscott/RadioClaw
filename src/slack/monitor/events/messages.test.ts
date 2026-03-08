@@ -216,7 +216,7 @@ describe("registerSlackMessageEvents", () => {
     expect(handler).toBeTruthy();
 
     // message_changed events from channels arrive via the generic "message"
-    // handler with channel_type:"channel" â€” not a separate event type.
+    // handler with channel_type:"channel" â€?not a separate event type.
     await handler!({
       event: {
         ...makeChangedEvent({ channel: "C1", user: "U1" }),

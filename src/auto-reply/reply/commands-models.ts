@@ -8,7 +8,7 @@ import {
   resolveDefaultModelForAgent,
   resolveModelRefFromString,
 } from "../../agents/model-selection.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import {
   buildModelsKeyboard,
@@ -35,7 +35,7 @@ export type ModelsProviderData = {
  * Exported for reuse by callback handlers.
  */
 export async function buildModelsProviderData(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   agentId?: string,
 ): Promise<ModelsProviderData> {
   const resolvedDefault = resolveDefaultModelForAgent({
@@ -184,7 +184,7 @@ function parseModelsArgs(raw: string): {
 
 function resolveProviderLabel(params: {
   provider: string;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentDir?: string;
   sessionEntry?: SessionEntry;
 }): string {
@@ -203,7 +203,7 @@ function resolveProviderLabel(params: {
 export function formatModelsAvailableHeader(params: {
   provider: string;
   total: number;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentDir?: string;
   sessionEntry?: SessionEntry;
 }): string {
@@ -213,11 +213,11 @@ export function formatModelsAvailableHeader(params: {
     agentDir: params.agentDir,
     sessionEntry: params.sessionEntry,
   });
-  return `Models (${providerLabel}) â€” ${params.total} available`;
+  return `Models (${providerLabel}) â€?${params.total} available`;
 }
 
 export async function resolveModelsCommandReply(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   commandBodyNormalized: string;
   surface?: string;
   currentModel?: string;
@@ -288,7 +288,7 @@ export async function resolveModelsCommandReply(params: {
 
   if (total === 0) {
     const lines: string[] = [
-      `Models (${providerLabel}) â€” none`,
+      `Models (${providerLabel}) â€?none`,
       "",
       "Browse: /models",
       "Switch: /model <provider/model>",
@@ -343,7 +343,7 @@ export async function resolveModelsCommandReply(params: {
   const endIndexExclusive = Math.min(total, startIndex + effectivePageSize);
   const pageModels = models.slice(startIndex, endIndexExclusive);
 
-  const header = `Models (${providerLabel}) â€” showing ${startIndex + 1}-${endIndexExclusive} of ${total} (page ${safePage}/${pageCount})`;
+  const header = `Models (${providerLabel}) â€?showing ${startIndex + 1}-${endIndexExclusive} of ${total} (page ${safePage}/${pageCount})`;
 
   const lines: string[] = [header];
   for (const id of pageModels) {

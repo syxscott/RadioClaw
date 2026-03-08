@@ -71,6 +71,6 @@ export async function handleSubagentsUnfocusAction(
     reason: "manual",
   });
   return stopWithText(
-    channel === "discord" ? "âœ… Thread unfocused." : "âœ… Conversation unfocused.",
+    channel === "discord" ? "âœ?Thread unfocused." : "âœ?Conversation unfocused.",
   );
 }

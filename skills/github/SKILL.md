@@ -3,7 +3,7 @@ name: github
 description: "GitHub operations via `gh` CLI: issues, PRs, CI runs, code review, API queries. Use when: (1) checking PR status or CI, (2) creating/commenting on issues, (3) listing/filtering PRs or issues, (4) viewing run logs. NOT for: complex web UI interactions requiring manual browser flows (use browser tooling when available), bulk operations across many repos (script with gh api), or when gh auth is not configured."
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
         "emoji": "üêô",
         "requires": { "bins": ["gh"] },
@@ -34,7 +34,7 @@ Use the `gh` CLI to interact with GitHub repositories, issues, PRs, and CI.
 
 ## When to Use
 
-‚úÖ **USE this skill when:**
+‚ú?**USE this skill when:**
 
 - Checking PR status, reviews, or merge readiness
 - Viewing CI/workflow run status and logs
@@ -45,13 +45,13 @@ Use the `gh` CLI to interact with GitHub repositories, issues, PRs, and CI.
 
 ## When NOT to Use
 
-‚ùå **DON'T use this skill when:**
+‚ù?**DON'T use this skill when:**
 
-- Local git operations (commit, push, pull, branch) ‚Üí use `git` directly
-- Non-GitHub repos (GitLab, Bitbucket, self-hosted) ‚Üí different CLIs
-- Cloning repositories ‚Üí use `git clone`
-- Reviewing actual code changes ‚Üí use `coding-agent` skill
-- Complex multi-file diffs ‚Üí use `coding-agent` or read files directly
+- Local git operations (commit, push, pull, branch) ‚Ü?use `git` directly
+- Non-GitHub repos (GitLab, Bitbucket, self-hosted) ‚Ü?different CLIs
+- Cloning repositories ‚Ü?use `git clone`
+- Reviewing actual code changes ‚Ü?use `coding-agent` skill
+- Complex multi-file diffs ‚Ü?use `coding-agent` or read files directly
 
 ## Setup
 

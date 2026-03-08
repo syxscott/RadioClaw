@@ -30,18 +30,18 @@ Only clients that explicitly call `node.pair.*` use this flow.
 2. The Gateway stores a **pending request** and emits `node.pair.requested`.
 3. You approve or reject the request (CLI or UI).
 4. On approval, the Gateway issues a **new token** (tokens are rotated on re‚Äëpair).
-5. The node reconnects using the token and is now ‚Äúpaired‚Äù.
+5. The node reconnects using the token and is now ‚Äúpaired‚Ä?
 
 Pending requests expire automatically after **5 minutes**.
 
 ## CLI workflow (headless friendly)
 
 ```bash
-openclaw nodes pending
-openclaw nodes approve <requestId>
-openclaw nodes reject <requestId>
-openclaw nodes status
-openclaw nodes rename --node <id|name|ip> --name "Living Room iPad"
+RadioClaw nodes pending
+RadioClaw nodes approve <requestId>
+RadioClaw nodes reject <requestId>
+RadioClaw nodes status
+RadioClaw nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.
@@ -50,16 +50,16 @@ openclaw nodes rename --node <id|name|ip> --name "Living Room iPad"
 
 Events:
 
-- `node.pair.requested` ‚Äî emitted when a new pending request is created.
-- `node.pair.resolved` ‚Äî emitted when a request is approved/rejected/expired.
+- `node.pair.requested` ‚Ä?emitted when a new pending request is created.
+- `node.pair.resolved` ‚Ä?emitted when a request is approved/rejected/expired.
 
 Methods:
 
-- `node.pair.request` ‚Äî create or reuse a pending request.
-- `node.pair.list` ‚Äî list pending + paired nodes.
-- `node.pair.approve` ‚Äî approve a pending request (issues token).
-- `node.pair.reject` ‚Äî reject a pending request.
-- `node.pair.verify` ‚Äî verify `{ nodeId, token }`.
+- `node.pair.request` ‚Ä?create or reuse a pending request.
+- `node.pair.list` ‚Ä?list pending + paired nodes.
+- `node.pair.approve` ‚Ä?approve a pending request (issues token).
+- `node.pair.reject` ‚Ä?reject a pending request.
+- `node.pair.verify` ‚Ä?verify `{ nodeId, token }`.
 
 Notes:
 
@@ -76,16 +76,16 @@ The macOS app can optionally attempt a **silent approval** when:
 - the request is marked `silent`, and
 - the app can verify an SSH connection to the gateway host using the same user.
 
-If silent approval fails, it falls back to the normal ‚ÄúApprove/Reject‚Äù prompt.
+If silent approval fails, it falls back to the normal ‚ÄúApprove/Reject‚Ä?prompt.
 
 ## Storage (local, private)
 
-Pairing state is stored under the Gateway state directory (default `~/.openclaw`):
+Pairing state is stored under the Gateway state directory (default `~/.RadioClaw`):
 
-- `~/.openclaw/nodes/paired.json`
-- `~/.openclaw/nodes/pending.json`
+- `~/.RadioClaw/nodes/paired.json`
+- `~/.RadioClaw/nodes/pending.json`
 
-If you override `OPENCLAW_STATE_DIR`, the `nodes/` folder moves with it.
+If you override `RadioClaw_STATE_DIR`, the `nodes/` folder moves with it.
 
 Security notes:
 

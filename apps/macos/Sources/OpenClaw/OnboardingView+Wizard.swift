@@ -1,5 +1,5 @@
 import Observation
-import OpenClawProtocol
+import RadioClawProtocol
 import SwiftUI
 
 extension OnboardingView {
@@ -72,7 +72,7 @@ private struct OnboardingWizardCardContent: View {
         case .starting:
             HStack(spacing: 8) {
                 ProgressView()
-                Text("Starting wizardâ€¦")
+                Text("Starting wizardâ€?)
                     .foregroundStyle(.secondary)
             }
         case let .step(step):
@@ -87,7 +87,7 @@ private struct OnboardingWizardCardContent: View {
             Text("Wizard complete. Continue to the next step.")
                 .font(.headline)
         case .waiting:
-            Text("Waiting for wizardâ€¦")
+            Text("Waiting for wizardâ€?)
                 .foregroundStyle(.secondary)
         }
     }

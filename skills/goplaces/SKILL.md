@@ -4,7 +4,7 @@ description: Query Google Places API (New) via the goplaces CLI for text search,
 homepage: https://github.com/steipete/goplaces
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
         "emoji": "📍",
         "requires": { "bins": ["goplaces"], "env": ["GOOGLE_PLACES_API_KEY"] },
@@ -48,5 +48,5 @@ Common commands
 Notes
 
 - `--no-color` or `NO_COLOR` disables ANSI color.
-- Price levels: 0..4 (free → very expensive).
+- Price levels: 0..4 (free �?very expensive).
 - Type filter sends only the first `--type` value (API accepts one).

@@ -1,18 +1,18 @@
-package ai.openclaw.app.node
+package ai.RadioClaw.app.node
 
-import ai.openclaw.app.gateway.GatewaySession
-import ai.openclaw.app.protocol.OpenClawCalendarCommand
-import ai.openclaw.app.protocol.OpenClawCanvasA2UICommand
-import ai.openclaw.app.protocol.OpenClawCanvasCommand
-import ai.openclaw.app.protocol.OpenClawCameraCommand
-import ai.openclaw.app.protocol.OpenClawContactsCommand
-import ai.openclaw.app.protocol.OpenClawDeviceCommand
-import ai.openclaw.app.protocol.OpenClawLocationCommand
-import ai.openclaw.app.protocol.OpenClawMotionCommand
-import ai.openclaw.app.protocol.OpenClawNotificationsCommand
-import ai.openclaw.app.protocol.OpenClawScreenCommand
-import ai.openclaw.app.protocol.OpenClawSmsCommand
-import ai.openclaw.app.protocol.OpenClawSystemCommand
+import ai.RadioClaw.app.gateway.GatewaySession
+import ai.RadioClaw.app.protocol.RadioClawCalendarCommand
+import ai.RadioClaw.app.protocol.RadioClawCanvasA2UICommand
+import ai.RadioClaw.app.protocol.RadioClawCanvasCommand
+import ai.RadioClaw.app.protocol.RadioClawCameraCommand
+import ai.RadioClaw.app.protocol.RadioClawContactsCommand
+import ai.RadioClaw.app.protocol.RadioClawDeviceCommand
+import ai.RadioClaw.app.protocol.RadioClawLocationCommand
+import ai.RadioClaw.app.protocol.RadioClawMotionCommand
+import ai.RadioClaw.app.protocol.RadioClawNotificationsCommand
+import ai.RadioClaw.app.protocol.RadioClawScreenCommand
+import ai.RadioClaw.app.protocol.RadioClawSmsCommand
+import ai.RadioClaw.app.protocol.RadioClawSystemCommand
 
 class InvokeDispatcher(
   private val canvas: CanvasController,
@@ -58,18 +58,18 @@ class InvokeDispatcher(
 
     return when (command) {
       // Canvas commands
-      OpenClawCanvasCommand.Present.rawValue -> {
+      RadioClawCanvasCommand.Present.rawValue -> {
         val url = CanvasController.parseNavigateUrl(paramsJson)
         canvas.navigate(url)
         GatewaySession.InvokeResult.ok(null)
       }
-      OpenClawCanvasCommand.Hide.rawValue -> GatewaySession.InvokeResult.ok(null)
-      OpenClawCanvasCommand.Navigate.rawValue -> {
+      RadioClawCanvasCommand.Hide.rawValue -> GatewaySession.InvokeResult.ok(null)
+      RadioClawCanvasCommand.Navigate.rawValue -> {
         val url = CanvasController.parseNavigateUrl(paramsJson)
         canvas.navigate(url)
         GatewaySession.InvokeResult.ok(null)
       }
-      OpenClawCanvasCommand.Eval.rawValue -> {
+      RadioClawCanvasCommand.Eval.rawValue -> {
         val js =
           CanvasController.parseEvalJs(paramsJson)
             ?: return GatewaySession.InvokeResult.error(
@@ -81,7 +81,7 @@ class InvokeDispatcher(
           GatewaySession.InvokeResult.ok("""{"result":${result.toJsonString()}}""")
         }
       }
-      OpenClawCanvasCommand.Snapshot.rawValue -> {
+      RadioClawCanvasCommand.Snapshot.rawValue -> {
         val snapshotParams = CanvasController.parseSnapshotParams(paramsJson)
         withCanvasAvailable {
           val base64 =
@@ -95,7 +95,7 @@ class InvokeDispatcher(
       }
 
       // A2UI commands
-      OpenClawCanvasA2UICommand.Reset.rawValue ->
+      RadioClawCanvasA2UICommand.Reset.rawValue ->
         withReadyA2ui {
           withCanvasAvailable {
             val res = canvas.eval(A2UIHandler.a2uiResetJS)
@@ -103,7 +103,7 @@ class InvokeDispatcher(
             GatewaySession.InvokeResult.ok(res)
           }
         }
-      OpenClawCanvasA2UICommand.Push.rawValue, OpenClawCanvasA2UICommand.PushJSONL.rawValue -> {
+      RadioClawCanvasA2UICommand.Push.rawValue, RadioClawCanvasA2UICommand.PushJSONL.rawValue -> {
         val messages =
           try {
             a2uiHandler.decodeA2uiMessages(command, paramsJson)
@@ -124,48 +124,48 @@ class InvokeDispatcher(
       }
 
       // Camera commands
-      OpenClawCameraCommand.List.rawValue -> cameraHandler.handleList(paramsJson)
-      OpenClawCameraCommand.Snap.rawValue -> cameraHandler.handleSnap(paramsJson)
-      OpenClawCameraCommand.Clip.rawValue -> cameraHandler.handleClip(paramsJson)
+      RadioClawCameraCommand.List.rawValue -> cameraHandler.handleList(paramsJson)
+      RadioClawCameraCommand.Snap.rawValue -> cameraHandler.handleSnap(paramsJson)
+      RadioClawCameraCommand.Clip.rawValue -> cameraHandler.handleClip(paramsJson)
 
       // Location command
-      OpenClawLocationCommand.Get.rawValue -> locationHandler.handleLocationGet(paramsJson)
+      RadioClawLocationCommand.Get.rawValue -> locationHandler.handleLocationGet(paramsJson)
 
       // Device commands
-      OpenClawDeviceCommand.Status.rawValue -> deviceHandler.handleDeviceStatus(paramsJson)
-      OpenClawDeviceCommand.Info.rawValue -> deviceHandler.handleDeviceInfo(paramsJson)
-      OpenClawDeviceCommand.Permissions.rawValue -> deviceHandler.handleDevicePermissions(paramsJson)
-      OpenClawDeviceCommand.Health.rawValue -> deviceHandler.handleDeviceHealth(paramsJson)
+      RadioClawDeviceCommand.Status.rawValue -> deviceHandler.handleDeviceStatus(paramsJson)
+      RadioClawDeviceCommand.Info.rawValue -> deviceHandler.handleDeviceInfo(paramsJson)
+      RadioClawDeviceCommand.Permissions.rawValue -> deviceHandler.handleDevicePermissions(paramsJson)
+      RadioClawDeviceCommand.Health.rawValue -> deviceHandler.handleDeviceHealth(paramsJson)
 
       // Notifications command
-      OpenClawNotificationsCommand.List.rawValue -> notificationsHandler.handleNotificationsList(paramsJson)
-      OpenClawNotificationsCommand.Actions.rawValue -> notificationsHandler.handleNotificationsActions(paramsJson)
+      RadioClawNotificationsCommand.List.rawValue -> notificationsHandler.handleNotificationsList(paramsJson)
+      RadioClawNotificationsCommand.Actions.rawValue -> notificationsHandler.handleNotificationsActions(paramsJson)
 
       // System command
-      OpenClawSystemCommand.Notify.rawValue -> systemHandler.handleSystemNotify(paramsJson)
+      RadioClawSystemCommand.Notify.rawValue -> systemHandler.handleSystemNotify(paramsJson)
 
       // Photos command
-      ai.openclaw.app.protocol.OpenClawPhotosCommand.Latest.rawValue -> photosHandler.handlePhotosLatest(
+      ai.RadioClaw.app.protocol.RadioClawPhotosCommand.Latest.rawValue -> photosHandler.handlePhotosLatest(
         paramsJson,
       )
 
       // Contacts command
-      OpenClawContactsCommand.Search.rawValue -> contactsHandler.handleContactsSearch(paramsJson)
-      OpenClawContactsCommand.Add.rawValue -> contactsHandler.handleContactsAdd(paramsJson)
+      RadioClawContactsCommand.Search.rawValue -> contactsHandler.handleContactsSearch(paramsJson)
+      RadioClawContactsCommand.Add.rawValue -> contactsHandler.handleContactsAdd(paramsJson)
 
       // Calendar command
-      OpenClawCalendarCommand.Events.rawValue -> calendarHandler.handleCalendarEvents(paramsJson)
-      OpenClawCalendarCommand.Add.rawValue -> calendarHandler.handleCalendarAdd(paramsJson)
+      RadioClawCalendarCommand.Events.rawValue -> calendarHandler.handleCalendarEvents(paramsJson)
+      RadioClawCalendarCommand.Add.rawValue -> calendarHandler.handleCalendarAdd(paramsJson)
 
       // Motion command
-      OpenClawMotionCommand.Activity.rawValue -> motionHandler.handleMotionActivity(paramsJson)
-      OpenClawMotionCommand.Pedometer.rawValue -> motionHandler.handleMotionPedometer(paramsJson)
+      RadioClawMotionCommand.Activity.rawValue -> motionHandler.handleMotionActivity(paramsJson)
+      RadioClawMotionCommand.Pedometer.rawValue -> motionHandler.handleMotionPedometer(paramsJson)
 
       // Screen command
-      OpenClawScreenCommand.Record.rawValue -> screenHandler.handleScreenRecord(paramsJson)
+      RadioClawScreenCommand.Record.rawValue -> screenHandler.handleScreenRecord(paramsJson)
 
       // SMS command
-      OpenClawSmsCommand.Send.rawValue -> smsHandler.handleSmsSend(paramsJson)
+      RadioClawSmsCommand.Send.rawValue -> smsHandler.handleSmsSend(paramsJson)
 
       // Debug commands
       "debug.ed25519" -> debugHandler.handleEd25519()

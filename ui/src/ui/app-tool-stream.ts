@@ -168,7 +168,7 @@ function formatToolOutput(value: unknown): string | null {
   if (!truncated.truncated) {
     return truncated.text;
   }
-  return `${truncated.text}\n\nâ€¦ truncated (${truncated.total} chars, showing first ${truncated.text.length}).`;
+  return `${truncated.text}\n\nâ€?truncated (${truncated.total} chars, showing first ${truncated.text.length}).`;
 }
 
 function buildToolStreamMessage(entry: ToolStreamEntry): Record<string, unknown> {
@@ -411,7 +411,7 @@ export function handleAgentEvent(host: ToolStreamHost, payload?: AgentEventPaylo
 
   // Filter by session only. Don't check chatRunId because the client sets it
   // to a client-generated UUID (via generateUUID in sendChatMessage), while
-  // tool events arrive with the server's engine runId â€” they can never match.
+  // tool events arrive with the server's engine runId â€?they can never match.
   const sessionKey = typeof payload.sessionKey === "string" ? payload.sessionKey : undefined;
   if (sessionKey && sessionKey !== host.sessionKey) {
     return;

@@ -10,23 +10,23 @@ title: "Development Channels"
 
 Last updated: 2026-01-21
 
-OpenClaw ships three update channels:
+RadioClaw ships three update channels:
 
 - **stable**: npm dist-tag `latest`.
 - **beta**: npm dist-tag `beta` (builds under test).
 - **dev**: moving head of `main` (git). npm dist-tag: `dev` (when published).
 
 We ship builds to **beta**, test them, then **promote a vetted build to `latest`**
-without changing the version number ‚Äî dist-tags are the source of truth for npm installs.
+without changing the version number ‚Ä?dist-tags are the source of truth for npm installs.
 
 ## Switching channels
 
 Git checkout:
 
 ```bash
-openclaw update --channel stable
-openclaw update --channel beta
-openclaw update --channel dev
+RadioClaw update --channel stable
+RadioClaw update --channel beta
+RadioClaw update --channel dev
 ```
 
 - `stable`/`beta` check out the latest matching tag (often the same tag).
@@ -35,17 +35,17 @@ openclaw update --channel dev
 npm/pnpm global install:
 
 ```bash
-openclaw update --channel stable
-openclaw update --channel beta
-openclaw update --channel dev
+RadioClaw update --channel stable
+RadioClaw update --channel beta
+RadioClaw update --channel dev
 ```
 
 This updates via the corresponding npm dist-tag (`latest`, `beta`, `dev`).
 
-When you **explicitly** switch channels with `--channel`, OpenClaw also aligns
+When you **explicitly** switch channels with `--channel`, RadioClaw also aligns
 the install method:
 
-- `dev` ensures a git checkout (default `~/openclaw`, override with `OPENCLAW_GIT_DIR`),
+- `dev` ensures a git checkout (default `~/RadioClaw`, override with `RadioClaw_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` installs from npm using the matching dist-tag.
 
@@ -53,7 +53,7 @@ Tip: if you want stable + dev in parallel, keep two clones and point your gatewa
 
 ## Plugins and channels
 
-When you switch channels with `openclaw update`, OpenClaw also syncs plugin sources:
+When you switch channels with `RadioClaw update`, RadioClaw also syncs plugin sources:
 
 - `dev` prefers bundled plugins from the git checkout.
 - `stable` and `beta` restore npm-installed plugin packages.
@@ -65,13 +65,13 @@ When you switch channels with `openclaw update`, OpenClaw also syncs plugin sour
 - Legacy `vYYYY.M.D-<patch>` tags are still recognized as stable (non-beta).
 - Keep tags immutable: never move or reuse a tag.
 - npm dist-tags remain the source of truth for npm installs:
-  - `latest` ‚Üí stable
-  - `beta` ‚Üí candidate build
-  - `dev` ‚Üí main snapshot (optional)
+  - `latest` ‚Ü?stable
+  - `beta` ‚Ü?candidate build
+  - `dev` ‚Ü?main snapshot (optional)
 
 ## macOS app availability
 
 Beta and dev builds may **not** include a macOS app release. That‚Äôs OK:
 
 - The git tag and npm dist-tag can still be published.
-- Call out ‚Äúno macOS build for this beta‚Äù in release notes or changelog.
+- Call out ‚Äúno macOS build for this beta‚Ä?in release notes or changelog.

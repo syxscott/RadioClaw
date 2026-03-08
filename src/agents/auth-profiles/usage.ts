@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { normalizeProviderId } from "../model-selection.js";
 import { saveAuthProfileStore, updateAuthProfileStoreWithLock } from "./store.js";
 import type { AuthProfileFailureReason, AuthProfileStore, ProfileUsageStats } from "./types.js";
@@ -166,9 +166,9 @@ export function getSoonestCooldownExpiry(
  *
  * When `cooldownUntil` or `disabledUntil` has passed, the corresponding fields
  * are removed and error counters are reset so the profile gets a fresh start
- * (circuit-breaker half-open â†’ closed). Without this, a stale `errorCount`
+ * (circuit-breaker half-open â†?closed). Without this, a stale `errorCount`
  * causes the *next* transient failure to immediately escalate to a much longer
- * cooldown â€” the root cause of profiles appearing "stuck" after rate limits.
+ * cooldown â€?the root cause of profiles appearing "stuck" after rate limits.
  *
  * `cooldownUntil` and `disabledUntil` are handled independently: if a profile
  * has both and only one has expired, only that field is cleared.
@@ -283,7 +283,7 @@ type ResolvedAuthCooldownConfig = {
 };
 
 function resolveAuthCooldownConfig(params: {
-  cfg?: OpenClawConfig;
+  cfg?: RadioClawConfig;
   providerId: string;
 }): ResolvedAuthCooldownConfig {
   const defaults = {
@@ -450,7 +450,7 @@ export async function markAuthProfileFailure(params: {
   store: AuthProfileStore;
   profileId: string;
   reason: AuthProfileFailureReason;
-  cfg?: OpenClawConfig;
+  cfg?: RadioClawConfig;
   agentDir?: string;
 }): Promise<void> {
   const { store, profileId, reason, agentDir, cfg } = params;

@@ -3,7 +3,7 @@ import {
   buildOpenGroupPolicyWarning,
   collectAllowlistProviderGroupPolicyWarnings,
   createScopedAccountConfigAccessors,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -15,7 +15,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk/matrix";
+} from "RadioClaw/plugin-sdk/matrix";
 import { matrixMessageActions } from "./actions.js";
 import { MatrixConfigSchema } from "./config-schema.js";
 import { listMatrixDirectoryGroupsLive, listMatrixDirectoryPeersLive } from "./directory-live.js";

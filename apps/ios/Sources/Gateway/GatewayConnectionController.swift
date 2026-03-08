@@ -6,7 +6,7 @@ import CryptoKit
 import EventKit
 import Foundation
 import Darwin
-import OpenClawKit
+import RadioClawKit
 import Network
 import Observation
 import os
@@ -456,7 +456,7 @@ final class GatewayConnectionController {
         Task { [weak appModel] in
             guard let appModel else { return }
             await MainActor.run {
-                appModel.gatewayStatusText = "Connectingâ€¦"
+                appModel.gatewayStatusText = "Connectingâ€?
             }
             let cfg = GatewayConnectConfig(
                 url: url,
@@ -755,7 +755,7 @@ final class GatewayConnectionController {
         if manualClientId?.isEmpty == false {
             return manualClientId!
         }
-        return "openclaw-ios"
+        return "RadioClaw-ios"
     }
 
     private func resolveManualPort(host: String, port: Int, useTLS: Bool) -> Int? {
@@ -785,32 +785,32 @@ final class GatewayConnectionController {
     }
 
     private func currentCaps() -> [String] {
-        var caps = [OpenClawCapability.canvas.rawValue, OpenClawCapability.screen.rawValue]
+        var caps = [RadioClawCapability.canvas.rawValue, RadioClawCapability.screen.rawValue]
 
         // Default-on: if the key doesn't exist yet, treat it as enabled.
         let cameraEnabled =
             UserDefaults.standard.object(forKey: "camera.enabled") == nil
                 ? true
                 : UserDefaults.standard.bool(forKey: "camera.enabled")
-        if cameraEnabled { caps.append(OpenClawCapability.camera.rawValue) }
+        if cameraEnabled { caps.append(RadioClawCapability.camera.rawValue) }
 
         let voiceWakeEnabled = UserDefaults.standard.bool(forKey: VoiceWakePreferences.enabledKey)
-        if voiceWakeEnabled { caps.append(OpenClawCapability.voiceWake.rawValue) }
+        if voiceWakeEnabled { caps.append(RadioClawCapability.voiceWake.rawValue) }
 
         let locationModeRaw = UserDefaults.standard.string(forKey: "location.enabledMode") ?? "off"
-        let locationMode = OpenClawLocationMode(rawValue: locationModeRaw) ?? .off
-        if locationMode != .off { caps.append(OpenClawCapability.location.rawValue) }
+        let locationMode = RadioClawLocationMode(rawValue: locationModeRaw) ?? .off
+        if locationMode != .off { caps.append(RadioClawCapability.location.rawValue) }
 
-        caps.append(OpenClawCapability.device.rawValue)
+        caps.append(RadioClawCapability.device.rawValue)
         if WatchMessagingService.isSupportedOnDevice() {
-            caps.append(OpenClawCapability.watch.rawValue)
+            caps.append(RadioClawCapability.watch.rawValue)
         }
-        caps.append(OpenClawCapability.photos.rawValue)
-        caps.append(OpenClawCapability.contacts.rawValue)
-        caps.append(OpenClawCapability.calendar.rawValue)
-        caps.append(OpenClawCapability.reminders.rawValue)
+        caps.append(RadioClawCapability.photos.rawValue)
+        caps.append(RadioClawCapability.contacts.rawValue)
+        caps.append(RadioClawCapability.calendar.rawValue)
+        caps.append(RadioClawCapability.reminders.rawValue)
         if Self.motionAvailable() {
-            caps.append(OpenClawCapability.motion.rawValue)
+            caps.append(RadioClawCapability.motion.rawValue)
         }
 
         return caps
@@ -818,58 +818,58 @@ final class GatewayConnectionController {
 
     private func currentCommands() -> [String] {
         var commands: [String] = [
-            OpenClawCanvasCommand.present.rawValue,
-            OpenClawCanvasCommand.hide.rawValue,
-            OpenClawCanvasCommand.navigate.rawValue,
-            OpenClawCanvasCommand.evalJS.rawValue,
-            OpenClawCanvasCommand.snapshot.rawValue,
-            OpenClawCanvasA2UICommand.push.rawValue,
-            OpenClawCanvasA2UICommand.pushJSONL.rawValue,
-            OpenClawCanvasA2UICommand.reset.rawValue,
-            OpenClawScreenCommand.record.rawValue,
-            OpenClawSystemCommand.notify.rawValue,
-            OpenClawChatCommand.push.rawValue,
-            OpenClawTalkCommand.pttStart.rawValue,
-            OpenClawTalkCommand.pttStop.rawValue,
-            OpenClawTalkCommand.pttCancel.rawValue,
-            OpenClawTalkCommand.pttOnce.rawValue,
+            RadioClawCanvasCommand.present.rawValue,
+            RadioClawCanvasCommand.hide.rawValue,
+            RadioClawCanvasCommand.navigate.rawValue,
+            RadioClawCanvasCommand.evalJS.rawValue,
+            RadioClawCanvasCommand.snapshot.rawValue,
+            RadioClawCanvasA2UICommand.push.rawValue,
+            RadioClawCanvasA2UICommand.pushJSONL.rawValue,
+            RadioClawCanvasA2UICommand.reset.rawValue,
+            RadioClawScreenCommand.record.rawValue,
+            RadioClawSystemCommand.notify.rawValue,
+            RadioClawChatCommand.push.rawValue,
+            RadioClawTalkCommand.pttStart.rawValue,
+            RadioClawTalkCommand.pttStop.rawValue,
+            RadioClawTalkCommand.pttCancel.rawValue,
+            RadioClawTalkCommand.pttOnce.rawValue,
         ]
 
         let caps = Set(self.currentCaps())
-        if caps.contains(OpenClawCapability.camera.rawValue) {
-            commands.append(OpenClawCameraCommand.list.rawValue)
-            commands.append(OpenClawCameraCommand.snap.rawValue)
-            commands.append(OpenClawCameraCommand.clip.rawValue)
+        if caps.contains(RadioClawCapability.camera.rawValue) {
+            commands.append(RadioClawCameraCommand.list.rawValue)
+            commands.append(RadioClawCameraCommand.snap.rawValue)
+            commands.append(RadioClawCameraCommand.clip.rawValue)
         }
-        if caps.contains(OpenClawCapability.location.rawValue) {
-            commands.append(OpenClawLocationCommand.get.rawValue)
+        if caps.contains(RadioClawCapability.location.rawValue) {
+            commands.append(RadioClawLocationCommand.get.rawValue)
         }
-        if caps.contains(OpenClawCapability.device.rawValue) {
-            commands.append(OpenClawDeviceCommand.status.rawValue)
-            commands.append(OpenClawDeviceCommand.info.rawValue)
+        if caps.contains(RadioClawCapability.device.rawValue) {
+            commands.append(RadioClawDeviceCommand.status.rawValue)
+            commands.append(RadioClawDeviceCommand.info.rawValue)
         }
-        if caps.contains(OpenClawCapability.watch.rawValue) {
-            commands.append(OpenClawWatchCommand.status.rawValue)
-            commands.append(OpenClawWatchCommand.notify.rawValue)
+        if caps.contains(RadioClawCapability.watch.rawValue) {
+            commands.append(RadioClawWatchCommand.status.rawValue)
+            commands.append(RadioClawWatchCommand.notify.rawValue)
         }
-        if caps.contains(OpenClawCapability.photos.rawValue) {
-            commands.append(OpenClawPhotosCommand.latest.rawValue)
+        if caps.contains(RadioClawCapability.photos.rawValue) {
+            commands.append(RadioClawPhotosCommand.latest.rawValue)
         }
-        if caps.contains(OpenClawCapability.contacts.rawValue) {
-            commands.append(OpenClawContactsCommand.search.rawValue)
-            commands.append(OpenClawContactsCommand.add.rawValue)
+        if caps.contains(RadioClawCapability.contacts.rawValue) {
+            commands.append(RadioClawContactsCommand.search.rawValue)
+            commands.append(RadioClawContactsCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.calendar.rawValue) {
-            commands.append(OpenClawCalendarCommand.events.rawValue)
-            commands.append(OpenClawCalendarCommand.add.rawValue)
+        if caps.contains(RadioClawCapability.calendar.rawValue) {
+            commands.append(RadioClawCalendarCommand.events.rawValue)
+            commands.append(RadioClawCalendarCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.reminders.rawValue) {
-            commands.append(OpenClawRemindersCommand.list.rawValue)
-            commands.append(OpenClawRemindersCommand.add.rawValue)
+        if caps.contains(RadioClawCapability.reminders.rawValue) {
+            commands.append(RadioClawRemindersCommand.list.rawValue)
+            commands.append(RadioClawRemindersCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.motion.rawValue) {
-            commands.append(OpenClawMotionCommand.activity.rawValue)
-            commands.append(OpenClawMotionCommand.pedometer.rawValue)
+        if caps.contains(RadioClawCapability.motion.rawValue) {
+            commands.append(RadioClawMotionCommand.activity.rawValue)
+            commands.append(RadioClawMotionCommand.pedometer.rawValue)
         }
 
         return commands

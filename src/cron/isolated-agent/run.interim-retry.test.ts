@@ -14,7 +14,7 @@ import {
 
 const runCronIsolatedAgentTurn = await loadRunCronIsolatedAgentTurn();
 
-describe("runCronIsolatedAgentTurn â€” interim ack retry", () => {
+describe("runCronIsolatedAgentTurn â€?interim ack retry", () => {
   setupRunCronIsolatedAgentTurnSuite();
 
   const mockFallbackPassthrough = () => {

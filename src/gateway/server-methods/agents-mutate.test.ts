@@ -87,7 +87,7 @@ vi.mock("../../infra/fs-safe.js", async () => {
   };
 });
 
-// Mock node:fs/promises â€“ agents.ts uses `import fs from "node:fs/promises"`
+// Mock node:fs/promises â€?agents.ts uses `import fs from "node:fs/promises"`
 // which resolves to the module namespace default, so we spread actual and
 // override the methods we need, plus set `default` explicitly.
 vi.mock("node:fs/promises", async () => {

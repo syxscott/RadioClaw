@@ -1,6 +1,6 @@
 import type { App } from "@slack/bolt";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import type { SlackMessageEvent } from "../types.js";
 import { resolveSlackChannelConfig } from "./channel-config.js";
@@ -84,7 +84,7 @@ describe("resolveSlackChannelConfig", () => {
 });
 
 const baseParams = () => ({
-  cfg: {} as OpenClawConfig,
+  cfg: {} as RadioClawConfig,
   accountId: "default",
   botToken: "token",
   app: { client: {} } as App,
@@ -109,7 +109,7 @@ const baseParams = () => ({
   replyToMode: "off" as const,
   slashCommand: {
     enabled: false,
-    name: "openclaw",
+    name: "RadioClaw",
     sessionPrefix: "slack:slash",
     ephemeral: true,
   },
@@ -158,7 +158,7 @@ describe("normalizeSlackChannelType", () => {
   });
 
   it("overrides wrong channel_type for D-prefix DM channels", () => {
-    // Slack DM channel IDs always start with "D" â€” if the event
+    // Slack DM channel IDs always start with "D" â€?if the event
     // reports a wrong channel_type, the D-prefix should win.
     expect(normalizeSlackChannelType("channel", "D123")).toBe("im");
     expect(normalizeSlackChannelType("group", "D456")).toBe("im");
@@ -171,7 +171,7 @@ describe("normalizeSlackChannelType", () => {
 
   it("does not override G-prefix channel_type (ambiguous prefix)", () => {
     // G-prefix can be either "group" (private channel) or "mpim" (group DM)
-    // â€” trust the provided channel_type since the prefix is ambiguous.
+    // â€?trust the provided channel_type since the prefix is ambiguous.
     expect(normalizeSlackChannelType("group", "G123")).toBe("group");
     expect(normalizeSlackChannelType("mpim", "G456")).toBe("mpim");
   });

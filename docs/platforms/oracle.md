@@ -1,19 +1,19 @@
 ---
-summary: "OpenClaw on Oracle Cloud (Always Free ARM)"
+summary: "RadioClaw on Oracle Cloud (Always Free ARM)"
 read_when:
-  - Setting up OpenClaw on Oracle Cloud
-  - Looking for low-cost VPS hosting for OpenClaw
-  - Want 24/7 OpenClaw on a small server
+  - Setting up RadioClaw on Oracle Cloud
+  - Looking for low-cost VPS hosting for RadioClaw
+  - Want 24/7 RadioClaw on a small server
 title: "Oracle Cloud"
 ---
 
-# OpenClaw on Oracle Cloud (OCI)
+# RadioClaw on Oracle Cloud (OCI)
 
 ## Goal
 
-Run a persistent OpenClaw Gateway on Oracle Cloud's **Always Free** ARM tier.
+Run a persistent RadioClaw Gateway on Oracle Cloud's **Always Free** ARM tier.
 
-Oracle‚Äôs free tier can be a great fit for OpenClaw (especially if you already have an OCI account), but it comes with tradeoffs:
+Oracle‚Äôs free tier can be a great fit for RadioClaw (especially if you already have an OCI account), but it comes with tradeoffs:
 
 - ARM architecture (most things work, but some binaries may be x86-only)
 - Capacity and signup can be finicky
@@ -32,16 +32,16 @@ Oracle‚Äôs free tier can be a great fit for OpenClaw (especially if you already 
 
 ## Prerequisites
 
-- Oracle Cloud account ([signup](https://www.oracle.com/cloud/free/)) ‚Äî see [community signup guide](https://gist.github.com/rssnyder/51e3cfedd730e7dd5f4a816143b25dbd) if you hit issues
+- Oracle Cloud account ([signup](https://www.oracle.com/cloud/free/)) ‚Ä?see [community signup guide](https://gist.github.com/rssnyder/51e3cfedd730e7dd5f4a816143b25dbd) if you hit issues
 - Tailscale account (free at [tailscale.com](https://tailscale.com))
 - ~30 minutes
 
 ## 1) Create an OCI Instance
 
 1. Log into [Oracle Cloud Console](https://cloud.oracle.com/)
-2. Navigate to **Compute ‚Üí Instances ‚Üí Create Instance**
+2. Navigate to **Compute ‚Ü?Instances ‚Ü?Create Instance**
 3. Configure:
-   - **Name:** `openclaw`
+   - **Name:** `RadioClaw`
    - **Image:** Ubuntu 24.04 (aarch64)
    - **Shape:** `VM.Standard.A1.Flex` (Ampere ARM)
    - **OCPUs:** 2 (or up to 4)
@@ -70,7 +70,7 @@ sudo apt install -y build-essential
 
 ```bash
 # Set hostname
-sudo hostnamectl set-hostname openclaw
+sudo hostnamectl set-hostname RadioClaw
 
 # Set password for ubuntu user
 sudo passwd ubuntu
@@ -83,10 +83,10 @@ sudo loginctl enable-linger ubuntu
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up --ssh --hostname=openclaw
+sudo tailscale up --ssh --hostname=RadioClaw
 ```
 
-This enables Tailscale SSH, so you can connect via `ssh openclaw` from any device on your tailnet ‚Äî no public IP needed.
+This enables Tailscale SSH, so you can connect via `ssh RadioClaw` from any device on your tailnet ‚Ä?no public IP needed.
 
 Verify:
 
@@ -94,12 +94,12 @@ Verify:
 tailscale status
 ```
 
-**From now on, connect via Tailscale:** `ssh ubuntu@openclaw` (or use the Tailscale IP).
+**From now on, connect via Tailscale:** `ssh ubuntu@RadioClaw` (or use the Tailscale IP).
 
-## 5) Install OpenClaw
+## 5) Install RadioClaw
 
 ```bash
-curl -fsSL https://openclaw.ai/install.sh | bash
+curl -fsSL https://RadioClaw.ai/install.sh | bash
 source ~/.bashrc
 ```
 
@@ -109,31 +109,31 @@ When prompted "How do you want to hatch your bot?", select **"Do this later"**.
 
 ## 6) Configure Gateway (loopback + token auth) and enable Tailscale Serve
 
-Use token auth as the default. It‚Äôs predictable and avoids needing any ‚Äúinsecure auth‚Äù Control UI flags.
+Use token auth as the default. It‚Äôs predictable and avoids needing any ‚Äúinsecure auth‚Ä?Control UI flags.
 
 ```bash
 # Keep the Gateway private on the VM
-openclaw config set gateway.bind loopback
+RadioClaw config set gateway.bind loopback
 
 # Require auth for the Gateway + Control UI
-openclaw config set gateway.auth.mode token
-openclaw doctor --generate-gateway-token
+RadioClaw config set gateway.auth.mode token
+RadioClaw doctor --generate-gateway-token
 
 # Expose over Tailscale Serve (HTTPS + tailnet access)
-openclaw config set gateway.tailscale.mode serve
-openclaw config set gateway.trustedProxies '["127.0.0.1"]'
+RadioClaw config set gateway.tailscale.mode serve
+RadioClaw config set gateway.trustedProxies '["127.0.0.1"]'
 
-systemctl --user restart openclaw-gateway
+systemctl --user restart RadioClaw-gateway
 ```
 
 ## 7) Verify
 
 ```bash
 # Check version
-openclaw --version
+RadioClaw --version
 
 # Check daemon status
-systemctl --user status openclaw-gateway
+systemctl --user status RadioClaw-gateway
 
 # Check Tailscale Serve
 tailscale serve status
@@ -144,10 +144,10 @@ curl http://localhost:18789
 
 ## 8) Lock Down VCN Security
 
-Now that everything is working, lock down the VCN to block all traffic except Tailscale. OCI's Virtual Cloud Network acts as a firewall at the network edge ‚Äî traffic is blocked before it reaches your instance.
+Now that everything is working, lock down the VCN to block all traffic except Tailscale. OCI's Virtual Cloud Network acts as a firewall at the network edge ‚Ä?traffic is blocked before it reaches your instance.
 
-1. Go to **Networking ‚Üí Virtual Cloud Networks** in the OCI Console
-2. Click your VCN ‚Üí **Security Lists** ‚Üí Default Security List
+1. Go to **Networking ‚Ü?Virtual Cloud Networks** in the OCI Console
+2. Click your VCN ‚Ü?**Security Lists** ‚Ü?Default Security List
 3. **Remove** all ingress rules except:
    - `0.0.0.0/0 UDP 41641` (Tailscale)
 4. Keep default egress rules (allow all outbound)
@@ -161,7 +161,7 @@ This blocks SSH on port 22, HTTP, HTTPS, and everything else at the network edge
 From any device on your Tailscale network:
 
 ```
-https://openclaw.<tailnet-name>.ts.net/
+https://RadioClaw.<tailnet-name>.ts.net/
 ```
 
 Replace `<tailnet-name>` with your tailnet name (visible in `tailscale status`).
@@ -178,7 +178,7 @@ No SSH tunnel needed. Tailscale provides:
 
 With the VCN locked down (only UDP 41641 open) and the Gateway bound to loopback, you get strong defense-in-depth: public traffic is blocked at the network edge, and admin access happens over your tailnet.
 
-This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force ‚Äî but you should still keep the OS updated, run `openclaw security audit`, and verify you aren‚Äôt accidentally listening on public interfaces.
+This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force ‚Ä?but you should still keep the OS updated, run `RadioClaw security audit`, and verify you aren‚Äôt accidentally listening on public interfaces.
 
 ### What's Already Protected
 
@@ -193,8 +193,8 @@ This setup often removes the _need_ for extra host-based firewall rules purely t
 
 ### Still Recommended
 
-- **Credential permissions:** `chmod 700 ~/.openclaw`
-- **Security audit:** `openclaw security audit`
+- **Credential permissions:** `chmod 700 ~/.RadioClaw`
+- **Security audit:** `RadioClaw security audit`
 - **System updates:** `sudo apt update && sudo apt upgrade` regularly
 - **Monitor Tailscale:** Review devices in [Tailscale admin console](https://login.tailscale.com/admin)
 
@@ -219,7 +219,7 @@ If Tailscale Serve isn't working, use an SSH tunnel:
 
 ```bash
 # From your local machine (via Tailscale)
-ssh -L 18789:127.0.0.1:18789 ubuntu@openclaw
+ssh -L 18789:127.0.0.1:18789 ubuntu@RadioClaw
 ```
 
 Then open `http://localhost:18789`.
@@ -243,15 +243,15 @@ Free tier ARM instances are popular. Try:
 sudo tailscale status
 
 # Re-authenticate
-sudo tailscale up --ssh --hostname=openclaw --reset
+sudo tailscale up --ssh --hostname=RadioClaw --reset
 ```
 
 ### Gateway won't start
 
 ```bash
-openclaw gateway status
-openclaw doctor --non-interactive
-journalctl --user -u openclaw-gateway -n 50
+RadioClaw gateway status
+RadioClaw doctor --non-interactive
+journalctl --user -u RadioClaw-gateway -n 50
 ```
 
 ### Can't reach Control UI
@@ -264,7 +264,7 @@ tailscale serve status
 curl http://localhost:18789
 
 # Restart if needed
-systemctl --user restart openclaw-gateway
+systemctl --user restart RadioClaw-gateway
 ```
 
 ### ARM binary issues
@@ -283,21 +283,21 @@ Most npm packages work fine. For binaries, look for `linux-arm64` or `aarch64` r
 
 All state lives in:
 
-- `~/.openclaw/` ‚Äî config, credentials, session data
-- `~/.openclaw/workspace/` ‚Äî workspace (SOUL.md, memory, artifacts)
+- `~/.RadioClaw/` ‚Ä?config, credentials, session data
+- `~/.RadioClaw/workspace/` ‚Ä?workspace (SOUL.md, memory, artifacts)
 
 Back up periodically:
 
 ```bash
-tar -czvf openclaw-backup.tar.gz ~/.openclaw ~/.openclaw/workspace
+tar -czvf RadioClaw-backup.tar.gz ~/.RadioClaw ~/.RadioClaw/workspace
 ```
 
 ---
 
 ## See Also
 
-- [Gateway remote access](/gateway/remote) ‚Äî other remote access patterns
-- [Tailscale integration](/gateway/tailscale) ‚Äî full Tailscale docs
-- [Gateway configuration](/gateway/configuration) ‚Äî all config options
-- [DigitalOcean guide](/platforms/digitalocean) ‚Äî if you want paid + easier signup
-- [Hetzner guide](/install/hetzner) ‚Äî Docker-based alternative
+- [Gateway remote access](/gateway/remote) ‚Ä?other remote access patterns
+- [Tailscale integration](/gateway/tailscale) ‚Ä?full Tailscale docs
+- [Gateway configuration](/gateway/configuration) ‚Ä?all config options
+- [DigitalOcean guide](/platforms/digitalocean) ‚Ä?if you want paid + easier signup
+- [Hetzner guide](/install/hetzner) ‚Ä?Docker-based alternative

@@ -236,7 +236,7 @@ export function buildModelsKeyboard(params: ModelsKeyboardParams): ButtonRow[] {
 
     if (currentPage < totalPages) {
       paginationRow.push({
-        text: "Next â–¶",
+        text: "Next â–?,
         callback_data: `${CALLBACK_PREFIX.list}${provider}_${currentPage + 1}`,
       });
     }
@@ -265,7 +265,7 @@ function truncateModelId(modelId: string, maxLen: number): string {
     return modelId;
   }
   // Show last part with ellipsis prefix
-  return `â€¦${modelId.slice(-(maxLen - 1))}`;
+  return `â€?{modelId.slice(-(maxLen - 1))}`;
 }
 
 /**

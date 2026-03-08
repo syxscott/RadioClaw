@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import RadioClawKit
 
 @MainActor
 final class NodeCapabilityRouter {

@@ -55,7 +55,7 @@ export function resolveZaiBaseUrl(endpoint?: string): string {
   }
 }
 
-// Pricing per 1M tokens (USD) â€” https://platform.minimaxi.com/document/Price
+// Pricing per 1M tokens (USD) â€?https://platform.minimaxi.com/document/Price
 export const MINIMAX_API_COST = {
   input: 0.3,
   output: 1.2,

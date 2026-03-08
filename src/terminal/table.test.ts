@@ -15,7 +15,7 @@ describe("renderTable", () => {
     });
 
     expect(out).toContain("Dashboard");
-    expect(out).toMatch(/â”‚ Dashboard\s+â”‚/);
+    expect(out).toMatch(/â”?Dashboard\s+â”?);
   });
 
   it("expands flex columns to fill available width", () => {
@@ -77,7 +77,7 @@ describe("renderTable", () => {
     const lines = out.split("\n").filter((line) => line.includes("a"));
     for (const line of lines) {
       const resetIndex = line.lastIndexOf(reset);
-      const lastSep = line.lastIndexOf("â”‚");
+      const lastSep = line.lastIndexOf("â”?);
       expect(resetIndex).toBeGreaterThan(-1);
       expect(lastSep).toBeGreaterThan(resetIndex);
     }
@@ -144,7 +144,7 @@ describe("wrapNoteMessage", () => {
 
   it("preserves long Windows paths without inserting spaces/newlines", () => {
     // No spaces: wrapNoteMessage splits on whitespace, so a "Program Files" style path would wrap.
-    const input = "C:\\\\State\\\\OpenClaw\\\\bin\\\\openclaw.exe";
+    const input = "C:\\\\State\\\\RadioClaw\\\\bin\\\\RadioClaw.exe";
     const wrapped = wrapNoteMessage(input, { maxWidth: 10, columns: 80 });
     expect(wrapped).toBe(input);
   });

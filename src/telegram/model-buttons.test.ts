@@ -203,7 +203,7 @@ describe("buildModelsKeyboard", () => {
       {
         name: "current model marked",
         currentModel: "anthropic/claude-sonnet-4",
-        firstText: "claude-sonnet-4 âœ“",
+        firstText: "claude-sonnet-4 âœ?,
       },
     ] as const;
     for (const testCase of cases) {
@@ -228,7 +228,7 @@ describe("buildModelsKeyboard", () => {
       {
         name: "first page",
         params: { currentPage: 1, models: ["model1", "model2"] },
-        expectedPagination: ["1/3", "Next â–¶"],
+        expectedPagination: ["1/3", "Next â–?],
       },
       {
         name: "middle page",
@@ -236,7 +236,7 @@ describe("buildModelsKeyboard", () => {
           currentPage: 2,
           models: ["model1", "model2", "model3", "model4", "model5", "model6"],
         },
-        expectedPagination: ["â—€ Prev", "2/3", "Next â–¶"],
+        expectedPagination: ["â—€ Prev", "2/3", "Next â–?],
       },
       {
         name: "last page",
@@ -273,7 +273,7 @@ describe("buildModelsKeyboard", () => {
         name: "overly long display",
         provider: "a",
         model: "this-model-name-is-long-enough-to-need-truncation-abcd",
-        startsWith: "â€¦",
+        startsWith: "â€?,
         maxLength: 38,
       },
     ] as const;

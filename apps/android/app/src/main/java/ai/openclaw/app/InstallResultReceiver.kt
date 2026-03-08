@@ -1,4 +1,4 @@
-package ai.openclaw.app
+package ai.RadioClaw.app
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,20 +13,20 @@ class InstallResultReceiver : BroadcastReceiver() {
 
     when (status) {
       PackageInstaller.STATUS_PENDING_USER_ACTION -> {
-        // System needs user confirmation â€” launch the confirmation activity
+        // System needs user confirmation â€?launch the confirmation activity
         @Suppress("DEPRECATION")
         val confirmIntent = intent.getParcelableExtra<Intent>(Intent.EXTRA_INTENT)
         if (confirmIntent != null) {
           confirmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
           context.startActivity(confirmIntent)
-          Log.w("openclaw", "app.update: user confirmation requested, launching install dialog")
+          Log.w("RadioClaw", "app.update: user confirmation requested, launching install dialog")
         }
       }
       PackageInstaller.STATUS_SUCCESS -> {
-        Log.w("openclaw", "app.update: install SUCCESS")
+        Log.w("RadioClaw", "app.update: install SUCCESS")
       }
       else -> {
-        Log.e("openclaw", "app.update: install FAILED status=$status message=$message")
+        Log.e("RadioClaw", "app.update: install FAILED status=$status message=$message")
       }
     }
   }

@@ -33,12 +33,12 @@ describe("formatAgo", () => {
 });
 
 describe("stripThinkingTags", () => {
-  it("strips <think>â€¦</think> segments", () => {
+  it("strips <think>â€?/think> segments", () => {
     const input = ["<think>", "secret", "</think>", "", "Hello"].join("\n");
     expect(stripThinkingTags(input)).toBe("Hello");
   });
 
-  it("strips <thinking>â€¦</thinking> segments", () => {
+  it("strips <thinking>â€?/thinking> segments", () => {
     const input = ["<thinking>", "secret", "</thinking>", "", "Hello"].join("\n");
     expect(stripThinkingTags(input)).toBe("Hello");
   });
@@ -52,7 +52,7 @@ describe("stripThinkingTags", () => {
     expect(stripThinkingTags("Hello")).toBe("Hello");
   });
 
-  it("strips <final>â€¦</final> segments", () => {
+  it("strips <final>â€?/final> segments", () => {
     const input = "<final>\n\nHello there\n\n</final>";
     expect(stripThinkingTags(input)).toBe("Hello there\n\n");
   });

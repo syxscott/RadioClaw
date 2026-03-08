@@ -38,7 +38,7 @@ struct ConfigSchemaForm: View {
                                 options: literals,
                                 defaultValue: schema.explicitDefault))
                         {
-                            Text("Selectâ€¦").tag(-1)
+                            Text("Selectâ€?).tag(-1)
                             ForEach(literals.indices, id: \ .self) { index in
                                 Text(String(describing: literals[index])).tag(index)
                             }
@@ -120,7 +120,7 @@ struct ConfigSchemaForm: View {
             }
             if let options = schema.enumValues {
                 Picker("", selection: self.enumBinding(path, options: options, defaultValue: schema.explicitDefault)) {
-                    Text("Selectâ€¦").tag(-1)
+                    Text("Selectâ€?).tag(-1)
                     ForEach(options.indices, id: \ .self) { index in
                         Text(String(describing: options[index])).tag(index)
                     }

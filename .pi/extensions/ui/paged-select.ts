@@ -58,7 +58,7 @@ export async function showPagedSelectList(params: {
     container.addChild(selectList);
 
     container.addChild(
-      new Text(theme.fg("dim", " ↑↓ navigate • ←→ page • enter open • esc close"), 0, 0),
+      new Text(theme.fg("dim", " ↑↓ navigate �?←→ page �?enter open �?esc close"), 0, 0),
     );
     container.addChild(new DynamicBorder((s: string) => theme.fg("accent", s)));
 

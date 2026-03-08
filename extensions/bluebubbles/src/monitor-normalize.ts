@@ -483,13 +483,13 @@ const REACTION_TYPE_MAP = new Map<number, { emoji: string; action: "added" | "re
   [2002, { emoji: "👎", action: "added" }],
   [2003, { emoji: "😂", action: "added" }],
   [2004, { emoji: "‼️", action: "added" }],
-  [2005, { emoji: "❓", action: "added" }],
+  [2005, { emoji: "�?, action: "added" }],
   [3000, { emoji: "❤️", action: "removed" }],
   [3001, { emoji: "👍", action: "removed" }],
   [3002, { emoji: "👎", action: "removed" }],
   [3003, { emoji: "😂", action: "removed" }],
   [3004, { emoji: "‼️", action: "removed" }],
-  [3005, { emoji: "❓", action: "removed" }],
+  [3005, { emoji: "�?, action: "removed" }],
 ]);
 
 // Maps tapback text patterns (e.g., "Loved", "Liked") to emoji + action
@@ -499,14 +499,14 @@ const TAPBACK_TEXT_MAP = new Map<string, { emoji: string; action: "added" | "rem
   ["disliked", { emoji: "👎", action: "added" }],
   ["laughed at", { emoji: "😂", action: "added" }],
   ["emphasized", { emoji: "‼️", action: "added" }],
-  ["questioned", { emoji: "❓", action: "added" }],
+  ["questioned", { emoji: "�?, action: "added" }],
   // Removal patterns (e.g., "Removed a heart from")
   ["removed a heart from", { emoji: "❤️", action: "removed" }],
   ["removed a like from", { emoji: "👍", action: "removed" }],
   ["removed a dislike from", { emoji: "👎", action: "removed" }],
   ["removed a laugh from", { emoji: "😂", action: "removed" }],
   ["removed an emphasis from", { emoji: "‼️", action: "removed" }],
-  ["removed a question from", { emoji: "❓", action: "removed" }],
+  ["removed a question from", { emoji: "�?, action: "removed" }],
 ]);
 
 const TAPBACK_EMOJI_REGEX =
@@ -518,7 +518,7 @@ function extractFirstEmoji(text: string): string | null {
 }
 
 function extractQuotedTapbackText(text: string): string | null {
-  const match = text.match(/[“"]([^”"]+)[”"]/s);
+  const match = text.match(/[�?]([^�?]+)[�?]/s);
   return match ? match[1] : null;
 }
 
@@ -579,7 +579,7 @@ export function parseTapbackText(params: {
       // Extract quoted text if present (e.g., 'Loved "hello"' -> "hello")
       const afterPattern = trimmed.slice(pattern.length).trim();
       if (params.requireQuoted) {
-        const strictMatch = afterPattern.match(/^[“"](.+)[”"]$/s);
+        const strictMatch = afterPattern.match(/^[�?](.+)[�?]$/s);
         if (!strictMatch) {
           return null;
         }

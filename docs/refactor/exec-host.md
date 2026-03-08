@@ -29,11 +29,11 @@ title: "Exec Host Refactor"
 - **Config keys:** `exec.host` + `exec.security` (per-agent override allowed).
 - **Elevation:** keep `/elevated` as an alias for gateway full access.
 - **Ask default:** `on-miss`.
-- **Approvals store:** `~/.openclaw/exec-approvals.json` (JSON, no legacy migration).
+- **Approvals store:** `~/.RadioClaw/exec-approvals.json` (JSON, no legacy migration).
 - **Runner:** headless system service; UI app hosts a Unix socket for approvals.
 - **Node identity:** use existing `nodeId`.
 - **Socket auth:** Unix socket + token (cross-platform); split later if needed.
-- **Node host state:** `~/.openclaw/node.json` (node id + pairing token).
+- **Node host state:** `~/.RadioClaw/node.json` (node id + pairing token).
 - **macOS exec host:** run `system.run` inside the macOS app; node host service forwards requests over local IPC.
 - **No XPC helper:** stick to Unix socket + token + peer checks.
 
@@ -61,7 +61,7 @@ Ask is **independent** of allowlist; allowlist can be used with `always` or `on-
 
 ### Policy resolution (per exec)
 
-1. Resolve `exec.host` (tool param â†’ agent override â†’ global default).
+1. Resolve `exec.host` (tool param â†?agent override â†?global default).
 2. Resolve `exec.security` and `exec.ask` (same precedence).
 3. If host is `sandbox`, proceed with local sandbox exec.
 4. If host is `gateway` or `node`, apply security + ask policy on that host.
@@ -103,7 +103,7 @@ Ask is **independent** of allowlist; allowlist can be used with `always` or `on-
 
 ## Approvals store (JSON)
 
-Path: `~/.openclaw/exec-approvals.json`
+Path: `~/.RadioClaw/exec-approvals.json`
 
 Purpose:
 
@@ -117,7 +117,7 @@ Proposed schema (v1):
 {
   "version": 1,
   "socket": {
-    "path": "~/.openclaw/exec-approvals.sock",
+    "path": "~/.RadioClaw/exec-approvals.sock",
     "token": "base64-opaque-token"
   },
   "defaults": {
@@ -166,7 +166,7 @@ Notes:
 
 ### IPC
 
-- Unix socket at `~/.openclaw/exec-approvals.sock` (0600).
+- Unix socket at `~/.RadioClaw/exec-approvals.sock` (0600).
 - Token stored in `exec-approvals.json` (0600).
 - Peer checks: same-UID only.
 - Challenge/response: nonce + HMAC(token, request-hash) to prevent replay.
@@ -251,7 +251,7 @@ Option B:
 ## Output caps
 
 - Cap combined stdout+stderr at **200k**; keep **tail 20k** for events.
-- Truncate with a clear suffix (e.g., `"â€¦ (truncated)"`).
+- Truncate with a clear suffix (e.g., `"â€?(truncated)"`).
 
 ## Slash commands
 
@@ -287,7 +287,7 @@ Option B:
 
 ### Phase 4: events
 
-- Add node â†’ gateway Bridge events for exec lifecycle.
+- Add node â†?gateway Bridge events for exec lifecycle.
 - Map to `enqueueSystemEvent` for agent prompts.
 
 ### Phase 5: UI polish
@@ -298,9 +298,9 @@ Option B:
 ## Testing plan
 
 - Unit tests: allowlist matching (glob + case-insensitive).
-- Unit tests: policy resolution precedence (tool param â†’ agent override â†’ global).
+- Unit tests: policy resolution precedence (tool param â†?agent override â†?global).
 - Integration tests: node runner deny/allow/ask flows.
-- Bridge event tests: node event â†’ system event routing.
+- Bridge event tests: node event â†?system event routing.
 
 ## Open risks
 

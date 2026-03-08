@@ -15,17 +15,17 @@ describe("extractKeywords", () => {
   });
 
   it("extracts keywords from Chinese conversational query", () => {
-    const keywords = extractKeywords("之前讨论的那个方案");
+    const keywords = extractKeywords("之前讨论的那个方�?);
     expect(keywords).toContain("讨论");
     expect(keywords).toContain("方案");
     // Should not include stop words
     expect(keywords).not.toContain("之前");
-    expect(keywords).not.toContain("的");
+    expect(keywords).not.toContain("�?);
     expect(keywords).not.toContain("那个");
   });
 
   it("extracts keywords from mixed language query", () => {
-    const keywords = extractKeywords("昨天讨论的 API design");
+    const keywords = extractKeywords("昨天讨论�?API design");
     expect(keywords).toContain("讨论");
     expect(keywords).toContain("api");
     expect(keywords).toContain("design");
@@ -39,8 +39,8 @@ describe("extractKeywords", () => {
   });
 
   it("extracts keywords from Korean conversational query", () => {
-    const keywords = extractKeywords("어제 논의한 배포 전략");
-    expect(keywords).toContain("논의한");
+    const keywords = extractKeywords("어제 논의�?배포 전략");
+    expect(keywords).toContain("논의�?);
     expect(keywords).toContain("배포");
     expect(keywords).toContain("전략");
     // Should not include stop words
@@ -48,24 +48,24 @@ describe("extractKeywords", () => {
   });
 
   it("strips Korean particles to extract stems", () => {
-    const keywords = extractKeywords("서버에서 발생한 에러를 확인");
+    const keywords = extractKeywords("서버에서 발생�?에러�?확인");
     expect(keywords).toContain("서버");
     expect(keywords).toContain("에러");
     expect(keywords).toContain("확인");
   });
 
   it("filters Korean stop words including inflected forms", () => {
-    const keywords = extractKeywords("나는 그리고 그래서");
-    expect(keywords).not.toContain("나");
+    const keywords = extractKeywords("나는 그리�?그래�?);
+    expect(keywords).not.toContain("�?);
     expect(keywords).not.toContain("나는");
-    expect(keywords).not.toContain("그리고");
-    expect(keywords).not.toContain("그래서");
+    expect(keywords).not.toContain("그리�?);
+    expect(keywords).not.toContain("그래�?);
   });
 
   it("filters inflected Korean stop words not explicitly listed", () => {
-    const keywords = extractKeywords("그녀는 우리는");
-    expect(keywords).not.toContain("그녀는");
-    expect(keywords).not.toContain("우리는");
+    const keywords = extractKeywords("그녀�?우리�?);
+    expect(keywords).not.toContain("그녀�?);
+    expect(keywords).not.toContain("우리�?);
     expect(keywords).not.toContain("그녀");
     expect(keywords).not.toContain("우리");
   });
@@ -73,47 +73,47 @@ describe("extractKeywords", () => {
   it("does not produce bogus single-char stems from particle stripping", () => {
     const keywords = extractKeywords("논의");
     expect(keywords).toContain("논의");
-    expect(keywords).not.toContain("논");
+    expect(keywords).not.toContain("�?);
   });
 
   it("strips longest Korean trailing particles first", () => {
     const keywords = extractKeywords("기능으로 설명");
     expect(keywords).toContain("기능");
-    expect(keywords).not.toContain("기능으");
+    expect(keywords).not.toContain("기능�?);
   });
 
   it("keeps stripped ASCII stems for mixed Korean tokens", () => {
-    const keywords = extractKeywords("API를 배포했다");
+    const keywords = extractKeywords("API�?배포했다");
     expect(keywords).toContain("api");
     expect(keywords).toContain("배포했다");
   });
 
   it("handles mixed Korean and English query", () => {
-    const keywords = extractKeywords("API 배포에 대한 논의");
+    const keywords = extractKeywords("API 배포�?대�?논의");
     expect(keywords).toContain("api");
     expect(keywords).toContain("배포");
     expect(keywords).toContain("논의");
   });
 
   it("extracts keywords from Japanese conversational query", () => {
-    const keywords = extractKeywords("昨日話したデプロイ戦略");
+    const keywords = extractKeywords("昨日話したデプロイ戦�?);
     expect(keywords).toContain("デプロイ");
     expect(keywords).toContain("戦略");
     expect(keywords).not.toContain("昨日");
   });
 
   it("handles mixed Japanese and English query", () => {
-    const keywords = extractKeywords("昨日話したAPIのバグ");
+    const keywords = extractKeywords("昨日話したAPIのバ�?);
     expect(keywords).toContain("api");
     expect(keywords).toContain("バグ");
     expect(keywords).not.toContain("した");
   });
 
   it("filters Japanese stop words", () => {
-    const keywords = extractKeywords("これ それ そして どう");
+    const keywords = extractKeywords("これ それ そし�?どう");
     expect(keywords).not.toContain("これ");
     expect(keywords).not.toContain("それ");
-    expect(keywords).not.toContain("そして");
+    expect(keywords).not.toContain("そし�?);
     expect(keywords).not.toContain("どう");
   });
 

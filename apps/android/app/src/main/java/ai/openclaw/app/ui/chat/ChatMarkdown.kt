@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui.chat
+package ai.RadioClaw.app.ui.chat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,12 +34,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ai.openclaw.app.ui.mobileAccent
-import ai.openclaw.app.ui.mobileCallout
-import ai.openclaw.app.ui.mobileCaption1
-import ai.openclaw.app.ui.mobileCodeBg
-import ai.openclaw.app.ui.mobileCodeText
-import ai.openclaw.app.ui.mobileTextSecondary
+import ai.RadioClaw.app.ui.mobileAccent
+import ai.RadioClaw.app.ui.mobileCallout
+import ai.RadioClaw.app.ui.mobileCaption1
+import ai.RadioClaw.app.ui.mobileCodeBg
+import ai.RadioClaw.app.ui.mobileCodeText
+import ai.RadioClaw.app.ui.mobileTextSecondary
 import org.commonmark.Extension
 import org.commonmark.ext.autolink.AutolinkExtension
 import org.commonmark.ext.gfm.strikethrough.Strikethrough
@@ -252,7 +252,7 @@ private fun RenderBulletList(
       if (item is ListItem) {
         RenderListItem(
           item = item,
-          markerText = "‚Ä¢",
+          markerText = "‚Ä?,
           textColor = textColor,
           inlineStyles = inlineStyles,
           listDepth = listDepth,
@@ -304,7 +304,7 @@ private fun RenderListItem(
   var marker = markerText
   val task = contentStart as? TaskListItemMarker
   if (task != null) {
-    marker = if (task.isChecked) "‚òë" else "‚òê"
+    marker = if (task.isChecked) "‚ò? else "‚ò?
     contentStart = task.next
   }
 

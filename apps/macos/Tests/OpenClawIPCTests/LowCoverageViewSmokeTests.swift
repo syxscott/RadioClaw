@@ -1,14 +1,14 @@
 import AppKit
-import OpenClawProtocol
+import RadioClawProtocol
 import SwiftUI
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized)
 @MainActor
 struct LowCoverageViewSmokeTests {
     @Test func contextMenuCardBuildsBody() {
-        let loading = ContextMenuCardView(rows: [], statusText: "Loadingâ€¦", isLoading: true)
+        let loading = ContextMenuCardView(rows: [], statusText: "Loadingâ€?, isLoading: true)
         _ = loading.body
 
         let empty = ContextMenuCardView(rows: [], statusText: nil, isLoading: false)

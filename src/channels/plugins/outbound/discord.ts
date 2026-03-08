@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { RadioClawConfig } from "../../../config/config.js";
 import {
   getThreadBindingManager,
   type ThreadBindingRecord,
@@ -39,7 +39,7 @@ function resolveDiscordWebhookIdentity(params: {
 }
 
 async function maybeSendDiscordWebhookText(params: {
-  cfg?: OpenClawConfig;
+  cfg?: RadioClawConfig;
   text: string;
   threadId?: string | number | null;
   accountId?: string | null;

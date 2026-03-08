@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // vi.hoisted runs before module imports, ensuring FAST_TEST_MODE is picked up.
 vi.hoisted(() => {
-  process.env.OPENCLAW_TEST_FAST = "1";
+  process.env.RadioClaw_TEST_FAST = "1";
 });
 
 import {
@@ -297,7 +297,7 @@ describe("waitForDescendantSubagentSummary", () => {
           task: "morning briefing",
           cleanup: "keep",
           createdAt: 1000,
-          // no endedAt â†’ active
+          // no endedAt â†?active
         },
       ])
       .mockReturnValue([]); // subsequent calls: all done

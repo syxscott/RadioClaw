@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { AuthProfileConfig } from "../../config/types.js";
 import { findNormalizedProviderKey, normalizeProviderId } from "../model-selection.js";
 import { dedupeProfileIds, listProfilesForProvider } from "./profiles.js";
@@ -21,7 +21,7 @@ function isEmailLike(value: string): boolean {
 }
 
 export function suggestOAuthProfileIdForLegacyDefault(params: {
-  cfg?: OpenClawConfig;
+  cfg?: RadioClawConfig;
   store: AuthProfileStore;
   provider: string;
   legacyProfileId: string;
@@ -82,7 +82,7 @@ export function suggestOAuthProfileIdForLegacyDefault(params: {
 }
 
 export function repairOAuthProfileIdMismatch(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   store: AuthProfileStore;
   provider: string;
   legacyProfileId?: string;
@@ -143,7 +143,7 @@ export function repairOAuthProfileIdMismatch(params: {
     return { ...order, [resolvedKey]: deduped };
   })();
 
-  const nextCfg: OpenClawConfig = {
+  const nextCfg: RadioClawConfig = {
     ...params.cfg,
     auth: {
       ...params.cfg.auth,
@@ -152,7 +152,7 @@ export function repairOAuthProfileIdMismatch(params: {
     },
   };
 
-  const changes = [`Auth: migrate ${legacyProfileId} â†’ ${toProfileId} (OAuth profile id)`];
+  const changes = [`Auth: migrate ${legacyProfileId} â†?${toProfileId} (OAuth profile id)`];
 
   return {
     config: nextCfg,

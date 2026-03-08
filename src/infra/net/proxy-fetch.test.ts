@@ -72,7 +72,7 @@ describe("resolveProxyFetchFromEnv", () => {
   });
 
   it("returns proxy fetch using EnvHttpProxyAgent when HTTPS_PROXY is set", async () => {
-    // Stub empty vars first â€” on Windows, process.env is case-insensitive so
+    // Stub empty vars first â€?on Windows, process.env is case-insensitive so
     // HTTPS_PROXY and https_proxy share the same slot. Value must be set LAST.
     vi.stubEnv("HTTP_PROXY", "");
     vi.stubEnv("https_proxy", "");

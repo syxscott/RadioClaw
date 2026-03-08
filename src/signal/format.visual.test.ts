@@ -26,14 +26,14 @@ describe("markdownToSignalText", () => {
     it("renders blockquotes with a visible prefix", () => {
       const res = markdownToSignalText("> This is a quote");
       // Should have some kind of prefix to distinguish it
-      expect(res.text).toMatch(/^[│>]/);
+      expect(res.text).toMatch(/^[�?]/);
       expect(res.text).toContain("This is a quote");
     });
 
     it("renders multi-line blockquotes with prefix", () => {
       const res = markdownToSignalText("> Line 1\n> Line 2");
       // Should start with the prefix
-      expect(res.text).toMatch(/^[│>]/);
+      expect(res.text).toMatch(/^[�?]/);
       expect(res.text).toContain("Line 1");
       expect(res.text).toContain("Line 2");
     });
@@ -43,7 +43,7 @@ describe("markdownToSignalText", () => {
     it("renders horizontal rules as a visible separator", () => {
       const res = markdownToSignalText("Para 1\n\n---\n\nPara 2");
       // Should contain some kind of visual separator like ───
-      expect(res.text).toMatch(/[─—-]{3,}/);
+      expect(res.text).toMatch(/[─�?]{3,}/);
     });
 
     it("renders horizontal rule between content", () => {
@@ -51,7 +51,7 @@ describe("markdownToSignalText", () => {
       expect(res.text).toContain("Above");
       expect(res.text).toContain("Below");
       // Should have a separator
-      expect(res.text).toMatch(/[─—-]{3,}/);
+      expect(res.text).toMatch(/[─�?]{3,}/);
     });
   });
 });

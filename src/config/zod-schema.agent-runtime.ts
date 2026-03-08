@@ -278,7 +278,7 @@ export const ToolsWebSearchSchema = z
     perplexity: z
       .object({
         apiKey: SecretInputSchema.optional().register(sensitive),
-        // Legacy Sonar/OpenRouter fields â€” kept for backward compatibility
+        // Legacy Sonar/OpenRouter fields â€?kept for backward compatibility
         // so existing configs don't fail validation. Ignored at runtime.
         baseUrl: z.string().optional(),
         model: z.string().optional(),

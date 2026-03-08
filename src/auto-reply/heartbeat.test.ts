@@ -109,7 +109,7 @@ describe("stripHeartbeatToken", () => {
   });
 
   it("strips trailing punctuation only when directly after the token", () => {
-    // Token with trailing dot/exclamation/dashes â†’ should still strip
+    // Token with trailing dot/exclamation/dashes â†?should still strip
     expect(stripHeartbeatToken(`${HEARTBEAT_TOKEN}.`, { mode: "heartbeat" })).toEqual({
       shouldSkip: true,
       text: "",
@@ -156,7 +156,7 @@ describe("stripHeartbeatToken", () => {
   });
 
   it("preserves trailing punctuation on text before the token", () => {
-    // Token at end, preceding text has its own punctuation â€” only the token is stripped
+    // Token at end, preceding text has its own punctuation â€?only the token is stripped
     expect(stripHeartbeatToken(`All clear. ${HEARTBEAT_TOKEN}`, { mode: "message" })).toEqual({
       shouldSkip: false,
       text: "All clear.",

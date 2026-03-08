@@ -4,9 +4,9 @@ description: Manage Apple Reminders via remindctl CLI (list, add, edit, complete
 homepage: https://github.com/steipete/remindctl
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
-        "emoji": "‚è∞",
+        "emoji": "‚è?,
         "os": ["darwin"],
         "requires": { "bins": ["remindctl"] },
         "install":
@@ -29,7 +29,7 @@ Use `remindctl` to manage Apple Reminders directly from the terminal.
 
 ## When to Use
 
-‚úÖ **USE this skill when:**
+‚ú?**USE this skill when:**
 
 - User explicitly mentions "reminder" or "Reminders app"
 - Creating personal to-dos with due dates that sync to iOS
@@ -38,13 +38,13 @@ Use `remindctl` to manage Apple Reminders directly from the terminal.
 
 ## When NOT to Use
 
-‚ùå **DON'T use this skill when:**
+‚ù?**DON'T use this skill when:**
 
-- Scheduling Clawdbot tasks or alerts ‚Üí use `cron` tool with systemEvent instead
-- Calendar events or appointments ‚Üí use Apple Calendar
-- Project/work task management ‚Üí use Notion, GitHub Issues, or task queue
-- One-time notifications ‚Üí use `cron` tool for timed alerts
-- User says "remind me" but means a Clawdbot alert ‚Üí clarify first
+- Scheduling Clawdbot tasks or alerts ‚Ü?use `cron` tool with systemEvent instead
+- Calendar events or appointments ‚Ü?use Apple Calendar
+- Project/work task management ‚Ü?use Notion, GitHub Issues, or task queue
+- One-time notifications ‚Ü?use `cron` tool for timed alerts
+- User says "remind me" but means a Clawdbot alert ‚Ü?clarify first
 
 ## Setup
 
@@ -114,5 +114,5 @@ User: "Remind me to check on the deploy in 2 hours"
 
 **Ask:** "Do you want this in Apple Reminders (syncs to your phone) or as a Clawdbot alert (I'll message you here)?"
 
-- Apple Reminders ‚Üí use this skill
-- Clawdbot alert ‚Üí use `cron` tool with systemEvent
+- Apple Reminders ‚Ü?use this skill
+- Clawdbot alert ‚Ü?use `cron` tool with systemEvent

@@ -234,7 +234,7 @@ export function clearCommandLane(lane: string = CommandLane.Main) {
  *
  * Bumps lane generation and clears execution counters so stale completions
  * from old in-flight tasks are ignored. Queued entries are intentionally
- * preserved â€” they represent pending user work that should still execute
+ * preserved â€?they represent pending user work that should still execute
  * after restart.
  *
  * After resetting, drains any lanes that still have queued entries so
@@ -275,7 +275,7 @@ export function getActiveTaskCount(): number {
  * Polls at a short interval; resolves when no tasks are active or
  * when `timeoutMs` elapses (whichever comes first).
  *
- * New tasks enqueued after this call are ignored â€” only tasks that are
+ * New tasks enqueued after this call are ignored â€?only tasks that are
  * already executing are waited on.
  */
 export function waitForActiveTasks(timeoutMs: number): Promise<{ drained: boolean }> {

@@ -94,7 +94,7 @@ describe("telegram proxy client", () => {
     },
     {
       name: "reactions",
-      run: () => reactMessageTelegram("123", "456", "âœ…", { token: "tok", accountId: "foo" }),
+      run: () => reactMessageTelegram("123", "456", "âœ?, { token: "tok", accountId: "foo" }),
     },
     {
       name: "deleteMessage",

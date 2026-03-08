@@ -71,9 +71,9 @@ function renderFilterChips(
     selectedSessions.length === 1 ? sessions.find((s) => s.key === selectedSessions[0]) : null;
   const sessionsLabel = selectedSession
     ? (selectedSession.label || selectedSession.key).slice(0, 20) +
-      ((selectedSession.label || selectedSession.key).length > 20 ? "â€¦" : "")
+      ((selectedSession.label || selectedSession.key).length > 20 ? "â€? : "")
     : selectedSessions.length === 1
-      ? selectedSessions[0].slice(0, 8) + "â€¦"
+      ? selectedSessions[0].slice(0, 8) + "â€?
       : `${selectedSessions.length} sessions`;
   const sessionsFullName = selectedSession
     ? selectedSession.label || selectedSession.key
@@ -383,20 +383,20 @@ function renderUsageInsights(
   const avgCost = aggregates.messages.total ? totals.totalCost / aggregates.messages.total : 0;
   const cacheBase = totals.input + totals.cacheRead;
   const cacheHitRate = cacheBase > 0 ? totals.cacheRead / cacheBase : 0;
-  const cacheHitLabel = cacheBase > 0 ? `${(cacheHitRate * 100).toFixed(1)}%` : "â€”";
+  const cacheHitLabel = cacheBase > 0 ? `${(cacheHitRate * 100).toFixed(1)}%` : "â€?;
   const errorRatePct = stats.errorRate * 100;
   const throughputLabel =
     stats.throughputTokensPerMin !== undefined
       ? `${formatTokens(Math.round(stats.throughputTokensPerMin))} tok/min`
-      : "â€”";
+      : "â€?;
   const throughputCostLabel =
     stats.throughputCostPerMin !== undefined
       ? `${formatCost(stats.throughputCostPerMin, 4)} / min`
-      : "â€”";
+      : "â€?;
   const avgDurationLabel =
     stats.durationCount > 0
-      ? (formatDurationCompact(stats.avgDurationMs, { spaced: true }) ?? "â€”")
-      : "â€”";
+      ? (formatDurationCompact(stats.avgDurationMs, { spaced: true }) ?? "â€?)
+      : "â€?;
   const cacheHint = "Cache hit rate = cache read / (input + cache read). Higher is better.";
   const errorHint = "Error rate = errors / total messages. Lower is better.";
   const throughputHint = "Throughput shows tokens per minute over active time. Higher is better.";
@@ -601,7 +601,7 @@ function renderSessionsCard(
       parts.push(`errors:${s.usage.messageCounts.errors}`);
     }
     if (showColumn("duration") && s.usage?.durationMs) {
-      parts.push(`dur:${formatDurationCompact(s.usage.durationMs, { spaced: true }) ?? "â€”"}`);
+      parts.push(`dur:${formatDurationCompact(s.usage.durationMs, { spaced: true }) ?? "â€?}`);
     }
     return parts;
   };
@@ -733,7 +733,7 @@ function renderSessionsCard(
           @click=${() => onSessionSortDirChange(sessionSortDir === "desc" ? "asc" : "desc")}
           title=${sessionSortDir === "desc" ? "Descending" : "Ascending"}
         >
-          ${sessionSortDir === "desc" ? "â†“" : "â†‘"}
+          ${sessionSortDir === "desc" ? "â†? : "â†?}
         </button>
         ${
           selectedCount > 0

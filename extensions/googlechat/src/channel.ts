@@ -4,7 +4,7 @@ import {
   collectAllowlistProviderGroupPolicyWarnings,
   createScopedAccountConfigAccessors,
   formatNormalizedAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import {
   applyAccountNameToChannelSection,
   applySetupAccountConfigPatch,
@@ -26,9 +26,9 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ChannelStatusIssue,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/googlechat";
-import { GoogleChatConfigSchema } from "openclaw/plugin-sdk/googlechat";
+  type RadioClawConfig,
+} from "RadioClaw/plugin-sdk/googlechat";
+import { GoogleChatConfigSchema } from "RadioClaw/plugin-sdk/googlechat";
 import {
   listGoogleChatAccountIds,
   resolveDefaultGoogleChatAccountId,

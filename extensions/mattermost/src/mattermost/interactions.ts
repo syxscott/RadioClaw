@@ -3,14 +3,14 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   isTrustedProxyAddress,
   resolveClientIp,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/mattermost";
+  type RadioClawConfig,
+} from "RadioClaw/plugin-sdk/mattermost";
 import { getMattermostRuntime } from "../runtime.js";
 import { updateMattermostPost, type MattermostClient } from "./client.js";
 
 const INTERACTION_MAX_BODY_BYTES = 64 * 1024;
 const INTERACTION_BODY_TIMEOUT_MS = 10_000;
-const SIGNED_CHANNEL_ID_CONTEXT_KEY = "__openclaw_channel_id";
+const SIGNED_CHANNEL_ID_CONTEXT_KEY = "__RadioClaw_channel_id";
 
 /**
  * Mattermost interactive message callback payload.
@@ -59,7 +59,7 @@ export function getInteractionCallbackUrl(accountId: string): string | undefined
   return callbackUrls.get(accountId);
 }
 
-type InteractionCallbackConfig = Pick<OpenClawConfig, "gateway" | "channels"> & {
+type InteractionCallbackConfig = Pick<RadioClawConfig, "gateway" | "channels"> & {
   interactions?: {
     callbackBaseUrl?: string;
   };
@@ -162,7 +162,7 @@ const interactionSecrets = new Map<string, string>();
 let defaultInteractionSecret: string | undefined;
 
 function deriveInteractionSecret(botToken: string): string {
-  return createHmac("sha256", "openclaw-mattermost-interactions").update(botToken).digest("hex");
+  return createHmac("sha256", "RadioClaw-mattermost-interactions").update(botToken).digest("hex");
 }
 
 export function setInteractionSecret(accountIdOrBotToken: string, botToken?: string): void {
@@ -190,7 +190,7 @@ export function getInteractionSecret(accountId?: string): string {
     }
   }
   throw new Error(
-    "Interaction secret not initialized â€” call setInteractionSecret(accountId, botToken) first",
+    "Interaction secret not initialized â€?call setInteractionSecret(accountId, botToken) first",
   );
 }
 
@@ -581,7 +581,7 @@ export function createMattermostInteractionHandler(params: {
     }
 
     // Dispatch as system event so the agent can handle it.
-    // Wrapped in try/catch â€” the post update below must still run even if
+    // Wrapped in try/catch â€?the post update below must still run even if
     // system event dispatch fails (e.g. missing sessionKey or channel lookup).
     try {
       const eventLabel =
@@ -608,7 +608,7 @@ export function createMattermostInteractionHandler(params: {
         props: {
           attachments: [
             {
-              text: `âœ“ **${clickedButtonName}** selected by @${userName}`,
+              text: `âœ?**${clickedButtonName}** selected by @${userName}`,
             },
           ],
         },
@@ -617,7 +617,7 @@ export function createMattermostInteractionHandler(params: {
       log?.(`mattermost interaction: failed to update post ${payload.post_id}: ${String(err)}`);
     }
 
-    // Respond with empty JSON â€” the post update is handled above
+    // Respond with empty JSON â€?the post update is handled above
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.end("{}");

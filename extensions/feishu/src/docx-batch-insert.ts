@@ -112,7 +112,7 @@ export async function insertBlocksInBatches(
 ): Promise<{ children: any[]; skipped: string[] }> {
   const allChildren: any[] = [];
 
-  // Build batches ensuring each batch has â‰¤1000 total descendants
+  // Build batches ensuring each batch has â‰?000 total descendants
   const batches: { firstLevelIds: string[]; blocks: any[] }[] = [];
   let currentBatch: { firstLevelIds: string[]; blocks: any[] } = { firstLevelIds: [], blocks: [] };
   const usedBlockIds = new Set<string>();

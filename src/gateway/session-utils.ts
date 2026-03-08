@@ -9,7 +9,7 @@ import {
   resolveConfiguredModelRef,
   resolveDefaultModelForAgent,
 } from "../agents/model-selection.js";
-import { type OpenClawConfig, loadConfig } from "../config/config.js";
+import { type RadioClawConfig, loadConfig } from "../config/config.js";
 import { resolveStateDir } from "../config/paths.js";
 import {
   buildGroupDisplayName,
@@ -78,7 +78,7 @@ function tryResolveExistingPath(value: string): string | null {
 }
 
 function resolveIdentityAvatarUrl(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   agentId: string,
   avatar: string | undefined,
 ): string | undefined {
@@ -142,9 +142,9 @@ function truncateTitle(text: string, maxLen: number): string {
   const cut = text.slice(0, maxLen - 1);
   const lastSpace = cut.lastIndexOf(" ");
   if (lastSpace > maxLen * 0.6) {
-    return cut.slice(0, lastSpace) + "â€¦";
+    return cut.slice(0, lastSpace) + "â€?;
   }
-  return cut + "â€¦";
+  return cut + "â€?;
 }
 
 export function deriveSessionTitle(
@@ -309,7 +309,7 @@ function listExistingAgentIdsFromDisk(): string[] {
   }
 }
 
-function listConfiguredAgentIds(cfg: OpenClawConfig): string[] {
+function listConfiguredAgentIds(cfg: RadioClawConfig): string[] {
   const ids = new Set<string>();
   const defaultId = normalizeAgentId(resolveDefaultAgentId(cfg));
   ids.add(defaultId);
@@ -331,7 +331,7 @@ function listConfiguredAgentIds(cfg: OpenClawConfig): string[] {
     : sorted;
 }
 
-export function listAgentsForGateway(cfg: OpenClawConfig): {
+export function listAgentsForGateway(cfg: RadioClawConfig): {
   defaultId: string;
   mainKey: string;
   scope: SessionScope;
@@ -400,12 +400,12 @@ function canonicalizeSessionKeyForAgent(agentId: string, key: string): string {
   return `agent:${normalizeAgentId(agentId)}:${lowered}`;
 }
 
-function resolveDefaultStoreAgentId(cfg: OpenClawConfig): string {
+function resolveDefaultStoreAgentId(cfg: RadioClawConfig): string {
   return normalizeAgentId(resolveDefaultAgentId(cfg));
 }
 
 export function resolveSessionStoreKey(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   sessionKey: string;
 }): string {
   const raw = (params.sessionKey ?? "").trim();
@@ -441,7 +441,7 @@ export function resolveSessionStoreKey(params: {
   return canonicalizeSessionKeyForAgent(agentId, lowered);
 }
 
-function resolveSessionStoreAgentId(cfg: OpenClawConfig, canonicalKey: string): string {
+function resolveSessionStoreAgentId(cfg: RadioClawConfig, canonicalKey: string): string {
   if (canonicalKey === "global" || canonicalKey === "unknown") {
     return resolveDefaultStoreAgentId(cfg);
   }
@@ -453,7 +453,7 @@ function resolveSessionStoreAgentId(cfg: OpenClawConfig, canonicalKey: string): 
 }
 
 export function canonicalizeSpawnedByForAgent(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   agentId: string,
   spawnedBy?: string,
 ): string | undefined {
@@ -471,14 +471,14 @@ export function canonicalizeSpawnedByForAgent(
   } else {
     result = `agent:${normalizeAgentId(agentId)}:${lower}`;
   }
-  // Resolve main-alias references (e.g. agent:ops:main â†’ configured main key).
+  // Resolve main-alias references (e.g. agent:ops:main â†?configured main key).
   const parsed = parseAgentSessionKey(result);
   const resolvedAgent = parsed?.agentId ? normalizeAgentId(parsed.agentId) : agentId;
   return canonicalizeMainSessionAlias({ cfg, agentId: resolvedAgent, sessionKey: result });
 }
 
 export function resolveGatewaySessionStoreTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   key: string;
   scanLegacyKeys?: boolean;
   store?: Record<string, SessionEntry>;
@@ -534,7 +534,7 @@ export function resolveGatewaySessionStoreTarget(params: {
 
 // Merge with existing entry based on latest timestamp to ensure data consistency and avoid overwriting with less complete data.
 function mergeSessionEntryIntoCombined(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   combined: Record<string, SessionEntry>;
   entry: SessionEntry;
   agentId: string;
@@ -562,7 +562,7 @@ function mergeSessionEntryIntoCombined(params: {
   }
 }
 
-export function loadCombinedSessionStoreForGateway(cfg: OpenClawConfig): {
+export function loadCombinedSessionStoreForGateway(cfg: RadioClawConfig): {
   storePath: string;
   store: Record<string, SessionEntry>;
 } {
@@ -607,7 +607,7 @@ export function loadCombinedSessionStoreForGateway(cfg: OpenClawConfig): {
   return { storePath, store: combined };
 }
 
-export function getSessionDefaults(cfg: OpenClawConfig): GatewaySessionsDefaults {
+export function getSessionDefaults(cfg: RadioClawConfig): GatewaySessionsDefaults {
   const resolved = resolveConfiguredModelRef({
     cfg,
     defaultProvider: DEFAULT_PROVIDER,
@@ -625,7 +625,7 @@ export function getSessionDefaults(cfg: OpenClawConfig): GatewaySessionsDefaults
 }
 
 export function resolveSessionModelRef(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   entry?:
     | SessionEntry
     | Pick<SessionEntry, "model" | "modelProvider" | "modelOverride" | "providerOverride">,
@@ -647,7 +647,7 @@ export function resolveSessionModelRef(
   const runtimeProvider = entry?.modelProvider?.trim();
   if (runtimeModel) {
     if (runtimeProvider) {
-      // Provider is explicitly recorded â€” use it directly. Re-parsing the
+      // Provider is explicitly recorded â€?use it directly. Re-parsing the
       // model string through parseModelRef would incorrectly split OpenRouter
       // vendor-prefixed model names (e.g. model="anthropic/claude-haiku-4.5"
       // with provider="openrouter") into { provider: "anthropic" }, discarding
@@ -683,7 +683,7 @@ export function resolveSessionModelRef(
 }
 
 export function resolveSessionModelIdentityRef(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   entry?:
     | SessionEntry
     | Pick<SessionEntry, "model" | "modelProvider" | "modelOverride" | "providerOverride">,
@@ -716,7 +716,7 @@ export function resolveSessionModelIdentityRef(
 }
 
 export function listSessionsFromStore(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   storePath: string;
   store: Record<string, SessionEntry>;
   opts: import("./protocol/index.js").SessionsListParams;

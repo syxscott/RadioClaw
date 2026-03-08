@@ -10,7 +10,7 @@ title: "Clawnet Refactor"
 
 ## Hi
 
-Hi Peter ‚Äî great direction; this unlocks simpler UX + stronger security.
+Hi Peter ‚Ä?great direction; this unlocks simpler UX + stronger security.
 
 ## Purpose
 
@@ -68,10 +68,10 @@ Single, rigorous document for:
 
 ## Control plane clients today
 
-- CLI ‚Üí Gateway WS via `callGateway` (`src/gateway/call.ts`).
-- macOS app UI ‚Üí Gateway WS (`GatewayConnection`).
-- Web Control UI ‚Üí Gateway WS.
-- ACP ‚Üí Gateway WS.
+- CLI ‚Ü?Gateway WS via `callGateway` (`src/gateway/call.ts`).
+- macOS app UI ‚Ü?Gateway WS (`GatewayConnection`).
+- Web Control UI ‚Ü?Gateway WS.
+- ACP ‚Ü?Gateway WS.
 - Browser control uses its own HTTP control server.
 
 ## Nodes today
@@ -258,17 +258,17 @@ Approval is **gateway‚Äëhosted**, UI delivered to operator clients.
 ## macOS app
 
 - Operator role by default (control UI).
-- Node role when ‚ÄúMac node‚Äù enabled (system.run, screen, camera).
-- Same deviceId for both connections ‚Üí merged UI entry.
+- Node role when ‚ÄúMac node‚Ä?enabled (system.run, screen, camera).
+- Same deviceId for both connections ‚Ü?merged UI entry.
 
 ## CLI
 
 - Operator role always.
 - Scope derived by subcommand:
-  - `status`, `logs` ‚Üí read
-  - `agent`, `message` ‚Üí write
-  - `config`, `channels` ‚Üí admin
-  - approvals + pairing ‚Üí `operator.approvals` / `operator.pairing`
+  - `status`, `logs` ‚Ü?read
+  - `agent`, `message` ‚Ü?write
+  - `config`, `channels` ‚Ü?admin
+  - approvals + pairing ‚Ü?`operator.approvals` / `operator.pairing`
 
 ---
 
@@ -291,7 +291,7 @@ Human label only.
 
 ## UI grouping
 
-Same `deviceId` across roles ‚Üí single ‚ÄúInstance‚Äù row:
+Same `deviceId` across roles ‚Ü?single ‚ÄúInstance‚Ä?row:
 
 - Badge: `operator`, `node`.
 - Shows capabilities + last seen.
@@ -342,7 +342,7 @@ Same `deviceId` across roles ‚Üí single ‚ÄúInstance‚Äù row:
 # Security notes
 
 - Role/allowlist enforced at gateway boundary.
-- No client gets ‚Äúfull‚Äù API without operator scope.
+- No client gets ‚Äúfull‚Ä?API without operator scope.
 - Pairing required for _all_ connections.
 - TLS + pinning reduces MITM risk for mobile.
 - SSH silent approval is a convenience; still recorded + revocable.

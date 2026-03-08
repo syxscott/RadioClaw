@@ -15,7 +15,7 @@ This makes ACP usage in high-traffic messaging channels predictable and durable,
 
 ## Why
 
-Current thread-bound ACP behavior is optimized for ephemeral Discord thread workflows. Telegram does not have the same thread model; it has forum topics in groups/supergroups. Users want stable, always-on ACP “workspaces” in chat surfaces, not only temporary thread sessions.
+Current thread-bound ACP behavior is optimized for ephemeral Discord thread workflows. Telegram does not have the same thread model; it has forum topics in groups/supergroups. Users want stable, always-on ACP “workspaces�?in chat surfaces, not only temporary thread sessions.
 
 ## Goals
 
@@ -38,7 +38,7 @@ Current thread-bound ACP behavior is optimized for ephemeral Discord thread work
 
 ### 1) Two binding types
 
-- **Persistent binding**: saved in config, reconciled on startup, intended for “named workspace” channels/topics.
+- **Persistent binding**: saved in config, reconciled on startup, intended for “named workspace�?channels/topics.
 - **Temporary binding**: runtime-only, expires by idle/max-age policy.
 
 ### 2) Command behavior
@@ -68,12 +68,12 @@ Unify routing and persistent ACP binding configuration in top-level `bindings[]`
       {
         "id": "main",
         "default": true,
-        "workspace": "~/.openclaw/workspace-main",
+        "workspace": "~/.RadioClaw/workspace-main",
         "runtime": { "type": "embedded" },
       },
       {
         "id": "codex",
-        "workspace": "~/.openclaw/workspace-codex",
+        "workspace": "~/.RadioClaw/workspace-codex",
         "runtime": {
           "type": "acp",
           "acp": {
@@ -86,7 +86,7 @@ Unify routing and persistent ACP binding configuration in top-level `bindings[]`
       },
       {
         "id": "claude",
-        "workspace": "~/.openclaw/workspace-claude",
+        "workspace": "~/.RadioClaw/workspace-claude",
         "runtime": {
           "type": "acp",
           "acp": {
@@ -370,6 +370,4 @@ Notes:
 - Ship as opt-in per conversation (`bindings[].type="acp"` entry present).
 - Start with Discord + Telegram only.
 - Add docs with examples for:
-  - “one channel/topic per agent”
-  - “multiple channels/topics per same agent with different `cwd`”
-  - “team naming patterns (`codex-1`, `claude-repo-x`)".
+  - “one channel/topic per agent�?  - “multiple channels/topics per same agent with different `cwd`�?  - “team naming patterns (`codex-1`, `claude-repo-x`)".

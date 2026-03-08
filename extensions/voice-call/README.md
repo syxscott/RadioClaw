@@ -1,6 +1,6 @@
-# @openclaw/voice-call
+# @RadioClaw/voice-call
 
-Official Voice Call plugin for **OpenClaw**.
+Official Voice Call plugin for **RadioClaw**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.openclaw.ai/plugins/voice-call`
-Plugin system: `https://docs.openclaw.ai/plugin`
+Docs: `https://docs.RadioClaw.ai/plugins/voice-call`
+Plugin system: `https://docs.RadioClaw.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via OpenClaw (recommended)
+### Option A: install via RadioClaw (recommended)
 
 ```bash
-openclaw plugins install @openclaw/voice-call
+RadioClaw plugins install @RadioClaw/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.openclaw/extensions
-cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
-cd ~/.openclaw/extensions/voice-call && pnpm install
+mkdir -p ~/.RadioClaw/extensions
+cp -R extensions/voice-call ~/.RadioClaw/extensions/voice-call
+cd ~/.RadioClaw/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -108,7 +108,7 @@ Recommended ranges:
 
 - **Production:** `120`â€“`300` seconds for notify-style flows.
 - Keep this value **higher than `maxDurationSeconds`** so normal calls can
-  finish. A good starting point is `maxDurationSeconds + 30â€“60` seconds.
+  finish. A good starting point is `maxDurationSeconds + 30â€?0` seconds.
 
 Example:
 
@@ -122,7 +122,7 @@ Example:
 
 Voice Call uses the core `messages.tts` configuration (OpenAI or ElevenLabs) for
 streaming speech on calls. You can override it under the plugin config with the
-same shape â€” overrides deep-merge with `messages.tts`.
+same shape â€?overrides deep-merge with `messages.tts`.
 
 ```json5
 {
@@ -143,13 +143,13 @@ Notes:
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall continue --call-id <id> --message "Any questions?"
-openclaw voicecall speak --call-id <id> --message "One moment"
-openclaw voicecall end --call-id <id>
-openclaw voicecall status --call-id <id>
-openclaw voicecall tail
-openclaw voicecall expose --mode funnel
+RadioClaw voicecall call --to "+15555550123" --message "Hello from RadioClaw"
+RadioClaw voicecall continue --call-id <id> --message "Any questions?"
+RadioClaw voicecall speak --call-id <id> --message "One moment"
+RadioClaw voicecall end --call-id <id>
+RadioClaw voicecall status --call-id <id>
+RadioClaw voicecall tail
+RadioClaw voicecall expose --mode funnel
 ```
 
 ## Tool

@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { resolvePluginTools } from "../plugins/tools.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
 import { resolveSessionAgentId } from "./agent-scope.js";
@@ -25,7 +25,7 @@ import { createTtsTool } from "./tools/tts-tool.js";
 import { createWebFetchTool, createWebSearchTool } from "./tools/web-tools.js";
 import { resolveWorkspaceRoot } from "./workspace-dir.js";
 
-export function createOpenClawTools(
+export function createRadioClawTools(
   options?: {
     sandboxBrowserBridgeUrl?: string;
     allowHostBrowserControl?: boolean;
@@ -41,7 +41,7 @@ export function createOpenClawTools(
     sandboxFsBridge?: SandboxFsBridge;
     fsPolicy?: ToolFsPolicy;
     sandboxed?: boolean;
-    config?: OpenClawConfig;
+    config?: RadioClawConfig;
     pluginToolAllowlist?: string[];
     /** Current channel ID for auto-threading (Slack). */
     currentChannelId?: string;
@@ -67,7 +67,7 @@ export function createOpenClawTools(
     requesterSenderId?: string | null;
     /** Whether the requesting sender is an owner. */
     senderIsOwner?: boolean;
-    /** Ephemeral session UUID â€” regenerated on /new and /reset. */
+    /** Ephemeral session UUID â€?regenerated on /new and /reset. */
     sessionId?: string;
   } & SpawnedToolContext,
 ): AnyAgentTool[] {

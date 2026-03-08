@@ -128,10 +128,10 @@ Successfully processed 1 files`;
 
     it("skips localized (non-English) status lines that have no parenthesised token", () => {
       const output =
-        "C:\\Users\\karte\\.openclaw NT AUTHORITY\\\u0421\u0418\u0421\u0422\u0415\u041c\u0410:(OI)(CI)(F)\n" +
+        "C:\\Users\\karte\\.RadioClaw NT AUTHORITY\\\u0421\u0418\u0421\u0422\u0415\u041c\u0410:(OI)(CI)(F)\n" +
         "\u0423\u0441\u043f\u0435\u0448\u043d\u043e \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u0430\u043d\u043e 1 \u0444\u0430\u0439\u043b\u043e\u0432; " +
         "\u043d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u0430\u0442\u044c 0 \u0444\u0430\u0439\u043b\u043e\u0432";
-      const entries = parseIcaclsOutput(output, "C:\\Users\\karte\\.openclaw");
+      const entries = parseIcaclsOutput(output, "C:\\Users\\karte\\.RadioClaw");
       expect(entries).toHaveLength(1);
       expect(entries[0].principal).toBe("NT AUTHORITY\\\u0421\u0418\u0421\u0422\u0415\u041c\u0410");
     });
@@ -239,7 +239,7 @@ Successfully processed 1 files`;
     });
   });
 
-  describe("summarizeWindowsAcl — SID-based classification", () => {
+  describe("summarizeWindowsAcl �?SID-based classification", () => {
     it("classifies SYSTEM SID (S-1-5-18) as trusted", () => {
       expectTrustedOnly([aclEntry({ principal: "S-1-5-18" })]);
     });
@@ -357,7 +357,7 @@ Successfully processed 1 files`;
       expect(summary.untrustedGroup).toHaveLength(0);
     });
 
-    it("full scenario: SYSTEM SID + owner SID only → no findings", () => {
+    it("full scenario: SYSTEM SID + owner SID only �?no findings", () => {
       const ownerSid = "S-1-5-21-1824257776-4070701511-781240313-1001";
       const entries: WindowsAclEntry[] = [
         {
@@ -603,7 +603,7 @@ Successfully processed 1 files`;
     });
   });
 
-  describe("summarizeWindowsAcl — localized SYSTEM account names", () => {
+  describe("summarizeWindowsAcl �?localized SYSTEM account names", () => {
     it("classifies French SYSTEM (AUTORITE NT\\Système) as trusted", () => {
       expectTrustedOnly([aclEntry({ principal: "AUTORITE NT\\Système" })]);
     });
@@ -616,7 +616,7 @@ Successfully processed 1 files`;
       expectTrustedOnly([aclEntry({ principal: "AUTORIDAD NT\\SYSTEM" })]);
     });
 
-    it("French Windows full scenario: user + Système only → no untrusted", () => {
+    it("French Windows full scenario: user + Système only �?no untrusted", () => {
       const entries: WindowsAclEntry[] = [
         aclEntry({ principal: "MYPC\\Pierre" }),
         aclEntry({ principal: "AUTORITE NT\\Système" }),
@@ -629,7 +629,7 @@ Successfully processed 1 files`;
     });
   });
 
-  describe("formatIcaclsResetCommand — uses SID for SYSTEM", () => {
+  describe("formatIcaclsResetCommand �?uses SID for SYSTEM", () => {
     it("uses *S-1-5-18 instead of SYSTEM in reset command", () => {
       const cmd = formatIcaclsResetCommand("C:\\test.json", {
         isDir: false,

@@ -35,9 +35,9 @@ describe("provider-usage.format", () => {
     );
 
     expect(summary).toContain("Now 90% left ‚è±now");
-    expect(summary).toContain("Minute 80% left ‚è±30m");
-    expect(summary).toContain("Hour 70% left ‚è±2h 15m");
-    expect(summary).toContain("Day 60% left ‚è±2d 3h");
+    expect(summary).toContain("Minute 80% left ‚è?0m");
+    expect(summary).toContain("Hour 70% left ‚è?h 15m");
+    expect(summary).toContain("Day 60% left ‚è?d 3h");
     expect(summary).toMatch(/Date 50% left ‚è±[A-Z][a-z]{2} \d{1,2}/);
   });
 

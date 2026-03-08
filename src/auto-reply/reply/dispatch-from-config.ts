@@ -1,5 +1,5 @@
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   loadSessionStore,
   resolveSessionStoreEntry,
@@ -72,7 +72,7 @@ const isInboundAudioContext = (ctx: FinalizedMsgContext): boolean => {
 
 const resolveSessionStoreLookup = (
   ctx: FinalizedMsgContext,
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
 ): {
   sessionKey?: string;
   entry?: SessionEntry;
@@ -105,7 +105,7 @@ export type DispatchFromConfigResult = {
 
 export async function dispatchReplyFromConfig(params: {
   ctx: FinalizedMsgContext;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   dispatcher: ReplyDispatcher;
   replyOptions?: Omit<GetReplyOptions, "onToolResult" | "onBlockReply">;
   replyResolver?: typeof getReplyFromConfig;
@@ -413,7 +413,7 @@ export async function dispatchReplyFromConfig(params: {
         },
         onBlockReply: (payload: ReplyPayload, context) => {
           const run = async () => {
-            // Suppress reasoning payloads â€” channels using this generic dispatch
+            // Suppress reasoning payloads â€?channels using this generic dispatch
             // path (WhatsApp, web, etc.) do not have a dedicated reasoning lane.
             // Telegram has its own dispatch path that handles reasoning splitting.
             if (shouldSuppressReasoningPayload(payload)) {
@@ -478,7 +478,7 @@ export async function dispatchReplyFromConfig(params: {
     let queuedFinal = false;
     let routedFinalCount = 0;
     for (const reply of replies) {
-      // Suppress reasoning payloads from channel delivery â€” channels using this
+      // Suppress reasoning payloads from channel delivery â€?channels using this
       // generic dispatch path do not have a dedicated reasoning lane.
       if (shouldSuppressReasoningPayload(reply)) {
         continue;

@@ -12,7 +12,7 @@ import {
 } from "../channels/telegram/allow-from.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { resolveNativeCommandsEnabled, resolveNativeSkillsEnabled } from "../config/commands.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { isDangerousNameMatchingEnabled } from "../config/dangerous-name-matching.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
 import { normalizeStringEntries } from "../shared/string-normalization.js";
@@ -101,7 +101,7 @@ function dedupeFindings(findings: SecurityAuditFinding[]): SecurityAuditFinding[
 }
 
 function hasExplicitProviderAccountConfig(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   provider: string,
   accountId: string,
 ): boolean {
@@ -117,8 +117,8 @@ function hasExplicitProviderAccountConfig(
 }
 
 export async function collectChannelSecurityFindings(params: {
-  cfg: OpenClawConfig;
-  sourceConfig?: OpenClawConfig;
+  cfg: RadioClawConfig;
+  sourceConfig?: RadioClawConfig;
   plugins: ReturnType<typeof listChannelPlugins>;
 }): Promise<SecurityAuditFinding[]> {
   const findings: SecurityAuditFinding[] = [];
@@ -126,7 +126,7 @@ export async function collectChannelSecurityFindings(params: {
 
   const inspectChannelAccount = (
     plugin: (typeof params.plugins)[number],
-    cfg: OpenClawConfig,
+    cfg: RadioClawConfig,
     accountId: string,
   ) =>
     plugin.config.inspectAccount?.(cfg, accountId) ??
@@ -255,7 +255,7 @@ export async function collectChannelSecurityFindings(params: {
           "Multiple DM senders currently share the main session, which can leak context across users.",
         remediation:
           "Run: " +
-          formatCliCommand('openclaw config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('RadioClaw config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate DM sessions per sender.',
       });
     }
@@ -331,7 +331,7 @@ export async function collectChannelSecurityFindings(params: {
         addDiscordNameBasedEntries({
           target: discordNameBasedAllowEntries,
           values: storeAllowFrom,
-          source: "~/.openclaw/credentials/discord-allowFrom.json",
+          source: "~/.RadioClaw/credentials/discord-allowFrom.json",
         });
         const discordGuildEntries =
           (discordCfg.guilds as Record<string, unknown> | undefined) ?? {};
@@ -443,7 +443,7 @@ export async function collectChannelSecurityFindings(params: {
               severity: "critical",
               title: "Discord slash commands are unrestricted",
               detail:
-                "commands.useAccessGroups=false disables sender allowlists for Discord slash commands unless a per-guild/channel users allowlist is configured; with no users allowlist, any user in allowed guild channels can invoke /â€¦ commands.",
+                "commands.useAccessGroups=false disables sender allowlists for Discord slash commands unless a per-guild/channel users allowlist is configured; with no users allowlist, any user in allowed guild channels can invoke /â€?commands.",
               remediation:
                 "Set commands.useAccessGroups=true (recommended), or configure channels.discord.guilds.<id>.users (or channels.discord.guilds.<id>.channels.<channel>.users).",
             });
@@ -459,7 +459,7 @@ export async function collectChannelSecurityFindings(params: {
               severity: "warn",
               title: "Discord slash commands have no allowlists",
               detail:
-                "Discord slash commands are enabled, but neither an owner allowFrom list nor any per-guild/channel users allowlist is configured; /â€¦ commands will be rejected for everyone.",
+                "Discord slash commands are enabled, but neither an owner allowFrom list nor any per-guild/channel users allowlist is configured; /â€?commands will be rejected for everyone.",
               remediation:
                 "Add your user id to channels.discord.allowFrom (or approve yourself via pairing), or configure channels.discord.guilds.<id>.users.",
             });
@@ -497,7 +497,7 @@ export async function collectChannelSecurityFindings(params: {
               severity: "critical",
               title: "Slack slash commands bypass access groups",
               detail:
-                "Slack slash/native commands are enabled while commands.useAccessGroups=false; this can allow unrestricted /â€¦ command execution from channels/users you didn't explicitly authorize.",
+                "Slack slash/native commands are enabled while commands.useAccessGroups=false; this can allow unrestricted /â€?command execution from channels/users you didn't explicitly authorize.",
               remediation: "Set commands.useAccessGroups=true (recommended).",
             });
           } else {
@@ -536,7 +536,7 @@ export async function collectChannelSecurityFindings(params: {
                 severity: "warn",
                 title: "Slack slash commands have no allowlists",
                 detail:
-                  "Slack slash/native commands are enabled, but neither an owner allowFrom list nor any channels.<id>.users allowlist is configured; /â€¦ commands will be rejected for everyone.",
+                  "Slack slash/native commands are enabled, but neither an owner allowFrom list nor any channels.<id>.users allowlist is configured; /â€?commands will be rejected for everyone.",
                 remediation:
                   "Approve yourself via pairing (recommended), or set channels.slack.allowFrom and/or channels.slack.channels.<id>.users.",
               });
@@ -691,7 +691,7 @@ export async function collectChannelSecurityFindings(params: {
           severity: "critical",
           title: "Telegram group allowlist contains wildcard",
           detail:
-            'Telegram group sender allowlist contains "*", which allows any group member to run /â€¦ commands and control directives.',
+            'Telegram group sender allowlist contains "*", which allows any group member to run /â€?commands and control directives.',
           remediation:
             'Remove "*" from channels.telegram.groupAllowFrom and pairing store; prefer explicit numeric Telegram user IDs.',
         });
@@ -712,7 +712,7 @@ export async function collectChannelSecurityFindings(params: {
           severity: "critical",
           title: "Telegram group commands have no sender allowlist",
           detail:
-            `Telegram group access is enabled but no sender allowlist is configured; this allows any group member to invoke /â€¦ commands` +
+            `Telegram group access is enabled but no sender allowlist is configured; this allows any group member to invoke /â€?commands` +
             (skillsEnabled ? " (including skill commands)." : "."),
           remediation:
             "Approve yourself via pairing (recommended), or set channels.telegram.groupAllowFrom (or per-group groups.<id>.allowFrom).",

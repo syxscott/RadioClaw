@@ -60,7 +60,7 @@ describe("DiscordMessageListener", () => {
     });
     const listener = new DiscordMessageListener(handler as never, createLogger() as never);
 
-    // Both messages target the same channel â€” previously serialized, now concurrent.
+    // Both messages target the same channel â€?previously serialized, now concurrent.
     await listener.handle(fakeEvent("ch-1"), {} as never);
     await listener.handle(fakeEvent("ch-1"), {} as never);
 
@@ -75,7 +75,7 @@ describe("DiscordMessageListener", () => {
     await vi.waitFor(() => {
       expect(order).toContain("end:2");
     });
-    // First handler is still running â€” no serialization.
+    // First handler is still running â€?no serialization.
     expect(order).not.toContain("end:1");
 
     resolveA?.();

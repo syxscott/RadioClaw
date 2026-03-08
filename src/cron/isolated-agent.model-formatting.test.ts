@@ -217,7 +217,7 @@ describe("cron model formatting and precedence edge cases", () => {
   // ------ precedence: job payload > session override > default ------
 
   describe("model precedence isolation", () => {
-    it("job payload model overrides default (anthropic â†’ openai)", async () => {
+    it("job payload model overrides default (anthropic â†?openai)", async () => {
       // Default in makeCfg is anthropic/claude-opus-4-5.
       // Job payload sets openai/gpt-4.1-mini. Provider must be openai.
       await withTempHome(async (home) => {
@@ -292,7 +292,7 @@ describe("cron model formatting and precedence edge cases", () => {
   // ------ sequential runs with different overrides (the CI failure pattern) ------
 
   describe("sequential model switches (CI failure regression)", () => {
-    it("openai override â†’ session openai â†’ job anthropic: each step resolves correctly", async () => {
+    it("openai override â†?session openai â†?job anthropic: each step resolves correctly", async () => {
       // This reproduces the exact pattern from the CI failure.
       // Three sequential calls in one temp home, switching providers.
       await withTempHome(async (home) => {
@@ -363,7 +363,7 @@ describe("cron model formatting and precedence edge cases", () => {
         });
         expect(r1.call.provider).toBe("openai");
 
-        // Run 2: no override â€” must revert to default anthropic
+        // Run 2: no override â€?must revert to default anthropic
         vi.mocked(runEmbeddedPiAgent).mockClear();
         mockEmbeddedOk();
         const r2 = await runTurn(home, {
@@ -453,7 +453,7 @@ describe("cron model formatting and precedence edge cases", () => {
             },
           },
         });
-        // Whitespace modelOverride should be ignored â†’ default
+        // Whitespace modelOverride should be ignored â†?default
         expect(call.provider).toBe("anthropic");
         expect(call.model).toBe("claude-opus-4-5");
       });

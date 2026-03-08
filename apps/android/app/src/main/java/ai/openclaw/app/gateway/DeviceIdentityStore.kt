@@ -1,4 +1,4 @@
-package ai.openclaw.app.gateway
+package ai.RadioClaw.app.gateway
 
 import android.content.Context
 import android.util.Base64
@@ -17,7 +17,7 @@ data class DeviceIdentity(
 
 class DeviceIdentityStore(context: Context) {
   private val json = Json { ignoreUnknownKeys = true }
-  private val identityFile = File(context.filesDir, "openclaw/identity/device.json")
+  private val identityFile = File(context.filesDir, "RadioClaw/identity/device.json")
   @Volatile private var cachedIdentity: DeviceIdentity? = null
 
   @Synchronized
@@ -43,7 +43,7 @@ class DeviceIdentityStore(context: Context) {
 
   fun signPayload(payload: String, identity: DeviceIdentity): String? {
     return try {
-      // Use BC lightweight API directly â€” JCA provider registration is broken by R8
+      // Use BC lightweight API directly â€?JCA provider registration is broken by R8
       val privateKeyBytes = Base64.decode(identity.privateKeyPkcs8Base64, Base64.DEFAULT)
       val pkInfo = org.bouncycastle.asn1.pkcs.PrivateKeyInfo.getInstance(privateKeyBytes)
       val parsed = pkInfo.parsePrivateKey()

@@ -6,7 +6,7 @@ import {
   resolveConfiguredModelRef,
   resolveModelRefFromString,
 } from "../../agents/model-selection.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import { buildBrowseProvidersButton } from "../../telegram/model-buttons.js";
 import { shortenHomePath } from "../../utils.js";
@@ -52,7 +52,7 @@ function pushUniqueCatalogEntry(params: {
 }
 
 function buildModelPickerCatalog(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   defaultProvider: string;
   defaultModel: string;
   aliasIndex: ModelAliasIndex;
@@ -189,7 +189,7 @@ function buildModelPickerCatalog(params: {
 
 export async function maybeHandleModelDirectiveInfo(params: {
   directives: InlineDirectives;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentDir: string;
   activeAgentId: string;
   provider: string;
@@ -347,7 +347,7 @@ export async function maybeHandleModelDirectiveInfo(params: {
       const label = `${provider}/${entry.id}`;
       const aliases = params.aliasIndex.byKey.get(label);
       const aliasSuffix = aliases && aliases.length > 0 ? ` (${aliases.join(", ")})` : "";
-      lines.push(`  â€¢ ${label}${aliasSuffix}`);
+      lines.push(`  â€?${label}${aliasSuffix}`);
     }
   }
   return { text: lines.join("\n") };
@@ -355,7 +355,7 @@ export async function maybeHandleModelDirectiveInfo(params: {
 
 export function resolveModelSelectionFromDirective(params: {
   directives: InlineDirectives;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentDir: string;
   defaultProvider: string;
   defaultModel: string;

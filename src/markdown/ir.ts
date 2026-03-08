@@ -270,7 +270,7 @@ function appendListPrefix(state: RenderState) {
   }
   top.index += 1;
   const indent = "  ".repeat(Math.max(0, stack.length - 1));
-  const prefix = top.type === "ordered" ? `${top.index}. ` : "â€¢ ";
+  const prefix = top.type === "ordered" ? `${top.index}. ` : "â€?";
   state.text += `${indent}${prefix}`;
 }
 
@@ -413,7 +413,7 @@ function appendTableBulletValue(
   if (!value?.text) {
     return;
   }
-  state.text += "â€¢ ";
+  state.text += "â€?";
   if (header?.text) {
     appendCell(state, header);
     state.text += ": ";

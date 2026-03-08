@@ -13,7 +13,7 @@ async function expectLoadRejectionPreservesField(params: {
   expectedValue: unknown;
 }) {
   await withTempHome(async (home) => {
-    const configPath = path.join(home, ".openclaw", "openclaw.json");
+    const configPath = path.join(home, ".RadioClaw", "RadioClaw.json");
     await fs.mkdir(path.dirname(configPath), { recursive: true });
     await fs.writeFile(configPath, JSON.stringify(params.config, null, 2), "utf-8");
 
@@ -34,7 +34,7 @@ async function withSnapshotForConfig(
   run: (params: { snapshot: ConfigSnapshot; parsed: unknown; configPath: string }) => Promise<void>,
 ) {
   await withTempHome(async (home) => {
-    const configPath = path.join(home, ".openclaw", "openclaw.json");
+    const configPath = path.join(home, ".RadioClaw", "RadioClaw.json");
     await fs.mkdir(path.dirname(configPath), { recursive: true });
     await fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf-8");
     const snapshot = await readConfigFileSnapshot();
@@ -215,7 +215,7 @@ describe("legacy config detection", () => {
       telegram: { requireMention: false },
     });
     expect(res.changes).toContain(
-      'Moved telegram.requireMention â†’ channels.telegram.groups."*".requireMention.',
+      'Moved telegram.requireMention â†?channels.telegram.groups."*".requireMention.',
     );
     expect(res.config?.channels?.telegram?.groups?.["*"]?.requireMention).toBe(false);
     expect(
@@ -226,7 +226,7 @@ describe("legacy config detection", () => {
     const res = migrateLegacyConfig({
       messages: { tts: { enabled: true } },
     });
-    expect(res.changes).toContain("Moved messages.tts.enabled â†’ messages.tts.auto (always).");
+    expect(res.changes).toContain("Moved messages.tts.enabled â†?messages.tts.auto (always).");
     expect(res.config?.messages?.tts?.auto).toBe("always");
     expect(res.config?.messages?.tts?.enabled).toBeUndefined();
   });
@@ -298,7 +298,7 @@ describe("legacy config detection", () => {
   });
   it("does not auto-migrate claude-cli auth profile mode on load", async () => {
     await withTempHome(async (home) => {
-      const configPath = path.join(home, ".openclaw", "openclaw.json");
+      const configPath = path.join(home, ".RadioClaw", "RadioClaw.json");
       await fs.mkdir(path.dirname(configPath), { recursive: true });
       await fs.writeFile(
         configPath,

@@ -10,7 +10,7 @@ describe("createTelegramRetryRunner", () => {
       const runner = createTelegramRetryRunner({
         retry: { attempts: 2, minDelayMs: 0, maxDelayMs: 0, jitter: 0 },
         shouldRetry: () => false, // predicate says no
-        // strictShouldRetry not set â€” regex fallback still applies
+        // strictShouldRetry not set â€?regex fallback still applies
       });
       await expect(runner(fn, "test")).rejects.toThrow("ECONNRESET");
       // Regex matches "reset" so it retried despite shouldRetry returning false
@@ -27,7 +27,7 @@ describe("createTelegramRetryRunner", () => {
         strictShouldRetry: true, // predicate is authoritative
       });
       await expect(runner(fn, "test")).rejects.toThrow("ECONNRESET");
-      // No retry â€” predicate returned false and regex fallback was suppressed
+      // No retry â€?predicate returned false and regex fallback was suppressed
       expect(fn).toHaveBeenCalledTimes(1);
     });
 

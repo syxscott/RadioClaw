@@ -1,12 +1,12 @@
-package ai.openclaw.app.node
+package ai.RadioClaw.app.node
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
-import ai.openclaw.app.LocationMode
-import ai.openclaw.app.gateway.GatewaySession
+import ai.RadioClaw.app.LocationMode
+import ai.RadioClaw.app.gateway.GatewaySession
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject

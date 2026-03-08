@@ -1,4 +1,4 @@
-import OpenClawKit
+import RadioClawKit
 import CoreLocation
 import Foundation
 
@@ -31,7 +31,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
         self.configureLocationManager()
     }
 
-    func ensureAuthorization(mode: OpenClawLocationMode) async -> CLAuthorizationStatus {
+    func ensureAuthorization(mode: RadioClawLocationMode) async -> CLAuthorizationStatus {
         guard CLLocationManager.locationServicesEnabled() else { return .denied }
 
         let status = self.manager.authorizationStatus
@@ -54,8 +54,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
     }
 
     func currentLocation(
-        params: OpenClawLocationGetParams,
-        desiredAccuracy: OpenClawLocationAccuracy,
+        params: RadioClawLocationGetParams,
+        desiredAccuracy: RadioClawLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?) async throws -> CLLocation
     {
@@ -85,7 +85,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
     }
 
     func startLocationUpdates(
-        desiredAccuracy: OpenClawLocationAccuracy,
+        desiredAccuracy: RadioClawLocationAccuracy,
         significantChangesOnly: Bool) -> AsyncStream<CLLocation>
     {
         self.stopLocationUpdates()
@@ -155,7 +155,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate, LocationServic
                 } else {
                     cont.resume(throwing: Error.unavailable)
                 }
-                // Don't return â€” also forward to significant-change callback below
+                // Don't return â€?also forward to significant-change callback below
                 // so both consumers receive updates when both are active.
             }
             if let callback = self.significantLocationCallback, let latest = locs.last {

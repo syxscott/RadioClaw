@@ -1,7 +1,7 @@
 import CoreLocation
-import OpenClawIPC
+import RadioClawIPC
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized)
 @MainActor

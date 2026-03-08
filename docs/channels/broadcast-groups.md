@@ -14,11 +14,11 @@ title: "Broadcast Groups"
 
 ## Overview
 
-Broadcast Groups enable multiple agents to process and respond to the same message simultaneously. This allows you to create specialized agent teams that work together in a single WhatsApp group or DM ‚Äî all using one phone number.
+Broadcast Groups enable multiple agents to process and respond to the same message simultaneously. This allows you to create specialized agent teams that work together in a single WhatsApp group or DM ‚Ä?all using one phone number.
 
 Current scope: **WhatsApp only** (web channel).
 
-Broadcast groups are evaluated after channel allowlists and group activation rules. In WhatsApp groups, this means broadcasts happen when OpenClaw would normally reply (for example: on mention, depending on your group settings).
+Broadcast groups are evaluated after channel allowlists and group activation rules. In WhatsApp groups, this means broadcasts happen when RadioClaw would normally reply (for example: on mention, depending on your group settings).
 
 ## Use Cases
 
@@ -83,7 +83,7 @@ Add a top-level `broadcast` section (next to `bindings`). Keys are WhatsApp peer
 }
 ```
 
-**Result:** When OpenClaw would reply in this chat, it will run all three agents.
+**Result:** When RadioClaw would reply in this chat, it will run all three agents.
 
 ### Processing Strategy
 
@@ -192,7 +192,7 @@ In group `120363403215116621@g.us` with agents `["alfred", "baerbel"]`:
 ```
 Session: agent:alfred:whatsapp:group:120363403215116621@g.us
 History: [user message, alfred's previous responses]
-Workspace: /Users/pascal/openclaw-alfred/
+Workspace: /Users/pascal/RadioClaw-alfred/
 Tools: read, write, exec
 ```
 
@@ -201,7 +201,7 @@ Tools: read, write, exec
 ```
 Session: agent:baerbel:whatsapp:group:120363403215116621@g.us
 History: [user message, baerbel's previous responses]
-Workspace: /Users/pascal/openclaw-baerbel/
+Workspace: /Users/pascal/RadioClaw-baerbel/
 Tools: read only
 ```
 
@@ -219,8 +219,8 @@ Design each agent with a single, clear responsibility:
 }
 ```
 
-‚úÖ **Good:** Each agent has one job  
-‚ùå **Bad:** One generic "dev-helper" agent
+‚ú?**Good:** Each agent has one job  
+‚ù?**Bad:** One generic "dev-helper" agent
 
 ### 2. Use Descriptive Names
 
@@ -266,7 +266,7 @@ With many agents, consider:
 Agents fail independently. One agent's error doesn't block others:
 
 ```
-Message ‚Üí [Agent A ‚úì, Agent B ‚úó error, Agent C ‚úì]
+Message ‚Ü?[Agent A ‚ú? Agent B ‚ú?error, Agent C ‚úì]
 Result: Agent A and C respond, Agent B logs error
 ```
 
@@ -276,7 +276,7 @@ Result: Agent A and C respond, Agent B logs error
 
 Broadcast groups currently work with:
 
-- ‚úÖ WhatsApp (implemented)
+- ‚ú?WhatsApp (implemented)
 - üöß Telegram (planned)
 - üöß Discord (planned)
 - üöß Slack (planned)
@@ -317,7 +317,7 @@ Broadcast groups work alongside existing routing:
 **Debug:**
 
 ```bash
-tail -f ~/.openclaw/logs/gateway.log | grep broadcast
+tail -f ~/.RadioClaw/logs/gateway.log | grep broadcast
 ```
 
 ### Only One Agent Responding
@@ -403,7 +403,7 @@ tail -f ~/.openclaw/logs/gateway.log | grep broadcast
 ### Config Schema
 
 ```typescript
-interface OpenClawConfig {
+interface RadioClawConfig {
   broadcast?: {
     strategy?: "parallel" | "sequential";
     [peerId: string]: string[];

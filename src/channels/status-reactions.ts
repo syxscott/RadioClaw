@@ -10,19 +10,19 @@
 export type StatusReactionAdapter = {
   /** Set/replace the current reaction emoji. */
   setReaction: (emoji: string) => Promise<void>;
-  /** Remove a specific reaction emoji (optional — needed for Discord-style platforms). */
+  /** Remove a specific reaction emoji (optional �?needed for Discord-style platforms). */
   removeReaction?: (emoji: string) => Promise<void>;
 };
 
 export type StatusReactionEmojis = {
   queued?: string; // Default: uses initialEmoji param
   thinking?: string; // Default: "🧠"
-  tool?: string; // Default: "🛠️"
+  tool?: string; // Default: "🛠�?
   coding?: string; // Default: "💻"
   web?: string; // Default: "🌐"
-  done?: string; // Default: "✅"
-  error?: string; // Default: "❌"
-  stallSoft?: string; // Default: "⏳"
+  done?: string; // Default: "�?
+  error?: string; // Default: "�?
+  stallSoft?: string; // Default: "�?
   stallHard?: string; // Default: "⚠️"
 };
 
@@ -52,8 +52,8 @@ export const DEFAULT_EMOJIS: Required<StatusReactionEmojis> = {
   queued: "👀",
   thinking: "🤔",
   tool: "🔥",
-  coding: "👨‍💻",
-  web: "⚡",
+  coding: "👨‍�?,
+  web: "�?,
   done: "👍",
   error: "😱",
   stallSoft: "🥱",

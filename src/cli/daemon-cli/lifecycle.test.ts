@@ -130,7 +130,7 @@ describe("runDaemonRestart health checks", () => {
     mockSpawnSync.mockReset();
 
     service.readCommand.mockResolvedValue({
-      programArguments: ["openclaw", "gateway", "--port", "18789"],
+      programArguments: ["RadioClaw", "gateway", "--port", "18789"],
       environment: {},
     });
 
@@ -165,14 +165,14 @@ describe("runDaemonRestart health checks", () => {
       }
       const pid = Number.parseInt(match[1] ?? "", 10);
       if ([4200, 4300].includes(pid)) {
-        return ["openclaw", "gateway", "--port", "18789", ""].join("\0");
+        return ["RadioClaw", "gateway", "--port", "18789", ""].join("\0");
       }
       throw new Error(`unknown pid ${pid}`);
     });
     mockSpawnSync.mockReturnValue({
       error: null,
       status: 0,
-      stdout: "openclaw gateway --port 18789",
+      stdout: "RadioClaw gateway --port 18789",
       stderr: "",
     });
   });
@@ -216,7 +216,7 @@ describe("runDaemonRestart health checks", () => {
 
     await expect(runDaemonRestart({ json: true })).rejects.toMatchObject({
       message: "Gateway restart timed out after 60s waiting for health checks.",
-      hints: ["openclaw gateway status --deep", "openclaw doctor"],
+      hints: ["RadioClaw gateway status --deep", "RadioClaw doctor"],
     });
     expect(terminateStaleGatewayPids).not.toHaveBeenCalled();
     expect(renderRestartDiagnostics).toHaveBeenCalledTimes(1);
@@ -230,7 +230,7 @@ describe("runDaemonRestart health checks", () => {
       error: null,
       status: 0,
       stdout:
-        'CommandLine="C:\\\\Program Files\\\\OpenClaw\\\\openclaw.exe" gateway --port 18789\r\n',
+        'CommandLine="C:\\\\Program Files\\\\RadioClaw\\\\RadioClaw.exe" gateway --port 18789\r\n',
       stderr: "",
     });
     runServiceStop.mockImplementation(async (params: { onNotLoaded?: () => Promise<unknown> }) => {
@@ -252,7 +252,7 @@ describe("runDaemonRestart health checks", () => {
       error: null,
       status: 0,
       stdout:
-        'CommandLine="C:\\\\Program Files\\\\OpenClaw\\\\openclaw.exe" gateway --port 18789\r\n',
+        'CommandLine="C:\\\\Program Files\\\\RadioClaw\\\\RadioClaw.exe" gateway --port 18789\r\n',
       stderr: "",
     });
     runServiceRestart.mockImplementation(
@@ -288,7 +288,7 @@ describe("runDaemonRestart health checks", () => {
       error: null,
       status: 0,
       stdout:
-        'CommandLine="C:\\\\Program Files\\\\OpenClaw\\\\openclaw.exe" gateway --port 18789\r\n',
+        'CommandLine="C:\\\\Program Files\\\\RadioClaw\\\\RadioClaw.exe" gateway --port 18789\r\n',
       stderr: "",
     });
     runServiceRestart.mockImplementation(

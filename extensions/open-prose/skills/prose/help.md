@@ -59,8 +59,8 @@ prose run examples/01-hello-world.prose
 
 ```
 prose help
-â†’ Select "Build something new"
-â†’ Describe what you want to automate
+â†?Select "Build something new"
+â†?Describe what you want to automate
 ```
 
 ---

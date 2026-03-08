@@ -192,7 +192,7 @@ const PROVIDER_AUTH_CHOICE_OPTION_HINTS: Partial<Record<AuthChoice, string>> = {
   "cloudflare-ai-gateway-api-key": "Account ID + Gateway ID + API key",
   "venice-api-key": "Privacy-focused inference (uncensored models)",
   "together-api-key": "Access to Llama, DeepSeek, Qwen, and more open models",
-  "huggingface-api-key": "Inference Providers â€” OpenAI-compatible chat",
+  "huggingface-api-key": "Inference Providers â€?OpenAI-compatible chat",
 };
 
 const PROVIDER_AUTH_CHOICE_OPTION_LABELS: Partial<Record<AuthChoice, string>> = {

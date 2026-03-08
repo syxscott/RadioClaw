@@ -22,7 +22,7 @@ import {
 } from "./thread-bindings.js";
 
 type DiscordConfig = NonNullable<
-  import("../../config/config.js").OpenClawConfig["channels"]
+  import("../../config/config.js").RadioClawConfig["channels"]
 >["discord"];
 type DiscordMessageEvent = import("./listeners.js").DiscordMessageEvent;
 type DiscordClient = import("@buape/carbon").Client;
@@ -32,7 +32,7 @@ const DEFAULT_CFG = {
     mainKey: "main",
     scope: "per-sender",
   },
-} as import("../../config/config.js").OpenClawConfig;
+} as import("../../config/config.js").RadioClawConfig;
 
 function createThreadBinding(
   overrides?: Partial<
@@ -62,7 +62,7 @@ function createThreadBinding(
 }
 
 function createPreflightArgs(params: {
-  cfg: import("../../config/config.js").OpenClawConfig;
+  cfg: import("../../config/config.js").RadioClawConfig;
   discordConfig: DiscordConfig;
   data: DiscordMessageEvent;
   client: DiscordClient;
@@ -73,7 +73,7 @@ function createPreflightArgs(params: {
     accountId: "default",
     token: "token",
     runtime: {} as import("../../runtime.js").RuntimeEnv,
-    botUserId: "openclaw-bot",
+    botUserId: "RadioClaw-bot",
     guildHistories: new Map(),
     historyLimit: 0,
     mediaMaxBytes: 1_000_000,
@@ -218,7 +218,7 @@ async function runGuildPreflight(params: {
   guildId: string;
   message: import("@buape/carbon").Message;
   discordConfig: DiscordConfig;
-  cfg?: import("../../config/config.js").OpenClawConfig;
+  cfg?: import("../../config/config.js").RadioClawConfig;
   guildEntries?: Parameters<typeof preflightDiscordMessage>[0]["guildEntries"];
 }) {
   return preflightDiscordMessage({
@@ -287,7 +287,7 @@ describe("preflightDiscordMessage", () => {
       author: {
         id: "relay-bot-1",
         bot: true,
-        username: "OpenClaw",
+        username: "RadioClaw",
       },
     });
 
@@ -364,7 +364,7 @@ describe("preflightDiscordMessage", () => {
       createPreflightArgs({
         cfg: {
           ...DEFAULT_CFG,
-        } as import("../../config/config.js").OpenClawConfig,
+        } as import("../../config/config.js").RadioClawConfig,
         discordConfig: {
           allowBots: true,
         } as DiscordConfig,
@@ -415,8 +415,8 @@ describe("preflightDiscordMessage", () => {
     const message = createMessage({
       id: "m-bot-mentions-on",
       channelId,
-      content: "hi <@openclaw-bot>",
-      mentionedUsers: [{ id: "openclaw-bot" }],
+      content: "hi <@RadioClaw-bot>",
+      mentionedUsers: [{ id: "RadioClaw-bot" }],
       author: {
         id: "relay-bot-1",
         bot: true,
@@ -541,7 +541,7 @@ describe("preflightDiscordMessage", () => {
   });
 
   it("uses attachment content_type for guild audio preflight mention detection", async () => {
-    transcribeFirstAudioMock.mockResolvedValue("hey openclaw");
+    transcribeFirstAudioMock.mockResolvedValue("hey RadioClaw");
 
     const channelId = "channel-audio-1";
     const client = createGuildTextClient(channelId);
@@ -571,10 +571,10 @@ describe("preflightDiscordMessage", () => {
           ...DEFAULT_CFG,
           messages: {
             groupChat: {
-              mentionPatterns: ["openclaw"],
+              mentionPatterns: ["RadioClaw"],
             },
           },
-        } as import("../../config/config.js").OpenClawConfig,
+        } as import("../../config/config.js").RadioClawConfig,
         discordConfig: {} as DiscordConfig,
         data: createGuildEvent({
           channelId,

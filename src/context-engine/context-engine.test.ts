@@ -86,10 +86,8 @@ class MockContextEngine implements ContextEngine {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 1. Engine contract tests
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 1. Engine contract tests
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("Engine contract tests", () => {
   it("a mock engine implementing ContextEngine can be registered and resolved", async () => {
     const factory = () => new MockContextEngine();
@@ -155,10 +153,8 @@ describe("Engine contract tests", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 2. Registry tests
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 2. Registry tests
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("Registry tests", () => {
   it("registerContextEngine() stores a factory", () => {
     const factory = () => new MockContextEngine();
@@ -200,10 +196,8 @@ describe("Registry tests", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 3. Default engine selection
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 3. Default engine selection
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("Default engine selection", () => {
   // Ensure both legacy and a custom test engine are registered before these tests.
   beforeEach(() => {
@@ -243,10 +237,8 @@ describe("Default engine selection", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 4. Invalid engine fallback
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 4. Invalid engine fallback
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("Invalid engine fallback", () => {
   it("resolveContextEngine() with config pointing to unregistered engine throws with helpful error", async () => {
     await expect(resolveContextEngine(configWithSlot("nonexistent-engine"))).rejects.toThrow(
@@ -274,10 +266,8 @@ describe("Invalid engine fallback", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 5. LegacyContextEngine parity
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 5. LegacyContextEngine parity
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("LegacyContextEngine parity", () => {
   it("ingest() returns { ingested: false } (no-op)", async () => {
     const engine = new LegacyContextEngine();
@@ -315,10 +305,8 @@ describe("LegacyContextEngine parity", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 6. Initialization guard
-// ═══════════════════════════════════════════════════════════════════════════
-
+// ══════════════════════════════════════════════════════════════════════════�?// 6. Initialization guard
+// ══════════════════════════════════════════════════════════════════════════�?
 describe("Initialization guard", () => {
   it("ensureContextEnginesInitialized() is idempotent (calling twice does not throw)", async () => {
     const { ensureContextEnginesInitialized } = await import("./init.js");

@@ -16,7 +16,7 @@ There are two related systems:
 - **Commands**: standalone `/...` messages.
 - **Directives**: `/think`, `/verbose`, `/reasoning`, `/elevated`, `/exec`, `/model`, `/queue`.
   - Directives are stripped from the message before the model sees it.
-  - In normal chat messages (not directive-only), they are treated as “inline hints” and do **not** persist session settings.
+  - In normal chat messages (not directive-only), they are treated as “inline hints�?and do **not** persist session settings.
   - In directive-only messages (the message contains only directives), they persist to the session and reply with an acknowledgement.
   - Directives are only applied for **authorized senders**. If `commands.allowFrom` is set, it is the only
     allowlist used; otherwise authorization comes from channel allowlists/pairing plus `commands.useAccessGroups`.
@@ -58,7 +58,7 @@ They run immediately, are stripped before the model sees the message, and the re
   - Set `channels.discord.commands.nativeSkills`, `channels.telegram.commands.nativeSkills`, or `channels.slack.commands.nativeSkills` to override per provider (bool or `"auto"`).
 - `commands.bash` (default `false`) enables `! <cmd>` to run host shell commands (`/bash <cmd>` is an alias; requires `tools.elevated` allowlists).
 - `commands.bashForegroundMs` (default `2000`) controls how long bash waits before switching to background mode (`0` backgrounds immediately).
-- `commands.config` (default `false`) enables `/config` (reads/writes `openclaw.json`).
+- `commands.config` (default `false`) enables `/config` (reads/writes `RadioClaw.json`).
 - `commands.debug` (default `false`) enables `/debug` (runtime-only overrides).
 - `commands.allowFrom` (optional) sets a per-provider allowlist for command authorization. When configured, it is the
   only authorization source for commands and directives (channel allowlists/pairing and `commands.useAccessGroups`
@@ -75,7 +75,7 @@ Text + native (when enabled):
 - `/status` (show current status; includes provider usage/quota for the current model provider when available)
 - `/allowlist` (list/add/remove allowlist entries)
 - `/approve <id> allow-once|allow-always|deny` (resolve exec approval prompts)
-- `/context [list|detail|json]` (explain “context”; `detail` shows per-file + per-tool + per-skill + system prompt size)
+- `/context [list|detail|json]` (explain “context�? `detail` shows per-file + per-tool + per-skill + system prompt size)
 - `/export-session [path]` (alias: `/export`) (export current session to HTML with full system prompt)
 - `/whoami` (show your sender id; alias: `/id`)
 - `/session idle <duration|off>` (manage inactivity auto-unfocus for focused thread bindings)
@@ -121,9 +121,9 @@ Notes:
 
 - Commands accept an optional `:` between the command and args (e.g. `/think: high`, `/send: on`, `/help:`).
 - `/new <model>` accepts a model alias, `provider/model`, or a provider name (fuzzy match); if no match, the text is treated as the message body.
-- For full provider usage breakdown, use `openclaw status --usage`.
+- For full provider usage breakdown, use `RadioClaw status --usage`.
 - `/allowlist add|remove` requires `commands.config=true` and honors channel `configWrites`.
-- `/usage` controls the per-response usage footer; `/usage cost` prints a local cost summary from OpenClaw session logs.
+- `/usage` controls the per-response usage footer; `/usage cost` prints a local cost summary from RadioClaw session logs.
 - `/restart` is enabled by default; set `commands.restart: false` to disable it.
 - Discord-only native command: `/vc join|leave|status` controls voice channels (requires `channels.discord.voice` and native commands; not available as text).
 - Discord thread-binding commands (`/focus`, `/unfocus`, `/agents`, `/session idle`, `/session max-age`) require effective thread bindings to be enabled (`session.threadBindings.enabled` and/or `channels.discord.threadBindings.enabled`).
@@ -141,12 +141,12 @@ Notes:
   - `/skill <name> [input]` runs a skill by name (useful when native command limits prevent per-skill commands).
   - By default, skill commands are forwarded to the model as a normal request.
   - Skills may optionally declare `command-dispatch: tool` to route the command directly to a tool (deterministic, no model).
-  - Example: `/prose` (OpenProse plugin) — see [OpenProse](/prose).
+  - Example: `/prose` (OpenProse plugin) �?see [OpenProse](/prose).
 - **Native command arguments:** Discord uses autocomplete for dynamic options (and button menus when you omit required args). Telegram and Slack show a button menu when a command supports choices and you omit the arg.
 
 ## Usage surfaces (what shows where)
 
-- **Provider usage/quota** (example: “Claude 80% left”) shows up in `/status` for the current model provider when usage tracking is enabled.
+- **Provider usage/quota** (example: “Claude 80% left�? shows up in `/status` for the current model provider when usage tracking is enabled.
 - **Per-response tokens/cost** is controlled by `/usage off|tokens|full` (appended to normal replies).
 - `/model status` is about **models/auth/endpoints**, not usage.
 
@@ -180,7 +180,7 @@ Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[openclaw]"
+/debug set messages.responsePrefix="[RadioClaw]"
 /debug set channels.whatsapp.allowFrom=["+1555","+4477"]
 /debug unset messages.responsePrefix
 /debug reset
@@ -188,12 +188,12 @@ Examples:
 
 Notes:
 
-- Overrides apply immediately to new config reads, but do **not** write to `openclaw.json`.
+- Overrides apply immediately to new config reads, but do **not** write to `RadioClaw.json`.
 - Use `/debug reset` to clear all overrides and return to the on-disk config.
 
 ## Config updates
 
-`/config` writes to your on-disk config (`openclaw.json`). Owner-only. Disabled by default; enable with `commands.config: true`.
+`/config` writes to your on-disk config (`RadioClaw.json`). Owner-only. Disabled by default; enable with `commands.config: true`.
 
 Examples:
 
@@ -201,7 +201,7 @@ Examples:
 /config show
 /config show messages.responsePrefix
 /config get messages.responsePrefix
-/config set messages.responsePrefix="[openclaw]"
+/config set messages.responsePrefix="[RadioClaw]"
 /config unset messages.responsePrefix
 ```
 
@@ -218,5 +218,5 @@ Notes:
   - Slack: `agent:<agentId>:slack:slash:<userId>` (prefix configurable via `channels.slack.slashCommand.sessionPrefix`)
   - Telegram: `telegram:slash:<userId>` (targets the chat session via `CommandTargetSessionKey`)
 - **`/stop`** targets the active chat session so it can abort the current run.
-- **Slack:** `channels.slack.slashCommand` is still supported for a single `/openclaw`-style command. If you enable `commands.native`, you must create one Slack slash command per built-in command (same names as `/help`). Command argument menus for Slack are delivered as ephemeral Block Kit buttons.
+- **Slack:** `channels.slack.slashCommand` is still supported for a single `/RadioClaw`-style command. If you enable `commands.native`, you must create one Slack slash command per built-in command (same names as `/help`). Command argument menus for Slack are delivered as ephemeral Block Kit buttons.
   - Slack native exception: register `/agentstatus` (not `/status`) because Slack reserves `/status`. Text `/status` still works in Slack messages.

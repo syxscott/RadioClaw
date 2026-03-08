@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawProtocol
+import RadioClawProtocol
 import Testing
 
 @Suite struct GatewayFrameDecodeTests {

@@ -66,7 +66,7 @@ Goal: produce a thorough review and a clear recommendation (READY for /landpr vs
 A) TL;DR recommendation
 
 - One of: READY FOR /landpr | NEEDS WORK | NEEDS DISCUSSION
-- 1â€“3 sentence rationale.
+- 1â€? sentence rationale.
 
 B) What changed
 

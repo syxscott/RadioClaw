@@ -16,18 +16,18 @@ Start at [/help/troubleshooting](/help/troubleshooting) if you want the fast tri
 Run these first, in this order:
 
 ```bash
-openclaw status
-openclaw gateway status
-openclaw logs --follow
-openclaw doctor
-openclaw channels status --probe
+RadioClaw status
+RadioClaw gateway status
+RadioClaw logs --follow
+RadioClaw doctor
+RadioClaw channels status --probe
 ```
 
 Expected healthy signals:
 
-- `openclaw gateway status` shows `Runtime: running` and `RPC probe: ok`.
-- `openclaw doctor` reports no blocking config/service issues.
-- `openclaw channels status --probe` shows connected/ready channels.
+- `RadioClaw gateway status` shows `Runtime: running` and `RPC probe: ok`.
+- `RadioClaw doctor` reports no blocking config/service issues.
+- `RadioClaw channels status --probe` shows connected/ready channels.
 
 ## Anthropic 429 extra usage required for long context
 
@@ -35,9 +35,9 @@ Use this when logs/errors include:
 `HTTP 429: rate_limit_error: Extra usage is required for long context requests`.
 
 ```bash
-openclaw logs --follow
-openclaw models status
-openclaw config get agents.defaults.models
+RadioClaw logs --follow
+RadioClaw models status
+RadioClaw config get agents.defaults.models
 ```
 
 Look for:
@@ -63,11 +63,11 @@ Related:
 If channels are up but nothing answers, check routing and policy before reconnecting anything.
 
 ```bash
-openclaw status
-openclaw channels status --probe
-openclaw pairing list --channel <channel> [--account <id>]
-openclaw config get channels
-openclaw logs --follow
+RadioClaw status
+RadioClaw channels status --probe
+RadioClaw pairing list --channel <channel> [--account <id>]
+RadioClaw config get channels
+RadioClaw logs --follow
 ```
 
 Look for:
@@ -78,9 +78,9 @@ Look for:
 
 Common signatures:
 
-- `drop guild message (mention required` â†’ group message ignored until mention.
-- `pairing request` â†’ sender needs approval.
-- `blocked` / `allowlist` â†’ sender/channel was filtered by policy.
+- `drop guild message (mention required` â†?group message ignored until mention.
+- `pairing request` â†?sender needs approval.
+- `blocked` / `allowlist` â†?sender/channel was filtered by policy.
 
 Related:
 
@@ -93,11 +93,11 @@ Related:
 When dashboard/control UI will not connect, validate URL, auth mode, and secure context assumptions.
 
 ```bash
-openclaw gateway status
-openclaw status
-openclaw logs --follow
-openclaw doctor
-openclaw gateway status --json
+RadioClaw gateway status
+RadioClaw status
+RadioClaw logs --follow
+RadioClaw doctor
+RadioClaw gateway status --json
 ```
 
 Look for:
@@ -108,20 +108,20 @@ Look for:
 
 Common signatures:
 
-- `device identity required` â†’ non-secure context or missing device auth.
-- `device nonce required` / `device nonce mismatch` â†’ client is not completing the
+- `device identity required` â†?non-secure context or missing device auth.
+- `device nonce required` / `device nonce mismatch` â†?client is not completing the
   challenge-based device auth flow (`connect.challenge` + `device.nonce`).
-- `device signature invalid` / `device signature expired` â†’ client signed the wrong
+- `device signature invalid` / `device signature expired` â†?client signed the wrong
   payload (or stale timestamp) for the current handshake.
-- `unauthorized` / reconnect loop â†’ token/password mismatch.
-- `gateway connect failed:` â†’ wrong host/port/url target.
+- `unauthorized` / reconnect loop â†?token/password mismatch.
+- `gateway connect failed:` â†?wrong host/port/url target.
 
 Device auth v2 migration check:
 
 ```bash
-openclaw --version
-openclaw doctor
-openclaw gateway status
+RadioClaw --version
+RadioClaw doctor
+RadioClaw gateway status
 ```
 
 If logs show nonce/signature errors, update the connecting client and verify it:
@@ -141,11 +141,11 @@ Related:
 Use this when service is installed but process does not stay up.
 
 ```bash
-openclaw gateway status
-openclaw status
-openclaw logs --follow
-openclaw doctor
-openclaw gateway status --deep
+RadioClaw gateway status
+RadioClaw status
+RadioClaw logs --follow
+RadioClaw doctor
+RadioClaw gateway status --deep
 ```
 
 Look for:
@@ -156,9 +156,9 @@ Look for:
 
 Common signatures:
 
-- `Gateway start blocked: set gateway.mode=local` â†’ local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `openclaw configure`). If you are running OpenClaw via Podman using the dedicated `openclaw` user, the config lives at `~openclaw/.openclaw/openclaw.json`.
-- `refusing to bind gateway ... without auth` â†’ non-loopback bind without token/password.
-- `another gateway instance is already listening` / `EADDRINUSE` â†’ port conflict.
+- `Gateway start blocked: set gateway.mode=local` â†?local gateway mode is not enabled. Fix: set `gateway.mode="local"` in your config (or run `RadioClaw configure`). If you are running RadioClaw via Podman using the dedicated `RadioClaw` user, the config lives at `~RadioClaw/.RadioClaw/RadioClaw.json`.
+- `refusing to bind gateway ... without auth` â†?non-loopback bind without token/password.
+- `another gateway instance is already listening` / `EADDRINUSE` â†?port conflict.
 
 Related:
 
@@ -171,11 +171,11 @@ Related:
 If channel state is connected but message flow is dead, focus on policy, permissions, and channel specific delivery rules.
 
 ```bash
-openclaw channels status --probe
-openclaw pairing list --channel <channel> [--account <id>]
-openclaw status --deep
-openclaw logs --follow
-openclaw config get channels
+RadioClaw channels status --probe
+RadioClaw pairing list --channel <channel> [--account <id>]
+RadioClaw status --deep
+RadioClaw logs --follow
+RadioClaw config get channels
 ```
 
 Look for:
@@ -186,9 +186,9 @@ Look for:
 
 Common signatures:
 
-- `mention required` â†’ message ignored by group mention policy.
-- `pairing` / pending approval traces â†’ sender is not approved.
-- `missing_scope`, `not_in_channel`, `Forbidden`, `401/403` â†’ channel auth/permissions issue.
+- `mention required` â†?message ignored by group mention policy.
+- `pairing` / pending approval traces â†?sender is not approved.
+- `missing_scope`, `not_in_channel`, `Forbidden`, `401/403` â†?channel auth/permissions issue.
 
 Related:
 
@@ -202,11 +202,11 @@ Related:
 If cron or heartbeat did not run or did not deliver, verify scheduler state first, then delivery target.
 
 ```bash
-openclaw cron status
-openclaw cron list
-openclaw cron runs --id <jobId> --limit 20
-openclaw system heartbeat last
-openclaw logs --follow
+RadioClaw cron status
+RadioClaw cron list
+RadioClaw cron runs --id <jobId> --limit 20
+RadioClaw system heartbeat last
+RadioClaw logs --follow
 ```
 
 Look for:
@@ -217,11 +217,11 @@ Look for:
 
 Common signatures:
 
-- `cron: scheduler disabled; jobs will not run automatically` â†’ cron disabled.
-- `cron: timer tick failed` â†’ scheduler tick failed; check file/log/runtime errors.
-- `heartbeat skipped` with `reason=quiet-hours` â†’ outside active hours window.
-- `heartbeat: unknown accountId` â†’ invalid account id for heartbeat delivery target.
-- `heartbeat skipped` with `reason=dm-blocked` â†’ heartbeat target resolved to a DM-style destination while `agents.defaults.heartbeat.directPolicy` (or per-agent override) is set to `block`.
+- `cron: scheduler disabled; jobs will not run automatically` â†?cron disabled.
+- `cron: timer tick failed` â†?scheduler tick failed; check file/log/runtime errors.
+- `heartbeat skipped` with `reason=quiet-hours` â†?outside active hours window.
+- `heartbeat: unknown accountId` â†?invalid account id for heartbeat delivery target.
+- `heartbeat skipped` with `reason=dm-blocked` â†?heartbeat target resolved to a DM-style destination while `agents.defaults.heartbeat.directPolicy` (or per-agent override) is set to `block`.
 
 Related:
 
@@ -234,11 +234,11 @@ Related:
 If a node is paired but tools fail, isolate foreground, permission, and approval state.
 
 ```bash
-openclaw nodes status
-openclaw nodes describe --node <idOrNameOrIp>
-openclaw approvals get --node <idOrNameOrIp>
-openclaw logs --follow
-openclaw status
+RadioClaw nodes status
+RadioClaw nodes describe --node <idOrNameOrIp>
+RadioClaw approvals get --node <idOrNameOrIp>
+RadioClaw logs --follow
+RadioClaw status
 ```
 
 Look for:
@@ -249,10 +249,10 @@ Look for:
 
 Common signatures:
 
-- `NODE_BACKGROUND_UNAVAILABLE` â†’ node app must be in foreground.
-- `*_PERMISSION_REQUIRED` / `LOCATION_PERMISSION_REQUIRED` â†’ missing OS permission.
-- `SYSTEM_RUN_DENIED: approval required` â†’ exec approval pending.
-- `SYSTEM_RUN_DENIED: allowlist miss` â†’ command blocked by allowlist.
+- `NODE_BACKGROUND_UNAVAILABLE` â†?node app must be in foreground.
+- `*_PERMISSION_REQUIRED` / `LOCATION_PERMISSION_REQUIRED` â†?missing OS permission.
+- `SYSTEM_RUN_DENIED: approval required` â†?exec approval pending.
+- `SYSTEM_RUN_DENIED: allowlist miss` â†?command blocked by allowlist.
 
 Related:
 
@@ -265,11 +265,11 @@ Related:
 Use this when browser tool actions fail even though the gateway itself is healthy.
 
 ```bash
-openclaw browser status
-openclaw browser start --browser-profile openclaw
-openclaw browser profiles
-openclaw logs --follow
-openclaw doctor
+RadioClaw browser status
+RadioClaw browser start --browser-profile RadioClaw
+RadioClaw browser profiles
+RadioClaw logs --follow
+RadioClaw doctor
 ```
 
 Look for:
@@ -280,10 +280,10 @@ Look for:
 
 Common signatures:
 
-- `Failed to start Chrome CDP on port` â†’ browser process failed to launch.
-- `browser.executablePath not found` â†’ configured path is invalid.
-- `Chrome extension relay is running, but no tab is connected` â†’ extension relay not attached.
-- `Browser attachOnly is enabled ... not reachable` â†’ attach-only profile has no reachable target.
+- `Failed to start Chrome CDP on port` â†?browser process failed to launch.
+- `browser.executablePath not found` â†?configured path is invalid.
+- `Chrome extension relay is running, but no tab is connected` â†?extension relay not attached.
+- `Browser attachOnly is enabled ... not reachable` â†?attach-only profile has no reachable target.
 
 Related:
 
@@ -298,10 +298,10 @@ Most post-upgrade breakage is config drift or stricter defaults now being enforc
 ### 1) Auth and URL override behavior changed
 
 ```bash
-openclaw gateway status
-openclaw config get gateway.mode
-openclaw config get gateway.remote.url
-openclaw config get gateway.auth.mode
+RadioClaw gateway status
+RadioClaw config get gateway.mode
+RadioClaw config get gateway.remote.url
+RadioClaw config get gateway.auth.mode
 ```
 
 What to check:
@@ -311,16 +311,16 @@ What to check:
 
 Common signatures:
 
-- `gateway connect failed:` â†’ wrong URL target.
-- `unauthorized` â†’ endpoint reachable but wrong auth.
+- `gateway connect failed:` â†?wrong URL target.
+- `unauthorized` â†?endpoint reachable but wrong auth.
 
 ### 2) Bind and auth guardrails are stricter
 
 ```bash
-openclaw config get gateway.bind
-openclaw config get gateway.auth.token
-openclaw gateway status
-openclaw logs --follow
+RadioClaw config get gateway.bind
+RadioClaw config get gateway.auth.token
+RadioClaw gateway status
+RadioClaw logs --follow
 ```
 
 What to check:
@@ -330,16 +330,16 @@ What to check:
 
 Common signatures:
 
-- `refusing to bind gateway ... without auth` â†’ bind+auth mismatch.
-- `RPC probe: failed` while runtime is running â†’ gateway alive but inaccessible with current auth/url.
+- `refusing to bind gateway ... without auth` â†?bind+auth mismatch.
+- `RPC probe: failed` while runtime is running â†?gateway alive but inaccessible with current auth/url.
 
 ### 3) Pairing and device identity state changed
 
 ```bash
-openclaw devices list
-openclaw pairing list --channel <channel> [--account <id>]
-openclaw logs --follow
-openclaw doctor
+RadioClaw devices list
+RadioClaw pairing list --channel <channel> [--account <id>]
+RadioClaw logs --follow
+RadioClaw doctor
 ```
 
 What to check:
@@ -349,14 +349,14 @@ What to check:
 
 Common signatures:
 
-- `device identity required` â†’ device auth not satisfied.
-- `pairing required` â†’ sender/device must be approved.
+- `device identity required` â†?device auth not satisfied.
+- `pairing required` â†?sender/device must be approved.
 
 If the service config and runtime still disagree after checks, reinstall service metadata from the same profile/state directory:
 
 ```bash
-openclaw gateway install --force
-openclaw gateway restart
+RadioClaw gateway install --force
+RadioClaw gateway restart
 ```
 
 Related:

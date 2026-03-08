@@ -1,14 +1,14 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import {
   ensureControlUiAllowedOriginsForNonLoopbackBind,
   type GatewayNonLoopbackBindMode,
 } from "../config/gateway-control-ui-origins.js";
 
 export async function maybeSeedControlUiAllowedOriginsAtStartup(params: {
-  config: OpenClawConfig;
-  writeConfig: (config: OpenClawConfig) => Promise<void>;
+  config: RadioClawConfig;
+  writeConfig: (config: RadioClawConfig) => Promise<void>;
   log: { info: (msg: string) => void; warn: (msg: string) => void };
-}): Promise<OpenClawConfig> {
+}): Promise<RadioClawConfig> {
   const seeded = ensureControlUiAllowedOriginsForNonLoopbackBind(params.config);
   if (!seeded.seededOrigins || !seeded.bind) {
     return params.config;

@@ -1,10 +1,10 @@
 import AppKit
 import Foundation
-import OpenClawKit
+import RadioClawKit
 import OSLog
 import Security
 
-private let deepLinkLogger = Logger(subsystem: "ai.openclaw", category: "DeepLink")
+private let deepLinkLogger = Logger(subsystem: "ai.RadioClaw", category: "DeepLink")
 
 enum DeepLinkAgentPolicy {
     static let maxMessageChars = 20000
@@ -60,7 +60,7 @@ final class DeepLinkHandler {
             return
         }
         guard !AppStateStore.shared.isPaused else {
-            self.presentAlert(title: "OpenClaw is paused", message: "Unpause OpenClaw to run agent actions.")
+            self.presentAlert(title: "RadioClaw is paused", message: "Unpause RadioClaw to run agent actions.")
             return
         }
 
@@ -96,10 +96,10 @@ final class DeepLinkHandler {
             }
 
             let urlText = originalURL.absoluteString
-            let urlPreview = urlText.count > 500 ? "\(urlText.prefix(500))â€¦" : urlText
+            let urlPreview = urlText.count > 500 ? "\(urlText.prefix(500))â€? : urlText
             let body =
                 "Run the agent with this message?\n\n\(messagePreview)\n\nURL:\n\(urlPreview)"
-            guard self.confirm(title: "Run OpenClaw agent?", message: body) else { return }
+            guard self.confirm(title: "Run RadioClaw agent?", message: body) else { return }
         }
 
         if AppStateStore.shared.connectionMode == .local {

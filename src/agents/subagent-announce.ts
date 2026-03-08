@@ -48,7 +48,7 @@ import { readLatestAssistantReply } from "./tools/agent-step.js";
 import { sanitizeTextContent, extractAssistantText } from "./tools/sessions-helpers.js";
 import { isAnnounceSkip } from "./tools/sessions-send-helpers.js";
 
-const FAST_TEST_MODE = process.env.OPENCLAW_TEST_FAST === "1";
+const FAST_TEST_MODE = process.env.RadioClaw_TEST_FAST === "1";
 const FAST_TEST_RETRY_INTERVAL_MS = 8;
 const DEFAULT_SUBAGENT_ANNOUNCE_TIMEOUT_MS = 60_000;
 const MAX_TIMER_SAFE_TIMEOUT_MS = 2_147_000_000;
@@ -465,7 +465,7 @@ async function buildCompactAnnounceStatsLine(params: {
   if (typeof promptCache === "number" && promptCache > ioTotal) {
     parts.push(`prompt/cache ${formatTokenCount(promptCache)}`);
   }
-  return `Stats: ${parts.join(" â€¢ ")}`;
+  return `Stats: ${parts.join(" â€?")}`;
 }
 
 type DeliveryContextSource = Parameters<typeof deliveryContextFromSession>[0];
@@ -479,7 +479,7 @@ function resolveAnnounceOrigin(
   if (normalizedRequester?.channel && isInternalMessageChannel(normalizedRequester.channel)) {
     // Ignore internal channel hints (webchat) so a valid persisted route
     // can still be used for outbound delivery. Non-standard channels that
-    // are not in the deliverable list should NOT be stripped here â€” doing
+    // are not in the deliverable list should NOT be stripped here â€?doing
     // so causes the session entry's stale lastChannel (often WhatsApp) to
     // override the actual requester origin, leading to delivery failures.
     return mergeDeliveryContext(
@@ -964,10 +964,10 @@ export function buildSubagentSystemPrompt(params: {
       ...(acpEnabled
         ? [
             'For ACP harness sessions (codex/claudecode/gemini), use `sessions_spawn` with `runtime: "acp"` (set `agentId` unless `acp.defaultAgent` is configured).',
-            '`agents_list` and `subagents` apply to OpenClaw sub-agents (`runtime: "subagent"`); ACP harness ids are controlled by `acp.allowedAgents`.',
+            '`agents_list` and `subagents` apply to RadioClaw sub-agents (`runtime: "subagent"`); ACP harness ids are controlled by `acp.allowedAgents`.',
             "Do not ask users to run slash commands or CLI when `sessions_spawn` can do it directly.",
-            "Do not use `exec` (`openclaw ...`, `acpx ...`) to spawn ACP sessions.",
-            'Use `subagents` only for OpenClaw subagents (`runtime: "subagent"`).',
+            "Do not use `exec` (`RadioClaw ...`, `acpx ...`) to spawn ACP sessions.",
+            'Use `subagents` only for RadioClaw subagents (`runtime: "subagent"`).',
             "Subagent results auto-announce back to you; ACP sessions continue in their bound thread.",
             "Avoid polling loops; spawn, orchestrate, and synthesize results.",
           ]

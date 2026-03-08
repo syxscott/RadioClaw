@@ -4,9 +4,9 @@ description: Batch-generate images via OpenAI Images API. Random prompt sampler 
 homepage: https://platform.openai.com/docs/api-reference/images
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
-        "emoji": "🖼️",
+        "emoji": "🖼�?,
         "requires": { "bins": ["python3"], "env": ["OPENAI_API_KEY"] },
         "primaryEnv": "OPENAI_API_KEY",
         "install":
@@ -25,12 +25,12 @@ metadata:
 
 # OpenAI Image Gen
 
-Generate a handful of “random but structured” prompts and render them via the OpenAI Images API.
+Generate a handful of “random but structured�?prompts and render them via the OpenAI Images API.
 
 ## Run
 
 Note: Image generation can take longer than common exec timeouts (for example 30 seconds).
-When invoking this skill via OpenClaw’s exec tool, set a higher timeout to avoid premature termination/retries (e.g., exec timeout=300).
+When invoking this skill via RadioClaw’s exec tool, set a higher timeout to avoid premature termination/retries (e.g., exec timeout=300).
 
 ```bash
 python3 {baseDir}/scripts/gen.py
@@ -88,5 +88,5 @@ Different models support different parameter values. The script automatically se
 ## Output
 
 - `*.png`, `*.jpeg`, or `*.webp` images (output format depends on model + `--output-format`)
-- `prompts.json` (prompt → file mapping)
+- `prompts.json` (prompt �?file mapping)
 - `index.html` (thumbnail gallery)

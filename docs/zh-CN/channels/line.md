@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想将 OpenClaw 连接到 LINE
-  - 你需要配置 LINE webhook + 凭证
+  - 你想�?RadioClaw 连接�?LINE
+  - 你需要配�?LINE webhook + 凭证
   - 你想了解 LINE 特有的消息选项
 summary: LINE Messaging API 插件的配置、设置和使用方法
 title: LINE
@@ -16,39 +16,30 @@ x-i18n:
 
 # LINE（插件）
 
-LINE 通过 LINE Messaging API 连接到 OpenClaw。该插件作为 webhook 接收器在 Gateway 网关上运行，使用你的 channel access token + channel secret 进行身份验证。
-
-状态：通过插件支持。支持私信、群聊、媒体、位置、Flex 消息、模板消息和快捷回复。不支持表情回应和话题回复。
-
-## 需要安装插件
-
-安装 LINE 插件：
-
+LINE 通过 LINE Messaging API 连接�?RadioClaw。该插件作为 webhook 接收器在 Gateway 网关上运行，使用你的 channel access token + channel secret 进行身份验证�?
+状态：通过插件支持。支持私信、群聊、媒体、位置、Flex 消息、模板消息和快捷回复。不支持表情回应和话题回复�?
+## 需要安装插�?
+安装 LINE 插件�?
 ```bash
-openclaw plugins install @openclaw/line
+RadioClaw plugins install @RadioClaw/line
 ```
 
-本地检出（从 git 仓库运行时）：
-
+本地检出（�?git 仓库运行时）�?
 ```bash
-openclaw plugins install ./extensions/line
+RadioClaw plugins install ./extensions/line
 ```
 
 ## 配置步骤
 
 1. 创建 LINE Developers 账户并打开控制台：
    https://developers.line.biz/console/
-2. 创建（或选择）一个 Provider 并添加 **Messaging API** 渠道。
-3. 从渠道设置中复制 **Channel access token** 和 **Channel secret**。
-4. 在 Messaging API 设置中启用 **Use webhook**。
-5. 将 webhook URL 设置为你的 Gateway 网关端点（必须使用 HTTPS）：
+2. 创建（或选择）一�?Provider 并添�?**Messaging API** 渠道�?3. 从渠道设置中复制 **Channel access token** �?**Channel secret**�?4. �?Messaging API 设置中启�?**Use webhook**�?5. �?webhook URL 设置为你�?Gateway 网关端点（必须使�?HTTPS）：
 
 ```
 https://gateway-host/line/webhook
 ```
 
-Gateway 网关会响应 LINE 的 webhook 验证（GET）和入站事件（POST）。如果你需要自定义路径，请设置 `channels.line.webhookPath` 或 `channels.line.accounts.<id>.webhookPath` 并相应更新 URL。
-
+Gateway 网关会响�?LINE �?webhook 验证（GET）和入站事件（POST）。如果你需要自定义路径，请设置 `channels.line.webhookPath` �?`channels.line.accounts.<id>.webhookPath` 并相应更�?URL�?
 ## 配置
 
 最小配置：
@@ -66,13 +57,11 @@ Gateway 网关会响应 LINE 的 webhook 验证（GET）和入站事件（POST�
 }
 ```
 
-环境变量（仅限默认账户）：
-
+环境变量（仅限默认账户）�?
 - `LINE_CHANNEL_ACCESS_TOKEN`
 - `LINE_CHANNEL_SECRET`
 
-Token/secret 文件：
-
+Token/secret 文件�?
 ```json5
 {
   channels: {
@@ -104,11 +93,10 @@ Token/secret 文件：
 
 ## 访问控制
 
-私信默认使用配对模式。未知发送者会收到配对码，其消息在获得批准前会被忽略。
-
+私信默认使用配对模式。未知发送者会收到配对码，其消息在获得批准前会被忽略�?
 ```bash
-openclaw pairing list line
-openclaw pairing approve line <CODE>
+RadioClaw pairing list line
+RadioClaw pairing approve line <CODE>
 ```
 
 允许列表和策略：
@@ -119,23 +107,13 @@ openclaw pairing approve line <CODE>
 - `channels.line.groupAllowFrom`：群组的允许列表 LINE 用户 ID
 - 单群组覆盖：`channels.line.groups.<groupId>.allowFrom`
 
-LINE ID 区分大小写。有效 ID 格式如下：
-
-- 用户：`U` + 32 位十六进制字符
-- 群组：`C` + 32 位十六进制字符
-- 房间：`R` + 32 位十六进制字符
-
+LINE ID 区分大小写。有�?ID 格式如下�?
+- 用户：`U` + 32 位十六进制字�?- 群组：`C` + 32 位十六进制字�?- 房间：`R` + 32 位十六进制字�?
 ## 消息行为
 
-- 文本按 5000 字符分块。
-- Markdown 格式会被移除；代码块和表格会尽可能转换为 Flex 卡片。
-- 流式响应会被缓冲；智能体处理时，LINE 会收到完整分块并显示加载动画。
-- 媒体下载受 `channels.line.mediaMaxMb` 限制（默认 10）。
-
-## 渠道数据（富消息）
-
-使用 `channelData.line` 发送快捷回复、位置、Flex 卡片或模板消息。
-
+- 文本�?5000 字符分块�?- Markdown 格式会被移除；代码块和表格会尽可能转换为 Flex 卡片�?- 流式响应会被缓冲；智能体处理时，LINE 会收到完整分块并显示加载动画�?- 媒体下载�?`channels.line.mediaMaxMb` 限制（默�?10）�?
+## 渠道数据（富消息�?
+使用 `channelData.line` 发送快捷回复、位置、Flex 卡片或模板消息�?
 ```json5
 {
   text: "Here you go",
@@ -167,14 +145,11 @@ LINE ID 区分大小写。有效 ID 格式如下：
 }
 ```
 
-LINE 插件还提供 `/card` 命令用于 Flex 消息预设：
-
+LINE 插件还提�?`/card` 命令用于 Flex 消息预设�?
 ```
 /card info "Welcome" "Thanks for joining!"
 ```
 
 ## 故障排除
 
-- **Webhook 验证失败：** 确保 webhook URL 使用 HTTPS 且 `channelSecret` 与 LINE 控制台中的一致。
-- **没有入站事件：** 确认 webhook 路径与 `channels.line.webhookPath` 匹配，且 Gateway 网关可从 LINE 访问。
-- **媒体下载错误：** 如果媒体超过默认限制，请提高 `channels.line.mediaMaxMb`。
+- **Webhook 验证失败�?* 确保 webhook URL 使用 HTTPS �?`channelSecret` �?LINE 控制台中的一致�?- **没有入站事件�?* 确认 webhook 路径�?`channels.line.webhookPath` 匹配，且 Gateway 网关可从 LINE 访问�?- **媒体下载错误�?* 如果媒体超过默认限制，请提高 `channels.line.mediaMaxMb`�?

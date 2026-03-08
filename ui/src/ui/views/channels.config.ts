@@ -123,7 +123,7 @@ export function renderChannelConfigSection(params: { channelId: string; props: C
       ${
         props.configSchemaLoading
           ? html`
-              <div class="muted">Loading config schemaâ€¦</div>
+              <div class="muted">Loading config schemaâ€?/div>
             `
           : renderChannelConfigForm({
               channelId,
@@ -140,7 +140,7 @@ export function renderChannelConfigSection(params: { channelId: string; props: C
           ?disabled=${disabled || !props.configFormDirty}
           @click=${() => props.onConfigSave()}
         >
-          ${props.configSaving ? "Savingâ€¦" : "Save"}
+          ${props.configSaving ? "Savingâ€? : "Save"}
         </button>
         <button
           class="btn"

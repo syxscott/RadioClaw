@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# ClawDock - Docker helpers for OpenClaw
-# Inspired by Simon Willison's "Running OpenClaw in Docker"
-# https://til.simonwillison.net/llms/openclaw-docker
+# ClawDock - Docker helpers for RadioClaw
+# Inspired by Simon Willison's "Running RadioClaw in Docker"
+# https://til.simonwillison.net/llms/RadioClaw-docker
 #
 # Installation:
-#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/openclaw/openclaw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+#   mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/RadioClaw/RadioClaw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 #   echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc
 #
 # Usage:
@@ -38,14 +38,14 @@ _cmd() {
 # =============================================================================
 CLAWDOCK_CONFIG="${HOME}/.clawdock/config"
 
-# Common paths to check for OpenClaw
+# Common paths to check for RadioClaw
 CLAWDOCK_COMMON_PATHS=(
-  "${HOME}/openclaw"
-  "${HOME}/workspace/openclaw"
-  "${HOME}/projects/openclaw"
-  "${HOME}/dev/openclaw"
-  "${HOME}/code/openclaw"
-  "${HOME}/src/openclaw"
+  "${HOME}/RadioClaw"
+  "${HOME}/workspace/RadioClaw"
+  "${HOME}/projects/RadioClaw"
+  "${HOME}/dev/RadioClaw"
+  "${HOME}/code/RadioClaw"
+  "${HOME}/src/RadioClaw"
 )
 
 _clawdock_filter_warnings() {
@@ -97,28 +97,28 @@ _clawdock_ensure_dir() {
 
   if [[ -n "$found_path" ]]; then
     echo ""
-    echo "🦞 Found OpenClaw at: $found_path"
+    echo "🦞 Found RadioClaw at: $found_path"
     echo -n "   Use this location? [Y/n] "
     read -r response
     if [[ "$response" =~ ^[Nn] ]]; then
       echo ""
       echo "Set CLAWDOCK_DIR manually:"
-      echo "  export CLAWDOCK_DIR=/path/to/openclaw"
+      echo "  export CLAWDOCK_DIR=/path/to/RadioClaw"
       return 1
     fi
     CLAWDOCK_DIR="$found_path"
   else
     echo ""
-    echo "❌ OpenClaw not found in common locations."
+    echo "�?RadioClaw not found in common locations."
     echo ""
     echo "Clone it first:"
     echo ""
-    echo "  git clone https://github.com/openclaw/openclaw.git ~/openclaw"
-    echo "  cd ~/openclaw && ./docker-setup.sh"
+    echo "  git clone https://github.com/RadioClaw/RadioClaw.git ~/RadioClaw"
+    echo "  cd ~/RadioClaw && ./docker-setup.sh"
     echo ""
     echo "Or set CLAWDOCK_DIR if it's elsewhere:"
     echo ""
-    echo "  export CLAWDOCK_DIR=/path/to/openclaw"
+    echo "  export CLAWDOCK_DIR=/path/to/RadioClaw"
     echo ""
     return 1
   fi
@@ -128,7 +128,7 @@ _clawdock_ensure_dir() {
     /bin/mkdir -p "${HOME}/.clawdock"
   fi
   echo "CLAWDOCK_DIR=\"$CLAWDOCK_DIR\"" > "$CLAWDOCK_CONFIG"
-  echo "✅ Saved to $CLAWDOCK_CONFIG"
+  echo "�?Saved to $CLAWDOCK_CONFIG"
   echo ""
   return 0
 }
@@ -149,7 +149,7 @@ _clawdock_read_env_token() {
     return 1
   fi
   local raw
-  raw=$(sed -n 's/^OPENCLAW_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
+  raw=$(sed -n 's/^RadioClaw_GATEWAY_TOKEN=//p' "${CLAWDOCK_DIR}/.env" | head -n 1)
   if [[ -z "$raw" ]]; then
     return 1
   fi
@@ -158,7 +158,7 @@ _clawdock_read_env_token() {
 
 # Basic Operations
 clawdock-start() {
-  _clawdock_compose up -d openclaw-gateway
+  _clawdock_compose up -d RadioClaw-gateway
 }
 
 clawdock-stop() {
@@ -166,11 +166,11 @@ clawdock-stop() {
 }
 
 clawdock-restart() {
-  _clawdock_compose restart openclaw-gateway
+  _clawdock_compose restart RadioClaw-gateway
 }
 
 clawdock-logs() {
-  _clawdock_compose logs -f openclaw-gateway
+  _clawdock_compose logs -f RadioClaw-gateway
 }
 
 clawdock-status() {
@@ -184,30 +184,30 @@ clawdock-cd() {
 }
 
 clawdock-config() {
-  cd ~/.openclaw
+  cd ~/.RadioClaw
 }
 
 clawdock-workspace() {
-  cd ~/.openclaw/workspace
+  cd ~/.RadioClaw/workspace
 }
 
 # Container Access
 clawdock-shell() {
-  _clawdock_compose exec openclaw-gateway \
-    bash -c 'echo "alias openclaw=\"./openclaw.mjs\"" > /tmp/.bashrc_openclaw && bash --rcfile /tmp/.bashrc_openclaw'
+  _clawdock_compose exec RadioClaw-gateway \
+    bash -c 'echo "alias RadioClaw=\"./RadioClaw.mjs\"" > /tmp/.bashrc_RadioClaw && bash --rcfile /tmp/.bashrc_RadioClaw'
 }
 
 clawdock-exec() {
-  _clawdock_compose exec openclaw-gateway "$@"
+  _clawdock_compose exec RadioClaw-gateway "$@"
 }
 
 clawdock-cli() {
-  _clawdock_compose run --rm openclaw-cli "$@"
+  _clawdock_compose run --rm RadioClaw-cli "$@"
 }
 
 # Maintenance
 clawdock-rebuild() {
-  _clawdock_compose build openclaw-gateway
+  _clawdock_compose build RadioClaw-gateway
 }
 
 clawdock-clean() {
@@ -220,11 +220,11 @@ clawdock-health() {
   local token
   token=$(_clawdock_read_env_token)
   if [[ -z "$token" ]]; then
-    echo "❌ Error: Could not find gateway token"
+    echo "�?Error: Could not find gateway token"
     echo "   Check: ${CLAWDOCK_DIR}/.env"
     return 1
   fi
-  _clawdock_compose exec -e "OPENCLAW_GATEWAY_TOKEN=$token" openclaw-gateway \
+  _clawdock_compose exec -e "RadioClaw_GATEWAY_TOKEN=$token" RadioClaw-gateway \
     node dist/index.js health
 }
 
@@ -241,23 +241,23 @@ clawdock-fix-token() {
   local token
   token=$(clawdock-token)
   if [[ -z "$token" ]]; then
-    echo "❌ Error: Could not find gateway token"
+    echo "�?Error: Could not find gateway token"
     echo "   Check: ${CLAWDOCK_DIR}/.env"
     return 1
   fi
 
   echo "📝 Setting token: ${token:0:20}..."
 
-  _clawdock_compose exec -e "TOKEN=$token" openclaw-gateway \
-    bash -c './openclaw.mjs config set gateway.remote.token "$TOKEN" && ./openclaw.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose exec -e "TOKEN=$token" RadioClaw-gateway \
+    bash -c './RadioClaw.mjs config set gateway.remote.token "$TOKEN" && ./RadioClaw.mjs config set gateway.auth.token "$TOKEN"' 2>&1 | _clawdock_filter_warnings
 
   echo "🔍 Verifying token was saved..."
   local saved_token
-  saved_token=$(_clawdock_compose exec openclaw-gateway \
-    bash -c "./openclaw.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
+  saved_token=$(_clawdock_compose exec RadioClaw-gateway \
+    bash -c "./RadioClaw.mjs config get gateway.remote.token 2>/dev/null" 2>&1 | _clawdock_filter_warnings | tr -d '\r\n' | head -c 64)
 
   if [[ "$saved_token" == "$token" ]]; then
-    echo "✅ Token saved correctly!"
+    echo "�?Token saved correctly!"
   else
     echo "⚠️  Token mismatch detected"
     echo "   Expected: ${token:0:20}..."
@@ -265,12 +265,12 @@ clawdock-fix-token() {
   fi
 
   echo "🔄 Restarting gateway..."
-  _clawdock_compose restart openclaw-gateway 2>&1 | _clawdock_filter_warnings
+  _clawdock_compose restart RadioClaw-gateway 2>&1 | _clawdock_filter_warnings
 
-  echo "⏳ Waiting for gateway to start..."
+  echo "�?Waiting for gateway to start..."
   sleep 5
 
-  echo "✅ Configuration complete!"
+  echo "�?Configuration complete!"
   echo -e "   Try: $(_cmd clawdock-devices)"
 }
 
@@ -280,17 +280,17 @@ clawdock-dashboard() {
 
   echo "🦞 Getting dashboard URL..."
   local output exit_status url
-  output=$(_clawdock_compose run --rm openclaw-cli dashboard --no-open 2>&1)
+  output=$(_clawdock_compose run --rm RadioClaw-cli dashboard --no-open 2>&1)
   exit_status=$?
   url=$(printf "%s\n" "$output" | _clawdock_filter_warnings | grep -o 'http[s]\?://[^[:space:]]*' | head -n 1)
   if [[ $exit_status -ne 0 ]]; then
-    echo "❌ Failed to get dashboard URL"
+    echo "�?Failed to get dashboard URL"
     echo -e "   Try restarting: $(_cmd clawdock-restart)"
     return 1
   fi
 
   if [[ -n "$url" ]]; then
-    echo "✅ Opening: $url"
+    echo "�?Opening: $url"
     open "$url" 2>/dev/null || xdg-open "$url" 2>/dev/null || echo "   Please open manually: $url"
     echo ""
     echo -e "${_CLR_CYAN}💡 If you see 'pairing required' error:${_CLR_RESET}"
@@ -298,7 +298,7 @@ clawdock-dashboard() {
     echo "   2. Copy the Request ID from the Pending table"
     echo -e "   3. Run: $(_cmd 'clawdock-approve <request-id>')"
   else
-    echo "❌ Failed to get dashboard URL"
+    echo "�?Failed to get dashboard URL"
     echo -e "   Try restarting: $(_cmd clawdock-restart)"
   fi
 }
@@ -309,7 +309,7 @@ clawdock-devices() {
 
   echo "🔍 Checking device pairings..."
   local output exit_status
-  output=$(_clawdock_compose exec openclaw-gateway node dist/index.js devices list 2>&1)
+  output=$(_clawdock_compose exec RadioClaw-gateway node dist/index.js devices list 2>&1)
   exit_status=$?
   printf "%s\n" "$output" | _clawdock_filter_warnings
   if [ $exit_status -ne 0 ]; then
@@ -318,7 +318,7 @@ clawdock-devices() {
     echo -e "   1. Verify token is set: $(_cmd clawdock-token)"
     echo "   2. Try manual config inside container:"
     echo -e "      $(_cmd clawdock-shell)"
-    echo -e "      $(_cmd 'openclaw config get gateway.remote.token')"
+    echo -e "      $(_cmd 'RadioClaw config get gateway.remote.token')"
     return 1
   fi
 
@@ -332,7 +332,7 @@ clawdock-approve() {
   _clawdock_ensure_dir || return 1
 
   if [[ -z "$1" ]]; then
-    echo -e "❌ Usage: $(_cmd 'clawdock-approve <request-id>')"
+    echo -e "�?Usage: $(_cmd 'clawdock-approve <request-id>')"
     echo ""
     echo -e "${_CLR_CYAN}💡 How to approve a device:${_CLR_RESET}"
     echo -e "   1. Run: $(_cmd clawdock-devices)"
@@ -344,19 +344,19 @@ clawdock-approve() {
     return 1
   fi
 
-  echo "✅ Approving device: $1"
-  _clawdock_compose exec openclaw-gateway \
+  echo "�?Approving device: $1"
+  _clawdock_compose exec RadioClaw-gateway \
     node dist/index.js devices approve "$1" 2>&1 | _clawdock_filter_warnings
 
   echo ""
-  echo "✅ Device approved! Refresh your browser."
+  echo "�?Device approved! Refresh your browser."
 }
 
 # Show all available clawdock helper commands
 clawdock-help() {
-  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for OpenClaw${_CLR_RESET}\n"
+  echo -e "\n${_CLR_BOLD}${_CLR_CYAN}🦞 ClawDock - Docker Helpers for RadioClaw${_CLR_RESET}\n"
 
-  echo -e "${_CLR_BOLD}${_CLR_MAGENTA}⚡ Basic Operations${_CLR_RESET}"
+  echo -e "${_CLR_BOLD}${_CLR_MAGENTA}�?Basic Operations${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-start)       ${_CLR_DIM}Start the gateway${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-stop)        ${_CLR_DIM}Stop the gateway${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-restart)     ${_CLR_DIM}Restart the gateway${_CLR_RESET}"
@@ -365,7 +365,7 @@ clawdock-help() {
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🐚 Container Access${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (openclaw alias ready)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-shell)       ${_CLR_DIM}Shell into container (RadioClaw alias ready)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-cli)         ${_CLR_DIM}Run CLI commands (e.g., clawdock-cli status)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-exec) ${_CLR_CYAN}<cmd>${_CLR_RESET}  ${_CLR_DIM}Execute command in gateway container${_CLR_RESET}"
   echo ""
@@ -385,11 +385,11 @@ clawdock-help() {
   echo -e "  $(_cmd clawdock-clean)       ${_CLR_RED}⚠️  Remove containers & volumes (nuclear)${_CLR_RESET}"
   echo ""
 
-  echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🛠️  Utilities${_CLR_RESET}"
+  echo -e "${_CLR_BOLD}${_CLR_MAGENTA}🛠�? Utilities${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-health)      ${_CLR_DIM}Run health check${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-token)       ${_CLR_DIM}Show gateway auth token${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to openclaw project directory${_CLR_RESET}"
-  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.openclaw)${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-cd)          ${_CLR_DIM}Jump to RadioClaw project directory${_CLR_RESET}"
+  echo -e "  $(_cmd clawdock-config)      ${_CLR_DIM}Open config directory (~/.RadioClaw)${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-workspace)   ${_CLR_DIM}Open workspace directory${_CLR_RESET}"
   echo ""
 
@@ -404,14 +404,14 @@ clawdock-help() {
 
   echo -e "${_CLR_BOLD}${_CLR_GREEN}💬 WhatsApp Setup${_CLR_RESET}"
   echo -e "  $(_cmd clawdock-shell)"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'openclaw channels login --channel whatsapp')"
-  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'openclaw status')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'RadioClaw channels login --channel whatsapp')"
+  echo -e "    ${_CLR_BLUE}>${_CLR_RESET} $(_cmd 'RadioClaw status')"
   echo ""
 
   echo -e "${_CLR_BOLD}${_CLR_CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${_CLR_RESET}"
   echo ""
 
   echo -e "${_CLR_CYAN}💡 All commands guide you through next steps!${_CLR_RESET}"
-  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.openclaw.ai${_CLR_RESET}"
+  echo -e "${_CLR_BLUE}📚 Docs: ${_CLR_RESET}${_CLR_CYAN}https://docs.RadioClaw.ai${_CLR_RESET}"
   echo ""
 }

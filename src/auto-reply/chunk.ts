@@ -3,7 +3,7 @@
 // the chunk so messages are only split when they truly exceed the limit.
 
 import type { ChannelId } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { findFenceSpanAt, isSafeFenceBreak, parseFenceSpans } from "../markdown/fences.js";
 import { resolveAccountEntry } from "../routing/account-lookup.js";
 import { normalizeAccountId } from "../routing/session-key.js";
@@ -49,7 +49,7 @@ function resolveChunkLimitForProvider(
 }
 
 export function resolveTextChunkLimit(
-  cfg: OpenClawConfig | undefined,
+  cfg: RadioClawConfig | undefined,
   provider?: TextChunkProvider,
   accountId?: string | null,
   opts?: { fallbackLimit?: number },
@@ -92,7 +92,7 @@ function resolveChunkModeForProvider(
 }
 
 export function resolveChunkMode(
-  cfg: OpenClawConfig | undefined,
+  cfg: RadioClawConfig | undefined,
   provider?: TextChunkProvider,
   accountId?: string | null,
 ): ChunkMode {
@@ -192,7 +192,7 @@ export function chunkByParagraph(
   const normalized = text.replace(/\r\n?/g, "\n");
 
   // Fast-path: if there are no blank-line paragraph separators, do not split.
-  // (We *do not* early-return based on `limit` â€” newline mode is about paragraph
+  // (We *do not* early-return based on `limit` â€?newline mode is about paragraph
   // boundaries, not only exceeding a length limit.)
   const paragraphRe = /\n[\t ]*\n+/;
   if (!paragraphRe.test(normalized)) {

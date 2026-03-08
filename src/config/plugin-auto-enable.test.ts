@@ -14,7 +14,7 @@ function makeRegistry(plugins: Array<{ id: string; channels: string[] }>): Plugi
       origin: "config" as const,
       rootDir: `/fake/${p.id}`,
       source: `/fake/${p.id}/index.js`,
-      manifestPath: `/fake/${p.id}/openclaw.plugin.json`,
+      manifestPath: `/fake/${p.id}/RadioClaw.plugin.json`,
     })),
     diagnostics: [],
   };
@@ -150,7 +150,7 @@ describe("applyPluginAutoEnable", () => {
       config: {},
       env: {
         IRC_HOST: "irc.libera.chat",
-        IRC_NICK: "openclaw-bot",
+        IRC_NICK: "RadioClaw-bot",
       },
     });
 
@@ -217,9 +217,9 @@ describe("applyPluginAutoEnable", () => {
     expect(result.changes).toEqual([]);
   });
 
-  describe("third-party channel plugins (pluginId â‰  channelId)", () => {
+  describe("third-party channel plugins (pluginId â‰?channelId)", () => {
     it("uses the plugin manifest id, not the channel id, for plugins.entries", () => {
-      // Reproduces: https://github.com/openclaw/openclaw/issues/25261
+      // Reproduces: https://github.com/RadioClaw/RadioClaw/issues/25261
       // Plugin "apn-channel" declares channels: ["apn"]. Doctor must write
       // plugins.entries["apn-channel"], not plugins.entries["apn"].
       const result = applyWithApnChannelConfig();

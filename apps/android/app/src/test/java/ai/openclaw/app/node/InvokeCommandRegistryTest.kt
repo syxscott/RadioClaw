@@ -1,16 +1,16 @@
-package ai.openclaw.app.node
+package ai.RadioClaw.app.node
 
-import ai.openclaw.app.protocol.OpenClawCalendarCommand
-import ai.openclaw.app.protocol.OpenClawCameraCommand
-import ai.openclaw.app.protocol.OpenClawCapability
-import ai.openclaw.app.protocol.OpenClawContactsCommand
-import ai.openclaw.app.protocol.OpenClawDeviceCommand
-import ai.openclaw.app.protocol.OpenClawLocationCommand
-import ai.openclaw.app.protocol.OpenClawMotionCommand
-import ai.openclaw.app.protocol.OpenClawNotificationsCommand
-import ai.openclaw.app.protocol.OpenClawPhotosCommand
-import ai.openclaw.app.protocol.OpenClawSmsCommand
-import ai.openclaw.app.protocol.OpenClawSystemCommand
+import ai.RadioClaw.app.protocol.RadioClawCalendarCommand
+import ai.RadioClaw.app.protocol.RadioClawCameraCommand
+import ai.RadioClaw.app.protocol.RadioClawCapability
+import ai.RadioClaw.app.protocol.RadioClawContactsCommand
+import ai.RadioClaw.app.protocol.RadioClawDeviceCommand
+import ai.RadioClaw.app.protocol.RadioClawLocationCommand
+import ai.RadioClaw.app.protocol.RadioClawMotionCommand
+import ai.RadioClaw.app.protocol.RadioClawNotificationsCommand
+import ai.RadioClaw.app.protocol.RadioClawPhotosCommand
+import ai.RadioClaw.app.protocol.RadioClawSmsCommand
+import ai.RadioClaw.app.protocol.RadioClawSystemCommand
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -18,52 +18,52 @@ import org.junit.Test
 class InvokeCommandRegistryTest {
   private val coreCapabilities =
     setOf(
-      OpenClawCapability.Canvas.rawValue,
-      OpenClawCapability.Screen.rawValue,
-      OpenClawCapability.Device.rawValue,
-      OpenClawCapability.Notifications.rawValue,
-      OpenClawCapability.System.rawValue,
-      OpenClawCapability.AppUpdate.rawValue,
-      OpenClawCapability.Photos.rawValue,
-      OpenClawCapability.Contacts.rawValue,
-      OpenClawCapability.Calendar.rawValue,
+      RadioClawCapability.Canvas.rawValue,
+      RadioClawCapability.Screen.rawValue,
+      RadioClawCapability.Device.rawValue,
+      RadioClawCapability.Notifications.rawValue,
+      RadioClawCapability.System.rawValue,
+      RadioClawCapability.AppUpdate.rawValue,
+      RadioClawCapability.Photos.rawValue,
+      RadioClawCapability.Contacts.rawValue,
+      RadioClawCapability.Calendar.rawValue,
     )
 
   private val optionalCapabilities =
     setOf(
-      OpenClawCapability.Camera.rawValue,
-      OpenClawCapability.Location.rawValue,
-      OpenClawCapability.Sms.rawValue,
-      OpenClawCapability.VoiceWake.rawValue,
-      OpenClawCapability.Motion.rawValue,
+      RadioClawCapability.Camera.rawValue,
+      RadioClawCapability.Location.rawValue,
+      RadioClawCapability.Sms.rawValue,
+      RadioClawCapability.VoiceWake.rawValue,
+      RadioClawCapability.Motion.rawValue,
     )
 
   private val coreCommands =
     setOf(
-      OpenClawDeviceCommand.Status.rawValue,
-      OpenClawDeviceCommand.Info.rawValue,
-      OpenClawDeviceCommand.Permissions.rawValue,
-      OpenClawDeviceCommand.Health.rawValue,
-      OpenClawNotificationsCommand.List.rawValue,
-      OpenClawNotificationsCommand.Actions.rawValue,
-      OpenClawSystemCommand.Notify.rawValue,
-      OpenClawPhotosCommand.Latest.rawValue,
-      OpenClawContactsCommand.Search.rawValue,
-      OpenClawContactsCommand.Add.rawValue,
-      OpenClawCalendarCommand.Events.rawValue,
-      OpenClawCalendarCommand.Add.rawValue,
+      RadioClawDeviceCommand.Status.rawValue,
+      RadioClawDeviceCommand.Info.rawValue,
+      RadioClawDeviceCommand.Permissions.rawValue,
+      RadioClawDeviceCommand.Health.rawValue,
+      RadioClawNotificationsCommand.List.rawValue,
+      RadioClawNotificationsCommand.Actions.rawValue,
+      RadioClawSystemCommand.Notify.rawValue,
+      RadioClawPhotosCommand.Latest.rawValue,
+      RadioClawContactsCommand.Search.rawValue,
+      RadioClawContactsCommand.Add.rawValue,
+      RadioClawCalendarCommand.Events.rawValue,
+      RadioClawCalendarCommand.Add.rawValue,
       "app.update",
     )
 
   private val optionalCommands =
     setOf(
-      OpenClawCameraCommand.Snap.rawValue,
-      OpenClawCameraCommand.Clip.rawValue,
-      OpenClawCameraCommand.List.rawValue,
-      OpenClawLocationCommand.Get.rawValue,
-      OpenClawMotionCommand.Activity.rawValue,
-      OpenClawMotionCommand.Pedometer.rawValue,
-      OpenClawSmsCommand.Send.rawValue,
+      RadioClawCameraCommand.Snap.rawValue,
+      RadioClawCameraCommand.Clip.rawValue,
+      RadioClawCameraCommand.List.rawValue,
+      RadioClawLocationCommand.Get.rawValue,
+      RadioClawMotionCommand.Activity.rawValue,
+      RadioClawMotionCommand.Pedometer.rawValue,
+      RadioClawSmsCommand.Send.rawValue,
     )
 
   private val debugCommands = setOf("debug.logs", "debug.ed25519")
@@ -133,8 +133,8 @@ class InvokeCommandRegistryTest {
         ),
       )
 
-    assertTrue(commands.contains(OpenClawMotionCommand.Activity.rawValue))
-    assertFalse(commands.contains(OpenClawMotionCommand.Pedometer.rawValue))
+    assertTrue(commands.contains(RadioClawMotionCommand.Activity.rawValue))
+    assertFalse(commands.contains(RadioClawMotionCommand.Pedometer.rawValue))
   }
 
   private fun defaultFlags(

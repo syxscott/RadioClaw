@@ -1,5 +1,5 @@
 ---
-summary: "When OpenClaw shows typing indicators and how to tune them"
+summary: "When RadioClaw shows typing indicators and how to tune them"
 read_when:
   - Changing typing indicator behavior or defaults
 title: "Typing Indicators"
@@ -13,7 +13,7 @@ to control **how often** it refreshes.
 
 ## Defaults
 
-When `agents.defaults.typingMode` is **unset**, OpenClaw keeps the legacy behavior:
+When `agents.defaults.typingMode` is **unset**, RadioClaw keeps the legacy behavior:
 
 - **Direct chats**: typing starts immediately once the model loop begins.
 - **Group chats with a mention**: typing starts immediately.
@@ -24,16 +24,16 @@ When `agents.defaults.typingMode` is **unset**, OpenClaw keeps the legacy behavi
 
 Set `agents.defaults.typingMode` to one of:
 
-- `never` ‚Äî no typing indicator, ever.
-- `instant` ‚Äî start typing **as soon as the model loop begins**, even if the run
+- `never` ‚Ä?no typing indicator, ever.
+- `instant` ‚Ä?start typing **as soon as the model loop begins**, even if the run
   later returns only the silent reply token.
-- `thinking` ‚Äî start typing on the **first reasoning delta** (requires
+- `thinking` ‚Ä?start typing on the **first reasoning delta** (requires
   `reasoningLevel: "stream"` for the run).
-- `message` ‚Äî start typing on the **first non-silent text delta** (ignores
+- `message` ‚Ä?start typing on the **first non-silent text delta** (ignores
   the `NO_REPLY` silent token).
 
-Order of ‚Äúhow early it fires‚Äù:
-`never` ‚Üí `message` ‚Üí `thinking` ‚Üí `instant`
+Order of ‚Äúhow early it fires‚Ä?
+`never` ‚Ü?`message` ‚Ü?`thinking` ‚Ü?`instant`
 
 ## Configuration
 

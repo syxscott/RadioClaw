@@ -177,7 +177,7 @@ export async function fetchChatUsers(
         });
       })
       .on("error", (err) => {
-        log?.warn(`fetchChatUsers: HTTP error â€” ${err instanceof Error ? err.message : err}`);
+        log?.warn(`fetchChatUsers: HTTP error â€?${err instanceof Error ? err.message : err}`);
         resolve(cached?.users ?? []);
       });
   });

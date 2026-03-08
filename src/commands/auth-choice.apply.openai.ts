@@ -86,7 +86,7 @@ export async function applyAuthChoiceOpenAI(
         openUrl: async (url) => {
           await openUrl(url);
         },
-        localBrowserMessage: "Complete sign-in in browserâ€¦",
+        localBrowserMessage: "Complete sign-in in browserâ€?,
       });
     } catch {
       // The helper already surfaces the error to the user.

@@ -323,7 +323,7 @@ session: quench
 Test the HTTP client:
 1. Fetch http://example.com (no TLS)
 2. Fetch https://example.com (with TLS)
-3. Test redirect following (http â†’ https)
+3. Test redirect following (http â†?https)
 4. Test chunked encoding
 5. Test error cases (bad host, timeout, etc.)
 
@@ -351,8 +351,8 @@ Phase 2: HTML Parsing
 Raw HTML is just text. We need to smelt it into a Document Object Model.
 
 Two stages:
-1. Tokenizer: HTML text â†’ Tokens (start tag, end tag, text, comment, etc.)
-2. Parser: Tokens â†’ DOM tree
+1. Tokenizer: HTML text â†?Tokens (start tag, end tag, text, comment, etc.)
+2. Parser: Tokens â†?DOM tree
 
 The HTML5 spec is complex, but we can simplify:
 - Handle well-formed HTML (don't worry about error recovery)
@@ -488,8 +488,8 @@ Phase 3: CSS Parsing
 A DOM without styles is shapeless metal. CSS gives it form.
 
 Two stages:
-1. Tokenizer: CSS text â†’ Tokens
-2. Parser: Tokens â†’ Stylesheet (rules, selectors, declarations)
+1. Tokenizer: CSS text â†?Tokens
+2. Parser: Tokens â†?Stylesheet (rules, selectors, declarations)
 
 We need enough CSS to render real pages:
 - Type selectors: div, p, a
@@ -657,7 +657,7 @@ File: src/style/computed.rs (ComputedStyle and inheritance)
 Create:
 - SelectorMatcher that can test if a selector matches an element
 - Specificity calculation
-- Cascade resolver that takes DOM + Stylesheets â†’ styled DOM
+- Cascade resolver that takes DOM + Stylesheets â†?styled DOM
 - Inheritance and default values
 """
   context: style_design
@@ -675,7 +675,7 @@ Test cases:
 6. Inheritance: color inherits, border doesn't
 7. Defaults: display defaults to inline for span, block for div
 
-Write tests with DOM + CSS â†’ expected computed styles.
+Write tests with DOM + CSS â†?expected computed styles.
 """
 
 loop until **all style resolution tests pass** (max: 5):
@@ -702,7 +702,7 @@ Layout takes a styled DOM and produces a "layout tree" - boxes with
 positions and sizes in pixels.
 
 Components:
-1. Box generation: DOM elements â†’ layout boxes
+1. Box generation: DOM elements â†?layout boxes
 2. Block layout: vertical stacking with margins
 3. Inline layout: horizontal flow with line breaking
 4. Text layout: measuring and positioning text
@@ -874,7 +874,7 @@ Test cases:
 2. Nested boxes with different colors
 3. Borders (all four sides)
 4. Text rendering (basic ASCII)
-5. Full pipeline: HTML â†’ DOM â†’ Style â†’ Layout â†’ Paint â†’ Window
+5. Full pipeline: HTML â†?DOM â†?Style â†?Layout â†?Paint â†?Window
 
 The window should show something! Verify visually.
 """
@@ -901,9 +901,9 @@ This is where browsers separate from mere HTML viewers.
 The JavaScript engine is the fire that brings the blade to life.
 
 We're not building V8. We're building something that works:
-- Lexer: JS source â†’ tokens
-- Parser: tokens â†’ AST
-- Compiler: AST â†’ bytecode
+- Lexer: JS source â†?tokens
+- Parser: tokens â†?AST
+- Compiler: AST â†?bytecode
 - VM: execute bytecode
 - Builtins: Object, Array, Function, String, Number, console.log
 
@@ -1020,7 +1020,7 @@ We'll do bytecode. It's more interesting and teaches more.
 
 Components:
 - Value type: JS values (number, string, object, function, etc.)
-- Compiler: AST â†’ bytecode
+- Compiler: AST â†?bytecode
 - VM: execute bytecode with a stack
 - Heap: objects live here
 - GC: garbage collection (mark-sweep is fine)
@@ -1221,9 +1221,9 @@ Key bindings:
 - Event objects
 
 document methods:
-- getElementById(id) â†’ Element | null
-- querySelector(selector) â†’ Element | null
-- createElement(tag) â†’ Element
+- getElementById(id) â†?Element | null
+- querySelector(selector) â†?Element | null
+- createElement(tag) â†?Element
 
 Element properties/methods:
 - innerHTML (get/set)
@@ -1235,7 +1235,7 @@ Element properties/methods:
 
 Event system:
 - Event object: type, target, preventDefault, stopPropagation
-- Event dispatch: capture â†’ target â†’ bubble
+- Event dispatch: capture â†?target â†?bubble
 """
 
 session: hammer
@@ -1316,7 +1316,7 @@ The full pipeline:
 7. Compute layout
 8. Paint to pixel buffer
 9. Display in window
-10. Handle events â†’ JS â†’ DOM changes â†’ re-render
+10. Handle events â†?JS â†?DOM changes â†?re-render
 
 This is the final tempering. The blade becomes a weapon.
 """

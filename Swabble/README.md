@@ -1,4 +1,4 @@
-# ğŸ™ï¸ swabble â€” Speech.framework wake-word hook daemon (macOS 26)
+# ğŸ™ï¸?swabble â€?Speech.framework wake-word hook daemon (macOS 26)
 
 swabble is a Swift 6.2 wake-word hook daemon. The CLI targets macOS 26 (SpeechAnalyzer + SpeechTranscriber). The shared `SwabbleKit` target is multi-platform and exposes wake-word gating utilities for iOS/macOS apps.
 
@@ -47,17 +47,17 @@ targets: [
 ```
 
 ## CLI
-- `serve` â€” foreground loop (mic â†’ wake â†’ hook)
-- `transcribe <file>` â€” offline transcription (txt|srt)
-- `test-hook "text"` â€” invoke configured hook
-- `mic list|set <index>` â€” enumerate/select input device
-- `setup` â€” write default config JSON
-- `doctor` â€” check Speech auth & device availability
-- `health` â€” prints `ok`
-- `tail-log` â€” last 10 transcripts
-- `status` â€” show wake state + recent transcripts
-- `service install|uninstall|status` â€” user launchd plist (stub: prints launchctl commands)
-- `start|stop|restart` â€” placeholders until full launchd wiring
+- `serve` â€?foreground loop (mic â†?wake â†?hook)
+- `transcribe <file>` â€?offline transcription (txt|srt)
+- `test-hook "text"` â€?invoke configured hook
+- `mic list|set <index>` â€?enumerate/select input device
+- `setup` â€?write default config JSON
+- `doctor` â€?check Speech auth & device availability
+- `health` â€?prints `ok`
+- `tail-log` â€?last 10 transcripts
+- `status` â€?show wake state + recent transcripts
+- `service install|uninstall|status` â€?user launchd plist (stub: prints launchctl commands)
+- `start|stop|restart` â€?placeholders until full launchd wiring
 
 All commands accept Commander runtime flags (`-v/--verbose`, `--json-output`, `--log-level`), plus `--config` where applicable.
 
@@ -91,12 +91,12 @@ When a wake-gated transcript passes min_chars & cooldown, swabble runs:
 <command> <args...> "<prefix><text>"
 ```
 Environment variables:
-- `SWABBLE_TEXT` â€” stripped transcript (wake word removed)
-- `SWABBLE_PREFIX` â€” rendered prefix (hostname substituted)
+- `SWABBLE_TEXT` â€?stripped transcript (wake word removed)
+- `SWABBLE_PREFIX` â€?rendered prefix (hostname substituted)
 - plus any `hook.env` key/values
 
 ## Speech pipeline
-- `AVAudioEngine` tap â†’ `BufferConverter` â†’ `AnalyzerInput` â†’ `SpeechAnalyzer` with a `SpeechTranscriber` module.
+- `AVAudioEngine` tap â†?`BufferConverter` â†?`AnalyzerInput` â†?`SpeechAnalyzer` with a `SpeechTranscriber` module.
 - Requests volatile + final results; the CLI uses text-only wake gating today.
 - Authorization requested at first start; requires macOS 26 + new Speech.framework APIs.
 

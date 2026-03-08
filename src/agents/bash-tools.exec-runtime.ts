@@ -81,7 +81,7 @@ export const DEFAULT_MAX_OUTPUT = clampWithDefault(
   200_000,
 );
 export const DEFAULT_PENDING_MAX_OUTPUT = clampWithDefault(
-  readEnvInt("OPENCLAW_BASH_PENDING_MAX_OUTPUT_CHARS"),
+  readEnvInt("RadioClaw_BASH_PENDING_MAX_OUTPUT_CHARS"),
   30_000,
   1_000,
   200_000,
@@ -278,7 +278,7 @@ export async function runExecProcess(opts: {
   const supervisor = getProcessSupervisor();
   const shellRuntimeEnv: Record<string, string> = {
     ...opts.env,
-    OPENCLAW_SHELL: "exec",
+    RadioClaw_SHELL: "exec",
   };
 
   const session: ProcessSession = {
@@ -491,7 +491,7 @@ export async function runExecProcess(opts: {
       const exitCode = exit.exitCode ?? 0;
       // Shell exit codes 126 (not executable) and 127 (command not found) are
       // unrecoverable infrastructure failures that should surface as real errors
-      // rather than silently completing â€” e.g. `python: command not found`.
+      // rather than silently completing â€?e.g. `python: command not found`.
       const isShellFailure = exitCode === 126 || exitCode === 127;
       const status: "completed" | "failed" =
         isNormalExit && !isShellFailure ? "completed" : "failed";

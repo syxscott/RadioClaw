@@ -10,7 +10,7 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/mattermost";
+import type { RadioClawPluginApi } from "RadioClaw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import { resolveSlashCommandConfig, type MattermostRegisteredCommand } from "./slash-commands.js";
 import { createSlashCommandHttpHandler } from "./slash-http.js";
@@ -30,7 +30,7 @@ export type SlashCommandAccountState = {
   triggerMap: Map<string, string>;
 };
 
-/** Map from accountId â†’ per-account slash command state. */
+/** Map from accountId â†?per-account slash command state. */
 const accountStates = new Map<string, SlashCommandAccountState>();
 
 export function resolveSlashHandlerForToken(token: string): {
@@ -86,8 +86,8 @@ export function activateSlashCommands(params: {
   registeredCommands: MattermostRegisteredCommand[];
   triggerMap?: Map<string, string>;
   api: {
-    cfg: import("openclaw/plugin-sdk/mattermost").OpenClawConfig;
-    runtime: import("openclaw/plugin-sdk/mattermost").RuntimeEnv;
+    cfg: import("RadioClaw/plugin-sdk/mattermost").RadioClawConfig;
+    runtime: import("RadioClaw/plugin-sdk/mattermost").RuntimeEnv;
   };
   log?: (msg: string) => void;
 }) {
@@ -148,7 +148,7 @@ export function deactivateSlashCommands(accountId?: string) {
  * The single HTTP route dispatches to the correct per-account handler
  * by matching the inbound token against each account's registered tokens.
  */
-export function registerSlashCommandRoute(api: OpenClawPluginApi) {
+export function registerSlashCommandRoute(api: RadioClawPluginApi) {
   const mmConfig = api.config.channels?.mattermost as Record<string, unknown> | undefined;
 
   // Collect callback paths from both top-level and per-account config.
@@ -170,7 +170,7 @@ export function registerSlashCommandRoute(api: OpenClawPluginApi) {
           callbackPaths.add(urlPath);
         }
       } catch {
-        // Invalid URL â€” ignore, will be caught during registration
+        // Invalid URL â€?ignore, will be caught during registration
       }
     }
   };
@@ -250,13 +250,13 @@ export function registerSlashCommandRoute(api: OpenClawPluginApi) {
         token = new URLSearchParams(bodyStr).get("token");
       }
     } catch {
-      // parse failed â€” will be caught by handler
+      // parse failed â€?will be caught by handler
     }
 
     const match = token ? resolveSlashHandlerForToken(token) : { kind: "none" as const };
 
     if (match.kind === "none") {
-      // No matching account â€” reject
+      // No matching account â€?reject
       res.statusCode = 401;
       res.setHeader("Content-Type", "application/json; charset=utf-8");
       res.end(

@@ -123,7 +123,7 @@ export function computeNextRunAtMs(schedule: CronSchedule, nowMs: number): numbe
         return retryMs;
       }
     }
-    // Still in the past â€” try from start of tomorrow (UTC) as a broader reset.
+    // Still in the past â€?try from start of tomorrow (UTC) as a broader reset.
     const tomorrowMs = new Date(nowMs).setUTCHours(24, 0, 0, 0);
     const retry2 = cron.nextRun(new Date(tomorrowMs));
     if (retry2) {

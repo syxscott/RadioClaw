@@ -150,7 +150,7 @@ export async function getTailnetHostname(exec: typeof runExec = runExec, detecte
 let cachedTailscaleBinary: string | null = null;
 
 export async function getTailscaleBinary(): Promise<string> {
-  const forcedBinary = process.env.OPENCLAW_TEST_TAILSCALE_BINARY?.trim();
+  const forcedBinary = process.env.RadioClaw_TEST_TAILSCALE_BINARY?.trim();
   if (forcedBinary) {
     cachedTailscaleBinary = forcedBinary;
     return forcedBinary;
@@ -195,7 +195,7 @@ export async function ensureGoInstalled(
     runtime.error("Go is required to build tailscaled from source. Aborting.");
     runtime.exit(1);
   }
-  logVerbose("Installing Go via Homebrewâ€¦");
+  logVerbose("Installing Go via Homebrewâ€?);
   await exec("brew", ["install", "go"]);
 }
 
@@ -221,7 +221,7 @@ export async function ensureTailscaledInstalled(
     runtime.error("tailscaled is required for user-space funnel. Aborting.");
     runtime.exit(1);
   }
-  logVerbose("Installing tailscaled via Homebrewâ€¦");
+  logVerbose("Installing tailscaled via Homebrewâ€?);
   await exec("brew", ["install", "tailscale"]);
 }
 
@@ -372,7 +372,7 @@ export async function ensureFunnel(
     runtime.error("Failed to enable Tailscale Funnel. Is it allowed on your tailnet?");
     runtime.error(
       info(
-        `Tip: Funnel is optional for OpenClaw. You can keep running the web gateway without it: \`${formatCliCommand("openclaw gateway")}\``,
+        `Tip: Funnel is optional for RadioClaw. You can keep running the web gateway without it: \`${formatCliCommand("RadioClaw gateway")}\``,
       ),
     );
     if (shouldLogVerbose()) {

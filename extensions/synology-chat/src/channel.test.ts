@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock external dependencies
-vi.mock("openclaw/plugin-sdk/synology-chat", () => ({
+vi.mock("RadioClaw/plugin-sdk/synology-chat", () => ({
   DEFAULT_ACCOUNT_ID: "default",
   setAccountEnabledInConfigSection: vi.fn((_opts: any) => ({})),
   registerPluginHttpRoute: vi.fn(() => vi.fn()),
@@ -44,7 +44,7 @@ vi.mock("zod", () => ({
 }));
 
 const { createSynologyChatPlugin } = await import("./channel.js");
-const { registerPluginHttpRoute } = await import("openclaw/plugin-sdk/synology-chat");
+const { registerPluginHttpRoute } = await import("RadioClaw/plugin-sdk/synology-chat");
 
 describe("createSynologyChatPlugin", () => {
   it("returns a plugin object with all required sections", () => {
@@ -412,7 +412,7 @@ describe("createSynologyChatPlugin", () => {
 
       // Start first account (returns a pending promise)
       const firstPromise = plugin.gateway.startAccount(makeCtx(abortFirst));
-      // Start second account on same path â€” should deregister the first route
+      // Start second account on same path â€?should deregister the first route
       const secondPromise = plugin.gateway.startAccount(makeCtx(abortSecond));
 
       // Give microtasks time to settle

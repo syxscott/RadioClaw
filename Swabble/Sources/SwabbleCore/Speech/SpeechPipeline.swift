@@ -15,7 +15,7 @@ public enum SpeechPipelineError: Error {
     case transcriberUnavailable
 }
 
-/// Live microphone â†’ SpeechAnalyzer â†’ SpeechTranscriber pipeline.
+/// Live microphone â†?SpeechAnalyzer â†?SpeechTranscriber pipeline.
 @available(macOS 26.0, iOS 26.0, *)
 public actor SpeechPipeline {
     private struct UnsafeBuffer: @unchecked Sendable { let buffer: AVAudioPCMBuffer }

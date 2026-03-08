@@ -139,7 +139,7 @@ export async function handleSubagentsSendAction(
     timeoutMs: waitMs + 2000,
   });
   if (wait?.status === "timeout") {
-    return stopWithText(`â³ Subagent still running (run ${runId.slice(0, 8)}).`);
+    return stopWithText(`â?Subagent still running (run ${runId.slice(0, 8)}).`);
   }
   if (wait?.status === "error") {
     const waitError = typeof wait.error === "string" ? wait.error : "unknown error";
@@ -154,6 +154,6 @@ export async function handleSubagentsSendAction(
   const last = filtered.length > 0 ? filtered[filtered.length - 1] : undefined;
   const replyText = last ? extractAssistantText(last) : undefined;
   return stopWithText(
-    replyText ?? `âœ… Sent to ${formatRunLabel(targetResolution.entry)} (run ${runId.slice(0, 8)}).`,
+    replyText ?? `âœ?Sent to ${formatRunLabel(targetResolution.entry)} (run ${runId.slice(0, 8)}).`,
   );
 }

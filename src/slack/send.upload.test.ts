@@ -79,14 +79,14 @@ describe("sendMessageSlack file upload with user IDs", () => {
   it("resolves bare user ID to DM channel before completing upload", async () => {
     const client = createUploadTestClient();
 
-    // Bare user ID â€” parseSlackTarget classifies this as kind="channel"
+    // Bare user ID â€?parseSlackTarget classifies this as kind="channel"
     await sendMessageSlack("U2ZH3MFSR", "screenshot", {
       token: "xoxb-test",
       client,
       mediaUrl: "/tmp/screenshot.png",
     });
 
-    // Should call conversations.open to resolve user ID â†’ DM channel
+    // Should call conversations.open to resolve user ID â†?DM channel
     expect(client.conversations.open).toHaveBeenCalledWith({
       users: "U2ZH3MFSR",
     });

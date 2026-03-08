@@ -1,7 +1,7 @@
 ---
 title: Lobster
-summary: "Typed workflow runtime for OpenClaw with resumable approval gates."
-description: Typed workflow runtime for OpenClaw ‚Äî composable pipelines with approval gates.
+summary: "Typed workflow runtime for RadioClaw with resumable approval gates."
+description: Typed workflow runtime for RadioClaw ‚Ä?composable pipelines with approval gates.
 read_when:
   - You want deterministic multi-step workflows with explicit approvals
   - You need to resume a workflow without re-running earlier steps
@@ -9,7 +9,7 @@ read_when:
 
 # Lobster
 
-Lobster is a workflow shell that lets OpenClaw run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
+Lobster is a workflow shell that lets RadioClaw run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
 
 ## Hook
 
@@ -19,7 +19,7 @@ Your assistant can build the tools that manage itself. Ask for a workflow, and 3
 
 Today, complex workflows require many back-and-forth tool calls. Each call costs tokens, and the LLM has to orchestrate every step. Lobster moves that orchestration into a typed runtime:
 
-- **One call instead of many**: OpenClaw runs one Lobster tool call and gets a structured result.
+- **One call instead of many**: RadioClaw runs one Lobster tool call and gets a structured result.
 - **Approvals built in**: Side effects (send email, post comment) halt the workflow until explicitly approved.
 - **Resumable**: Halted workflows return a token; approve and resume without re-running everything.
 
@@ -29,18 +29,18 @@ Lobster is intentionally small. The goal is not "a new language," it's a predict
 
 - **Approve/resume is built in**: A normal program can prompt a human, but it can‚Äôt _pause and resume_ with a durable token without you inventing that runtime yourself.
 - **Determinism + auditability**: Pipelines are data, so they‚Äôre easy to log, diff, replay, and review.
-- **Constrained surface for AI**: A tiny grammar + JSON piping reduces ‚Äúcreative‚Äù code paths and makes validation realistic.
+- **Constrained surface for AI**: A tiny grammar + JSON piping reduces ‚Äúcreative‚Ä?code paths and makes validation realistic.
 - **Safety policy baked in**: Timeouts, output caps, sandbox checks, and allowlists are enforced by the runtime, not each script.
 - **Still programmable**: Each step can call any CLI or script. If you want JS/TS, generate `.lobster` files from code.
 
 ## How it works
 
-OpenClaw launches the local `lobster` CLI in **tool mode** and parses a JSON envelope from stdout.
+RadioClaw launches the local `lobster` CLI in **tool mode** and parses a JSON envelope from stdout.
 If the pipeline pauses for approval, the tool returns a `resumeToken` so you can continue later.
 
 ## Pattern: small CLI + JSON pipes + approvals
 
-Build tiny commands that speak JSON, then chain them into a single Lobster call. (Example command names below ‚Äî swap in your own.)
+Build tiny commands that speak JSON, then chain them into a single Lobster call. (Example command names below ‚Ä?swap in your own.)
 
 ```bash
 inbox list --json
@@ -72,7 +72,7 @@ Example: map input items into tool calls:
 
 ```bash
 gog.gmail.search --query 'newer_than:1d' \
-  | openclaw.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
+  | RadioClaw.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
 ```
 
 ## JSON-only LLM steps (llm-task)
@@ -104,7 +104,7 @@ Enable the tool:
 Use it in a pipeline:
 
 ```lobster
-openclaw.invoke --tool llm-task --action json --args-json '{
+RadioClaw.invoke --tool llm-task --action json --args-json '{
   "prompt": "Given the input email, return intent and draft.",
   "input": { "subject": "Hello", "body": "Can you help?" },
   "schema": {
@@ -123,7 +123,7 @@ See [LLM Task](/tools/llm-task) for details and configuration options.
 
 ## Workflow files (.lobster)
 
-Lobster can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In OpenClaw tool calls, set `pipeline` to the file path.
+Lobster can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In RadioClaw tool calls, set `pipeline` to the file path.
 
 ```yaml
 name: inbox-triage
@@ -153,7 +153,7 @@ Notes:
 
 ## Install Lobster
 
-Install the Lobster CLI on the **same host** that runs the OpenClaw Gateway (see the [Lobster repo](https://github.com/openclaw/lobster)), and ensure `lobster` is on `PATH`.
+Install the Lobster CLI on the **same host** that runs the RadioClaw Gateway (see the [Lobster repo](https://github.com/RadioClaw/lobster)), and ensure `lobster` is on `PATH`.
 
 ## Enable the tool
 
@@ -189,7 +189,7 @@ Or per-agent:
 Avoid using `tools.allow: ["lobster"]` unless you intend to run in restrictive allowlist mode.
 
 Note: allowlists are opt-in for optional plugins. If your allowlist only names
-plugin tools (like `lobster`), OpenClaw keeps core tools enabled. To restrict core
+plugin tools (like `lobster`), RadioClaw keeps core tools enabled. To restrict core
 tools, include the core tools or groups you want in the allowlist too.
 
 ## Example: Email triage
@@ -198,12 +198,12 @@ Without Lobster:
 
 ```
 User: "Check my email and draft replies"
-‚Üí openclaw calls gmail.list
-‚Üí LLM summarizes
-‚Üí User: "draft replies to #2 and #5"
-‚Üí LLM drafts
-‚Üí User: "send #2"
-‚Üí openclaw calls gmail.send
+‚Ü?RadioClaw calls gmail.list
+‚Ü?LLM summarizes
+‚Ü?User: "draft replies to #2 and #5"
+‚Ü?LLM drafts
+‚Ü?User: "send #2"
+‚Ü?RadioClaw calls gmail.send
 (repeat daily, no memory of what was triaged)
 ```
 
@@ -233,7 +233,7 @@ Returns a JSON envelope (truncated):
 }
 ```
 
-User approves ‚Üí resume:
+User approves ‚Ü?resume:
 
 ```json
 {
@@ -294,9 +294,9 @@ Continue a halted workflow after approval.
 
 Lobster returns a JSON envelope with one of three statuses:
 
-- `ok` ‚Üí finished successfully
-- `needs_approval` ‚Üí paused; `requiresApproval.resumeToken` is required to resume
-- `cancelled` ‚Üí explicitly denied or cancelled
+- `ok` ‚Ü?finished successfully
+- `needs_approval` ‚Ü?paused; `requiresApproval.resumeToken` is required to resume
+- `cancelled` ‚Ü?explicitly denied or cancelled
 
 The tool surfaces the envelope in both `content` (pretty JSON) and `details` (raw object).
 
@@ -304,8 +304,8 @@ The tool surfaces the envelope in both `content` (pretty JSON) and `details` (ra
 
 If `requiresApproval` is present, inspect the prompt and decide:
 
-- `approve: true` ‚Üí resume and continue side effects
-- `approve: false` ‚Üí cancel and finalize the workflow
+- `approve: true` ‚Ü?resume and continue side effects
+- `approve: false` ‚Ü?cancel and finalize the workflow
 
 Use `approve --preview-from-stdin --limit N` to attach a JSON preview to approval requests without custom jq/heredoc glue. Resume tokens are now compact: Lobster stores workflow resume state under its state dir and hands back a small token key.
 
@@ -315,17 +315,17 @@ OpenProse pairs well with Lobster: use `/prose` to orchestrate multi-agent prep,
 
 ## Safety
 
-- **Local subprocess only** ‚Äî no network calls from the plugin itself.
-- **No secrets** ‚Äî Lobster doesn't manage OAuth; it calls OpenClaw tools that do.
-- **Sandbox-aware** ‚Äî disabled when the tool context is sandboxed.
-- **Hardened** ‚Äî fixed executable name (`lobster`) on `PATH`; timeouts and output caps enforced.
+- **Local subprocess only** ‚Ä?no network calls from the plugin itself.
+- **No secrets** ‚Ä?Lobster doesn't manage OAuth; it calls RadioClaw tools that do.
+- **Sandbox-aware** ‚Ä?disabled when the tool context is sandboxed.
+- **Hardened** ‚Ä?fixed executable name (`lobster`) on `PATH`; timeouts and output caps enforced.
 
 ## Troubleshooting
 
-- **`lobster subprocess timed out`** ‚Üí increase `timeoutMs`, or split a long pipeline.
-- **`lobster output exceeded maxStdoutBytes`** ‚Üí raise `maxStdoutBytes` or reduce output size.
-- **`lobster returned invalid JSON`** ‚Üí ensure the pipeline runs in tool mode and prints only JSON.
-- **`lobster failed (code ‚Ä¶)`** ‚Üí run the same pipeline in a terminal to inspect stderr.
+- **`lobster subprocess timed out`** ‚Ü?increase `timeoutMs`, or split a long pipeline.
+- **`lobster output exceeded maxStdoutBytes`** ‚Ü?raise `maxStdoutBytes` or reduce output size.
+- **`lobster returned invalid JSON`** ‚Ü?ensure the pipeline runs in tool mode and prints only JSON.
+- **`lobster failed (code ‚Ä?`** ‚Ü?run the same pipeline in a terminal to inspect stderr.
 
 ## Learn more
 
@@ -334,7 +334,7 @@ OpenProse pairs well with Lobster: use `/prose` to orchestrate multi-agent prep,
 
 ## Case study: community workflows
 
-One public example: a ‚Äúsecond brain‚Äù CLI + Lobster pipelines that manage three Markdown vaults (personal, partner, shared). The CLI emits JSON for stats, inbox listings, and stale scans; Lobster chains those commands into workflows like `weekly-review`, `inbox-triage`, `memory-consolidation`, and `shared-task-sync`, each with approval gates. AI handles judgment (categorization) when available and falls back to deterministic rules when not.
+One public example: a ‚Äúsecond brain‚Ä?CLI + Lobster pipelines that manage three Markdown vaults (personal, partner, shared). The CLI emits JSON for stats, inbox listings, and stale scans; Lobster chains those commands into workflows like `weekly-review`, `inbox-triage`, `memory-consolidation`, and `shared-task-sync`, each with approval gates. AI handles judgment (categorization) when available and falls back to deterministic rules when not.
 
 - Thread: [https://x.com/plattenschieber/status/2014508656335770033](https://x.com/plattenschieber/status/2014508656335770033)
 - Repo: [https://github.com/bloomedai/brain-cli](https://github.com/bloomedai/brain-cli)

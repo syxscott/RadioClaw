@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, RuntimeEnv } from "RadioClaw/plugin-sdk/feishu";
 import {
   buildAgentMediaPayload,
   buildPendingHistoryContextFromMap,
@@ -12,7 +12,7 @@ import {
   resolveOpenProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
   warnMissingProviderGroupPolicyFallbackOnce,
-} from "openclaw/plugin-sdk/feishu";
+} from "RadioClaw/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { tryRecordMessage, tryRecordMessagePersistent } from "./dedup.js";
@@ -453,7 +453,7 @@ function formatSubMessageContent(content: string, contentType: string): string {
 
 function checkBotMentioned(event: FeishuMessageEvent, botOpenId?: string): boolean {
   if (!botOpenId) return false;
-  // Check for @all (@_all in Feishu) â€” treat as mentioning every bot
+  // Check for @all (@_all in Feishu) â€?treat as mentioning every bot
   const rawContent = event.message.content ?? "";
   if (rawContent.includes("@_all")) return true;
   const mentions = event.message.mentions ?? [];
@@ -777,7 +777,7 @@ export function parseFeishuMessageEvent(
   const mentionedBot = checkBotMentioned(event, botOpenId);
   const hasAnyMention = (event.message.mentions?.length ?? 0) > 0;
   // Strip the bot's own mention so slash commands like @Bot /help retain
-  // the leading /. This applies in both p2p *and* group contexts â€” the
+  // the leading /. This applies in both p2p *and* group contexts â€?the
   // mentionedBot flag already captures whether the bot was addressed, so
   // keeping the mention tag in content only breaks command detection (#35994).
   // Non-bot mentions (e.g. mention-forward targets) are still normalized to <at> tags.
@@ -1054,7 +1054,7 @@ export async function handleFeishuMessage(params: {
       log(`feishu[${account.accountId}]: message in group ${ctx.chatId} did not mention bot`);
       // Record to pending history for non-broadcast groups only. For broadcast groups,
       // the mentioned handler's broadcast dispatch writes the turn directly into all
-      // agent sessions â€” buffering here would cause duplicate replay when this account
+      // agent sessions â€?buffering here would cause duplicate replay when this account
       // later becomes active via buildPendingHistoryContextFromMap.
       if (!broadcastAgents && chatHistories && groupHistoryKey) {
         recordPendingHistoryEntryIfEnabled({
@@ -1433,7 +1433,7 @@ export async function handleFeishuMessage(params: {
         } else {
           // Observer agent: no-op dispatcher (session entry + inference, no Feishu reply).
           // Strip CommandAuthorized so slash commands (e.g. /reset) don't silently
-          // mutate observer sessions â€” only the active agent should execute commands.
+          // mutate observer sessions â€?only the active agent should execute commands.
           delete (agentCtx as Record<string, unknown>).CommandAuthorized;
           const noopDispatcher = {
             sendToolResult: () => false,

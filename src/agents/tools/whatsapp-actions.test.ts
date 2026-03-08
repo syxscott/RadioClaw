@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../routing/session-key.js";
 import { handleWhatsAppAction } from "./whatsapp-actions.js";
 
@@ -15,7 +15,7 @@ vi.mock("../../web/outbound.js", () => ({
 
 const enabledConfig = {
   channels: { whatsapp: { actions: { reactions: true } } },
-} as OpenClawConfig;
+} as RadioClawConfig;
 
 describe("handleWhatsAppAction", () => {
   beforeEach(() => {
@@ -28,11 +28,11 @@ describe("handleWhatsAppAction", () => {
         action: "react",
         chatJid: "123@s.whatsapp.net",
         messageId: "msg1",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       enabledConfig,
     );
-    expect(sendReactionWhatsApp).toHaveBeenLastCalledWith("+123", "msg1", "âœ…", {
+    expect(sendReactionWhatsApp).toHaveBeenLastCalledWith("+123", "msg1", "âœ?, {
       verbose: false,
       fromMe: undefined,
       participant: undefined,
@@ -64,7 +64,7 @@ describe("handleWhatsAppAction", () => {
         action: "react",
         chatJid: "123@s.whatsapp.net",
         messageId: "msg1",
-        emoji: "âœ…",
+        emoji: "âœ?,
         remove: true,
       },
       enabledConfig,
@@ -101,14 +101,14 @@ describe("handleWhatsAppAction", () => {
   it("respects reaction gating", async () => {
     const cfg = {
       channels: { whatsapp: { actions: { reactions: false } } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     await expect(
       handleWhatsAppAction(
         {
           action: "react",
           chatJid: "123@s.whatsapp.net",
           messageId: "msg1",
-          emoji: "âœ…",
+          emoji: "âœ?,
         },
         cfg,
       ),
@@ -128,7 +128,7 @@ describe("handleWhatsAppAction", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await expect(
       handleWhatsAppAction(
@@ -136,7 +136,7 @@ describe("handleWhatsAppAction", () => {
           action: "react",
           chatJid: "111@s.whatsapp.net",
           messageId: "msg1",
-          emoji: "âœ…",
+          emoji: "âœ?,
         },
         cfg,
       ),
@@ -158,19 +158,19 @@ describe("handleWhatsAppAction", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await handleWhatsAppAction(
       {
         action: "react",
         chatJid: "123@s.whatsapp.net",
         messageId: "msg1",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       cfg,
     );
 
-    expect(sendReactionWhatsApp).toHaveBeenLastCalledWith("+123", "msg1", "âœ…", {
+    expect(sendReactionWhatsApp).toHaveBeenLastCalledWith("+123", "msg1", "âœ?, {
       verbose: false,
       fromMe: undefined,
       participant: undefined,

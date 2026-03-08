@@ -131,7 +131,7 @@ final class MenuContextCardInjector: NSObject, NSMenuDelegate {
                 } else {
                     // Keep the menu readable: one line, short.
                     let firstLine = trimmed.split(whereSeparator: \.isNewline).first.map(String.init) ?? trimmed
-                    self.cacheErrorText = firstLine.count > 90 ? "\(firstLine.prefix(87))â€¦" : firstLine
+                    self.cacheErrorText = firstLine.count > 90 ? "\(firstLine.prefix(87))â€? : firstLine
                 }
             }
             self.cacheUpdatedAt = Date()

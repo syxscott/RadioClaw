@@ -1,20 +1,20 @@
 import Foundation
-import OpenClawProtocol
+import RadioClawProtocol
 
-enum OpenClawConfigFile {
-    private static let logger = Logger(subsystem: "ai.openclaw", category: "config")
+enum RadioClawConfigFile {
+    private static let logger = Logger(subsystem: "ai.RadioClaw", category: "config")
     private static let configAuditFileName = "config-audit.jsonl"
 
     static func url() -> URL {
-        OpenClawPaths.configURL
+        RadioClawPaths.configURL
     }
 
     static func stateDirURL() -> URL {
-        OpenClawPaths.stateDirURL
+        RadioClawPaths.stateDirURL
     }
 
     static func defaultWorkspaceURL() -> URL {
-        OpenClawPaths.workspaceURL
+        RadioClawPaths.workspaceURL
     }
 
     static func loadDict() -> [String: Any] {
@@ -319,7 +319,7 @@ enum OpenClawConfigFile {
     private static func appendConfigWriteAudit(_ fields: [String: Any]) {
         var record: [String: Any] = [
             "ts": ISO8601DateFormatter().string(from: Date()),
-            "source": "macos-openclaw-config-file",
+            "source": "macos-RadioClaw-config-file",
             "event": "config.write",
             "pid": ProcessInfo.processInfo.processIdentifier,
             "argv": Array(ProcessInfo.processInfo.arguments.prefix(8)),

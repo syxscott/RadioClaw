@@ -290,7 +290,7 @@ export async function processDiscordMessage(ctx: DiscordMessagePreflightContext)
     }
     const parentName = threadParentName ?? "parent";
     threadLabel = threadName
-      ? `Discord thread #${normalizeDiscordSlug(parentName)} â€º ${threadName}`
+      ? `Discord thread #${normalizeDiscordSlug(parentName)} â€?${threadName}`
       : `Discord thread #${normalizeDiscordSlug(parentName)}`;
     if (threadParentId) {
       parentSessionKey = buildAgentSessionKey({
@@ -514,7 +514,7 @@ export async function processDiscordMessage(ctx: DiscordMessagePreflightContext)
     }
     // Strip reasoning/thinking tags that may leak through the stream.
     const cleaned = stripReasoningTagsFromText(text, { mode: "strict", trim: "both" });
-    // Skip pure-reasoning messages (e.g. "Reasoning:\nâ€¦") that contain no answer text.
+    // Skip pure-reasoning messages (e.g. "Reasoning:\nâ€?) that contain no answer text.
     if (!cleaned || cleaned.startsWith("Reasoning:\n")) {
       return;
     }

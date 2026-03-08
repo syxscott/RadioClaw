@@ -168,7 +168,7 @@ private struct ManualEntryStep: View {
                         HStack(spacing: 8) {
                             ProgressView()
                                 .progressViewStyle(.circular)
-                            Text("Connectingâ€¦")
+                            Text("Connectingâ€?)
                         }
                     } else {
                         Text("Connect")
@@ -367,8 +367,8 @@ private struct ConnectionStatusBox: View {
             "gateway: \(appModel.gatewayStatusText)",
             "discovery: \(gatewayController.discoveryStatusText)",
         ]
-        lines.append("server: \(appModel.gatewayServerName ?? "â€”")")
-        lines.append("address: \(appModel.gatewayRemoteAddress ?? "â€”")")
+        lines.append("server: \(appModel.gatewayServerName ?? "â€?)")
+        lines.append("address: \(appModel.gatewayRemoteAddress ?? "â€?)")
         return lines
     }
 }

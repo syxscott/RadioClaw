@@ -1,5 +1,5 @@
 import { formatCliCommand } from "../cli/command-format.js";
-import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";
+import { resolveRadioClawPackageRoot } from "../infra/RadioClaw-root.js";
 import {
   checkUpdateStatus,
   compareSemverStrings,
@@ -12,7 +12,7 @@ export async function getUpdateCheckResult(params: {
   fetchGit: boolean;
   includeRegistry: boolean;
 }): Promise<UpdateCheckResult> {
-  const root = await resolveOpenClawPackageRoot({
+  const root = await resolveRadioClawPackageRoot({
     moduleUrl: import.meta.url,
     argv1: process.argv[1],
     cwd: process.cwd(),
@@ -66,7 +66,7 @@ export function formatUpdateAvailableHint(update: UpdateCheckResult): string | n
     details.push(`npm ${availability.latestVersion}`);
   }
   const suffix = details.length > 0 ? ` (${details.join(" · ")})` : "";
-  return `Update available${suffix}. Run: ${formatCliCommand("openclaw update")}`;
+  return `Update available${suffix}. Run: ${formatCliCommand("RadioClaw update")}`;
 }
 
 export function formatUpdateOneLiner(update: UpdateCheckResult): string {
@@ -93,7 +93,7 @@ export function formatUpdateOneLiner(update: UpdateCheckResult): string {
     const branch = update.git.branch ? `git ${update.git.branch}` : "git";
     parts.push(branch);
     if (update.git.upstream) {
-      parts.push(`↔ ${update.git.upstream}`);
+      parts.push(`�?${update.git.upstream}`);
     }
     if (update.git.dirty === true) {
       parts.push("dirty");

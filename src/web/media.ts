@@ -94,7 +94,7 @@ async function assertLocalMediaAllowed(
     resolved = path.resolve(mediaPath);
   }
 
-  // Hardening: the default allowlist includes the OpenClaw temp dir, and tests/CI may
+  // Hardening: the default allowlist includes the RadioClaw temp dir, and tests/CI may
   // override the state dir into tmp. Avoid accidentally allowing per-agent
   // `workspace-*` state roots via the temp-root prefix match; require explicit
   // localRoots for those.
@@ -196,12 +196,12 @@ function logOptimizedImage(params: { originalSize: number; optimized: OptimizedI
   }
   if (params.optimized.format === "png") {
     logVerbose(
-      `Optimized PNG (preserving alpha) from ${formatMb(params.originalSize)}MB to ${formatMb(params.optimized.optimizedSize)}MB (sideâ‰¤${params.optimized.resizeSide}px)`,
+      `Optimized PNG (preserving alpha) from ${formatMb(params.originalSize)}MB to ${formatMb(params.optimized.optimizedSize)}MB (sideâ‰?{params.optimized.resizeSide}px)`,
     );
     return;
   }
   logVerbose(
-    `Optimized media from ${formatMb(params.originalSize)}MB to ${formatMb(params.optimized.optimizedSize)}MB (sideâ‰¤${params.optimized.resizeSide}px, q=${params.optimized.quality})`,
+    `Optimized media from ${formatMb(params.originalSize)}MB to ${formatMb(params.optimized.optimizedSize)}MB (sideâ‰?{params.optimized.resizeSide}px, q=${params.optimized.quality})`,
   );
 }
 

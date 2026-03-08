@@ -17,7 +17,7 @@ import { EventEmitter } from "node:events";
 import WebSocket from "ws";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// WebSocket Event Types (Server → Client)
+// WebSocket Event Types (Server �?Client)
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface ResponseObject {
@@ -174,7 +174,7 @@ export type OpenAIWebSocketEvent =
   | ErrorEvent;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Client → Server Event Types
+// Client �?Server Event Types
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type ContentPart =
@@ -331,7 +331,7 @@ export class OpenAIWebSocketManager extends EventEmitter<InternalEvents> {
   send(event: ClientEvent): void {
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       throw new Error(
-        `OpenAIWebSocketManager: cannot send — connection is not open (readyState=${this.ws?.readyState ?? "no socket"})`,
+        `OpenAIWebSocketManager: cannot send �?connection is not open (readyState=${this.ws?.readyState ?? "no socket"})`,
       );
     }
     this.ws.send(JSON.stringify(event));
@@ -478,7 +478,7 @@ export class OpenAIWebSocketManager extends EventEmitter<InternalEvents> {
     } else if (data instanceof ArrayBuffer) {
       text = Buffer.from(data).toString("utf8");
     } else {
-      // Blob or other — coerce to string
+      // Blob or other �?coerce to string
       text = String(data);
     }
 

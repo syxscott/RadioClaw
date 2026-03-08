@@ -11,10 +11,10 @@ import {
   createReplyPrefixOptions,
   createTypingCallbacks,
   logTypingFailure,
-  type OpenClawConfig,
+  type RadioClawConfig,
   type ReplyPayload,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/mattermost";
+} from "RadioClaw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "../mattermost/accounts.js";
 import { getMattermostRuntime } from "../runtime.js";
 import {
@@ -44,7 +44,7 @@ import {
 
 type SlashHttpHandlerParams = {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   runtime: RuntimeEnv;
   /** Expected token from registered commands (for validation). */
   commandTokens: Set<string>;
@@ -98,7 +98,7 @@ type SlashInvocationAuth = {
 
 async function authorizeSlashInvocation(params: {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   client: ReturnType<typeof createMattermostClient>;
   commandText: string;
   channelId: string;
@@ -243,7 +243,7 @@ export function createSlashCommandHttpHandler(params: SlashHttpHandlerParams) {
       return;
     }
 
-    // Validate token â€” fail closed: reject when no tokens are registered
+    // Validate token â€?fail closed: reject when no tokens are registered
     // (e.g. registration failed or startup was partial)
     if (commandTokens.size === 0 || !commandTokens.has(payload.token)) {
       sendJsonResponse(res, 401, {
@@ -287,7 +287,7 @@ export function createSlashCommandHttpHandler(params: SlashHttpHandlerParams) {
 
     log?.(`mattermost: slash command /${trigger} from ${senderName} in ${channelId}`);
 
-    // Acknowledge immediately â€” we'll send the actual reply asynchronously
+    // Acknowledge immediately â€?we'll send the actual reply asynchronously
     sendJsonResponse(res, 200, {
       response_type: "ephemeral",
       text: "Processing...",
@@ -330,7 +330,7 @@ export function createSlashCommandHttpHandler(params: SlashHttpHandlerParams) {
 
 async function handleSlashCommandAsync(params: {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   runtime: RuntimeEnv;
   client: ReturnType<typeof createMattermostClient>;
   commandText: string;
@@ -428,7 +428,7 @@ async function handleSlashCommandAsync(params: {
     return;
   }
 
-  // Build inbound context â€” the command text is the body
+  // Build inbound context â€?the command text is the body
   const ctxPayload = core.channel.reply.finalizeInboundContext({
     Body: commandText,
     BodyForAgent: commandText,

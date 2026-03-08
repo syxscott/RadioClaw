@@ -239,7 +239,7 @@ extension MenuSessionsInjector {
             headerItem.tag = self.tag
             headerItem.isEnabled = false
             let statusText = isConnected
-                ? (self.cachedErrorText ?? "Loading sessions‚Ä¶")
+                ? (self.cachedErrorText ?? "Loading sessions‚Ä?)
                 : self.controlChannelStatusText(for: channelState)
             let hosted = self.makeHostedView(
                 rootView: AnyView(MenuSessionsHeaderView(
@@ -295,7 +295,7 @@ extension MenuSessionsInjector {
 
         if case .connecting = ControlChannel.shared.state {
             menu.insertItem(
-                self.makeMessageItem(text: "Connecting‚Ä¶", symbolName: "circle.dashed", width: width),
+                self.makeMessageItem(text: "Connecting‚Ä?, symbolName: "circle.dashed", width: width),
                 at: cursor)
             cursor += 1
             return
@@ -472,9 +472,9 @@ extension MenuSessionsInjector {
     private func controlChannelStatusText(for state: ControlChannel.ConnectionState) -> String {
         switch state {
         case .connected:
-            "Loading sessions‚Ä¶"
+            "Loading sessions‚Ä?
         case .connecting:
-            "Connecting‚Ä¶"
+            "Connecting‚Ä?
         case let .degraded(message):
             message.nonEmpty ?? "Gateway disconnected"
         case .disconnected:
@@ -744,7 +744,7 @@ extension MenuSessionsInjector {
     private func compactUsageError(_ error: Error) -> String {
         let message = error.localizedDescription.trimmingCharacters(in: .whitespacesAndNewlines)
         if message.isEmpty { return "Usage unavailable" }
-        if message.count > 90 { return "\(message.prefix(87))‚Ä¶" }
+        if message.count > 90 { return "\(message.prefix(87))‚Ä? }
         return message
     }
 
@@ -774,7 +774,7 @@ extension MenuSessionsInjector {
             width: width,
             maxLines: 3))
 
-        let morePreview = NSMenuItem(title: "More preview‚Ä¶", action: nil, keyEquivalent: "")
+        let morePreview = NSMenuItem(title: "More preview‚Ä?, action: nil, keyEquivalent: "")
         morePreview.submenu = self.buildPreviewSubmenu(sessionKey: row.key, width: width)
         menu.addItem(morePreview)
 
@@ -1029,7 +1029,7 @@ extension MenuSessionsInjector {
         Task { @MainActor in
             guard SessionActions.confirmDestructiveAction(
                 title: "Reset session?",
-                message: "Starts a new session id for ‚Äú\(key)‚Äù.",
+                message: "Starts a new session id for ‚Äú\(key)‚Ä?",
                 action: "Reset")
             else { return }
 
@@ -1067,7 +1067,7 @@ extension MenuSessionsInjector {
         Task { @MainActor in
             guard SessionActions.confirmDestructiveAction(
                 title: "Delete session?",
-                message: "Deletes the ‚Äú\(key)‚Äù entry and archives its transcript.",
+                message: "Deletes the ‚Äú\(key)‚Ä?entry and archives its transcript.",
                 action: "Delete")
             else { return }
 

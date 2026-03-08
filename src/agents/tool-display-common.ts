@@ -642,7 +642,7 @@ function stripShellPreamble(command: string): PreambleResult {
     const head = (first ? rest.slice(0, first.index) : rest).trim();
     // cd/pushd/popd is preamble when followed by && / ; / \n, or when we already
     // stripped at least one preamble segment (handles chained cd's like `cd /tmp && cd /app`).
-    // NOT for || â€” `cd /app || npm install` means npm runs when cd *fails*, so (in /app) is wrong.
+    // NOT for || â€?`cd /app || npm install` means npm runs when cd *fails*, so (in /app) is wrong.
     const isChdir = (first ? !first.isOr : i > 0) && isChdirCommand(head);
     const isPreamble =
       head.startsWith("set ") || head.startsWith("export ") || head.startsWith("unset ") || isChdir;
@@ -925,9 +925,9 @@ function summarizeKnownExec(words: string[]): string {
     return `run ${bin} ${script}`;
   }
 
-  if (bin === "openclaw") {
+  if (bin === "RadioClaw") {
     const sub = firstPositional(words, 1);
-    return sub ? `run openclaw ${sub}` : "run openclaw";
+    return sub ? `run RadioClaw ${sub}` : "run RadioClaw";
   }
 
   const arg = firstPositional(words, 1);
@@ -957,7 +957,7 @@ type ExecSummary = {
 function summarizeExecCommand(command: string): ExecSummary | undefined {
   const { command: cleaned, chdirPath } = stripShellPreamble(command);
   if (!cleaned) {
-    // All segments were preamble (e.g. `cd /tmp && cd /app`) â€” preserve chdirPath for context.
+    // All segments were preamble (e.g. `cd /tmp && cd /app`) â€?preserve chdirPath for context.
     return chdirPath ? { text: "", chdirPath } : undefined;
   }
 
@@ -967,7 +967,7 @@ function summarizeExecCommand(command: string): ExecSummary | undefined {
   }
 
   const summaries = stages.map((stage) => summarizePipeline(stage));
-  const text = summaries.length === 1 ? summaries[0] : summaries.join(" â†’ ");
+  const text = summaries.length === 1 ? summaries[0] : summaries.join(" â†?");
   const allGeneric = summaries.every((s) => isGenericSummary(s));
 
   return { text, chdirPath, allGeneric };
@@ -1008,7 +1008,7 @@ const KNOWN_SUMMARY_PREFIXES = [
   "run build",
   "start app",
   "run lint",
-  "run openclaw",
+  "run RadioClaw",
   "run node script",
   "run node ",
   "run python",
@@ -1074,7 +1074,7 @@ export function resolveExecDetail(args: unknown): string | undefined {
   const compact = compactRawCommand(unwrapped);
 
   // When ALL stages are generic (e.g. "run jj"), use the compact raw command instead.
-  // For mixed stages like "run cargo build â†’ run tests", keep the summary since some parts are useful.
+  // For mixed stages like "run cargo build â†?run tests", keep the summary since some parts are useful.
   if (result?.allGeneric !== false && isGenericSummary(summary)) {
     return cwd ? `${compact} (in ${cwd})` : compact;
   }

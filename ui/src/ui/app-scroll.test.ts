@@ -57,13 +57,13 @@ function createScrollEvent(scrollHeight: number, scrollTop: number, clientHeight
 }
 
 /* ------------------------------------------------------------------ */
-/*  handleChatScroll â€“ threshold tests                                 */
+/*  handleChatScroll â€?threshold tests                                 */
 /* ------------------------------------------------------------------ */
 
 describe("handleChatScroll", () => {
   it("sets chatUserNearBottom=true when within the 450px threshold", () => {
     const { host } = createScrollHost({});
-    // distanceFromBottom = 2000 - 1600 - 400 = 0 â†’ clearly near bottom
+    // distanceFromBottom = 2000 - 1600 - 400 = 0 â†?clearly near bottom
     const event = createScrollEvent(2000, 1600, 400);
     handleChatScroll(host, event);
     expect(host.chatUserNearBottom).toBe(true);
@@ -71,7 +71,7 @@ describe("handleChatScroll", () => {
 
   it("sets chatUserNearBottom=true when distance is just under threshold", () => {
     const { host } = createScrollHost({});
-    // distanceFromBottom = 2000 - 1151 - 400 = 449 â†’ just under threshold
+    // distanceFromBottom = 2000 - 1151 - 400 = 449 â†?just under threshold
     const event = createScrollEvent(2000, 1151, 400);
     handleChatScroll(host, event);
     expect(host.chatUserNearBottom).toBe(true);
@@ -79,7 +79,7 @@ describe("handleChatScroll", () => {
 
   it("sets chatUserNearBottom=false when distance is exactly at threshold", () => {
     const { host } = createScrollHost({});
-    // distanceFromBottom = 2000 - 1150 - 400 = 450 â†’ at threshold (uses strict <)
+    // distanceFromBottom = 2000 - 1150 - 400 = 450 â†?at threshold (uses strict <)
     const event = createScrollEvent(2000, 1150, 400);
     handleChatScroll(host, event);
     expect(host.chatUserNearBottom).toBe(false);
@@ -87,7 +87,7 @@ describe("handleChatScroll", () => {
 
   it("sets chatUserNearBottom=false when scrolled well above threshold", () => {
     const { host } = createScrollHost({});
-    // distanceFromBottom = 2000 - 500 - 400 = 1100 â†’ way above threshold
+    // distanceFromBottom = 2000 - 500 - 400 = 1100 â†?way above threshold
     const event = createScrollEvent(2000, 500, 400);
     handleChatScroll(host, event);
     expect(host.chatUserNearBottom).toBe(false);
@@ -95,8 +95,8 @@ describe("handleChatScroll", () => {
 
   it("sets chatUserNearBottom=false when user scrolled up past one long message (>200px <450px)", () => {
     const { host } = createScrollHost({});
-    // distanceFromBottom = 2000 - 1250 - 400 = 350 â†’ old threshold would say "near", new says "near"
-    // distanceFromBottom = 2000 - 1100 - 400 = 500 â†’ old threshold would say "not near", new also "not near"
+    // distanceFromBottom = 2000 - 1250 - 400 = 350 â†?old threshold would say "near", new says "near"
+    // distanceFromBottom = 2000 - 1100 - 400 = 500 â†?old threshold would say "not near", new also "not near"
     const event = createScrollEvent(2000, 1100, 400);
     handleChatScroll(host, event);
     expect(host.chatUserNearBottom).toBe(false);
@@ -104,7 +104,7 @@ describe("handleChatScroll", () => {
 });
 
 /* ------------------------------------------------------------------ */
-/*  scheduleChatScroll â€“ respects user scroll position                 */
+/*  scheduleChatScroll â€?respects user scroll position                 */
 /* ------------------------------------------------------------------ */
 
 describe("scheduleChatScroll", () => {
@@ -127,7 +127,7 @@ describe("scheduleChatScroll", () => {
       scrollTop: 1600,
       clientHeight: 400,
     });
-    // distanceFromBottom = 2000 - 1600 - 400 = 0 â†’ near bottom
+    // distanceFromBottom = 2000 - 1600 - 400 = 0 â†?near bottom
     host.chatUserNearBottom = true;
 
     scheduleChatScroll(host);
@@ -142,7 +142,7 @@ describe("scheduleChatScroll", () => {
       scrollTop: 500,
       clientHeight: 400,
     });
-    // distanceFromBottom = 2000 - 500 - 400 = 1100 â†’ not near bottom
+    // distanceFromBottom = 2000 - 500 - 400 = 1100 â†?not near bottom
     host.chatUserNearBottom = false;
     const originalScrollTop = container.scrollTop;
 
@@ -158,7 +158,7 @@ describe("scheduleChatScroll", () => {
       scrollTop: 500,
       clientHeight: 400,
     });
-    // User has scrolled up â€” chatUserNearBottom is false
+    // User has scrolled up â€?chatUserNearBottom is false
     host.chatUserNearBottom = false;
     host.chatHasAutoScrolled = true; // Already past initial load
     const originalScrollTop = container.scrollTop;

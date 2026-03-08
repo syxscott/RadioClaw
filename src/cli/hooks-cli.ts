@@ -3,7 +3,7 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import type { Command } from "commander";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { loadConfig, writeConfigFile } from "../config/io.js";
 import {
   buildWorkspaceHookStatus,
@@ -63,7 +63,7 @@ function mergeHookEntries(pluginEntries: HookEntry[], workspaceEntries: HookEntr
   return Array.from(merged.values());
 }
 
-function buildHooksReport(config: OpenClawConfig): HookStatusReport {
+function buildHooksReport(config: RadioClawConfig): HookStatusReport {
   const workspaceDir = resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config));
   const workspaceEntries = loadWorkspaceHookEntries(workspaceDir, { config });
   const pluginReport = buildPluginStatusReport({ config, workspaceDir });
@@ -93,11 +93,11 @@ function resolveHookForToggle(
 }
 
 function buildConfigWithHookEnabled(params: {
-  config: OpenClawConfig;
+  config: RadioClawConfig;
   hookName: string;
   enabled: boolean;
   ensureHooksEnabled?: boolean;
-}): OpenClawConfig {
+}): RadioClawConfig {
   const entries = { ...params.config.hooks?.internal?.entries };
   entries[params.hookName] = { ...entries[params.hookName], enabled: params.enabled };
 
@@ -118,12 +118,12 @@ function buildConfigWithHookEnabled(params: {
 
 function formatHookStatus(hook: HookStatusEntry): string {
   if (hook.eligible) {
-    return theme.success("‚úì ready");
+    return theme.success("‚ú?ready");
   }
   if (hook.disabled) {
-    return theme.warn("‚è∏ disabled");
+    return theme.warn("‚è?disabled");
   }
-  return theme.error("‚úó missing");
+  return theme.error("‚ú?missing");
 }
 
 function formatHookName(hook: HookStatusEntry): string {
@@ -215,7 +215,7 @@ async function readInstalledPackageVersion(dir: string): Promise<string | undefi
 
 type HookInternalEntryLike = Record<string, unknown> & { enabled?: boolean };
 
-function enableInternalHookEntries(config: OpenClawConfig, hookNames: string[]): OpenClawConfig {
+function enableInternalHookEntries(config: RadioClawConfig, hookNames: string[]): RadioClawConfig {
   const entries = { ...config.hooks?.internal?.entries } as Record<string, HookInternalEntryLike>;
 
   for (const hookName of hookNames) {
@@ -267,7 +267,7 @@ export function formatHooksList(report: HookStatusReport, opts: HooksListOptions
 
   if (hooks.length === 0) {
     const message = opts.eligible
-      ? `No eligible hooks found. Run \`${formatCliCommand("openclaw hooks list")}\` to see all hooks.`
+      ? `No eligible hooks found. Run \`${formatCliCommand("RadioClaw hooks list")}\` to see all hooks.`
       : "No hooks found.";
     return message;
   }
@@ -323,7 +323,7 @@ export function formatHookInfo(
     if (opts.json) {
       return JSON.stringify({ error: "not found", hook: hookName }, null, 2);
     }
-    return `Hook "${hookName}" not found. Run \`${formatCliCommand("openclaw hooks list")}\` to see available hooks.`;
+    return `Hook "${hookName}" not found. Run \`${formatCliCommand("RadioClaw hooks list")}\` to see available hooks.`;
   }
 
   if (opts.json) {
@@ -333,10 +333,10 @@ export function formatHookInfo(
   const lines: string[] = [];
   const emoji = hook.emoji ?? "üîó";
   const status = hook.eligible
-    ? theme.success("‚úì Ready")
+    ? theme.success("‚ú?Ready")
     : hook.disabled
-      ? theme.warn("‚è∏ Disabled")
-      : theme.error("‚úó Missing requirements");
+      ? theme.warn("‚è?Disabled")
+      : theme.error("‚ú?Missing requirements");
 
   lines.push(`${emoji} ${theme.heading(hook.name)} ${status}`);
   lines.push("");
@@ -376,35 +376,35 @@ export function formatHookInfo(
     if (hook.requirements.bins.length > 0) {
       const binsStatus = hook.requirements.bins.map((bin) => {
         const missing = hook.missing.bins.includes(bin);
-        return missing ? theme.error(`‚úó ${bin}`) : theme.success(`‚úì ${bin}`);
+        return missing ? theme.error(`‚ú?${bin}`) : theme.success(`‚ú?${bin}`);
       });
       lines.push(`${theme.muted("  Binaries:")} ${binsStatus.join(", ")}`);
     }
     if (hook.requirements.anyBins.length > 0) {
       const anyBinsStatus =
         hook.missing.anyBins.length > 0
-          ? theme.error(`‚úó (any of: ${hook.requirements.anyBins.join(", ")})`)
-          : theme.success(`‚úì (any of: ${hook.requirements.anyBins.join(", ")})`);
+          ? theme.error(`‚ú?(any of: ${hook.requirements.anyBins.join(", ")})`)
+          : theme.success(`‚ú?(any of: ${hook.requirements.anyBins.join(", ")})`);
       lines.push(`${theme.muted("  Any binary:")} ${anyBinsStatus}`);
     }
     if (hook.requirements.env.length > 0) {
       const envStatus = hook.requirements.env.map((env) => {
         const missing = hook.missing.env.includes(env);
-        return missing ? theme.error(`‚úó ${env}`) : theme.success(`‚úì ${env}`);
+        return missing ? theme.error(`‚ú?${env}`) : theme.success(`‚ú?${env}`);
       });
       lines.push(`${theme.muted("  Environment:")} ${envStatus.join(", ")}`);
     }
     if (hook.requirements.config.length > 0) {
       const configStatus = hook.configChecks.map((check) => {
-        return check.satisfied ? theme.success(`‚úì ${check.path}`) : theme.error(`‚úó ${check.path}`);
+        return check.satisfied ? theme.success(`‚ú?${check.path}`) : theme.error(`‚ú?${check.path}`);
       });
       lines.push(`${theme.muted("  Config:")} ${configStatus.join(", ")}`);
     }
     if (hook.requirements.os.length > 0) {
       const osStatus =
         hook.missing.os.length > 0
-          ? theme.error(`‚úó (${hook.requirements.os.join(", ")})`)
-          : theme.success(`‚úì (${hook.requirements.os.join(", ")})`);
+          ? theme.error(`‚ú?(${hook.requirements.os.join(", ")})`)
+          : theme.success(`‚ú?(${hook.requirements.os.join(", ")})`);
       lines.push(`${theme.muted("  OS:")} ${osStatus}`);
     }
   }
@@ -489,7 +489,7 @@ export async function enableHook(hookName: string): Promise<void> {
 
   await writeConfigFile(nextConfig);
   defaultRuntime.log(
-    `${theme.success("‚úì")} Enabled hook: ${hook.emoji ?? "üîó"} ${theme.command(hookName)}`,
+    `${theme.success("‚ú?)} Enabled hook: ${hook.emoji ?? "üîó"} ${theme.command(hookName)}`,
   );
 }
 
@@ -500,7 +500,7 @@ export async function disableHook(hookName: string): Promise<void> {
 
   await writeConfigFile(nextConfig);
   defaultRuntime.log(
-    `${theme.warn("‚è∏")} Disabled hook: ${hook.emoji ?? "üîó"} ${theme.command(hookName)}`,
+    `${theme.warn("‚è?)} Disabled hook: ${hook.emoji ?? "üîó"} ${theme.command(hookName)}`,
   );
 }
 
@@ -511,7 +511,7 @@ export function registerHooksCli(program: Command): void {
     .addHelpText(
       "after",
       () =>
-        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/hooks", "docs.openclaw.ai/cli/hooks")}\n`,
+        `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/hooks", "docs.RadioClaw.ai/cli/hooks")}\n`,
     );
 
   hooks
@@ -596,7 +596,7 @@ export function registerHooksCli(program: Command): void {
             process.exit(1);
           }
 
-          let next: OpenClawConfig = {
+          let next: RadioClawConfig = {
             ...cfg,
             hooks: {
               ...cfg.hooks,
@@ -762,7 +762,7 @@ export function registerHooksCli(program: Command): void {
           if (currentVersion && probe.version && currentVersion === probe.version) {
             defaultRuntime.log(`${hookId} is up to date (${currentLabel}).`);
           } else {
-            defaultRuntime.log(`Would update ${hookId}: ${currentLabel} ‚Üí ${nextVersion}.`);
+            defaultRuntime.log(`Would update ${hookId}: ${currentLabel} ‚Ü?${nextVersion}.`);
           }
           continue;
         }
@@ -801,7 +801,7 @@ export function registerHooksCli(program: Command): void {
         if (currentVersion && nextVersion && currentVersion === nextVersion) {
           defaultRuntime.log(`${hookId} already at ${currentLabel}.`);
         } else {
-          defaultRuntime.log(`Updated ${hookId}: ${currentLabel} ‚Üí ${nextLabel}.`);
+          defaultRuntime.log(`Updated ${hookId}: ${currentLabel} ‚Ü?${nextLabel}.`);
         }
       }
 

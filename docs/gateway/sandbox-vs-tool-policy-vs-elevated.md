@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-OpenClaw has three related (but different) controls:
+RadioClaw has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ OpenClaw has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what OpenClaw is _actually_ doing:
+Use the inspector to see what RadioClaw is _actually_ doing:
 
 ```bash
-openclaw sandbox explain
-openclaw sandbox explain --session agent:main:main
-openclaw sandbox explain --agent work
-openclaw sandbox explain --json
+RadioClaw sandbox explain
+RadioClaw sandbox explain --session agent:main:main
+RadioClaw sandbox explain --agent work
+RadioClaw sandbox explain --json
 ```
 
 It prints:
@@ -36,7 +36,7 @@ It prints:
 Sandboxing is controlled by `agents.defaults.sandbox.mode`:
 
 - `"off"`: everything runs on the host.
-- `"non-main"`: only non-main sessions are sandboxed (common “surprise” for groups/channels).
+- `"non-main"`: only non-main sessions are sandboxed (common “surprise�?for groups/channels).
 - `"all"`: everything is sandboxed.
 
 See [Sandboxing](/gateway/sandboxing) for the full matrix (scope, workspace mounts, images).
@@ -93,10 +93,9 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:openclaw`: all built-in OpenClaw tools (excludes provider plugins)
+- `group:RadioClaw`: all built-in RadioClaw tools (excludes provider plugins)
 
-## Elevated: exec-only “run on host”
-
+## Elevated: exec-only “run on host�?
 Elevated does **not** grant extra tools; it only affects `exec`.
 
 - If you’re sandboxed, `/elevated on` (or `exec` with `elevated: true`) runs on the host (approvals may still apply).
@@ -112,10 +111,9 @@ Gates:
 
 See [Elevated Mode](/tools/elevated).
 
-## Common “sandbox jail” fixes
+## Common “sandbox jail�?fixes
 
-### “Tool X blocked by sandbox tool policy”
-
+### “Tool X blocked by sandbox tool policy�?
 Fix-it keys (pick one):
 
 - Disable sandbox: `agents.defaults.sandbox.mode=off` (or per-agent `agents.list[].sandbox.mode=off`)
@@ -123,6 +121,5 @@ Fix-it keys (pick one):
   - remove it from `tools.sandbox.tools.deny` (or per-agent `agents.list[].tools.sandbox.tools.deny`)
   - or add it to `tools.sandbox.tools.allow` (or per-agent allow)
 
-### “I thought this was main, why is it sandboxed?”
-
+### “I thought this was main, why is it sandboxed?�?
 In `"non-main"` mode, group/channel keys are _not_ main. Use the main session key (shown by `sandbox explain`) or switch mode to `"off"`.

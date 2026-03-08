@@ -4,13 +4,13 @@ import {
   normalizeEnvVarKey,
 } from "../infra/host-env-security.js";
 import { containsEnvVarReference } from "./env-substitution.js";
-import type { OpenClawConfig } from "./types.js";
+import type { RadioClawConfig } from "./types.js";
 
 function isBlockedConfigEnvVar(key: string): boolean {
   return isDangerousHostEnvVarName(key) || isDangerousHostEnvOverrideVarName(key);
 }
 
-function collectConfigEnvVarsByTarget(cfg?: OpenClawConfig): Record<string, string> {
+function collectConfigEnvVarsByTarget(cfg?: RadioClawConfig): Record<string, string> {
   const envConfig = cfg?.env;
   if (!envConfig) {
     return {};
@@ -54,21 +54,21 @@ function collectConfigEnvVarsByTarget(cfg?: OpenClawConfig): Record<string, stri
   return entries;
 }
 
-export function collectConfigRuntimeEnvVars(cfg?: OpenClawConfig): Record<string, string> {
+export function collectConfigRuntimeEnvVars(cfg?: RadioClawConfig): Record<string, string> {
   return collectConfigEnvVarsByTarget(cfg);
 }
 
-export function collectConfigServiceEnvVars(cfg?: OpenClawConfig): Record<string, string> {
+export function collectConfigServiceEnvVars(cfg?: RadioClawConfig): Record<string, string> {
   return collectConfigEnvVarsByTarget(cfg);
 }
 
 /** @deprecated Use `collectConfigRuntimeEnvVars` or `collectConfigServiceEnvVars`. */
-export function collectConfigEnvVars(cfg?: OpenClawConfig): Record<string, string> {
+export function collectConfigEnvVars(cfg?: RadioClawConfig): Record<string, string> {
   return collectConfigRuntimeEnvVars(cfg);
 }
 
 export function applyConfigEnvVars(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   env: NodeJS.ProcessEnv = process.env,
 ): void {
   const entries = collectConfigRuntimeEnvVars(cfg);
@@ -76,9 +76,9 @@ export function applyConfigEnvVars(
     if (env[key]?.trim()) {
       continue;
     }
-    // Skip values containing unresolved ${VAR} references â€” applyConfigEnvVars runs
+    // Skip values containing unresolved ${VAR} references â€?applyConfigEnvVars runs
     // before env substitution, so these would pollute process.env with literal placeholders
-    // (e.g. process.env.OPENCLAW_GATEWAY_TOKEN = "${VAULT_TOKEN}") which downstream auth
+    // (e.g. process.env.RadioClaw_GATEWAY_TOKEN = "${VAULT_TOKEN}") which downstream auth
     // resolution would accept as valid credentials.
     if (containsEnvVarReference(value)) {
       continue;

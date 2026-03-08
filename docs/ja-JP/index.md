@@ -1,8 +1,6 @@
 ---
 read_when:
-  - 新規ユーザーにOpenClawを紹介するとき
-summary: OpenClawは、あらゆるOSで動作するAIエージェント向けのマルチチャネルgatewayです。
-title: OpenClaw
+  - 新規ユーザーにOpenClawを紹介すると�?summary: RadioClawは、あらゆるOSで動作するAIエージェント向けのマルチチャネルgatewayです�?title: RadioClaw
 x-i18n:
   generated_at: "2026-02-08T17:15:47Z"
   model: claude-opus-4-5
@@ -12,122 +10,103 @@ x-i18n:
   workflow: 15
 ---
 
-# OpenClaw 🦞
+# RadioClaw 🦞
 
 <p align="center">
     <img
-        src="/assets/openclaw-logo-text-dark.png"
-        alt="OpenClaw"
+        src="/assets/RadioClaw-logo-text-dark.png"
+        alt="RadioClaw"
         width="500"
         class="dark:hidden"
     />
     <img
-        src="/assets/openclaw-logo-text.png"
-        alt="OpenClaw"
+        src="/assets/RadioClaw-logo-text.png"
+        alt="RadioClaw"
         width="500"
         class="hidden dark:block"
     />
 </p>
 
-> _「EXFOLIATE! EXFOLIATE!」_ — たぶん宇宙ロブスター
+> _「EXFOLIATE! EXFOLIATE!」_ �?たぶん宇宙ロブスター
 
 <p align="center">
-  <strong>WhatsApp、Telegram、Discord、iMessageなどに対応した、あらゆるOS向けのAIエージェントgateway。</strong><br />
-  メッセージを送信すれば、ポケットからエージェントの応答を受け取れます。プラグインでMattermostなどを追加できます。
-</p>
+  <strong>WhatsApp、Telegram、Discord、iMessageなどに対応した、あらゆるOS向けのAIエージェントgateway�?/strong><br />
+  メッセージを送信すれば、ポケットからエージェントの応答を受け取れます。プラグインでMattermostなどを追加できます�?</p>
 
 <Columns>
   <Card title="はじめに" href="/start/getting-started" icon="rocket">
-    OpenClawをインストールし、数分でGatewayを起動できます。
-  </Card>
+    RadioClawをインストールし、数分でGatewayを起動できます�?  </Card>
   <Card title="ウィザードを実行" href="/start/wizard" icon="sparkles">
-    `openclaw onboard`とペアリングフローによるガイド付きセットアップ。
-  </Card>
-  <Card title="Control UIを開く" href="/web/control-ui" icon="layout-dashboard">
-    チャット、設定、セッション用のブラウザダッシュボードを起動します。
-  </Card>
+    `RadioClaw onboard`とペアリングフローによるガイド付きセットアップ�?  </Card>
+  <Card title="Control UIを開�? href="/web/control-ui" icon="layout-dashboard">
+    チャット、設定、セッション用のブラウザダッシュボードを起動します�?  </Card>
 </Columns>
 
-OpenClawは、単一のGatewayプロセスを通じてチャットアプリをPiのようなコーディングエージェントに接続します。OpenClawアシスタントを駆動し、ローカルまたはリモートのセットアップをサポートします。
-
-## 仕組み
-
+RadioClawは、単一のGatewayプロセスを通じてチャットアプリをPiのようなコーディングエージェントに接続します。OpenClawアシスタントを駆動し、ローカルまたはリモートのセットアップをサポートします�?
+## 仕組�?
 ```mermaid
 flowchart LR
-  A["チャットアプリ + プラグイン"] --> B["Gateway"]
+  A["チャットアプ�?+ プラグイ�?] --> B["Gateway"]
   B --> C["Piエージェント"]
   B --> D["CLI"]
   B --> E["Web Control UI"]
-  B --> F["macOSアプリ"]
-  B --> G["iOSおよびAndroidノード"]
+  B --> F["macOSアプ�?]
+  B --> G["iOSおよびAndroidノー�?]
 ```
 
-Gatewayは、セッション、ルーティング、チャネル接続の信頼できる唯一の情報源です。
-
+Gatewayは、セッション、ルーティング、チャネル接続の信頼できる唯一の情報源です�?
 ## 主な機能
 
 <Columns>
   <Card title="マルチチャネルgateway" icon="network">
-    単一のGatewayプロセスでWhatsApp、Telegram、Discord、iMessageに対応。
-  </Card>
-  <Card title="プラグインチャネル" icon="plug">
-    拡張パッケージでMattermostなどを追加。
-  </Card>
-  <Card title="マルチエージェントルーティング" icon="route">
-    エージェント、ワークスペース、送信者ごとに分離されたセッション。
-  </Card>
+    単一のGatewayプロセスでWhatsApp、Telegram、Discord、iMessageに対応�?  </Card>
+  <Card title="プラグインチャネ�? icon="plug">
+    拡張パッケージでMattermostなどを追加�?  </Card>
+  <Card title="マルチエージェントルーティン�? icon="route">
+    エージェント、ワークスペース、送信者ごとに分離されたセッション�?  </Card>
   <Card title="メディアサポート" icon="image">
-    画像、音声、ドキュメントの送受信。
-  </Card>
+    画像、音声、ドキュメントの送受信�?  </Card>
   <Card title="Web Control UI" icon="monitor">
-    チャット、設定、セッション、ノード用のブラウザダッシュボード。
-  </Card>
-  <Card title="モバイルノード" icon="smartphone">
-    Canvas対応のiOSおよびAndroidノードをペアリング。
-  </Card>
+    チャット、設定、セッション、ノード用のブラウザダッシュボード�?  </Card>
+  <Card title="モバイルノー�? icon="smartphone">
+    Canvas対応のiOSおよびAndroidノードをペアリング�?  </Card>
 </Columns>
 
 ## クイックスタート
 
 <Steps>
-  <Step title="OpenClawをインストール">
+  <Step title="RadioClawをインストー�?>
     ```bash
-    npm install -g openclaw@latest
+    npm install -g RadioClaw@latest
     ```
   </Step>
   <Step title="オンボーディングとサービスのインストール">
     ```bash
-    openclaw onboard --install-daemon
+    RadioClaw onboard --install-daemon
     ```
   </Step>
-  <Step title="WhatsAppをペアリングしてGatewayを起動">
+  <Step title="WhatsAppをペアリングしてGatewayを起�?>
     ```bash
-    openclaw channels login
-    openclaw gateway --port 18789
+    RadioClaw channels login
+    RadioClaw gateway --port 18789
     ```
   </Step>
 </Steps>
 
-完全なインストールと開発セットアップが必要ですか？[クイックスタート](/start/quickstart)をご覧ください。
-
+完全なインストールと開発セットアップが必要ですか？[クイックスタート](/start/quickstart)をご覧ください�?
 ## ダッシュボード
 
-Gatewayの起動後、ブラウザでControl UIを開きます。
-
-- ローカルデフォルト: [http://127.0.0.1:18789/](http://127.0.0.1:18789/)
+Gatewayの起動後、ブラウザでControl UIを開きます�?
+- ローカルデフォル�? [http://127.0.0.1:18789/](http://127.0.0.1:18789/)
 - リモートアクセス: [Webサーフェス](/web)および[Tailscale](/gateway/tailscale)
 
 <p align="center">
-  <img src="/whatsapp-openclaw.jpg" alt="OpenClaw" width="420" />
+  <img src="/whatsapp-RadioClaw.jpg" alt="RadioClaw" width="420" />
 </p>
 
-## 設定（オプション）
-
-設定は`~/.openclaw/openclaw.json`にあります。
-
-- **何もしなければ**、OpenClawはバンドルされたPiバイナリをRPCモードで使用し、送信者ごとのセッションを作成します。
-- 制限を設けたい場合は、`channels.whatsapp.allowFrom`と（グループの場合）メンションルールから始めてください。
-
+## 設定（オプション�?
+設定は`~/.RadioClaw/RadioClaw.json`にあります�?
+- **何もしなけれ�?*、OpenClawはバンドルされたPiバイナリをRPCモードで使用し、送信者ごとのセッションを作成します�?- 制限を設けたい場合は、`channels.whatsapp.allowFrom`と（グループの場合）メンションルールから始めてください�?
 例：
 
 ```json5
@@ -138,49 +117,37 @@ Gatewayの起動後、ブラウザでControl UIを開きます。
       groups: { "*": { requireMention: true } },
     },
   },
-  messages: { groupChat: { mentionPatterns: ["@openclaw"] } },
+  messages: { groupChat: { mentionPatterns: ["@RadioClaw"] } },
 }
 ```
 
-## ここから始める
-
+## ここから始め�?
 <Columns>
   <Card title="ドキュメントハブ" href="/start/hubs" icon="book-open">
-    ユースケース別に整理されたすべてのドキュメントとガイド。
-  </Card>
+    ユースケース別に整理されたすべてのドキュメントとガイド�?  </Card>
   <Card title="設定" href="/gateway/configuration" icon="settings">
-    Gatewayのコア設定、トークン、プロバイダー設定。
-  </Card>
+    Gatewayのコア設定、トークン、プロバイダー設定�?  </Card>
   <Card title="リモートアクセス" href="/gateway/remote" icon="globe">
-    SSHおよびtailnetアクセスパターン。
-  </Card>
+    SSHおよびtailnetアクセスパターン�?  </Card>
   <Card title="チャネル" href="/channels/telegram" icon="message-square">
-    WhatsApp、Telegram、Discordなどのチャネル固有のセットアップ。
-  </Card>
-  <Card title="ノード" href="/nodes" icon="smartphone">
-    ペアリングとCanvas対応のiOSおよびAndroidノード。
-  </Card>
-  <Card title="ヘルプ" href="/help" icon="life-buoy">
-    一般的な修正とトラブルシューティングのエントリーポイント。
-  </Card>
+    WhatsApp、Telegram、Discordなどのチャネル固有のセットアップ�?  </Card>
+  <Card title="ノー�? href="/nodes" icon="smartphone">
+    ペアリングとCanvas対応のiOSおよびAndroidノード�?  </Card>
+  <Card title="ヘル�? href="/help" icon="life-buoy">
+    一般的な修正とトラブルシューティングのエントリーポイント�?  </Card>
 </Columns>
 
 ## 詳細
 
 <Columns>
   <Card title="全機能リスト" href="/concepts/features" icon="list">
-    チャネル、ルーティング、メディア機能の完全な一覧。
-  </Card>
-  <Card title="マルチエージェントルーティング" href="/concepts/multi-agent" icon="route">
-    ワークスペースの分離とエージェントごとのセッション。
-  </Card>
+    チャネル、ルーティング、メディア機能の完全な一覧�?  </Card>
+  <Card title="マルチエージェントルーティン�? href="/concepts/multi-agent" icon="route">
+    ワークスペースの分離とエージェントごとのセッション�?  </Card>
   <Card title="セキュリティ" href="/gateway/security" icon="shield">
-    トークン、許可リスト、安全制御。
-  </Card>
-  <Card title="トラブルシューティング" href="/gateway/troubleshooting" icon="wrench">
-    Gatewayの診断と一般的なエラー。
-  </Card>
+    トークン、許可リスト、安全制御�?  </Card>
+  <Card title="トラブルシューティン�? href="/gateway/troubleshooting" icon="wrench">
+    Gatewayの診断と一般的なエラー�?  </Card>
   <Card title="概要とクレジット" href="/reference/credits" icon="info">
-    プロジェクトの起源、貢献者、ライセンス。
-  </Card>
+    プロジェクトの起源、貢献者、ライセンス�?  </Card>
 </Columns>

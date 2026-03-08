@@ -10,16 +10,16 @@ title: "Logging"
 
 For a user-facing overview (CLI + Control UI + config), see [/logging](/logging).
 
-OpenClaw has two log “surfaces”:
+RadioClaw has two log “surfaces�?
 
 - **Console output** (what you see in the terminal / Debug UI).
 - **File logs** (JSON lines) written by the gateway logger.
 
 ## File-based logger
 
-- Default rolling log file is under `/tmp/openclaw/` (one file per day): `openclaw-YYYY-MM-DD.log`
+- Default rolling log file is under `/tmp/RadioClaw/` (one file per day): `RadioClaw-YYYY-MM-DD.log`
   - Date uses the gateway host's local timezone.
-- The log file path and level can be configured via `~/.openclaw/openclaw.json`:
+- The log file path and level can be configured via `~/.RadioClaw/RadioClaw.json`:
   - `logging.file`
   - `logging.level`
 
@@ -29,7 +29,7 @@ The Control UI Logs tab tails this file via the gateway (`logs.tail`).
 CLI can do the same:
 
 ```bash
-openclaw logs --follow
+RadioClaw logs --follow
 ```
 
 **Verbose vs. log levels**
@@ -52,7 +52,7 @@ You can tune console verbosity independently via:
 
 ## Tool summary redaction
 
-Verbose tool summaries (e.g. `🛠️ Exec: ...`) can mask sensitive tokens before they hit the
+Verbose tool summaries (e.g. `🛠�?Exec: ...`) can mask sensitive tokens before they hit the
 console stream. This is **tools-only** and does not alter file logs.
 
 - `logging.redactSensitive`: `off` | `tools` (default: `tools`)
@@ -65,7 +65,7 @@ console stream. This is **tools-only** and does not alter file logs.
 
 The gateway prints WebSocket protocol logs in two modes:
 
-- **Normal mode (no `--verbose`)**: only “interesting” RPC results are printed:
+- **Normal mode (no `--verbose`)**: only “interesting�?RPC results are printed:
   - errors (`ok=false`)
   - slow calls (default threshold: `>= 50ms`)
   - parse errors
@@ -73,7 +73,7 @@ The gateway prints WebSocket protocol logs in two modes:
 
 ### WS log style
 
-`openclaw gateway` supports a per-gateway style switch:
+`RadioClaw gateway` supports a per-gateway style switch:
 
 - `--ws-log auto` (default): normal mode is optimized; verbose mode uses compact output
 - `--ws-log compact`: compact output (paired request/response) when verbose
@@ -84,13 +84,13 @@ Examples:
 
 ```bash
 # optimized (only errors/slow)
-openclaw gateway
+RadioClaw gateway
 
 # show all WS traffic (paired)
-openclaw gateway --verbose --ws-log compact
+RadioClaw gateway --verbose --ws-log compact
 
 # show all WS traffic (full meta)
-openclaw gateway --verbose --ws-log full
+RadioClaw gateway --verbose --ws-log full
 ```
 
 ## Console formatting (subsystem logging)

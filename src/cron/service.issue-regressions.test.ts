@@ -539,7 +539,7 @@ describe("Cron issue regressions", () => {
       schedule: { kind: "at", at: new Date(pastAt).toISOString() },
       sessionTarget: "main",
       wakeMode: "now",
-      payload: { kind: "systemEvent", text: "‚è∞ Reminder" },
+      payload: { kind: "systemEvent", text: "‚è?Reminder" },
     } as const;
     const terminalStates: Array<{ id: string; state: CronJobState }> = [
       {
@@ -864,14 +864,14 @@ describe("Cron issue regressions", () => {
       enqueueSystemEvent: vi.fn(),
       requestHeartbeatNow: vi.fn(),
       runIsolatedAgentJob: vi.fn(async () => {
-        // Job completes very quickly (7ms) ‚Äî still within the same second
+        // Job completes very quickly (7ms) ‚Ä?still within the same second
         now += 7;
         fireCount++;
         return { status: "ok" as const, summary: "done" };
       }),
     });
 
-    // First timer tick ‚Äî should fire the job exactly once
+    // First timer tick ‚Ä?should fire the job exactly once
     await onTimer(state);
 
     expect(fireCount).toBe(1);
@@ -882,7 +882,7 @@ describe("Cron issue regressions", () => {
     expect(job!.state.nextRunAtMs).toBeDefined();
     expect(job!.state.nextRunAtMs).toBeGreaterThanOrEqual(nextDay);
 
-    // Second timer tick (simulating the timer re-arm) ‚Äî should NOT fire again
+    // Second timer tick (simulating the timer re-arm) ‚Ä?should NOT fire again
     await onTimer(state);
     expect(fireCount).toBe(1);
   });
@@ -1216,7 +1216,7 @@ describe("Cron issue regressions", () => {
     };
     const state = createCronServiceState({
       cronEnabled: true,
-      storePath: "/tmp/openclaw-cron-abort-test/jobs.json",
+      storePath: "/tmp/RadioClaw-cron-abort-test/jobs.json",
       log: noopLogger,
       nowMs: () => Date.now(),
       enqueueSystemEvent,

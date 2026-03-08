@@ -1,8 +1,7 @@
 ---
 read_when: Browser control fails on Linux, especially with snap Chromium
-summary: 修复 Linux 上 OpenClaw 浏览器控制的 Chrome/Brave/Edge/Chromium CDP 启动问题
-title: 浏览器故障排除
-x-i18n:
+summary: 修复 Linux �?RadioClaw 浏览器控制的 Chrome/Brave/Edge/Chromium CDP 启动问题
+title: 浏览器故障排�?x-i18n:
   generated_at: "2026-02-03T07:55:07Z"
   model: claude-opus-4-5
   provider: pi
@@ -11,40 +10,35 @@ x-i18n:
   workflow: 15
 ---
 
-# 浏览器故障排除（Linux）
+# 浏览器故障排除（Linux�?
+## 问题�?Failed to start Chrome CDP on port 18800"
 
-## 问题："Failed to start Chrome CDP on port 18800"
-
-OpenClaw 的浏览器控制服务器无法启动 Chrome/Brave/Edge/Chromium，出现以下错误：
+RadioClaw 的浏览器控制服务器无法启�?Chrome/Brave/Edge/Chromium，出现以下错误：
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"openclaw\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"RadioClaw\"."}
 ```
 
 ### 根本原因
 
-在 Ubuntu（和许多 Linux 发行版）上，默认的 Chromium 安装是 **snap 包**。Snap 的 AppArmor 限制会干扰 OpenClaw 启动和监控浏览器进程的方式。
-
-`apt install chromium` 命令安装的是一个重定向到 snap 的存根包：
-
+�?Ubuntu（和许多 Linux 发行版）上，默认�?Chromium 安装�?**snap �?*。Snap �?AppArmor 限制会干�?RadioClaw 启动和监控浏览器进程的方式�?
+`apt install chromium` 命令安装的是一个重定向�?snap 的存根包�?
 ```
 Note, selecting 'chromium-browser' instead of 'chromium'
 chromium-browser is already the newest version (2:1snap1-0ubuntu2).
 ```
 
-这不是真正的浏览器——它只是一个包装器。
+这不是真正的浏览器——它只是一个包装器�?
+### 解决方案 1：安�?Google Chrome（推荐）
 
-### 解决方案 1：安装 Google Chrome（推荐）
-
-安装官方 Google Chrome `.deb` 包，它不受 snap 沙箱限制：
-
+安装官方 Google Chrome `.deb` 包，它不�?snap 沙箱限制�?
 ```bash
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-然后更新你的 OpenClaw 配置（`~/.openclaw/openclaw.json`）：
+然后更新你的 RadioClaw 配置（`~/.RadioClaw/RadioClaw.json`）：
 
 ```json
 {
@@ -57,12 +51,11 @@ sudo apt --fix-broken install -y  # if there are dependency errors
 }
 ```
 
-### 解决方案 2：使用 Snap Chromium 的仅附加模式
+### 解决方案 2：使�?Snap Chromium 的仅附加模式
 
-如果你必须使用 snap Chromium，配置 OpenClaw 附加到手动启动的浏览器：
+如果你必须使�?snap Chromium，配�?RadioClaw 附加到手动启动的浏览器：
 
-1. 更新配置：
-
+1. 更新配置�?
 ```json
 {
   "browser": {
@@ -74,25 +67,23 @@ sudo apt --fix-broken install -y  # if there are dependency errors
 }
 ```
 
-2. 手动启动 Chromium：
-
+2. 手动启动 Chromium�?
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.openclaw/browser/openclaw/user-data \
+  --user-data-dir=$HOME/.RadioClaw/browser/RadioClaw/user-data \
   about:blank &
 ```
 
-3. 可选创建 systemd 用户服务以自动启动 Chrome：
-
+3. 可选创�?systemd 用户服务以自动启�?Chrome�?
 ```ini
-# ~/.config/systemd/user/openclaw-browser.service
+# ~/.config/systemd/user/RadioClaw-browser.service
 [Unit]
-Description=OpenClaw Browser (Chrome CDP)
+Description=RadioClaw Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.openclaw/browser/openclaw/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.RadioClaw/browser/RadioClaw/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -100,45 +91,36 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-启用：`systemctl --user enable --now openclaw-browser.service`
+启用：`systemctl --user enable --now RadioClaw-browser.service`
 
-### 验证浏览器是否工作
-
+### 验证浏览器是否工�?
 检查状态：
 
 ```bash
 curl -s http://127.0.0.1:18791/ | jq '{running, pid, chosenBrowser}'
 ```
 
-测试浏览：
-
+测试浏览�?
 ```bash
 curl -s -X POST http://127.0.0.1:18791/start
 curl -s http://127.0.0.1:18791/tabs
 ```
 
-### 配置参考
-
-| 选项                     | 描述                                                          | 默认值                                           |
+### 配置参�?
+| 选项                     | 描述                                                          | 默认�?                                          |
 | ------------------------ | ------------------------------------------------------------- | ------------------------------------------------ |
-| `browser.enabled`        | 启用浏览器控制                                                | `true`                                           |
-| `browser.executablePath` | Chromium 系浏览器二进制文件路径（Chrome/Brave/Edge/Chromium） | 自动检测（当默认浏览器是 Chromium 系时优先使用） |
-| `browser.headless`       | 无 GUI 运行                                                   | `false`                                          |
-| `browser.noSandbox`      | 添加 `--no-sandbox` 标志（某些 Linux 设置需要）               | `false`                                          |
+| `browser.enabled`        | 启用浏览器控�?                                               | `true`                                           |
+| `browser.executablePath` | Chromium 系浏览器二进制文件路径（Chrome/Brave/Edge/Chromium�?| 自动检测（当默认浏览器�?Chromium 系时优先使用�?|
+| `browser.headless`       | �?GUI 运行                                                   | `false`                                          |
+| `browser.noSandbox`      | 添加 `--no-sandbox` 标志（某�?Linux 设置需要）               | `false`                                          |
 | `browser.attachOnly`     | 不启动浏览器，仅附加到现有浏览器                              | `false`                                          |
 | `browser.cdpPort`        | Chrome DevTools Protocol 端口                                 | `18800`                                          |
 
-### 问题："Chrome extension relay is running, but no tab is connected"
+### 问题�?Chrome extension relay is running, but no tab is connected"
 
-你正在使用 `chrome` 配置文件（扩展中继）。它期望 OpenClaw 浏览器扩展附加到一个活动标签页。
-
-修复选项：
-
-1. **使用托管浏览器：** `openclaw browser start --browser-profile openclaw`
-   （或设置 `browser.defaultProfile: "openclaw"`）。
-2. **使用扩展中继：** 安装扩展，打开一个标签页，然后点击 OpenClaw 扩展图标来附加它。
-
-注意事项：
-
-- `chrome` 配置文件在可能时使用你的**系统默认 Chromium 浏览器**。
-- 本地 `openclaw` 配置文件自动分配 `cdpPort`/`cdpUrl`；仅为远程 CDP 设置这些。
+你正在使�?`chrome` 配置文件（扩展中继）。它期望 RadioClaw 浏览器扩展附加到一个活动标签页�?
+修复选项�?
+1. **使用托管浏览器：** `RadioClaw browser start --browser-profile RadioClaw`
+   （或设置 `browser.defaultProfile: "RadioClaw"`）�?2. **使用扩展中继�?* 安装扩展，打开一个标签页，然后点�?RadioClaw 扩展图标来附加它�?
+注意事项�?
+- `chrome` 配置文件在可能时使用你的**系统默认 Chromium 浏览�?*�?- 本地 `RadioClaw` 配置文件自动分配 `cdpPort`/`cdpUrl`；仅为远�?CDP 设置这些�?

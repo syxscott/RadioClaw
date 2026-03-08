@@ -7,7 +7,7 @@ import { resolveImplicitProviders } from "./models-config.providers.js";
 
 describe("minimax provider catalog", () => {
   it("does not advertise the removed lightning model for api-key or oauth providers", async () => {
-    const agentDir = mkdtempSync(join(tmpdir(), "openclaw-test-"));
+    const agentDir = mkdtempSync(join(tmpdir(), "RadioClaw-test-"));
     await writeFile(
       join(agentDir, "auth-profiles.json"),
       JSON.stringify(

@@ -239,7 +239,7 @@ export async function main() {
 
   console.log(`Cron usage report`);
   console.log(`  runsDir: ${runsDir}`);
-  console.log(`  window: ${new Date(fromMs).toISOString()} â†’ ${new Date(toMs).toISOString()}`);
+  console.log(`  window: ${new Date(fromMs).toISOString()} â†?${new Date(toMs).toISOString()}`);
   if (filterJobId) {
     console.log(`  filter jobId: ${filterJobId}`);
   }

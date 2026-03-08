@@ -4,7 +4,7 @@ import Foundation
 import Observation
 import SwiftUI
 
-/// Menu contents for the OpenClaw menu bar extra.
+/// Menu contents for the RadioClaw menu bar extra.
 struct MenuContent: View {
     @Bindable var state: AppState
     let updater: UpdaterProviding?
@@ -146,10 +146,10 @@ struct MenuContent: View {
             .disabled(!voiceWakeSupported)
             .opacity(voiceWakeSupported ? 1 : 0.5)
             Divider()
-            Button("Settingsâ€¦") { self.open(tab: .general) }
+            Button("Settingsâ€?) { self.open(tab: .general) }
                 .keyboardShortcut(",", modifiers: [.command])
             self.debugMenu
-            Button("About OpenClaw") { self.open(tab: .about) }
+            Button("About RadioClaw") { self.open(tab: .about) }
             if let updater, updater.isAvailable, self.updateStatus.isUpdateReady {
                 Button("Update ready, restart now?") { updater.checkForUpdates(nil) }
             }
@@ -189,11 +189,11 @@ struct MenuContent: View {
     private var connectionLabel: String {
         switch self.state.connectionMode {
         case .unconfigured:
-            "OpenClaw Not Configured"
+            "RadioClaw Not Configured"
         case .remote:
-            "Remote OpenClaw Active"
+            "Remote RadioClaw Active"
         case .local:
-            "OpenClaw Active"
+            "RadioClaw Active"
         }
     }
 
@@ -289,7 +289,7 @@ struct MenuContent: View {
                 Button {
                     DebugActions.openAgentEventsWindow()
                 } label: {
-                    Label("Open Agent Eventsâ€¦", systemImage: "bolt.horizontal.circle")
+                    Label("Open Agent Eventsâ€?, systemImage: "bolt.horizontal.circle")
                 }
                 Button {
                     DebugActions.openLog()
@@ -333,7 +333,7 @@ struct MenuContent: View {
         NSApp.activate(ignoringOtherApps: true)
         self.openSettings()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .openclawSelectSettingsTab, object: tab)
+            NotificationCenter.default.post(name: .RadioClawSelectSettingsTab, object: tab)
         }
     }
 
@@ -364,7 +364,7 @@ struct MenuContent: View {
         let lastAge = self.healthStore.lastSuccess.map { age(from: $0) }
 
         if isRefreshing {
-            return ("Health check runningâ€¦", health.tint)
+            return ("Health check runningâ€?, health.tint)
         }
 
         switch health {
@@ -442,7 +442,7 @@ struct MenuContent: View {
 
             if self.loadingMics {
                 Divider()
-                Label("Refreshing microphonesâ€¦", systemImage: "arrow.triangle.2.circlepath")
+                Label("Refreshing microphonesâ€?, systemImage: "arrow.triangle.2.circlepath")
                     .labelStyle(.titleOnly)
                     .foregroundStyle(.secondary)
                     .disabled(true)

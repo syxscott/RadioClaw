@@ -3,7 +3,7 @@
  *
  * Covers:
  *  - Message format converters (convertMessagesToInputItems, convertTools)
- *  - Response â†’ AssistantMessage parser (buildAssistantMessageFromResponse)
+ *  - Response â†?AssistantMessage parser (buildAssistantMessageFromResponse)
  *  - createOpenAIWebSocketStreamFn behaviour (connect, send, receive, fallback)
  *  - Session registry helpers (releaseWsSession, hasWsSession)
  */
@@ -64,7 +64,7 @@ const { MockManager } = vi.hoisted(() => {
 
     send(event: unknown): void {
       if (!this._connected) {
-        throw new Error("cannot send â€” not connected");
+        throw new Error("cannot send â€?not connected");
       }
       if (this.sendShouldFail) {
         throw new Error("Mock send failure");
@@ -807,7 +807,7 @@ describe("createOpenAIWebSocketStreamFn", () => {
         contextStub as Parameters<typeof streamFn>[1],
       );
 
-      // Consume â€” should fall back to HTTP (streamSimple mock).
+      // Consume â€?should fall back to HTTP (streamSimple mock).
       const messages: unknown[] = [];
       for await (const ev of await resolveStream(stream)) {
         messages.push(ev);
@@ -963,7 +963,7 @@ describe("createOpenAIWebSocketStreamFn", () => {
     MockManager.lastInstance!.sendShouldFail = true;
     const callsBefore = streamSimpleCalls.length;
 
-    // 3. Second call: send throws â†’ must fall back to HTTP and clear registry
+    // 3. Second call: send throws â†?must fall back to HTTP and clear registry
     const stream2 = streamFn(
       modelStub as Parameters<typeof streamFn>[0],
       contextStub as Parameters<typeof streamFn>[1],
@@ -1125,7 +1125,7 @@ describe("createOpenAIWebSocketStreamFn", () => {
           expect(hasError).toBe(true);
           resolve();
         } catch {
-          // The error propagation is also acceptable â€” promise rejected
+          // The error propagation is also acceptable â€?promise rejected
           resolve();
         }
       });

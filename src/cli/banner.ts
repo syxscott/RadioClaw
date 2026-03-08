@@ -61,11 +61,11 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
   const commitLabel = commit ?? "unknown";
   const tagline = pickTagline({ ...options, mode: resolveTaglineMode(options) });
   const rich = options.richTty ?? isRich();
-  const title = "🦞 OpenClaw";
+  const title = "🦞 RadioClaw";
   const prefix = "🦞 ";
   const columns = options.columns ?? process.stdout.columns ?? 120;
   const plainBaseLine = `${title} ${version} (${commitLabel})`;
-  const plainFullLine = tagline ? `${plainBaseLine} — ${tagline}` : plainBaseLine;
+  const plainFullLine = tagline ? `${plainBaseLine} �?${tagline}` : plainBaseLine;
   const fitsOnOneLine = visibleWidth(plainFullLine) <= columns;
   if (rich) {
     if (fitsOnOneLine) {
@@ -74,7 +74,7 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
       }
       return `${theme.heading(title)} ${theme.info(version)} ${theme.muted(
         `(${commitLabel})`,
-      )} ${theme.muted("—")} ${theme.accentDim(tagline)}`;
+      )} ${theme.muted("�?)} ${theme.accentDim(tagline)}`;
     }
     const line1 = `${theme.heading(title)} ${theme.info(version)} ${theme.muted(
       `(${commitLabel})`,
@@ -98,11 +98,11 @@ export function formatCliBannerLine(version: string, options: BannerOptions = {}
 
 const LOBSTER_ASCII = [
   "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
-  "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██",
+  "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░█�?,
   "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
-  "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
+  "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄█�?,
   "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
-  "                  🦞 OPENCLAW 🦞                    ",
+  "                  🦞 RadioClaw 🦞                    ",
   " ",
 ];
 
@@ -113,10 +113,10 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
   }
 
   const colorChar = (ch: string) => {
-    if (ch === "█") {
+    if (ch === "�?) {
       return theme.accentBright(ch);
     }
-    if (ch === "░") {
+    if (ch === "�?) {
       return theme.accentDim(ch);
     }
     if (ch === "▀") {
@@ -126,11 +126,11 @@ export function formatCliBannerArt(options: BannerOptions = {}): string {
   };
 
   const colored = LOBSTER_ASCII.map((line) => {
-    if (line.includes("OPENCLAW")) {
+    if (line.includes("RadioClaw")) {
       return (
         theme.muted("              ") +
         theme.accent("🦞") +
-        theme.info(" OPENCLAW ") +
+        theme.info(" RadioClaw ") +
         theme.accent("🦞")
       );
     }

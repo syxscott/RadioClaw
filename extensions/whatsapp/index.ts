@@ -1,5 +1,5 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/whatsapp";
-import { emptyPluginConfigSchema } from "openclaw/plugin-sdk/whatsapp";
+import type { RadioClawPluginApi } from "RadioClaw/plugin-sdk/whatsapp";
+import { emptyPluginConfigSchema } from "RadioClaw/plugin-sdk/whatsapp";
 import { whatsappPlugin } from "./src/channel.js";
 import { setWhatsAppRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "WhatsApp",
   description: "WhatsApp channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: RadioClawPluginApi) {
     setWhatsAppRuntime(api.runtime);
     api.registerChannel({ plugin: whatsappPlugin });
   },

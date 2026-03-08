@@ -59,8 +59,8 @@ describe("toSanitizedMarkdownHtml", () => {
     const md = [
       "| Feature | Status |",
       "|---------|--------|",
-      "| Tables  | âœ…     |",
-      "| Borders | âœ…     |",
+      "| Tables  | âœ?    |",
+      "| Borders | âœ?    |",
     ].join("\n");
     const html = toSanitizedMarkdownHtml(md);
     expect(html).toContain("<table");

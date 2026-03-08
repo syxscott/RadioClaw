@@ -155,11 +155,11 @@ describe("doctor config flow", () => {
             lifecycle: {
               enabled: true,
               reactions: {
-                queued: "â³",
+                queued: "â?,
                 thinking: "ðŸ§ ",
                 tool: "ðŸ”§",
-                done: "âœ…",
-                error: "âŒ",
+                done: "âœ?,
+                error: "â?,
               },
             },
           },
@@ -301,10 +301,10 @@ describe("doctor config flow", () => {
 
   it("converts numeric discord ids to strings on repair", async () => {
     await withTempHome(async (home) => {
-      const configDir = path.join(home, ".openclaw");
+      const configDir = path.join(home, ".RadioClaw");
       await fs.mkdir(configDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "openclaw.json"),
+        path.join(configDir, "RadioClaw.json"),
         JSON.stringify(
           {
             channels: {
@@ -545,11 +545,11 @@ describe("doctor config flow", () => {
 
   it('repairs dmPolicy="allowlist" by restoring allowFrom from pairing store on repair', async () => {
     const result = await withTempHome(async (home) => {
-      const configDir = path.join(home, ".openclaw");
+      const configDir = path.join(home, ".RadioClaw");
       const credentialsDir = path.join(configDir, "credentials");
       await fs.mkdir(credentialsDir, { recursive: true });
       await fs.writeFile(
-        path.join(configDir, "openclaw.json"),
+        path.join(configDir, "RadioClaw.json"),
         JSON.stringify(
           {
             channels: {

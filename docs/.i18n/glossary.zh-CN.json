@@ -1,7 +1,7 @@
 [
   {
-    "source": "OpenClaw",
-    "target": "OpenClaw"
+    "source": "RadioClaw",
+    "target": "RadioClaw"
   },
   {
     "source": "Gateway",
@@ -41,11 +41,11 @@
   },
   {
     "source": "Quick start",
-    "target": "快速开始"
+    "target": "快速开�?
   },
   {
     "source": "Quick Start",
-    "target": "快速开始"
+    "target": "快速开�?
   },
   {
     "source": "Docs directory",
@@ -129,15 +129,15 @@
   },
   {
     "source": "First 60 seconds",
-    "target": "最初的六十秒"
+    "target": "最初的六十�?
   },
   {
     "source": "Auth: where it lives (important)",
-    "target": "凭证：存储位置（重要）"
+    "target": "凭证：存储位置（重要�?
   },
   {
     "source": "agent",
-    "target": "智能体"
+    "target": "智能�?
   },
   {
     "source": "channel",
@@ -149,7 +149,7 @@
   },
   {
     "source": "provider",
-    "target": "提供商"
+    "target": "提供�?
   },
   {
     "source": "model",
@@ -165,7 +165,7 @@
   },
   {
     "source": "install sanity",
-    "target": "安装完整性检查"
+    "target": "安装完整性检�?
   },
   {
     "source": "get unstuck",

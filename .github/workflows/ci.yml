@@ -179,8 +179,8 @@ jobs:
         run: |
           # `pnpm test` runs `scripts/test-parallel.mjs`, which spawns multiple Node processes.
           # Default heap limits have been too low on Linux CI (V8 OOM near 4GB).
-          echo "OPENCLAW_TEST_WORKERS=2" >> "$GITHUB_ENV"
-          echo "OPENCLAW_TEST_MAX_OLD_SPACE_SIZE_MB=6144" >> "$GITHUB_ENV"
+          echo "RadioClaw_TEST_WORKERS=2" >> "$GITHUB_ENV"
+          echo "RadioClaw_TEST_MAX_OLD_SPACE_SIZE_MB=6144" >> "$GITHUB_ENV"
 
       - name: Run ${{ matrix.task }} (${{ matrix.runtime }})
         if: matrix.runtime != 'bun' || github.event_name != 'push'
@@ -357,7 +357,7 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=6144
       # Keep total concurrency predictable on the 32 vCPU runner.
       # Windows shard 2 has shown intermittent instability at 2 workers.
-      OPENCLAW_TEST_WORKERS: 1
+      RadioClaw_TEST_WORKERS: 1
     defaults:
       run:
         shell: bash
@@ -463,8 +463,8 @@ jobs:
       - name: Configure test shard (Windows)
         if: matrix.task == 'test'
         run: |
-          echo "OPENCLAW_TEST_SHARDS=${{ matrix.shard_count }}" >> "$GITHUB_ENV"
-          echo "OPENCLAW_TEST_SHARD_INDEX=${{ matrix.shard_index }}" >> "$GITHUB_ENV"
+          echo "RadioClaw_TEST_SHARDS=${{ matrix.shard_count }}" >> "$GITHUB_ENV"
+          echo "RadioClaw_TEST_SHARD_INDEX=${{ matrix.shard_index }}" >> "$GITHUB_ENV"
 
       - name: Build A2UI bundle (Windows)
         if: matrix.task == 'test'
@@ -533,7 +533,7 @@ jobs:
             if swift build --package-path apps/macos --configuration release; then
               exit 0
             fi
-            echo "swift build failed (attempt $attempt/3). Retryingâ€¦"
+            echo "swift build failed (attempt $attempt/3). Retryingâ€?
             sleep $((attempt * 20))
           done
           exit 1
@@ -545,7 +545,7 @@ jobs:
             if swift test --package-path apps/macos --parallel --enable-code-coverage --show-codecov-path; then
               exit 0
             fi
-            echo "swift test failed (attempt $attempt/3). Retryingâ€¦"
+            echo "swift test failed (attempt $attempt/3). Retryingâ€?
             sleep $((attempt * 20))
           done
           exit 1

@@ -94,7 +94,7 @@ export async function statusCommand(
       })
     : await withProgress(
         {
-          label: "Running security audit…",
+          label: "Running security audit�?,
           indeterminate: true,
           enabled: true,
         },
@@ -134,7 +134,7 @@ export async function statusCommand(
   const usage = opts.usage
     ? await withProgress(
         {
-          label: "Fetching usage snapshot…",
+          label: "Fetching usage snapshot�?,
           indeterminate: true,
           enabled: opts.json !== true,
         },
@@ -144,7 +144,7 @@ export async function statusCommand(
   const health: HealthSummary | undefined = opts.deep
     ? await withProgress(
         {
-          label: "Checking gateway health…",
+          label: "Checking gateway health�?,
           indeterminate: true,
           enabled: opts.json !== true,
         },
@@ -304,14 +304,14 @@ export async function statusCommand(
     if (daemon.installed === false) {
       return `${daemon.label} not installed`;
     }
-    const installedPrefix = daemon.managedByOpenClaw ? "installed · " : "";
+    const installedPrefix = daemon.managedByRadioClaw ? "installed · " : "";
     return `${daemon.label} ${installedPrefix}${daemon.loadedText}${daemon.runtimeShort ? ` · ${daemon.runtimeShort}` : ""}`;
   })();
   const nodeDaemonValue = (() => {
     if (nodeDaemon.installed === false) {
       return `${nodeDaemon.label} not installed`;
     }
-    const installedPrefix = nodeDaemon.managedByOpenClaw ? "installed · " : "";
+    const installedPrefix = nodeDaemon.managedByRadioClaw ? "installed · " : "";
     return `${nodeDaemon.label} ${installedPrefix}${nodeDaemon.loadedText}${nodeDaemon.runtimeShort ? ` · ${nodeDaemon.runtimeShort}` : ""}`;
   })();
 
@@ -364,7 +364,7 @@ export async function statusCommand(
     }
     if (!memory) {
       const slot = memoryPlugin.slot ? `plugin ${memoryPlugin.slot}` : "plugin";
-      // Custom (non-built-in) memory plugins can't be probed — show enabled, not unavailable
+      // Custom (non-built-in) memory plugins can't be probed �?show enabled, not unavailable
       if (memoryPlugin.slot && memoryPlugin.slot !== "memory-core") {
         return `enabled (${slot})`;
       }
@@ -442,7 +442,7 @@ export async function statusCommand(
     },
   ];
 
-  runtime.log(theme.heading("OpenClaw status"));
+  runtime.log(theme.heading("RadioClaw status"));
   runtime.log("");
   runtime.log(theme.heading("Overview"));
   runtime.log(
@@ -462,12 +462,12 @@ export async function statusCommand(
     if (pairingRecovery.requestId) {
       runtime.log(
         theme.muted(
-          `Recovery: ${formatCliCommand(`openclaw devices approve ${pairingRecovery.requestId}`)}`,
+          `Recovery: ${formatCliCommand(`RadioClaw devices approve ${pairingRecovery.requestId}`)}`,
         ),
       );
     }
-    runtime.log(theme.muted(`Fallback: ${formatCliCommand("openclaw devices approve --latest")}`));
-    runtime.log(theme.muted(`Inspect: ${formatCliCommand("openclaw devices list")}`));
+    runtime.log(theme.muted(`Fallback: ${formatCliCommand("RadioClaw devices approve --latest")}`));
+    runtime.log(theme.muted(`Inspect: ${formatCliCommand("RadioClaw devices list")}`));
   }
 
   runtime.log("");
@@ -510,11 +510,11 @@ export async function statusCommand(
       }
     }
     if (sorted.length > shown.length) {
-      runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
+      runtime.log(theme.muted(`�?+${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("openclaw security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("openclaw security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("RadioClaw security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("RadioClaw security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -598,7 +598,7 @@ export async function statusCommand(
       }).trimEnd(),
     );
     if (summary.queuedSystemEvents.length > 5) {
-      runtime.log(muted(`… +${summary.queuedSystemEvents.length - 5} more`));
+      runtime.log(muted(`�?+${summary.queuedSystemEvents.length - 5} more`));
     }
   }
 
@@ -666,8 +666,8 @@ export async function statusCommand(
   }
 
   runtime.log("");
-  runtime.log("FAQ: https://docs.openclaw.ai/faq");
-  runtime.log("Troubleshooting: https://docs.openclaw.ai/troubleshooting");
+  runtime.log("FAQ: https://docs.RadioClaw.ai/faq");
+  runtime.log("Troubleshooting: https://docs.RadioClaw.ai/troubleshooting");
   runtime.log("");
   const updateHint = formatUpdateAvailableHint(update);
   if (updateHint) {
@@ -675,11 +675,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("openclaw status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("openclaw logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("RadioClaw status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("RadioClaw logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("openclaw status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("RadioClaw status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("openclaw gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("RadioClaw gateway probe")}`);
   }
 }

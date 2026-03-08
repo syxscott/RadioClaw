@@ -90,7 +90,7 @@ describe("installPackageDir", () => {
   });
 
   it("keeps the existing install in place when staged validation fails", async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-install-package-dir-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-install-package-dir-"));
     const installBaseDir = path.join(fixtureRoot, "plugins");
     const sourceDir = path.join(fixtureRoot, "source");
     const targetDir = path.join(installBaseDir, "demo");
@@ -106,7 +106,7 @@ describe("installPackageDir", () => {
       timeoutMs: 1_000,
       copyErrorPrefix: "failed to copy plugin",
       hasDeps: false,
-      depsLogMessage: "Installing depsâ€¦",
+      depsLogMessage: "Installing depsâ€?,
       afterCopy: async (installedDir) => {
         expect(installedDir).not.toBe(targetDir);
         await expect(fs.readFile(path.join(installedDir, "marker.txt"), "utf8")).resolves.toBe(
@@ -122,15 +122,15 @@ describe("installPackageDir", () => {
     });
     await expect(fs.readFile(path.join(targetDir, "marker.txt"), "utf8")).resolves.toBe("old");
     await expect(
-      listMatchingDirs(installBaseDir, ".openclaw-install-stage-"),
+      listMatchingDirs(installBaseDir, ".RadioClaw-install-stage-"),
     ).resolves.toHaveLength(0);
     await expect(
-      listMatchingDirs(installBaseDir, ".openclaw-install-backups"),
+      listMatchingDirs(installBaseDir, ".RadioClaw-install-backups"),
     ).resolves.toHaveLength(0);
   });
 
   it("restores the original install if publish rename fails", async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-install-package-dir-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-install-package-dir-"));
     const installBaseDir = path.join(fixtureRoot, "plugins");
     const sourceDir = path.join(fixtureRoot, "source");
     const targetDir = path.join(installBaseDir, "demo");
@@ -156,7 +156,7 @@ describe("installPackageDir", () => {
       timeoutMs: 1_000,
       copyErrorPrefix: "failed to copy plugin",
       hasDeps: false,
-      depsLogMessage: "Installing depsâ€¦",
+      depsLogMessage: "Installing depsâ€?,
     });
 
     expect(result).toEqual({
@@ -165,14 +165,14 @@ describe("installPackageDir", () => {
     });
     await expect(fs.readFile(path.join(targetDir, "marker.txt"), "utf8")).resolves.toBe("old");
     await expect(
-      listMatchingDirs(installBaseDir, ".openclaw-install-stage-"),
+      listMatchingDirs(installBaseDir, ".RadioClaw-install-stage-"),
     ).resolves.toHaveLength(0);
-    const backupRoot = path.join(installBaseDir, ".openclaw-install-backups");
+    const backupRoot = path.join(installBaseDir, ".RadioClaw-install-backups");
     await expect(fs.readdir(backupRoot)).resolves.toHaveLength(0);
   });
 
   it("aborts without outside writes when the install base is rebound before publish", async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-install-package-dir-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-install-package-dir-"));
     const sourceDir = path.join(fixtureRoot, "source");
     const installBaseDir = path.join(fixtureRoot, "plugins");
     const preservedInstallRoot = path.join(fixtureRoot, "plugins-preserved");
@@ -198,7 +198,7 @@ describe("installPackageDir", () => {
             timeoutMs: 1_000,
             copyErrorPrefix: "failed to copy plugin",
             hasDeps: false,
-            depsLogMessage: "Installing depsâ€¦",
+            depsLogMessage: "Installing depsâ€?,
             logger: { warn: (message) => warnings.push(message) },
           }),
         ).resolves.toEqual({
@@ -219,7 +219,7 @@ describe("installPackageDir", () => {
   });
 
   it("warns and leaves the backup in place when the install base changes before backup cleanup", async () => {
-    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-install-package-dir-"));
+    fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-install-package-dir-"));
     const sourceDir = path.join(fixtureRoot, "source");
     const installBaseDir = path.join(fixtureRoot, "plugins");
     const preservedInstallRoot = path.join(fixtureRoot, "plugins-preserved");
@@ -246,7 +246,7 @@ describe("installPackageDir", () => {
           timeoutMs: 1_000,
           copyErrorPrefix: "failed to copy plugin",
           hasDeps: false,
-          depsLogMessage: "Installing depsâ€¦",
+          depsLogMessage: "Installing depsâ€?,
           logger: { warn: (message) => warnings.push(message) },
         }),
     });
@@ -260,7 +260,7 @@ describe("installPackageDir", () => {
     ).rejects.toMatchObject({
       code: "ENOENT",
     });
-    const backupRoot = path.join(preservedInstallRoot, ".openclaw-install-backups");
+    const backupRoot = path.join(preservedInstallRoot, ".RadioClaw-install-backups");
     await expect(fs.readdir(backupRoot)).resolves.toHaveLength(1);
   });
 });

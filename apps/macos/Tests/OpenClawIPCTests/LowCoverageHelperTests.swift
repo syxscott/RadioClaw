@@ -1,12 +1,12 @@
 import AppKit
 import Foundation
-import OpenClawProtocol
+import RadioClawProtocol
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized)
 struct LowCoverageHelperTests {
-    private typealias ProtoAnyCodable = OpenClawProtocol.AnyCodable
+    private typealias ProtoAnyCodable = RadioClawProtocol.AnyCodable
 
     @Test func anyCodableHelperAccessors() throws {
         let payload: [String: ProtoAnyCodable] = [

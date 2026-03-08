@@ -33,7 +33,7 @@ if (!exportMatch) {
 const exportedNames = exportMatch[1]
   .split(",")
   .map((s) => {
-    // Handle `foo as bar` aliases â€” the exported name is the `bar` part
+    // Handle `foo as bar` aliases â€?the exported name is the `bar` part
     const parts = s.trim().split(/\s+as\s+/);
     return (parts[parts.length - 1] || "").trim();
   })
@@ -89,7 +89,7 @@ const requiredSubpathEntries = [
 
 const requiredRuntimeShimEntries = ["root-alias.cjs"];
 
-// Critical functions that channel extension plugins import from openclaw/plugin-sdk.
+// Critical functions that channel extension plugins import from RadioClaw/plugin-sdk.
 // If any of these are missing, plugins will fail at runtime with:
 //   TypeError: (0 , _pluginSdk.<name>) is not a function
 const requiredExports = [

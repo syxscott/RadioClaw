@@ -15,7 +15,7 @@ import {
   resolveNativeCommandsEnabled,
   resolveNativeSkillsEnabled,
 } from "../config/commands.js";
-import type { OpenClawConfig, ReplyToMode } from "../config/config.js";
+import type { RadioClawConfig, ReplyToMode } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import {
   resolveChannelGroupPolicy,
@@ -53,7 +53,7 @@ export type TelegramBotOptions = {
   mediaMaxMb?: number;
   replyToMode?: ReplyToMode;
   proxyFetch?: typeof fetch;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   updateOffset?: {
     lastUpdateId?: number | null;
     onUpdateId?: (updateId: number) => void | Promise<void>;
@@ -335,7 +335,7 @@ export function createTelegramBot(opts: TelegramBotOptions) {
   // Global sendChatAction handler with 401 backoff / circuit breaker (issue #27092).
   // Created BEFORE the message processor so it can be injected into every message context.
   // Shared across all message contexts for this account so that consecutive 401s
-  // from ANY chat are tracked together â€” prevents infinite retry storms.
+  // from ANY chat are tracked together â€?prevents infinite retry storms.
   const sendChatActionHandler = createTelegramSendChatActionHandler({
     sendChatActionFn: (chatId, action, threadParams) =>
       bot.api.sendChatAction(

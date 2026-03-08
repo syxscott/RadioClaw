@@ -1,7 +1,7 @@
 ---
-summary: "Symptom first troubleshooting hub for OpenClaw"
+summary: "Symptom first troubleshooting hub for RadioClaw"
 read_when:
-  - OpenClaw is not working and you need the fastest path to a fix
+  - RadioClaw is not working and you need the fastest path to a fix
   - You want a triage flow before diving into deep runbooks
 title: "Troubleshooting"
 ---
@@ -15,24 +15,24 @@ If you only have 2 minutes, use this page as a triage front door.
 Run this exact ladder in order:
 
 ```bash
-openclaw status
-openclaw status --all
-openclaw gateway probe
-openclaw gateway status
-openclaw doctor
-openclaw channels status --probe
-openclaw logs --follow
+RadioClaw status
+RadioClaw status --all
+RadioClaw gateway probe
+RadioClaw gateway status
+RadioClaw doctor
+RadioClaw channels status --probe
+RadioClaw logs --follow
 ```
 
 Good output in one line:
 
-- `openclaw status` â†’ shows configured channels and no obvious auth errors.
-- `openclaw status --all` â†’ full report is present and shareable.
-- `openclaw gateway probe` â†’ expected gateway target is reachable.
-- `openclaw gateway status` â†’ `Runtime: running` and `RPC probe: ok`.
-- `openclaw doctor` â†’ no blocking config/service errors.
-- `openclaw channels status --probe` â†’ channels report `connected` or `ready`.
-- `openclaw logs --follow` â†’ steady activity, no repeating fatal errors.
+- `RadioClaw status` â†?shows configured channels and no obvious auth errors.
+- `RadioClaw status --all` â†?full report is present and shareable.
+- `RadioClaw gateway probe` â†?expected gateway target is reachable.
+- `RadioClaw gateway status` â†?`Runtime: running` and `RPC probe: ok`.
+- `RadioClaw doctor` â†?no blocking config/service errors.
+- `RadioClaw channels status --probe` â†?channels report `connected` or `ready`.
+- `RadioClaw logs --follow` â†?steady activity, no repeating fatal errors.
 
 ## Anthropic long context 429
 
@@ -40,24 +40,24 @@ If you see:
 `HTTP 429: rate_limit_error: Extra usage is required for long context requests`,
 go to [/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context](/gateway/troubleshooting#anthropic-429-extra-usage-required-for-long-context).
 
-## Plugin install fails with missing openclaw extensions
+## Plugin install fails with missing RadioClaw extensions
 
-If install fails with `package.json missing openclaw.extensions`, the plugin package
-is using an old shape that OpenClaw no longer accepts.
+If install fails with `package.json missing RadioClaw.extensions`, the plugin package
+is using an old shape that RadioClaw no longer accepts.
 
 Fix in the plugin package:
 
-1. Add `openclaw.extensions` to `package.json`.
+1. Add `RadioClaw.extensions` to `package.json`.
 2. Point entries at built runtime files (usually `./dist/index.js`).
-3. Republish the plugin and run `openclaw plugins install <npm-spec>` again.
+3. Republish the plugin and run `RadioClaw plugins install <npm-spec>` again.
 
 Example:
 
 ```json
 {
-  "name": "@openclaw/my-plugin",
+  "name": "@RadioClaw/my-plugin",
   "version": "1.2.3",
-  "openclaw": {
+  "RadioClaw": {
     "extensions": ["./dist/index.js"]
   }
 }
@@ -69,7 +69,7 @@ Reference: [/tools/plugin#distribution-npm](/tools/plugin#distribution-npm)
 
 ```mermaid
 flowchart TD
-  A[OpenClaw is not working] --> B{What breaks first}
+  A[RadioClaw is not working] --> B{What breaks first}
   B --> C[No replies]
   B --> D[Dashboard or Control UI will not connect]
   B --> E[Gateway will not start or service not running]
@@ -90,11 +90,11 @@ flowchart TD
 <AccordionGroup>
   <Accordion title="No replies">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw channels status --probe
-    openclaw pairing list --channel <channel> [--account <id>]
-    openclaw logs --follow
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw channels status --probe
+    RadioClaw pairing list --channel <channel> [--account <id>]
+    RadioClaw logs --follow
     ```
 
     Good output looks like:
@@ -106,9 +106,9 @@ flowchart TD
 
     Common log signatures:
 
-    - `drop guild message (mention required` â†’ mention gating blocked the message in Discord.
-    - `pairing request` â†’ sender is unapproved and waiting for DM pairing approval.
-    - `blocked` / `allowlist` in channel logs â†’ sender, room, or group is filtered.
+    - `drop guild message (mention required` â†?mention gating blocked the message in Discord.
+    - `pairing request` â†?sender is unapproved and waiting for DM pairing approval.
+    - `blocked` / `allowlist` in channel logs â†?sender, room, or group is filtered.
 
     Deep pages:
 
@@ -120,24 +120,24 @@ flowchart TD
 
   <Accordion title="Dashboard or Control UI will not connect">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw logs --follow
+    RadioClaw doctor
+    RadioClaw channels status --probe
     ```
 
     Good output looks like:
 
-    - `Dashboard: http://...` is shown in `openclaw gateway status`
+    - `Dashboard: http://...` is shown in `RadioClaw gateway status`
     - `RPC probe: ok`
     - No auth loop in logs
 
     Common log signatures:
 
-    - `device identity required` â†’ HTTP/non-secure context cannot complete device auth.
-    - `unauthorized` / reconnect loop â†’ wrong token/password or auth mode mismatch.
-    - `gateway connect failed:` â†’ UI is targeting the wrong URL/port or unreachable gateway.
+    - `device identity required` â†?HTTP/non-secure context cannot complete device auth.
+    - `unauthorized` / reconnect loop â†?wrong token/password or auth mode mismatch.
+    - `gateway connect failed:` â†?UI is targeting the wrong URL/port or unreachable gateway.
 
     Deep pages:
 
@@ -149,11 +149,11 @@ flowchart TD
 
   <Accordion title="Gateway will not start or service installed but not running">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw logs --follow
+    RadioClaw doctor
+    RadioClaw channels status --probe
     ```
 
     Good output looks like:
@@ -164,9 +164,9 @@ flowchart TD
 
     Common log signatures:
 
-    - `Gateway start blocked: set gateway.mode=local` â†’ gateway mode is unset/remote.
-    - `refusing to bind gateway ... without auth` â†’ non-loopback bind without token/password.
-    - `another gateway instance is already listening` or `EADDRINUSE` â†’ port already taken.
+    - `Gateway start blocked: set gateway.mode=local` â†?gateway mode is unset/remote.
+    - `refusing to bind gateway ... without auth` â†?non-loopback bind without token/password.
+    - `another gateway instance is already listening` or `EADDRINUSE` â†?port already taken.
 
     Deep pages:
 
@@ -178,11 +178,11 @@ flowchart TD
 
   <Accordion title="Channel connects but messages do not flow">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw logs --follow
-    openclaw doctor
-    openclaw channels status --probe
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw logs --follow
+    RadioClaw doctor
+    RadioClaw channels status --probe
     ```
 
     Good output looks like:
@@ -193,9 +193,9 @@ flowchart TD
 
     Common log signatures:
 
-    - `mention required` â†’ group mention gating blocked processing.
-    - `pairing` / `pending` â†’ DM sender is not approved yet.
-    - `not_in_channel`, `missing_scope`, `Forbidden`, `401/403` â†’ channel permission token issue.
+    - `mention required` â†?group mention gating blocked processing.
+    - `pairing` / `pending` â†?DM sender is not approved yet.
+    - `not_in_channel`, `missing_scope`, `Forbidden`, `401/403` â†?channel permission token issue.
 
     Deep pages:
 
@@ -206,12 +206,12 @@ flowchart TD
 
   <Accordion title="Cron or heartbeat did not fire or did not deliver">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw cron status
-    openclaw cron list
-    openclaw cron runs --id <jobId> --limit 20
-    openclaw logs --follow
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw cron status
+    RadioClaw cron list
+    RadioClaw cron runs --id <jobId> --limit 20
+    RadioClaw logs --follow
     ```
 
     Good output looks like:
@@ -222,10 +222,10 @@ flowchart TD
 
     Common log signatures:
 
-    - `cron: scheduler disabled; jobs will not run automatically` â†’ cron is disabled.
-    - `heartbeat skipped` with `reason=quiet-hours` â†’ outside configured active hours.
-    - `requests-in-flight` â†’ main lane busy; heartbeat wake was deferred.
-    - `unknown accountId` â†’ heartbeat delivery target account does not exist.
+    - `cron: scheduler disabled; jobs will not run automatically` â†?cron is disabled.
+    - `heartbeat skipped` with `reason=quiet-hours` â†?outside configured active hours.
+    - `requests-in-flight` â†?main lane busy; heartbeat wake was deferred.
+    - `unknown accountId` â†?heartbeat delivery target account does not exist.
 
     Deep pages:
 
@@ -237,11 +237,11 @@ flowchart TD
 
   <Accordion title="Node is paired but tool fails camera canvas screen exec">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw nodes status
-    openclaw nodes describe --node <idOrNameOrIp>
-    openclaw logs --follow
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw nodes status
+    RadioClaw nodes describe --node <idOrNameOrIp>
+    RadioClaw logs --follow
     ```
 
     Good output looks like:
@@ -252,10 +252,10 @@ flowchart TD
 
     Common log signatures:
 
-    - `NODE_BACKGROUND_UNAVAILABLE` â†’ bring node app to foreground.
-    - `*_PERMISSION_REQUIRED` â†’ OS permission was denied/missing.
-    - `SYSTEM_RUN_DENIED: approval required` â†’ exec approval is pending.
-    - `SYSTEM_RUN_DENIED: allowlist miss` â†’ command not on exec allowlist.
+    - `NODE_BACKGROUND_UNAVAILABLE` â†?bring node app to foreground.
+    - `*_PERMISSION_REQUIRED` â†?OS permission was denied/missing.
+    - `SYSTEM_RUN_DENIED: approval required` â†?exec approval is pending.
+    - `SYSTEM_RUN_DENIED: allowlist miss` â†?command not on exec allowlist.
 
     Deep pages:
 
@@ -267,24 +267,24 @@ flowchart TD
 
   <Accordion title="Browser tool fails">
     ```bash
-    openclaw status
-    openclaw gateway status
-    openclaw browser status
-    openclaw logs --follow
-    openclaw doctor
+    RadioClaw status
+    RadioClaw gateway status
+    RadioClaw browser status
+    RadioClaw logs --follow
+    RadioClaw doctor
     ```
 
     Good output looks like:
 
     - Browser status shows `running: true` and a chosen browser/profile.
-    - `openclaw` profile starts or `chrome` relay has an attached tab.
+    - `RadioClaw` profile starts or `chrome` relay has an attached tab.
 
     Common log signatures:
 
-    - `Failed to start Chrome CDP on port` â†’ local browser launch failed.
-    - `browser.executablePath not found` â†’ configured binary path is wrong.
-    - `Chrome extension relay is running, but no tab is connected` â†’ extension not attached.
-    - `Browser attachOnly is enabled ... not reachable` â†’ attach-only profile has no live CDP target.
+    - `Failed to start Chrome CDP on port` â†?local browser launch failed.
+    - `browser.executablePath not found` â†?configured binary path is wrong.
+    - `Chrome extension relay is running, but no tab is connected` â†?extension not attached.
+    - `Browser attachOnly is enabled ... not reachable` â†?attach-only profile has no live CDP target.
 
     Deep pages:
 

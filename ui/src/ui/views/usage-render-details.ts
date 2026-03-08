@@ -63,7 +63,7 @@ function renderSessionSummary(
     `;
   }
 
-  const formatTs = (ts?: number): string => (ts ? new Date(ts).toLocaleString() : "â€”");
+  const formatTs = (ts?: number): string => (ts ? new Date(ts).toLocaleString() : "â€?);
 
   const badges: string[] = [];
   if (session.channel) {
@@ -137,8 +137,8 @@ function renderSessionSummary(
       </div>
       <div class="session-summary-card">
         <div class="session-summary-title">Duration</div>
-        <div class="session-summary-value">${formatDurationCompact(usage.durationMs, { spaced: true }) ?? "â€”"}</div>
-        <div class="session-summary-meta">${formatTs(usage.firstActivity)} â†’ ${formatTs(usage.lastActivity)}</div>
+        <div class="session-summary-value">${formatDurationCompact(usage.durationMs, { spaced: true }) ?? "â€?}</div>
+        <div class="session-summary-meta">${formatTs(usage.firstActivity)} â†?${formatTs(usage.lastActivity)}</div>
       </div>
     </div>
     <div class="usage-insights-grid" style="margin-top: 12px;">
@@ -242,7 +242,7 @@ function renderSessionDetailPanel(
   onClose: () => void,
 ) {
   const label = session.label || session.key;
-  const displayLabel = label.length > 50 ? label.slice(0, 50) + "â€¦" : label;
+  const displayLabel = label.length > 50 ? label.slice(0, 50) + "â€? : label;
   const usage = session.usage;
 
   const hasRange = timeSeriesCursorStart !== null && timeSeriesCursorEnd !== null;
@@ -673,8 +673,8 @@ function renderTimeSeriesCompact(
         ${
           hasSelection
             ? html`
-              <span style="color: var(--accent);">â–¶ Turns ${rangeStartIdx + 1}â€“${rangeEndIdx} of ${points.length}</span> Â· 
-              ${new Date(rangeStartTs).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}â€“${new Date(rangeEndTs).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })} Â· 
+              <span style="color: var(--accent);">â–?Turns ${rangeStartIdx + 1}â€?{rangeEndIdx} of ${points.length}</span> Â· 
+              ${new Date(rangeStartTs).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}â€?{new Date(rangeEndTs).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })} Â· 
               ${formatTokens(filteredOutput + filteredInput + filteredCacheRead + filteredCacheWrite)} Â· 
               ${formatCost(filteredPoints.reduce((s, p) => s + (p.cost || 0), 0))}
             `

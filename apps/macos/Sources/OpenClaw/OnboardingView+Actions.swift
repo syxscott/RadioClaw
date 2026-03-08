@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
-import OpenClawDiscovery
-import OpenClawIPC
+import RadioClawDiscovery
+import RadioClawIPC
 import SwiftUI
 
 extension OnboardingView {
@@ -34,7 +34,7 @@ extension OnboardingView {
         SettingsTabRouter.request(tab)
         self.openSettings()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .openclawSelectSettingsTab, object: tab)
+            NotificationCenter.default.post(name: .RadioClawSelectSettingsTab, object: tab)
         }
     }
 
@@ -54,7 +54,7 @@ extension OnboardingView {
     }
 
     func finish() {
-        UserDefaults.standard.set(true, forKey: "openclaw.onboardingSeen")
+        UserDefaults.standard.set(true, forKey: "RadioClaw.onboardingSeen")
         UserDefaults.standard.set(currentOnboardingVersion, forKey: onboardingVersionKey)
         OnboardingController.shared.close()
     }

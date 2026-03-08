@@ -22,14 +22,14 @@ Session pruning trims **old tool results** from the in-memory context right befo
 
 - **OAuth or setup-token** profiles: enable `cache-ttl` pruning and set heartbeat to `1h`.
 - **API key** profiles: enable `cache-ttl` pruning, set heartbeat to `30m`, and default `cacheRetention: "short"` on Anthropic models.
-- If you set any of these values explicitly, OpenClaw does **not** override them.
+- If you set any of these values explicitly, RadioClaw does **not** override them.
 
 ## What this improves (cost + cache behavior)
 
 - **Why prune:** Anthropic prompt caching only applies within the TTL. If a session goes idle past the TTL, the next request re-caches the full prompt unless you trim it first.
 - **What gets cheaper:** pruning reduces the **cacheWrite** size for that first request after the TTL expires.
 - **Why the TTL reset matters:** once pruning runs, the cache window resets, so follow‑up requests can reuse the freshly cached prompt instead of re-caching the full history again.
-- **What it does not do:** pruning doesn’t add tokens or “double” costs; it only changes what gets cached on that first post‑TTL request.
+- **What it does not do:** pruning doesn’t add tokens or “double�?costs; it only changes what gets cached on that first post‑TTL request.
 
 ## What can be pruned
 
@@ -41,7 +41,7 @@ Session pruning trims **old tool results** from the in-memory context right befo
 
 ## Context window estimation
 
-Pruning uses an estimated context window (chars ≈ tokens × 4). The base window is resolved in this order:
+Pruning uses an estimated context window (chars �?tokens × 4). The base window is resolved in this order:
 
 1. `models.providers.*.models[].contextWindow` override.
 2. Model definition `contextWindow` (from the model registry).

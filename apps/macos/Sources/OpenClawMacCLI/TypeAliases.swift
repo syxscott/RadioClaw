@@ -1,5 +1,5 @@
-import OpenClawKit
-import OpenClawProtocol
+import RadioClawKit
+import RadioClawProtocol
 
-typealias ProtoAnyCodable = OpenClawProtocol.AnyCodable
-typealias KitAnyCodable = OpenClawKit.AnyCodable
+typealias ProtoAnyCodable = RadioClawProtocol.AnyCodable
+typealias KitAnyCodable = RadioClawKit.AnyCodable

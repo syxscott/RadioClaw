@@ -85,7 +85,7 @@ async function restartLoginSocket(login: ActiveLogin, runtime: RuntimeEnv) {
   }
   login.restartAttempted = true;
   runtime.log(
-    info("WhatsApp asked for a restart after pairing (code 515); retrying connection once‚Ä¶"),
+    info("WhatsApp asked for a restart after pairing (code 515); retrying connection once‚Ä?),
   );
   closeSocket(login.sock);
   try {
@@ -122,7 +122,7 @@ export async function startWebLoginWithQr(
   if (hasWeb && !opts.force) {
     const who = selfId.e164 ?? selfId.jid ?? "unknown";
     return {
-      message: `WhatsApp is already linked (${who}). Say ‚Äúrelink‚Äù if you want a fresh QR.`,
+      message: `WhatsApp is already linked (${who}). Say ‚Äúrelink‚Ä?if you want a fresh QR.`,
     };
   }
 
@@ -130,7 +130,7 @@ export async function startWebLoginWithQr(
   if (existing && isLoginFresh(existing) && existing.qrDataUrl) {
     return {
       qrDataUrl: existing.qrDataUrl,
-      message: "QR already active. Scan it in WhatsApp ‚Üí Linked Devices.",
+      message: "QR already active. Scan it in WhatsApp ‚Ü?Linked Devices.",
     };
   }
 
@@ -209,7 +209,7 @@ export async function startWebLoginWithQr(
   login.qrDataUrl = `data:image/png;base64,${base64}`;
   return {
     qrDataUrl: login.qrDataUrl,
-    message: "Scan this QR in WhatsApp ‚Üí Linked Devices.",
+    message: "Scan this QR in WhatsApp ‚Ü?Linked Devices.",
   };
 }
 
@@ -284,7 +284,7 @@ export async function waitForWebLogin(
     }
 
     if (login.connected) {
-      const message = "‚úÖ Linked! WhatsApp is ready.";
+      const message = "‚ú?Linked! WhatsApp is ready.";
       runtime.log(success(message));
       await resetActiveLogin(account.accountId);
       return { connected: true, message };

@@ -5,7 +5,7 @@ import type { AgentMessage } from "@mariozechner/pi-agent-core";
 import type { Api, Model } from "@mariozechner/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import { describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import * as compactionModule from "../compaction.js";
 import { buildEmbeddedExtensionFactories } from "../pi-embedded-runner/extensions.js";
 import { castAgentMessage } from "../test-helpers/agent-message-fixtures.js";
@@ -420,7 +420,7 @@ describe("compaction-safeguard runtime registry", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     buildEmbeddedExtensionFactories({
       cfg,
@@ -868,7 +868,7 @@ describe("compaction-safeguard recent-turn preservation", () => {
         "None.",
       ].join("\n"),
       identifiers: [],
-      latestAsk: "请提供状态更新",
+      latestAsk: "请提供状态更�?,
     });
 
     expect(quality.ok).toBe(false);
@@ -885,12 +885,12 @@ describe("compaction-safeguard recent-turn preservation", () => {
         "## Constraints/Rules",
         "Preserve safety checks.",
         "## Pending user asks",
-        "状态更新 pending.",
+        "状态更�?pending.",
         "## Exact identifiers",
         "None.",
       ].join("\n"),
       identifiers: [],
-      latestAsk: "请提供状态更新",
+      latestAsk: "请提供状态更�?,
     });
 
     expect(quality.ok).toBe(true);
@@ -1550,7 +1550,7 @@ describe("compaction-safeguard double-compaction guard", () => {
 async function expectWorkspaceSummaryEmptyForAgentsAlias(
   createAlias: (outsidePath: string, agentsPath: string) => void,
 ) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-compaction-summary-"));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "RadioClaw-compaction-summary-"));
   const prevCwd = process.cwd();
   try {
     const outside = path.join(root, "outside-secret.txt");

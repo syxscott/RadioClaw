@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
+import type { RadioClawConfig } from "RadioClaw/plugin-sdk/bluebubbles";
 import {
   DM_GROUP_ACCESS_REASON,
   createScopedPairingAccess,
@@ -16,7 +16,7 @@ import {
   resolveControlCommandGate,
   stripMarkdown,
   type HistoryEntry,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "RadioClaw/plugin-sdk/bluebubbles";
 import { downloadBlueBubblesAttachment } from "./attachments.js";
 import { markBlueBubblesChatRead, sendBlueBubblesTyping } from "./chat.js";
 import { fetchBlueBubblesHistory } from "./history.js";
@@ -222,7 +222,7 @@ function logGroupAllowlistHint(params: {
 }
 
 function resolveBlueBubblesAckReaction(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   core: BlueBubblesCoreRuntime;
   runtime: BlueBubblesRuntimeEnv;
@@ -488,7 +488,7 @@ export async function processMessage(
         const displayId = getShortIdForUuid(cacheMessageId) || cacheMessageId;
         const previewSource = pending.snippetRaw || rawBody;
         const preview = previewSource
-          ? ` "${previewSource.slice(0, 12)}${previewSource.length > 12 ? "â€¦" : ""}"`
+          ? ` "${previewSource.slice(0, 12)}${previewSource.length > 12 ? "â€? : ""}"`
           : "";
         core.system.enqueueSystemEvent(`Assistant sent${preview} [message_id:${displayId}]`, {
           sessionKey: pending.sessionKey,
@@ -976,7 +976,7 @@ export async function processMessage(
       timestamp: Date.now(),
     });
     const displayId = cacheEntry.shortId || trimmed;
-    const preview = snippet ? ` "${snippet.slice(0, 12)}${snippet.length > 12 ? "â€¦" : ""}"` : "";
+    const preview = snippet ? ` "${snippet.slice(0, 12)}${snippet.length > 12 ? "â€? : ""}"` : "";
     core.system.enqueueSystemEvent(`Assistant sent${preview} [message_id:${displayId}]`, {
       sessionKey: route.sessionKey,
       contextKey: `bluebubbles:outbound:${outboundTarget}:${trimmed}`,

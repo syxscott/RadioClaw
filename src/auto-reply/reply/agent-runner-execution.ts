@@ -433,7 +433,7 @@ export async function runAgentTurnWithFallback(params: {
                     // Serialize tool result delivery to preserve message ordering.
                     // Without this, concurrent tool callbacks race through typing signals
                     // and message sends, causing out-of-order delivery to the user.
-                    // See: https://github.com/openclaw/openclaw/issues/11044
+                    // See: https://github.com/RadioClaw/RadioClaw/issues/11044
                     let toolResultChain: Promise<void> = Promise.resolve();
                     return (payload: ReplyPayload) => {
                       toolResultChain = toolResultChain
@@ -591,7 +591,7 @@ export async function runAgentTurnWithFallback(params: {
 
       if (isTransientHttp && !didRetryTransientHttpError) {
         didRetryTransientHttpError = true;
-        // Retry the full runWithModelFallback() cycle — transient errors
+        // Retry the full runWithModelFallback() cycle �?transient errors
         // (502/521/etc.) typically affect the whole provider, so falling
         // back to an alternate model first would not help. Instead we wait
         // and retry the complete primary→fallback chain.
@@ -610,10 +610,10 @@ export async function runAgentTurnWithFallback(params: {
         : message;
       const trimmedMessage = safeMessage.replace(/\.\s*$/, "");
       const fallbackText = isContextOverflow
-        ? "⚠️ Context overflow — prompt too large for this model. Try a shorter message or a larger-context model."
+        ? "⚠️ Context overflow �?prompt too large for this model. Try a shorter message or a larger-context model."
         : isRoleOrderingError
           ? "⚠️ Message ordering conflict - please try again. If this persists, use /new to start a fresh session."
-          : `⚠️ Agent failed before reply: ${trimmedMessage}.\nLogs: openclaw logs --follow`;
+          : `⚠️ Agent failed before reply: ${trimmedMessage}.\nLogs: RadioClaw logs --follow`;
 
       return {
         kind: "final",
@@ -635,7 +635,7 @@ export async function runAgentTurnWithFallback(params: {
     return {
       kind: "final",
       payload: {
-        text: "⚠️ Context overflow — this conversation is too large for the model. Use /new to start a fresh session.",
+        text: "⚠️ Context overflow �?this conversation is too large for the model. Use /new to start a fresh session.",
       },
     };
   }

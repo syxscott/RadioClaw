@@ -9,8 +9,8 @@ title: "Text-to-Speech"
 
 # Text-to-speech (TTS)
 
-OpenClaw can convert outbound replies into audio using ElevenLabs, OpenAI, or Edge TTS.
-It works anywhere OpenClaw can send audio; Telegram gets a round voice-note bubble.
+RadioClaw can convert outbound replies into audio using ElevenLabs, OpenAI, or Edge TTS.
+It works anywhere RadioClaw can send audio; Telegram gets a round voice-note bubble.
 
 ## Supported services
 
@@ -23,13 +23,11 @@ It works anywhere OpenClaw can send audio; Telegram gets a round voice-note bubb
 Edge TTS uses Microsoft Edge's online neural TTS service via the `node-edge-tts`
 library. It's a hosted service (not local), uses Microsoft’s endpoints, and does
 not require an API key. `node-edge-tts` exposes speech configuration options and
-output formats, but not all options are supported by the Edge service. citeturn2search0
-
+output formats, but not all options are supported by the Edge service. citeturn2search0�?
 Because Edge TTS is a public web service without a published SLA or quota, treat it
 as best-effort. If you need guaranteed limits and support, use OpenAI or ElevenLabs.
 Microsoft's Speech REST API documents a 10‑minute audio limit per request; Edge TTS
-does not publish limits, so assume similar or lower limits. citeturn0search3
-
+does not publish limits, so assume similar or lower limits. citeturn0search3�?
 ## Optional keys
 
 If you want OpenAI or ElevenLabs:
@@ -37,7 +35,7 @@ If you want OpenAI or ElevenLabs:
 - `ELEVENLABS_API_KEY` (or `XI_API_KEY`)
 - `OPENAI_API_KEY`
 
-Edge TTS does **not** require an API key. If no API keys are found, OpenClaw defaults
+Edge TTS does **not** require an API key. If no API keys are found, RadioClaw defaults
 to Edge TTS (unless disabled via `messages.tts.edge.enabled=false`).
 
 If multiple providers are configured, the selected provider is used first and the others are fallback options.
@@ -63,7 +61,7 @@ when no OpenAI or ElevenLabs API keys are available.
 
 ## Config
 
-TTS config lives under `messages.tts` in `openclaw.json`.
+TTS config lives under `messages.tts` in `RadioClaw.json`.
 Full schema is in [Gateway configuration](/gateway/configuration).
 
 ### Minimal config (enable + provider)
@@ -162,7 +160,7 @@ Full schema is in [Gateway configuration](/gateway/configuration).
       auto: "always",
       maxTextLength: 4000,
       timeoutMs: 30000,
-      prefsPath: "~/.openclaw/settings/tts.json",
+      prefsPath: "~/.RadioClaw/settings/tts.json",
     },
   },
 }
@@ -206,7 +204,7 @@ Then run:
 - `enabled`: legacy toggle (doctor migrates this to `auto`).
 - `mode`: `"final"` (default) or `"all"` (includes tool/block replies).
 - `provider`: `"elevenlabs"`, `"openai"`, or `"edge"` (fallback is automatic).
-- If `provider` is **unset**, OpenClaw prefers `openai` (if key), then `elevenlabs` (if key),
+- If `provider` is **unset**, RadioClaw prefers `openai` (if key), then `elevenlabs` (if key),
   otherwise `edge`.
 - `summaryModel`: optional cheap model for auto-summary; defaults to `agents.defaults.model.primary`.
   - Accepts `provider/model` or a configured model alias.
@@ -301,7 +299,7 @@ Optional allowlist (enable provider switching while keeping other knobs configur
 ## Per-user preferences
 
 Slash commands write local overrides to `prefsPath` (default:
-`~/.openclaw/settings/tts.json`, override with `OPENCLAW_TTS_PREFS` or
+`~/.RadioClaw/settings/tts.json`, override with `RadioClaw_TTS_PREFS` or
 `messages.tts.prefsPath`).
 
 Stored fields:
@@ -321,17 +319,14 @@ These override `messages.tts.*` for that host.
   - 44.1kHz / 128kbps is the default balance for speech clarity.
 - **Edge TTS**: uses `edge.outputFormat` (default `audio-24khz-48kbitrate-mono-mp3`).
   - `node-edge-tts` accepts an `outputFormat`, but not all formats are available
-    from the Edge service. citeturn2search0
-  - Output format values follow Microsoft Speech output formats (including Ogg/WebM Opus). citeturn1search0
-  - Telegram `sendVoice` accepts OGG/MP3/M4A; use OpenAI/ElevenLabs if you need
-    guaranteed Opus voice notes. citeturn1search1
-  - If the configured Edge output format fails, OpenClaw retries with MP3.
+    from the Edge service. citeturn2search0�?  - Output format values follow Microsoft Speech output formats (including Ogg/WebM Opus). citeturn1search0�?  - Telegram `sendVoice` accepts OGG/MP3/M4A; use OpenAI/ElevenLabs if you need
+    guaranteed Opus voice notes. citeturn1search1�?  - If the configured Edge output format fails, RadioClaw retries with MP3.
 
 OpenAI/ElevenLabs formats are fixed; Telegram expects Opus for voice-note UX.
 
 ## Auto-TTS behavior
 
-When enabled, OpenClaw:
+When enabled, RadioClaw:
 
 - skips TTS if the reply already contains media or a `MEDIA:` directive.
 - skips very short replies (< 10 chars).
@@ -362,7 +357,7 @@ Reply -> TTS enabled?
 There is a single command: `/tts`.
 See [Slash commands](/tools/slash-commands) for enablement details.
 
-Discord note: `/tts` is a built-in Discord command, so OpenClaw registers
+Discord note: `/tts` is a built-in Discord command, so RadioClaw registers
 `/voice` as the native command there. Text `/tts ...` still works.
 
 ```
@@ -374,7 +369,7 @@ Discord note: `/tts` is a built-in Discord command, so OpenClaw registers
 /tts provider openai
 /tts limit 2000
 /tts summary off
-/tts audio Hello from OpenClaw
+/tts audio Hello from RadioClaw
 ```
 
 Notes:

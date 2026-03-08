@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { DiscordGuildChannelConfig, DiscordGuildEntry } from "../config/types.js";
 import { isRecord } from "../utils.js";
 import { inspectDiscordAccount } from "./account-inspect.js";
@@ -56,7 +56,7 @@ function listConfiguredGuildChannelKeys(
       if (!channelId) {
         continue;
       }
-      // Skip wildcard keys (e.g. "*" meaning "all channels") â€” they are valid
+      // Skip wildcard keys (e.g. "*" meaning "all channels") â€?they are valid
       // config but are not real channel IDs and should not be audited.
       if (channelId === "*") {
         continue;
@@ -71,7 +71,7 @@ function listConfiguredGuildChannelKeys(
 }
 
 export function collectDiscordAuditChannelIds(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
 }) {
   const account = inspectDiscordAccount({

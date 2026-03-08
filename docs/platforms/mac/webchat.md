@@ -17,14 +17,14 @@ agent (with a session switcher for other sessions).
 
 ## Launch & debugging
 
-- Manual: Lobster menu → “Open Chat”.
+- Manual: Lobster menu �?“Open Chat�?
 - Auto‑open for testing:
 
   ```bash
-  dist/OpenClaw.app/Contents/MacOS/OpenClaw --webchat
+  dist/RadioClaw.app/Contents/MacOS/RadioClaw --webchat
   ```
 
-- Logs: `./scripts/clawlog.sh` (subsystem `ai.openclaw`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `ai.RadioClaw`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

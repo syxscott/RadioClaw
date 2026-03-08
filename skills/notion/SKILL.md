@@ -4,7 +4,7 @@ description: Notion API for creating and managing pages, databases, and blocks.
 homepage: https://developers.notion.com
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       { "emoji": "ðŸ“", "requires": { "env": ["NOTION_API_KEY"] }, "primaryEnv": "NOTION_API_KEY" },
   }
 ---
@@ -24,7 +24,7 @@ mkdir -p ~/.config/notion
 echo "ntn_your_key_here" > ~/.config/notion/api_key
 ```
 
-4. Share target pages/databases with your integration (click "..." â†’ "Connect to" â†’ your integration name)
+4. Share target pages/databases with your integration (click "..." â†?"Connect to" â†?your integration name)
 
 ## API Basics
 
@@ -156,7 +156,7 @@ Common property formats for database items:
 
 ## Key Differences in 2025-09-03
 
-- **Databases â†’ Data Sources:** Use `/data_sources/` endpoints for queries and retrieval
+- **Databases â†?Data Sources:** Use `/data_sources/` endpoints for queries and retrieval
 - **Two IDs:** Each database now has both a `database_id` and a `data_source_id`
   - Use `database_id` when creating pages (`parent: {"database_id": "..."}`)
   - Use `data_source_id` when querying (`POST /v1/data_sources/{id}/query`)
@@ -167,7 +167,7 @@ Common property formats for database items:
 ## Notes
 
 - Page/database IDs are UUIDs (with or without dashes)
-- The API cannot set database view filters â€” that's UI-only
+- The API cannot set database view filters â€?that's UI-only
 - Rate limit: ~3 requests/second average, with `429 rate_limited` responses using `Retry-After`
 - Append block children: up to 100 children per request, up to two levels of nesting in a single append request
 - Payload size limits: up to 1000 block elements and 500KB overall

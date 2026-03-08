@@ -86,7 +86,7 @@ export function waitForSlackSocketDisconnect(
 /**
  * Detect non-recoverable Slack API / auth errors that should NOT be retried.
  * These indicate permanent credential problems (revoked bot, deactivated account, etc.)
- * and retrying will never succeed â€” continuing to retry blocks the entire gateway.
+ * and retrying will never succeed â€?continuing to retry blocks the entire gateway.
  */
 export function isNonRecoverableSlackAuthError(error: unknown): boolean {
   const msg = error instanceof Error ? error.message : typeof error === "string" ? error : "";

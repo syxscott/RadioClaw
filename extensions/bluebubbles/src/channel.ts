@@ -1,8 +1,8 @@
 import type {
   ChannelAccountSnapshot,
   ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/bluebubbles";
+  RadioClawConfig,
+} from "RadioClaw/plugin-sdk/bluebubbles";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -17,13 +17,13 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/bluebubbles";
+} from "RadioClaw/plugin-sdk/bluebubbles";
 import {
   buildAccountScopedDmSecurityPolicy,
   collectOpenGroupPolicyRestrictSendersWarnings,
   formatNormalizedAllowFromEntries,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,

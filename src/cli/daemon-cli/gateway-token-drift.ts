@@ -1,8 +1,8 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { resolveGatewayCredentialsFromConfig } from "../../gateway/credentials.js";
 
 export function resolveGatewayTokenForDriftCheck(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   env?: NodeJS.ProcessEnv;
 }) {
   return resolveGatewayCredentialsFromConfig({

@@ -4,7 +4,7 @@ description: Search GIF providers with CLI/TUI, download results, and extract st
 homepage: https://gifgrep.com
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
         "emoji": "ðŸ§²",
         "requires": { "bins": ["gifgrep"] },
@@ -35,7 +35,7 @@ Use `gifgrep` to search GIF providers (Tenor/Giphy), browse in a TUI, download r
 
 GIF-Grab (gifgrep workflow)
 
-- Search â†’ preview â†’ download â†’ extract (still/sheet) for fast review and sharing.
+- Search â†?preview â†?download â†?extract (still/sheet) for fast review and sharing.
 
 Quick start
 

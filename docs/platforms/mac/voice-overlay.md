@@ -33,11 +33,11 @@ Audience: macOS app contributors. Goal: keep the voice overlay predictable when 
    - `VoiceWakeOverlayView` renders only via the publisher; it never mutates global singletons directly.
    - Overlay user actions (`sendNow`, `dismiss`, `edit`) call back into the coordinator with the session token.
 4. **Unified send path**
-   - On `endCapture`: if trimmed text is empty → dismiss; else `performSend(session:)` (plays send chime once, forwards, dismisses).
+   - On `endCapture`: if trimmed text is empty �?dismiss; else `performSend(session:)` (plays send chime once, forwards, dismisses).
    - Push-to-talk: no delay; wake-word: optional delay for auto-send.
    - Apply a short cooldown to the wake runtime after push-to-talk finishes so wake-word doesn’t immediately retrigger.
 5. **Logging**
-   - Coordinator emits `.info` logs in subsystem `ai.openclaw`, categories `voicewake.overlay` and `voicewake.chime`.
+   - Coordinator emits `.info` logs in subsystem `ai.RadioClaw`, categories `voicewake.overlay` and `voicewake.chime`.
    - Key events: `session_started`, `adopted_by_push_to_talk`, `partial`, `finalized`, `send`, `dismiss`, `cancel`, `cooldown`.
 
 ## Debugging checklist
@@ -45,7 +45,7 @@ Audience: macOS app contributors. Goal: keep the voice overlay predictable when 
 - Stream logs while reproducing a sticky overlay:
 
   ```bash
-  sudo log stream --predicate 'subsystem == "ai.openclaw" AND category CONTAINS "voicewake"' --level info --style compact
+  sudo log stream --predicate 'subsystem == "ai.RadioClaw" AND category CONTAINS "voicewake"' --level info --style compact
   ```
 
 - Verify only one active session token; stale callbacks should be dropped by the coordinator.

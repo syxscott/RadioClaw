@@ -371,12 +371,12 @@ describe("edge cases", () => {
 
   it("handles unicode in profile fields", () => {
     const profile: NostrProfile = {
-      name: "日本語ユーザー",
+      name: "日本語ユーザ�?,
       about: "Привет мир! 你好世界!",
     };
 
     const content = profileToContent(profile);
-    expect(content.name).toBe("日本語ユーザー");
+    expect(content.name).toBe("日本語ユーザ�?);
 
     const event = createProfileEvent(TEST_SK, profile);
     expect(verifyEvent(event)).toBe(true);

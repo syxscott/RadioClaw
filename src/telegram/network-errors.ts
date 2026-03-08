@@ -31,7 +31,7 @@ const RECOVERABLE_ERROR_CODES = new Set([
  * meaning the message was definitely not delivered and it is safe to retry.
  *
  * Contrast with RECOVERABLE_ERROR_CODES which includes codes like ECONNRESET and ETIMEDOUT
- * that can fire *after* Telegram has already received and delivered a message â€” retrying
+ * that can fire *after* Telegram has already received and delivered a message â€?retrying
  * those would cause duplicate messages.
  */
 const PRE_CONNECT_ERROR_CODES = new Set([

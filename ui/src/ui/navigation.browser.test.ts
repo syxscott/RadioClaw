@@ -33,22 +33,22 @@ describe("control UI routing", () => {
   });
 
   it("infers nested base paths", async () => {
-    const app = mountApp("/apps/openclaw/cron");
+    const app = mountApp("/apps/RadioClaw/cron");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/apps/openclaw");
+    expect(app.basePath).toBe("/apps/RadioClaw");
     expect(app.tab).toBe("cron");
-    expect(window.location.pathname).toBe("/apps/openclaw/cron");
+    expect(window.location.pathname).toBe("/apps/RadioClaw/cron");
   });
 
   it("honors explicit base path overrides", async () => {
-    window.__OPENCLAW_CONTROL_UI_BASE_PATH__ = "/openclaw";
-    const app = mountApp("/openclaw/sessions");
+    window.__RadioClaw_CONTROL_UI_BASE_PATH__ = "/RadioClaw";
+    const app = mountApp("/RadioClaw/sessions");
     await app.updateComplete;
 
-    expect(app.basePath).toBe("/openclaw");
+    expect(app.basePath).toBe("/RadioClaw");
     expect(app.tab).toBe("sessions");
-    expect(window.location.pathname).toBe("/openclaw/sessions");
+    expect(window.location.pathname).toBe("/RadioClaw/sessions");
   });
 
   it("updates the URL when clicking nav items", async () => {
@@ -151,7 +151,7 @@ describe("control UI routing", () => {
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
-    expect(JSON.parse(localStorage.getItem("openclaw.control.settings.v1") ?? "{}").token).toBe(
+    expect(JSON.parse(localStorage.getItem("RadioClaw.control.settings.v1") ?? "{}").token).toBe(
       undefined,
     );
     expect(window.location.pathname).toBe("/ui/overview");
@@ -169,17 +169,17 @@ describe("control UI routing", () => {
 
   it("hydrates token from URL params even when settings already set", async () => {
     localStorage.setItem(
-      "openclaw.control.settings.v1",
-      JSON.stringify({ token: "existing-token", gatewayUrl: "wss://gateway.example/openclaw" }),
+      "RadioClaw.control.settings.v1",
+      JSON.stringify({ token: "existing-token", gatewayUrl: "wss://gateway.example/RadioClaw" }),
     );
     const app = mountApp("/ui/overview?token=abc123");
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
-    expect(JSON.parse(localStorage.getItem("openclaw.control.settings.v1") ?? "{}")).toMatchObject({
-      gatewayUrl: "wss://gateway.example/openclaw",
+    expect(JSON.parse(localStorage.getItem("RadioClaw.control.settings.v1") ?? "{}")).toMatchObject({
+      gatewayUrl: "wss://gateway.example/RadioClaw",
     });
-    expect(JSON.parse(localStorage.getItem("openclaw.control.settings.v1") ?? "{}").token).toBe(
+    expect(JSON.parse(localStorage.getItem("RadioClaw.control.settings.v1") ?? "{}").token).toBe(
       undefined,
     );
     expect(window.location.pathname).toBe("/ui/overview");
@@ -191,7 +191,7 @@ describe("control UI routing", () => {
     await app.updateComplete;
 
     expect(app.settings.token).toBe("abc123");
-    expect(JSON.parse(localStorage.getItem("openclaw.control.settings.v1") ?? "{}").token).toBe(
+    expect(JSON.parse(localStorage.getItem("RadioClaw.control.settings.v1") ?? "{}").token).toBe(
       undefined,
     );
     expect(window.location.pathname).toBe("/ui/overview");

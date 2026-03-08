@@ -62,7 +62,7 @@ export function renderToolCardSidebar(card: ToolCard, onOpenSidebar?: (content: 
         }
         const info = `## ${display.label}\n\n${
           detail ? `**Command:** \`${detail}\`\n\n` : ""
-        }*No output â€” tool completed successfully.*`;
+        }*No output â€?tool completed successfully.*`;
         onOpenSidebar!(info);
       }
     : undefined;

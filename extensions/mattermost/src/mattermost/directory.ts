@@ -1,8 +1,8 @@
 import type {
   ChannelDirectoryEntry,
-  OpenClawConfig,
+  RadioClawConfig,
   RuntimeEnv,
-} from "openclaw/plugin-sdk/mattermost";
+} from "RadioClaw/plugin-sdk/mattermost";
 import { listMattermostAccountIds, resolveMattermostAccount } from "./accounts.js";
 import {
   createMattermostClient,
@@ -13,7 +13,7 @@ import {
 } from "./client.js";
 
 export type MattermostDirectoryParams = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
   query?: string | null;
   limit?: number | null;
@@ -21,7 +21,7 @@ export type MattermostDirectoryParams = {
 };
 
 function buildClient(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
 }): MattermostClient | null {
   const account = resolveMattermostAccount({ cfg: params.cfg, accountId: params.accountId });
@@ -95,7 +95,7 @@ export async function listMattermostDirectoryGroups(
         });
       }
     } catch (err) {
-      // Token may be expired/revoked â€” skip this account and try others
+      // Token may be expired/revoked â€?skip this account and try others
       console.debug?.(
         "[mattermost-directory] listGroups: skipping account:",
         (err as Error)?.message,
@@ -111,7 +111,7 @@ export async function listMattermostDirectoryGroups(
  *
  * Uses only the first available client since all bots in a team see the same
  * user list (unlike channels where membership varies). Uses the first team
- * returned â€” multi-team setups will only see members from that team.
+ * returned â€?multi-team setups will only see members from that team.
  *
  * NOTE: per_page=200 for member listing; same pagination caveat as groups.
  */
@@ -131,7 +131,7 @@ export async function listMattermostDirectoryPeers(
     if (!teams.length) {
       return [];
     }
-    // Uses first team â€” multi-team setups may need iteration in the future
+    // Uses first team â€?multi-team setups may need iteration in the future
     const teamId = teams[0].id;
     const q = params.query?.trim().toLowerCase() || "";
 

@@ -395,7 +395,7 @@ function buildOversizedHistoryPlaceholder(message?: unknown): Record<string, unk
     role,
     timestamp,
     content: [{ type: "text", text: CHAT_HISTORY_OVERSIZED_PLACEHOLDER }],
-    __openclaw: { truncated: true, reason: "oversized" },
+    __RadioClaw: { truncated: true, reason: "oversized" },
   };
 }
 
@@ -988,7 +988,7 @@ export const chatHandlers: GatewayRequestHandlers = {
         sessionKey,
       });
       // Inject timestamp so agents know the current date/time.
-      // Only BodyForAgent gets the timestamp â€” Body stays raw for UI display.
+      // Only BodyForAgent gets the timestamp â€?Body stays raw for UI display.
       // See: https://github.com/moltbot/moltbot/issues/3658
       const stampedMessage = injectTimestamp(parsedMessage, timestampOptsFromConfig(cfg));
 

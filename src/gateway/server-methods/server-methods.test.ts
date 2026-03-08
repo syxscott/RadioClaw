@@ -176,7 +176,7 @@ describe("injectTimestamp", () => {
 
   it("does NOT double-stamp messages with cron-injected timestamps", () => {
     const cronMessage =
-      "[cron:abc123 my-job] do the thing\nCurrent time: Wednesday, January 28th, 2026 â€” 8:30 PM (America/New_York)";
+      "[cron:abc123 my-job] do the thing\nCurrent time: Wednesday, January 28th, 2026 â€?8:30 PM (America/New_York)";
     const result = injectTimestamp(cronMessage, { timezone: "America/New_York" });
 
     expect(result).toBe(cronMessage);
@@ -783,16 +783,16 @@ describe("logs.tail", () => {
   });
 
   it("falls back to latest rolling log file when today is missing", async () => {
-    const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), "openclaw-logs-"));
-    const older = path.join(tempDir, "openclaw-2026-01-20.log");
-    const newer = path.join(tempDir, "openclaw-2026-01-21.log");
+    const tempDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), "RadioClaw-logs-"));
+    const older = path.join(tempDir, "RadioClaw-2026-01-20.log");
+    const newer = path.join(tempDir, "RadioClaw-2026-01-21.log");
 
     await fsPromises.writeFile(older, '{"msg":"old"}\n');
     await fsPromises.writeFile(newer, '{"msg":"new"}\n');
     await fsPromises.utimes(older, new Date(0), new Date(0));
     await fsPromises.utimes(newer, new Date(), new Date());
 
-    setLoggerOverride({ file: path.join(tempDir, "openclaw-2026-01-22.log") });
+    setLoggerOverride({ file: path.join(tempDir, "RadioClaw-2026-01-22.log") });
 
     const respond = vi.fn();
     await logsHandlers["logs.tail"]({

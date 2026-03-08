@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { drainFormattedSystemEvents } from "../auto-reply/reply/session-updates.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { resolveMainSessionKey } from "../config/sessions.js";
 import { isCronSystemEvent } from "./heartbeat-runner.js";
 import { enqueueSystemEvent, peekSystemEvents, resetSystemEventsForTest } from "./system-events.js";
 
-const cfg = {} as unknown as OpenClawConfig;
+const cfg = {} as unknown as RadioClawConfig;
 const mainKey = resolveMainSessionKey(cfg);
 
 describe("system events (session routing)", () => {
@@ -14,15 +14,15 @@ describe("system events (session routing)", () => {
   });
 
   it("does not leak session-scoped events into main", async () => {
-    enqueueSystemEvent("Discord reaction added: âœ…", {
+    enqueueSystemEvent("Discord reaction added: âœ?, {
       sessionKey: "discord:group:123",
-      contextKey: "discord:reaction:added:msg:user:âœ…",
+      contextKey: "discord:reaction:added:msg:user:âœ?,
     });
 
     expect(peekSystemEvents(mainKey)).toEqual([]);
-    expect(peekSystemEvents("discord:group:123")).toEqual(["Discord reaction added: âœ…"]);
+    expect(peekSystemEvents("discord:group:123")).toEqual(["Discord reaction added: âœ?]);
 
-    // Main session gets no events â€” undefined returned
+    // Main session gets no events â€?undefined returned
     const main = await drainFormattedSystemEvents({
       cfg,
       sessionKey: mainKey,
@@ -31,7 +31,7 @@ describe("system events (session routing)", () => {
     });
     expect(main).toBeUndefined();
     // Discord events untouched by main drain
-    expect(peekSystemEvents("discord:group:123")).toEqual(["Discord reaction added: âœ…"]);
+    expect(peekSystemEvents("discord:group:123")).toEqual(["Discord reaction added: âœ?]);
 
     // Discord session gets its own events block
     const discord = await drainFormattedSystemEvents({
@@ -40,7 +40,7 @@ describe("system events (session routing)", () => {
       isMainSession: false,
       isNewSession: false,
     });
-    expect(discord).toMatch(/System:\s+\[[^\]]+\] Discord reaction added: âœ…/);
+    expect(discord).toMatch(/System:\s+\[[^\]]+\] Discord reaction added: âœ?);
     expect(peekSystemEvents("discord:group:123")).toEqual([]);
   });
 

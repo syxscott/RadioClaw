@@ -2,7 +2,7 @@ import {
   buildAccountScopedDmSecurityPolicy,
   createScopedAccountConfigAccessors,
   collectAllowlistProviderRestrictSendersWarnings,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import {
   applyAccountNameToChannelSection,
   buildBaseAccountStatusSnapshot,
@@ -29,7 +29,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "openclaw/plugin-sdk/signal";
+} from "RadioClaw/plugin-sdk/signal";
 import { getSignalRuntime } from "./runtime.js";
 
 const signalMessageActions: ChannelMessageActionAdapter = {

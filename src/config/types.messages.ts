@@ -98,7 +98,7 @@ export type MessagesConfig = {
    * - `{thinkingLevel}` or `{think}` - current thinking level (`high`, `low`, `off`)
    * - `{identity.name}` or `{identityName}` - agent identity name
    *
-   * Example: `"[{model} | think:{thinkingLevel}]"` â†’ `"[claude-opus-4-6 | think:high]"`
+   * Example: `"[{model} | think:{thinkingLevel}]"` â†?`"[claude-opus-4-6 | think:high]"`
    *
    * Unresolved variables remain as literal text (e.g., `{model}` if context unavailable).
    *

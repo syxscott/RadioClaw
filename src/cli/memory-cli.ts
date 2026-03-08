@@ -359,18 +359,18 @@ export async function runMemoryStatus(opts: MemoryCommandOptions) {
         let indexError: string | undefined;
         const syncFn = manager.sync ? manager.sync.bind(manager) : undefined;
         if (deep) {
-          await withProgress({ label: "Checking memoryâ€¦", total: 2 }, async (progress) => {
-            progress.setLabel("Probing vectorâ€¦");
+          await withProgress({ label: "Checking memoryâ€?, total: 2 }, async (progress) => {
+            progress.setLabel("Probing vectorâ€?);
             await manager.probeVectorAvailability();
             progress.tick();
-            progress.setLabel("Probing embeddingsâ€¦");
+            progress.setLabel("Probing embeddingsâ€?);
             embeddingProbe = await manager.probeEmbeddingAvailability();
             progress.tick();
           });
           if (opts.index && syncFn) {
             await withProgressTotals(
               {
-                label: "Indexing memoryâ€¦",
+                label: "Indexing memoryâ€?,
                 total: 0,
                 fallback: opts.verbose ? "line" : undefined,
               },
@@ -581,16 +581,16 @@ export function registerMemoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["openclaw memory status", "Show index and provider status."],
-          ["openclaw memory status --deep", "Probe embedding provider readiness."],
-          ["openclaw memory index --force", "Force a full reindex."],
-          ['openclaw memory search "meeting notes"', "Quick search using positional query."],
+          ["RadioClaw memory status", "Show index and provider status."],
+          ["RadioClaw memory status --deep", "Probe embedding provider readiness."],
+          ["RadioClaw memory index --force", "Force a full reindex."],
+          ['RadioClaw memory search "meeting notes"', "Quick search using positional query."],
           [
-            'openclaw memory search --query "deployment" --max-results 20',
+            'RadioClaw memory search --query "deployment" --max-results 20',
             "Limit results for focused troubleshooting.",
           ],
-          ["openclaw memory status --json", "Output machine-readable JSON (good for scripts)."],
-        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.openclaw.ai/cli/memory")}\n`,
+          ["RadioClaw memory status --json", "Output machine-readable JSON (good for scripts)."],
+        ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.RadioClaw.ai/cli/memory")}\n`,
     );
 
   memory
@@ -659,7 +659,7 @@ export function registerMemoryCli(program: Command) {
                 defaultRuntime.log("");
               }
               const startedAt = Date.now();
-              let lastLabel = "Indexing memoryâ€¦";
+              let lastLabel = "Indexing memoryâ€?;
               let lastCompleted = 0;
               let lastTotal = 0;
               const formatElapsed = () => {
@@ -697,7 +697,7 @@ export function registerMemoryCli(program: Command) {
               }
               await withProgressTotals(
                 {
-                  label: "Indexing memoryâ€¦",
+                  label: "Indexing memoryâ€?,
                   total: 0,
                   fallback: opts.verbose ? "line" : undefined,
                 },

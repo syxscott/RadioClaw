@@ -127,7 +127,7 @@ export function isBotMentioned(
 
 /**
  * Strip bot ship mention from message text for command detection.
- * "~bot-ship /status" â†’ "/status"
+ * "~bot-ship /status" â†?"/status"
  */
 export function stripBotMention(messageText: string, botShipName: string): string {
   if (!messageText || !botShipName) return messageText;

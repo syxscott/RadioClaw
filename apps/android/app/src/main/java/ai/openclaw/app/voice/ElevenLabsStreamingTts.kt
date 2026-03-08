@@ -1,4 +1,4 @@
-package ai.openclaw.app.voice
+package ai.RadioClaw.app.voice
 
 import android.media.AudioAttributes
 import android.media.AudioFormat
@@ -194,30 +194,29 @@ class ElevenLabsStreamingTts(
   }
 
   /**
-   * Send incremental text. Call with the full accumulated text so far â€”
-   * only the new portion (since last send) will be transmitted.
+   * Send incremental text. Call with the full accumulated text so far â€?   * only the new portion (since last send) will be transmitted.
    */
   // Track the full text we've sent so we can detect replacement vs append
   private var sentFullText = ""
 
   /**
       // If we already sent a superset of this text, it's just a stale/out-of-order
-      // event from a different thread â€” not a real divergence. Ignore it.
+      // event from a different thread â€?not a real divergence. Ignore it.
       if (sentFullText.startsWith(fullText)) return true
    * Returns true if text was accepted, false if text diverged (caller should restart).
    */
   @Synchronized
   fun sendText(fullText: String): Boolean {
     if (stopped) return false
-    if (finished) return true  // Already finishing â€” not a diverge, don't restart
+    if (finished) return true  // Already finishing â€?not a diverge, don't restart
 
     // Detect text replacement: if the new text doesn't start with what we already sent,
     // the stream has diverged (e.g., tool call interrupted and text was replaced).
     if (sentFullText.isNotEmpty() && !fullText.startsWith(sentFullText)) {
       // If we already sent a superset of this text, it's just a stale/out-of-order
-      // event from a different thread â€” not a real divergence. Ignore it.
+      // event from a different thread â€?not a real divergence. Ignore it.
       if (sentFullText.startsWith(fullText)) return true
-      Log.d(TAG, "text diverged â€” sent='${sentFullText.take(60)}' new='${fullText.take(60)}'")
+      Log.d(TAG, "text diverged â€?sent='${sentFullText.take(60)}' new='${fullText.take(60)}'")
       return false
     }
 
@@ -286,7 +285,7 @@ class ElevenLabsStreamingTts(
     val track = audioTrack ?: return
     if (stopped) return
 
-    // Start playback on first audio chunk â€” avoids underrun
+    // Start playback on first audio chunk â€?avoids underrun
     if (!trackStarted) {
       track.play()
       trackStarted = true

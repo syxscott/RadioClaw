@@ -8,7 +8,7 @@ title: "Channel Location Parsing"
 
 # Channel location parsing
 
-OpenClaw normalizes shared locations from chat channels into:
+RadioClaw normalizes shared locations from chat channels into:
 
 - human-readable text appended to the inbound body, and
 - structured fields in the auto-reply context payload.
@@ -26,7 +26,7 @@ Locations are rendered as friendly lines without brackets:
 - Pin:
   - `📍 48.858844, 2.294351 ±12m`
 - Named place:
-  - `📍 Eiffel Tower — Champ de Mars, Paris (48.858844, 2.294351 ±12m)`
+  - `📍 Eiffel Tower �?Champ de Mars, Paris (48.858844, 2.294351 ±12m)`
 - Live share:
   - `🛰 Live location: 48.858844, 2.294351 ±12m`
 

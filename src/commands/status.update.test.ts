@@ -90,7 +90,7 @@ describe("formatUpdateOneLiner", () => {
     });
 
     expect(formatUpdateOneLiner(update)).toBe(
-      `Update: git main · ↔ origin/main · dirty · behind 2 · npm latest ${VERSION} · deps ok`,
+      `Update: git main · �?origin/main · dirty · behind 2 · npm latest ${VERSION} · deps ok`,
     );
   });
 
@@ -141,7 +141,7 @@ describe("formatUpdateAvailableHint", () => {
     });
 
     expect(formatUpdateAvailableHint(update)).toBe(
-      `Update available (git behind 2 · npm ${latestVersion}). Run: openclaw update`,
+      `Update available (git behind 2 · npm ${latestVersion}). Run: RadioClaw update`,
     );
   });
 });

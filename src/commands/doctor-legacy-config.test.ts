@@ -13,7 +13,7 @@ describe("normalizeCompatibilityConfigValues preview streaming aliases", () => {
 
     expect(res.config.channels?.telegram?.streaming).toBe("off");
     expect(res.config.channels?.telegram?.streamMode).toBeUndefined();
-    expect(res.changes).toEqual(["Normalized channels.telegram.streaming boolean â†’ enum (off)."]);
+    expect(res.changes).toEqual(["Normalized channels.telegram.streaming boolean â†?enum (off)."]);
   });
 
   it("normalizes discord boolean streaming aliases to enum", () => {
@@ -28,7 +28,7 @@ describe("normalizeCompatibilityConfigValues preview streaming aliases", () => {
     expect(res.config.channels?.discord?.streaming).toBe("partial");
     expect(res.config.channels?.discord?.streamMode).toBeUndefined();
     expect(res.changes).toEqual([
-      "Normalized channels.discord.streaming boolean â†’ enum (partial).",
+      "Normalized channels.discord.streaming boolean â†?enum (partial).",
     ]);
   });
 
@@ -45,7 +45,7 @@ describe("normalizeCompatibilityConfigValues preview streaming aliases", () => {
     expect(res.config.channels?.slack?.nativeStreaming).toBe(false);
     expect(res.config.channels?.slack?.streamMode).toBeUndefined();
     expect(res.changes).toEqual([
-      "Moved channels.slack.streaming (boolean) â†’ channels.slack.nativeStreaming (false).",
+      "Moved channels.slack.streaming (boolean) â†?channels.slack.nativeStreaming (false).",
     ]);
   });
 });

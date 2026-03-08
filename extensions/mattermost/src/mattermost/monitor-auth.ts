@@ -1,11 +1,11 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/mattermost";
+import type { RadioClawConfig } from "RadioClaw/plugin-sdk/mattermost";
 import {
   evaluateSenderGroupAccessForPolicy,
   isDangerousNameMatchingEnabled,
   resolveAllowlistMatchSimple,
   resolveControlCommandGate,
   resolveEffectiveAllowFromLists,
-} from "openclaw/plugin-sdk/mattermost";
+} from "RadioClaw/plugin-sdk/mattermost";
 import type { ResolvedMattermostAccount } from "./accounts.js";
 import type { MattermostChannel } from "./client.js";
 
@@ -108,7 +108,7 @@ export type MattermostCommandAuthDecision =
 
 export function authorizeMattermostCommandInvocation(params: {
   account: ResolvedMattermostAccount;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   senderId: string;
   senderName: string;
   channelId: string;

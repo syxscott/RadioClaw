@@ -18,11 +18,11 @@ see-also:
 
 This document defines how to execute OpenProse programs. You are the OpenProse VM—an intelligent virtual machine that spawns subagent sessions according to a structured program.
 
-## OpenClaw Runtime Mapping
+## RadioClaw Runtime Mapping
 
-- **Task tool** in the upstream spec == OpenClaw `sessions_spawn`
-- **File I/O** == OpenClaw `read`/`write`
-- **Remote fetch** == OpenClaw `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == RadioClaw `sessions_spawn`
+- **File I/O** == RadioClaw `read`/`write`
+- **Remote fetch** == RadioClaw `web_fetch` (or `exec` with curl when POST is required)
 
 ## CLI Commands
 
@@ -42,19 +42,19 @@ OpenProse is invoked via `prose` commands:
 You can run any `.prose` program from a URL or registry reference:
 
 ```bash
-# Direct URL — any fetchable URL works
+# Direct URL �?any fetchable URL works
 prose run https://raw.githubusercontent.com/openprose/prose/main/skills/open-prose/examples/48-habit-miner.prose
 
-# Registry shorthand — handle/slug resolves to p.prose.md
+# Registry shorthand �?handle/slug resolves to p.prose.md
 prose run irl-danb/habit-miner     # Fetches https://p.prose.md/irl-danb/habit-miner
 prose run alice/code-review        # Fetches https://p.prose.md/alice/code-review
 ```
 
 **Resolution rules:**
 
-- Starts with `http://` or `https://` → fetch directly
-- Contains `/` but no protocol → resolve to `https://p.prose.md/{path}`
-- Otherwise → treat as local file path
+- Starts with `http://` or `https://` �?fetch directly
+- Contains `/` but no protocol �?resolve to `https://p.prose.md/{path}`
+- Otherwise �?treat as local file path
 
 This same resolution applies to `use` statements inside programs:
 
@@ -158,19 +158,19 @@ All execution state lives in `.prose/` (project-level) or `~/.prose/` (user-leve
 .prose/
 ├── .env                              # Config (simple key=value format)
 ├── runs/
-│   └── {YYYYMMDD}-{HHMMSS}-{random}/
-│       ├── program.prose             # Copy of running program
-│       ├── state.md                  # Execution state with code snippets
-│       ├── bindings/
-│       │   └── {name}.md             # All named values (input/output/let/const)
-│       ├── imports/
-│       │   └── {handle}--{slug}/     # Nested program executions (same structure recursively)
-│       └── agents/
-│           └── {name}/
-│               ├── memory.md         # Agent's current state
-│               ├── {name}-001.md     # Historical segments (flattened)
-│               ├── {name}-002.md
-│               └── ...
+�?  └── {YYYYMMDD}-{HHMMSS}-{random}/
+�?      ├── program.prose             # Copy of running program
+�?      ├── state.md                  # Execution state with code snippets
+�?      ├── bindings/
+�?      �?  └── {name}.md             # All named values (input/output/let/const)
+�?      ├── imports/
+�?      �?  └── {handle}--{slug}/     # Nested program executions (same structure recursively)
+�?      └── agents/
+�?          └── {name}/
+�?              ├── memory.md         # Agent's current state
+�?              ├── {name}-001.md     # Historical segments (flattened)
+�?              ├── {name}-002.md
+�?              └── ...
 └── agents/                           # Project-scoped agent memory
     └── {name}/
         ├── memory.md
@@ -206,8 +206,8 @@ If a program exceeds 999 segments, extend to 4 digits: `captain-1000.md`.
 
 OpenProse supports two state management systems. See the state files for detailed documentation:
 
-- **`state/filesystem.md`** — File-system state using the directory structure above (default)
-- **`state/in-context.md`** — In-context state using the narration protocol
+- **`state/filesystem.md`** �?File-system state using the directory structure above (default)
+- **`state/in-context.md`** �?In-context state using the narration protocol
 
 ### Who Writes What
 
@@ -853,10 +853,10 @@ Imported programs use the **same unified structure recursively**:
 ├── program.prose
 ├── state.md
 ├── bindings/
-│   └── {name}.md
+�?  └── {name}.md
 ├── imports/                    # Nested imports go here
-│   └── {handle2}--{slug2}/
-│       └── ...
+�?  └── {handle2}--{slug2}/
+�?      └── ...
 └── agents/
     └── {name}/
 ```

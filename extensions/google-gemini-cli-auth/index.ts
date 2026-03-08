@@ -1,17 +1,17 @@
 import {
   buildOauthProviderAuthResult,
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type RadioClawPluginApi,
   type ProviderAuthContext,
-} from "openclaw/plugin-sdk/google-gemini-cli-auth";
+} from "RadioClaw/plugin-sdk/google-gemini-cli-auth";
 import { loginGeminiCliOAuth } from "./oauth.js";
 
 const PROVIDER_ID = "google-gemini-cli";
 const PROVIDER_LABEL = "Gemini CLI OAuth";
 const DEFAULT_MODEL = "google-gemini-cli/gemini-3.1-pro-preview";
 const ENV_VARS = [
-  "OPENCLAW_GEMINI_OAUTH_CLIENT_ID",
-  "OPENCLAW_GEMINI_OAUTH_CLIENT_SECRET",
+  "RadioClaw_GEMINI_OAUTH_CLIENT_ID",
+  "RadioClaw_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_ID",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];
@@ -21,7 +21,7 @@ const geminiCliPlugin = {
   name: "Google Gemini CLI Auth",
   description: "OAuth flow for Gemini CLI (Google Code Assist)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: RadioClawPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,
@@ -35,7 +35,7 @@ const geminiCliPlugin = {
           hint: "PKCE + localhost callback",
           kind: "oauth",
           run: async (ctx: ProviderAuthContext) => {
-            const spin = ctx.prompter.progress("Starting Gemini CLI OAuthâ€¦");
+            const spin = ctx.prompter.progress("Starting Gemini CLI OAuthâ€?);
             try {
               const result = await loginGeminiCliOAuth({
                 isRemote: ctx.isRemote,

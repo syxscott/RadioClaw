@@ -55,7 +55,7 @@ describe("extra-params: Kilocode wrapper", () => {
       modelId: "anthropic/claude-sonnet-4",
     });
 
-    expect(headers?.["X-KILOCODE-FEATURE"]).toBe("openclaw");
+    expect(headers?.["X-KILOCODE-FEATURE"]).toBe("RadioClaw");
   });
 
   it("reads X-KILOCODE-FEATURE from KILOCODE_FEATURE env var", () => {
@@ -78,7 +78,7 @@ describe("extra-params: Kilocode wrapper", () => {
       callerHeaders: { "X-KILOCODE-FEATURE": "should-be-overwritten" },
     });
 
-    expect(headers?.["X-KILOCODE-FEATURE"]).toBe("openclaw");
+    expect(headers?.["X-KILOCODE-FEATURE"]).toBe("RadioClaw");
   });
 
   it("does not inject header for non-kilocode providers", () => {
@@ -175,7 +175,7 @@ describe("extra-params: Kilocode kilo/auto reasoning", () => {
 
     void agent.streamFn?.(model, context, {});
 
-    // x-ai models reject reasoning.effort â€” should be skipped
+    // x-ai models reject reasoning.effort â€?should be skipped
     expect(capturedPayload?.reasoning).toBeUndefined();
     expect(capturedPayload).not.toHaveProperty("reasoning_effort");
   });

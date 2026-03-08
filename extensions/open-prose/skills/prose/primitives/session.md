@@ -79,10 +79,10 @@ Context provided:
 
 When context feels overwhelming, process in this order:
 
-1. **Skim outer state** â†’ Where am I in the bigger picture?
-2. **Read your memory** â†’ What do I already know?
-3. **Focus on task context** â†’ What am I doing right now?
-4. **Synthesize** â†’ How does my prior knowledge inform this task?
+1. **Skim outer state** â†?Where am I in the bigger picture?
+2. **Read your memory** â†?What do I already know?
+3. **Focus on task context** â†?What am I doing right now?
+4. **Synthesize** â†?How does my prior knowledge inform this task?
 
 ### 1.5 Execution Scope (Block Invocations)
 
@@ -210,7 +210,7 @@ Update your memory file in this structure:
 
 [Append new decisions with dates and rationale]
 
-- [date]: [decision] â€” [why]
+- [date]: [decision] â€?[why]
 
 ## Open Concerns
 
@@ -286,9 +286,9 @@ Over many segments, your memory file grows. When it becomes unwieldy:
 
 If you receive very large task context (big code blocks, long documents):
 
-1. **Don't try to hold it all** â€” reference by location
-2. **Note what you examined** â€” "Reviewed lines 1-200, focused on auth flow"
-3. **Record specific locations** â€” future sessions can re-examine if needed
+1. **Don't try to hold it all** â€?reference by location
+2. **Note what you examined** â€?"Reviewed lines 1-200, focused on auth flow"
+3. **Record specific locations** â€?future sessions can re-examine if needed
 
 ---
 
@@ -446,8 +446,8 @@ If you are a persistent agent (invoked with `resume:`), you have additional resp
 
 ## Decisions Made
 
-- {date}: {decision} â€” {rationale}
-- {date}: {decision} â€” {rationale}
+- {date}: {decision} â€?{rationale}
+- {date}: {decision} â€?{rationale}
 
 ## Open Concerns
 
@@ -581,13 +581,13 @@ Segment: captain-003.md
 
 As a subagent in an OpenProse program:
 
-1. **Understand your context layers** â€” outer state, memory, task context
-2. **Read context by reference** â€” access binding files/database directly, load what you need
-3. **Build on your memory** â€” you have continuity, use it
-4. **Compact, don't summarize** â€” preserve specifics, drop reasoning chains
-5. **Signal clearly** â€” help the VM understand your decisions
-6. **Test your compaction** â€” would future-you understand exactly what happened?
-7. **Write outputs directly** â€” persist to the binding location you're given
-8. **Return pointers, not values** â€” the VM tracks locations, not content
+1. **Understand your context layers** â€?outer state, memory, task context
+2. **Read context by reference** â€?access binding files/database directly, load what you need
+3. **Build on your memory** â€?you have continuity, use it
+4. **Compact, don't summarize** â€?preserve specifics, drop reasoning chains
+5. **Signal clearly** â€?help the VM understand your decisions
+6. **Test your compaction** â€?would future-you understand exactly what happened?
+7. **Write outputs directly** â€?persist to the binding location you're given
+8. **Return pointers, not values** â€?the VM tracks locations, not content
 
 Your memory is what makes you persistent. The VM's efficiency depends on you writing outputs and returning confirmationsâ€”not dumping full content back through the substrate.

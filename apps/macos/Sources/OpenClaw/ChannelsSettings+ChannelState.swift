@@ -1,4 +1,4 @@
-import OpenClawProtocol
+import RadioClawProtocol
 import SwiftUI
 
 extension ChannelsSettings {
@@ -156,7 +156,7 @@ extension ChannelsSettings {
 
     var whatsAppSummary: String {
         guard let status = self.channelStatus("whatsapp", as: ChannelsStatusSnapshot.WhatsAppStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         if !status.linked { return "Not linked" }
         if status.connected { return "Connected" }
         if status.running { return "Running" }
@@ -165,31 +165,31 @@ extension ChannelsSettings {
 
     var telegramSummary: String {
         guard let status = self.channelStatus("telegram", as: ChannelsStatusSnapshot.TelegramStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         return self.configuredChannelSummary(configured: status.configured, running: status.running)
     }
 
     var discordSummary: String {
         guard let status = self.channelStatus("discord", as: ChannelsStatusSnapshot.DiscordStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         return self.configuredChannelSummary(configured: status.configured, running: status.running)
     }
 
     var googlechatSummary: String {
         guard let status = self.channelStatus("googlechat", as: ChannelsStatusSnapshot.GoogleChatStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         return self.configuredChannelSummary(configured: status.configured, running: status.running)
     }
 
     var signalSummary: String {
         guard let status = self.channelStatus("signal", as: ChannelsStatusSnapshot.SignalStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         return self.configuredChannelSummary(configured: status.configured, running: status.running)
     }
 
     var imessageSummary: String {
         guard let status = self.channelStatus("imessage", as: ChannelsStatusSnapshot.IMessageStatus.self)
-        else { return "Checkingâ€¦" }
+        else { return "Checkingâ€? }
         return self.configuredChannelSummary(configured: status.configured, running: status.running)
     }
 

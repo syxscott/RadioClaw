@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { startHeartbeatRunner } from "./heartbeat-runner.js";
 import { requestHeartbeatNow, resetHeartbeatWakeStateForTests } from "./heartbeat-wake.js";
 
@@ -8,7 +8,7 @@ describe("startHeartbeatRunner", () => {
     return startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as RadioClawConfig,
       runOnce,
     });
   }
@@ -42,7 +42,7 @@ describe("startHeartbeatRunner", () => {
           { id: "ops", heartbeat: { every: "15m" } },
         ],
       },
-    } as OpenClawConfig);
+    } as RadioClawConfig);
 
     await vi.advanceTimersByTimeAsync(10 * 60_000 + 1_000);
 
@@ -97,7 +97,7 @@ describe("startHeartbeatRunner", () => {
 
     const cfg = {
       agents: { defaults: { heartbeat: { every: "30m" } } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     // Start runner A
     const runnerA = startHeartbeatRunner({ cfg, runOnce: runSpy1 });
@@ -105,7 +105,7 @@ describe("startHeartbeatRunner", () => {
     // Start runner B (simulates lifecycle reload)
     const runnerB = startHeartbeatRunner({ cfg, runOnce: runSpy2 });
 
-    // Stop runner A (stale cleanup) â€” should NOT kill runner B's handler
+    // Stop runner A (stale cleanup) â€?should NOT kill runner B's handler
     runnerA.stop();
 
     // Runner B should still fire
@@ -150,7 +150,7 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as RadioClawConfig,
       runOnce: runSpy,
     });
 
@@ -184,11 +184,11 @@ describe("startHeartbeatRunner", () => {
     const runner = startHeartbeatRunner({
       cfg: {
         agents: { defaults: { heartbeat: { every: "30m" } } },
-      } as OpenClawConfig,
+      } as RadioClawConfig,
       runOnce: runSpy,
     });
 
-    // Trigger the first heartbeat at t=30m â€” returns requests-in-flight.
+    // Trigger the first heartbeat at t=30m â€?returns requests-in-flight.
     await vi.advanceTimersByTimeAsync(30 * 60_000 + 1_000);
     expect(runSpy).toHaveBeenCalledTimes(1);
 
@@ -199,7 +199,7 @@ describe("startHeartbeatRunner", () => {
     }
     expect(runSpy).toHaveBeenCalledTimes(5);
 
-    // The next interval tick at ~t=60m should still fire â€” the schedule
+    // The next interval tick at ~t=60m should still fire â€?the schedule
     // must not have been pushed to t=30m * 6 = 180m by the 5 retries.
     await vi.advanceTimersByTimeAsync(30 * 60_000);
     expect(runSpy).toHaveBeenCalledTimes(6);
@@ -221,7 +221,7 @@ describe("startHeartbeatRunner", () => {
             { id: "ops", heartbeat: { every: "15m" } },
           ],
         },
-      } as OpenClawConfig,
+      } as RadioClawConfig,
       runOnce: runSpy,
     });
 
@@ -259,7 +259,7 @@ describe("startHeartbeatRunner", () => {
             { id: "finance", heartbeat: { every: "30m" } },
           ],
         },
-      } as OpenClawConfig,
+      } as RadioClawConfig,
       runOnce: runSpy,
     });
 

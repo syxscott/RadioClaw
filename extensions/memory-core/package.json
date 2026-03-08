@@ -1,18 +1,18 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@RadioClaw/memory-core",
   "version": "2026.3.7",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "RadioClaw core memory search plugin",
   "type": "module",
   "peerDependencies": {
-    "openclaw": ">=2026.3.2"
+    "RadioClaw": ">=2026.3.2"
   },
   "peerDependenciesMeta": {
-    "openclaw": {
+    "RadioClaw": {
       "optional": true
     }
   },
-  "openclaw": {
+  "RadioClaw": {
     "extensions": [
       "./index.ts"
     ]

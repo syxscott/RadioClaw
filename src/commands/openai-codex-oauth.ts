@@ -39,7 +39,7 @@ export async function loginOpenAICodexOAuth(params: {
     "OpenAI Codex OAuth",
   );
 
-  const spin = prompter.progress("Starting OAuth flowâ€¦");
+  const spin = prompter.progress("Starting OAuth flowâ€?);
   try {
     const { onAuth: baseOnAuth, onPrompt } = createVpsAwareOAuthHandlers({
       isRemote,
@@ -47,7 +47,7 @@ export async function loginOpenAICodexOAuth(params: {
       runtime,
       spin,
       openUrl,
-      localBrowserMessage: localBrowserMessage ?? "Complete sign-in in browserâ€¦",
+      localBrowserMessage: localBrowserMessage ?? "Complete sign-in in browserâ€?,
     });
 
     const creds = await loginOpenAICodex({
@@ -60,7 +60,7 @@ export async function loginOpenAICodexOAuth(params: {
   } catch (err) {
     spin.stop("OpenAI OAuth failed");
     runtime.error(String(err));
-    await prompter.note("Trouble with OAuth? See https://docs.openclaw.ai/start/faq", "OAuth help");
+    await prompter.note("Trouble with OAuth? See https://docs.RadioClaw.ai/start/faq", "OAuth help");
     throw err;
   }
 }

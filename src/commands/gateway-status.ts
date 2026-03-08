@@ -75,7 +75,7 @@ export async function gatewayStatusCommand(
 
   const { discovery, probed } = await withProgress(
     {
-      label: "Inspecting gatewaysâ€¦",
+      label: "Inspecting gatewaysâ€?,
       indeterminate: true,
       enabled: opts.json !== true,
     },

@@ -9,10 +9,10 @@ title: "Web Tools"
 
 # Web tools
 
-OpenClaw ships two lightweight web tools:
+RadioClaw ships two lightweight web tools:
 
-- `web_search` â€” Search the web using Perplexity Search API, Brave Search API, Gemini with Google Search grounding, Grok, or Kimi.
-- `web_fetch` â€” HTTP fetch + readable extraction (HTML â†’ markdown/text).
+- `web_search` â€?Search the web using Perplexity Search API, Brave Search API, Gemini with Google Search grounding, Grok, or Kimi.
+- `web_fetch` â€?HTTP fetch + readable extraction (HTML â†?markdown/text).
 
 These are **not** browser automation. For JS-heavy sites or logins, use the
 [Browser tool](/tools/browser).
@@ -22,7 +22,7 @@ These are **not** browser automation. For JS-heavy sites or logins, use the
 - `web_search` calls your configured provider and returns results.
 - Results are cached by query for 15 minutes (configurable).
 - `web_fetch` does a plain HTTP GET and extracts readable content
-  (HTML â†’ markdown/text). It does **not** execute JavaScript.
+  (HTML â†?markdown/text). It does **not** execute JavaScript.
 - `web_fetch` is enabled by default (unless explicitly disabled).
 
 See [Perplexity Search setup](/perplexity) and [Brave Search setup](/brave-search) for provider-specific details.
@@ -31,7 +31,7 @@ See [Perplexity Search setup](/perplexity) and [Brave Search setup](/brave-searc
 
 | Provider                  | Pros                                                                                          | Cons                                        | API Key                             |
 | ------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------- | ----------------------------------- |
-| **Perplexity Search API** | Fast, structured results; domain, language, region, and freshness filters; content extraction | â€”                                           | `PERPLEXITY_API_KEY`                |
+| **Perplexity Search API** | Fast, structured results; domain, language, region, and freshness filters; content extraction | â€?                                          | `PERPLEXITY_API_KEY`                |
 | **Brave Search API**      | Fast, structured results                                                                      | Fewer filtering options; AI-use terms apply | `BRAVE_API_KEY`                     |
 | **Gemini**                | Google Search grounding, AI-synthesized                                                       | Requires Gemini API key                     | `GEMINI_API_KEY`                    |
 | **Grok**                  | xAI web-grounded responses                                                                    | Requires xAI API key                        | `XAI_API_KEY`                       |
@@ -39,25 +39,25 @@ See [Perplexity Search setup](/perplexity) and [Brave Search setup](/brave-searc
 
 ### Auto-detection
 
-If no `provider` is explicitly set, OpenClaw auto-detects which provider to use based on available API keys, checking in this order:
+If no `provider` is explicitly set, RadioClaw auto-detects which provider to use based on available API keys, checking in this order:
 
-1. **Brave** â€” `BRAVE_API_KEY` env var or `tools.web.search.apiKey` config
-2. **Gemini** â€” `GEMINI_API_KEY` env var or `tools.web.search.gemini.apiKey` config
-3. **Kimi** â€” `KIMI_API_KEY` / `MOONSHOT_API_KEY` env var or `tools.web.search.kimi.apiKey` config
-4. **Perplexity** â€” `PERPLEXITY_API_KEY` env var or `tools.web.search.perplexity.apiKey` config
-5. **Grok** â€” `XAI_API_KEY` env var or `tools.web.search.grok.apiKey` config
+1. **Brave** â€?`BRAVE_API_KEY` env var or `tools.web.search.apiKey` config
+2. **Gemini** â€?`GEMINI_API_KEY` env var or `tools.web.search.gemini.apiKey` config
+3. **Kimi** â€?`KIMI_API_KEY` / `MOONSHOT_API_KEY` env var or `tools.web.search.kimi.apiKey` config
+4. **Perplexity** â€?`PERPLEXITY_API_KEY` env var or `tools.web.search.perplexity.apiKey` config
+5. **Grok** â€?`XAI_API_KEY` env var or `tools.web.search.grok.apiKey` config
 
 If no keys are found, it falls back to Brave (you'll get a missing-key error prompting you to configure one).
 
 ## Setting up web search
 
-Use `openclaw configure --section web` to set up your API key and choose a provider.
+Use `RadioClaw configure --section web` to set up your API key and choose a provider.
 
 ### Perplexity Search
 
 1. Create a Perplexity account at [perplexity.ai/settings/api](https://www.perplexity.ai/settings/api)
 2. Generate an API key in the dashboard
-3. Run `openclaw configure --section web` to store the key in config, or set `PERPLEXITY_API_KEY` in your environment.
+3. Run `RadioClaw configure --section web` to store the key in config, or set `PERPLEXITY_API_KEY` in your environment.
 
 See [Perplexity Search API Docs](https://docs.perplexity.ai/guides/search-quickstart) for more details.
 
@@ -65,15 +65,15 @@ See [Perplexity Search API Docs](https://docs.perplexity.ai/guides/search-quicks
 
 1. Create a Brave Search API account at [brave.com/search/api](https://brave.com/search/api/)
 2. In the dashboard, choose the **Data for Search** plan (not "Data for AI") and generate an API key.
-3. Run `openclaw configure --section web` to store the key in config (recommended), or set `BRAVE_API_KEY` in your environment.
+3. Run `RadioClaw configure --section web` to store the key in config (recommended), or set `BRAVE_API_KEY` in your environment.
 
 Brave provides paid plans; check the Brave API portal for the current limits and pricing.
 
 ### Where to store the key
 
-**Via config (recommended):** run `openclaw configure --section web`. It stores the key under `tools.web.search.perplexity.apiKey` or `tools.web.search.apiKey`.
+**Via config (recommended):** run `RadioClaw configure --section web`. It stores the key under `tools.web.search.perplexity.apiKey` or `tools.web.search.apiKey`.
 
-**Via environment:** set `PERPLEXITY_API_KEY` or `BRAVE_API_KEY` in the Gateway process environment. For a gateway install, put it in `~/.openclaw/.env` (or your service environment). See [Env vars](/help/faq#how-does-openclaw-load-environment-variables).
+**Via environment:** set `PERPLEXITY_API_KEY` or `BRAVE_API_KEY` in the Gateway process environment. For a gateway install, put it in `~/.RadioClaw/.env` (or your service environment). See [Env vars](/help/faq#how-does-RadioClaw-load-environment-variables).
 
 ### Config examples
 
@@ -143,7 +143,7 @@ which returns AI-synthesized answers backed by live Google Search results with c
 ```
 
 **Environment alternative:** set `GEMINI_API_KEY` in the Gateway environment.
-For a gateway install, put it in `~/.openclaw/.env`.
+For a gateway install, put it in `~/.RadioClaw/.env`.
 
 ### Notes
 

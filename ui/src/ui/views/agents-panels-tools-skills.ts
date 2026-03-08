@@ -147,7 +147,7 @@ export function renderAgentTools(params: {
             ?disabled=${params.configSaving || !params.configDirty}
             @click=${params.onConfigSave}
           >
-            ${params.configSaving ? "Savingâ€¦" : "Save"}
+            ${params.configSaving ? "Savingâ€? : "Save"}
           </button>
         </div>
       </div>
@@ -301,7 +301,7 @@ export function renderAgentTools(params: {
       ${
         params.toolsCatalogLoading
           ? html`
-              <div class="card-sub" style="margin-top: 10px">Refreshing tool catalogâ€¦</div>
+              <div class="card-sub" style="margin-top: 10px">Refreshing tool catalogâ€?/div>
             `
           : nothing
       }
@@ -376,14 +376,14 @@ export function renderAgentSkills(params: {
             Reload Config
           </button>
           <button class="btn btn--sm" ?disabled=${params.loading} @click=${params.onRefresh}>
-            ${params.loading ? "Loadingâ€¦" : "Refresh"}
+            ${params.loading ? "Loadingâ€? : "Refresh"}
           </button>
           <button
             class="btn btn--sm primary"
             ?disabled=${params.configSaving || !params.configDirty}
             @click=${params.onConfigSave}
           >
-            ${params.configSaving ? "Savingâ€¦" : "Save"}
+            ${params.configSaving ? "Savingâ€? : "Save"}
           </button>
         </div>
       </div>

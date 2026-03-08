@@ -5,7 +5,7 @@ import { type FSWatcher } from "chokidar";
 import { resolveAgentDir, resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
 import type { ResolvedMemorySearchConfig } from "../agents/memory-search.js";
 import { resolveMemorySearchConfig } from "../agents/memory-search.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import {
   createEmbeddingProvider,
@@ -44,7 +44,7 @@ const INDEX_CACHE_PENDING = new Map<string, Promise<MemoryIndexManager>>();
 
 export class MemoryIndexManager extends MemoryManagerEmbeddingOps implements MemorySearchManager {
   private readonly cacheKey: string;
-  protected readonly cfg: OpenClawConfig;
+  protected readonly cfg: RadioClawConfig;
   protected readonly agentId: string;
   protected readonly workspaceDir: string;
   protected readonly settings: ResolvedMemorySearchConfig;
@@ -115,7 +115,7 @@ export class MemoryIndexManager extends MemoryManagerEmbeddingOps implements Mem
   private readonlyRecoveryLastError?: string;
 
   static async get(params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     agentId: string;
     purpose?: "default" | "status";
   }): Promise<MemoryIndexManager | null> {
@@ -172,7 +172,7 @@ export class MemoryIndexManager extends MemoryManagerEmbeddingOps implements Mem
 
   private constructor(params: {
     cacheKey: string;
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     agentId: string;
     workspaceDir: string;
     settings: ResolvedMemorySearchConfig;
@@ -271,7 +271,7 @@ export class MemoryIndexManager extends MemoryManagerEmbeddingOps implements Mem
       }
 
       // Extract keywords for better FTS matching on conversational queries
-      // e.g., "that thing we discussed about the API" â†’ ["discussed", "API"]
+      // e.g., "that thing we discussed about the API" â†?["discussed", "API"]
       const keywords = extractKeywords(cleaned);
       const searchTerms = keywords.length > 0 ? keywords : [cleaned];
 

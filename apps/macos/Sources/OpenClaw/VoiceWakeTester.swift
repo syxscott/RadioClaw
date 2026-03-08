@@ -30,7 +30,7 @@ final class VoiceWakeTester {
     private var currentTriggers: [String] = []
     private var holdingAfterDetect = false
     private var detectedText: String?
-    private let logger = Logger(subsystem: "ai.openclaw", category: "voicewake")
+    private let logger = Logger(subsystem: "ai.RadioClaw", category: "voicewake")
     private let silenceWindow: TimeInterval = 1.0
 
     init(locale: Locale = .current) {
@@ -259,7 +259,7 @@ final class VoiceWakeTester {
             self.stop(force: true)
             let state: VoiceWakeTestState = text.isEmpty
                 ? .failed("No speech detected")
-                : .failed("No trigger heard: “\(text)”")
+                : .failed("No trigger heard: “\(text)�?)
             Task { @MainActor in onUpdate(state) }
         } else {
             let state: VoiceWakeTestState = text.isEmpty ? .listening : .hearing(text)

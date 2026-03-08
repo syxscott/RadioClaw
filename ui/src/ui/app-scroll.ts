@@ -54,7 +54,7 @@ export function scheduleChatScroll(host: ScrollHost, force = false, smooth = fal
         effectiveForce || host.chatUserNearBottom || distanceFromBottom < NEAR_BOTTOM_THRESHOLD;
 
       if (!shouldStick) {
-        // User is scrolled up â€” flag that new content arrived below.
+        // User is scrolled up â€?flag that new content arrived below.
         host.chatNewMessagesBelow = true;
         return;
       }
@@ -156,7 +156,7 @@ export function exportLogs(lines: string[], label: string) {
   const anchor = document.createElement("a");
   const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
   anchor.href = url;
-  anchor.download = `openclaw-logs-${label}-${stamp}.log`;
+  anchor.download = `RadioClaw-logs-${label}-${stamp}.log`;
   anchor.click();
   URL.revokeObjectURL(url);
 }

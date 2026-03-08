@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 学习如何配置 OpenClaw
+  - 学习如何配置 RadioClaw
   - 寻找配置示例
-  - 首次设置 OpenClaw
-summary: 符合模式的常见 OpenClaw 设置配置示例
+  - 首次设置 RadioClaw
+summary: 符合模式的常�?RadioClaw 设置配置示例
 title: 配置示例
 x-i18n:
   generated_at: "2026-02-03T07:48:39Z"
@@ -16,23 +16,18 @@ x-i18n:
 
 # 配置示例
 
-以下示例与当前配置模式一致。有关详尽的参考和每个字段的说明，请参阅[配置](/gateway/configuration)。
-
-## 快速开始
-
-### 绝对最小配置
-
+以下示例与当前配置模式一致。有关详尽的参考和每个字段的说明，请参阅[配置](/gateway/configuration)�?
+## 快速开�?
+### 绝对最小配�?
 ```json5
 {
-  agent: { workspace: "~/.openclaw/workspace" },
+  agent: { workspace: "~/.RadioClaw/workspace" },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
 
-保存到 `~/.openclaw/openclaw.json`，你就可以从该号码私信机器人了。
-
-### 推荐的入门配置
-
+保存�?`~/.RadioClaw/RadioClaw.json`，你就可以从该号码私信机器人了�?
+### 推荐的入门配�?
 ```json5
 {
   identity: {
@@ -41,7 +36,7 @@ x-i18n:
     emoji: "🦞",
   },
   agent: {
-    workspace: "~/.openclaw/workspace",
+    workspace: "~/.RadioClaw/workspace",
     model: { primary: "anthropic/claude-sonnet-4-5" },
   },
   channels: {
@@ -53,10 +48,8 @@ x-i18n:
 }
 ```
 
-## 扩展示例（主要选项）
-
-> JSON5 允许你使用注释和尾随逗号。普通 JSON 也可以使用。
-
+## 扩展示例（主要选项�?
+> JSON5 允许你使用注释和尾随逗号。普�?JSON 也可以使用�?
 ```json5
 {
   // 环境 + shell
@@ -71,7 +64,7 @@ x-i18n:
     },
   },
 
-  // 认证配置文件元数据（密钥存储在 auth-profiles.json 中）
+  // 认证配置文件元数据（密钥存储�?auth-profiles.json 中）
   auth: {
     profiles: {
       "anthropic:me@example.com": { provider: "anthropic", mode: "oauth", email: "me@example.com" },
@@ -96,7 +89,7 @@ x-i18n:
   // 日志
   logging: {
     level: "info",
-    file: "/tmp/openclaw/openclaw.log",
+    file: "/tmp/RadioClaw/RadioClaw.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -104,7 +97,7 @@ x-i18n:
 
   // 消息格式
   messages: {
-    messagePrefix: "[openclaw]",
+    messagePrefix: "[RadioClaw]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -113,7 +106,7 @@ x-i18n:
   // 路由 + 队列
   routing: {
     groupChat: {
-      mentionPatterns: ["@openclaw", "openclaw"],
+      mentionPatterns: ["@RadioClaw", "RadioClaw"],
       historyLimit: 50,
     },
     queue: {
@@ -141,8 +134,7 @@ x-i18n:
         maxBytes: 20971520,
         models: [
           { provider: "openai", model: "gpt-4o-mini-transcribe" },
-          // 可选的 CLI 回退（Whisper 二进制）：
-          // { type: "cli", command: "whisper", args: ["--model", "base", "{{MediaPath}}"] }
+          // 可选的 CLI 回退（Whisper 二进制）�?          // { type: "cli", command: "whisper", args: ["--model", "base", "{{MediaPath}}"] }
         ],
         timeoutSeconds: 120,
       },
@@ -166,7 +158,7 @@ x-i18n:
       discord: { mode: "idle", idleMinutes: 10080 },
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.openclaw/agents/default/sessions/sessions.json",
+    store: "~/.RadioClaw/agents/default/sessions/sessions.json",
     typingIntervalSeconds: 5,
     sendPolicy: {
       default: "allow",
@@ -199,7 +191,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["steipete"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-openclaw",
+          slug: "friends-of-RadioClaw",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -219,7 +211,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "openclaw",
+        name: "RadioClaw",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -229,7 +221,7 @@ x-i18n:
   // 智能体运行时
   agents: {
     defaults: {
-      workspace: "~/.openclaw/workspace",
+      workspace: "~/.RadioClaw/workspace",
       userTimezone: "America/Chicago",
       model: {
         primary: "anthropic/claude-sonnet-4-5",
@@ -282,9 +274,9 @@ x-i18n:
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.openclaw/sandboxes",
+        workspaceRoot: "~/.RadioClaw/sandboxes",
         docker: {
-          image: "openclaw-sandbox:bookworm-slim",
+          image: "RadioClaw-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -349,7 +341,7 @@ x-i18n:
   // Cron 作业
   cron: {
     enabled: true,
-    store: "~/.openclaw/cron/cron.json",
+    store: "~/.RadioClaw/cron/cron.json",
     maxConcurrentRuns: 2,
   },
 
@@ -359,7 +351,7 @@ x-i18n:
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.openclaw/hooks",
+    transformsDir: "~/.RadioClaw/hooks",
     mappings: [
       {
         id: "gmail-hook",
@@ -379,7 +371,7 @@ x-i18n:
       },
     ],
     gmail: {
-      account: "openclaw@gmail.com",
+      account: "RadioClaw@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -398,7 +390,7 @@ x-i18n:
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/openclaw" },
+    controlUi: { enabled: true, basePath: "/RadioClaw" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -432,11 +424,10 @@ x-i18n:
 
 ## 常见模式
 
-### 多平台设置
-
+### 多平台设�?
 ```json5
 {
-  agent: { workspace: "~/.openclaw/workspace" },
+  agent: { workspace: "~/.RadioClaw/workspace" },
   channels: {
     whatsapp: { allowFrom: ["+15555550123"] },
     telegram: {
@@ -453,7 +444,7 @@ x-i18n:
 }
 ```
 
-### OAuth 带 API 密钥回退
+### OAuth �?API 密钥回退
 
 ```json5
 {
@@ -474,7 +465,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.openclaw/workspace",
+    workspace: "~/.RadioClaw/workspace",
     model: {
       primary: "anthropic/claude-sonnet-4-5",
       fallbacks: ["anthropic/claude-opus-4-5"],
@@ -513,7 +504,7 @@ x-i18n:
     },
   },
   agent: {
-    workspace: "~/.openclaw/workspace",
+    workspace: "~/.RadioClaw/workspace",
     model: {
       primary: "anthropic/claude-opus-4-5",
       fallbacks: ["minimax/MiniMax-M2.1"],
@@ -522,8 +513,7 @@ x-i18n:
 }
 ```
 
-### 工作机器人（受限访问）
-
+### 工作机器人（受限访问�?
 ```json5
 {
   identity: {
@@ -531,7 +521,7 @@ x-i18n:
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-openclaw",
+    workspace: "~/work-RadioClaw",
     elevated: { enabled: false },
   },
   channels: {
@@ -547,12 +537,11 @@ x-i18n:
 }
 ```
 
-### 仅本地模型
-
+### 仅本地模�?
 ```json5
 {
   agent: {
-    workspace: "~/.openclaw/workspace",
+    workspace: "~/.RadioClaw/workspace",
     model: { primary: "lmstudio/minimax-m2.1-gs32" },
   },
   models: {
@@ -581,7 +570,4 @@ x-i18n:
 
 ## 提示
 
-- 如果你设置 `dmPolicy: "open"`，匹配的 `allowFrom` 列表必须包含 `"*"`。
-- 提供商 ID 各不相同（电话号码、用户 ID、频道 ID）。使用提供商文档确认格式。
-- 稍后添加的可选部分：`web`、`browser`、`ui`、`discovery`、`canvasHost`、`talk`、`signal`、`imessage`。
-- 参阅[提供商](/channels/whatsapp)和[故障排除](/gateway/troubleshooting)了解更深入的设置说明。
+- 如果你设�?`dmPolicy: "open"`，匹配的 `allowFrom` 列表必须包含 `"*"`�?- 提供�?ID 各不相同（电话号码、用�?ID、频�?ID）。使用提供商文档确认格式�?- 稍后添加的可选部分：`web`、`browser`、`ui`、`discovery`、`canvasHost`、`talk`、`signal`、`imessage`�?- 参阅[提供商](/channels/whatsapp)和[故障排除](/gateway/troubleshooting)了解更深入的设置说明�?

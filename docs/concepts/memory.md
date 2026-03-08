@@ -1,6 +1,6 @@
 ---
 title: "Memory"
-summary: "How OpenClaw memory works (workspace files + automatic memory flush)"
+summary: "How RadioClaw memory works (workspace files + automatic memory flush)"
 read_when:
   - You want the memory file layout and workflow
   - You want to tune the automatic pre-compaction memory flush
@@ -8,7 +8,7 @@ read_when:
 
 # Memory
 
-OpenClaw memory is **plain Markdown in the agent workspace**. The files are the
+RadioClaw memory is **plain Markdown in the agent workspace**. The files are the
 source of truth; the model only "remembers" what gets written to disk.
 
 Memory search tools are provided by the active memory plugin (default:
@@ -26,14 +26,14 @@ The default workspace layout uses two memory layers:
   - **Only load in the main, private session** (never in group contexts).
 
 These files live under the workspace (`agents.defaults.workspace`, default
-`~/.openclaw/workspace`). See [Agent workspace](/concepts/agent-workspace) for the full layout.
+`~/.RadioClaw/workspace`). See [Agent workspace](/concepts/agent-workspace) for the full layout.
 
 ## Memory tools
 
-OpenClaw exposes two agent-facing tools for these Markdown files:
+RadioClaw exposes two agent-facing tools for these Markdown files:
 
-- `memory_search` ‚Äî semantic recall over indexed snippets.
-- `memory_get` ‚Äî targeted read of a specific Markdown file/line range.
+- `memory_search` ‚Ä?semantic recall over indexed snippets.
+- `memory_get` ‚Ä?targeted read of a specific Markdown file/line range.
 
 `memory_get` now **degrades gracefully when a file doesn't exist** (for example,
 today's daily log before the first write). Both the builtin manager and the QMD
@@ -51,7 +51,7 @@ tool call in try/catch logic.
 
 ## Automatic memory flush (pre-compaction ping)
 
-When a session is **close to auto-compaction**, OpenClaw triggers a **silent,
+When a session is **close to auto-compaction**, RadioClaw triggers a **silent,
 agentic turn** that reminds the model to write durable memory **before** the
 context is compacted. The default prompts explicitly say the model _may reply_,
 but usually `NO_REPLY` is the correct response so the user never sees this turn.
@@ -91,7 +91,7 @@ For the full compaction lifecycle, see
 
 ## Vector memory search
 
-OpenClaw can build a small vector index over `MEMORY.md` and `memory/*.md` so
+RadioClaw can build a small vector index over `MEMORY.md` and `memory/*.md` so
 semantic queries can find related notes even when wording differs.
 
 Defaults:
@@ -100,7 +100,7 @@ Defaults:
 - Watches memory files for changes (debounced).
 - Configure memory search under `agents.defaults.memorySearch` (not top-level
   `memorySearch`).
-- Uses remote embeddings by default. If `memorySearch.provider` is not set, OpenClaw auto-selects:
+- Uses remote embeddings by default. If `memorySearch.provider` is not set, RadioClaw auto-selects:
   1. `local` if a `memorySearch.local.modelPath` is configured and the file exists.
   2. `openai` if an OpenAI key can be resolved.
   3. `gemini` if a Gemini key can be resolved.
@@ -112,7 +112,7 @@ Defaults:
 - `memorySearch.provider = "ollama"` is also supported for local/self-hosted
   Ollama embeddings (`/api/embeddings`), but it is not auto-selected.
 
-Remote embeddings **require** an API key for the embedding provider. OpenClaw
+Remote embeddings **require** an API key for the embedding provider. RadioClaw
 resolves keys from auth profiles, `models.providers.*.apiKey`, or environment
 variables. Codex OAuth only covers chat/completions and does **not** satisfy
 embeddings for memory search. For Gemini, use `GEMINI_API_KEY` or
@@ -128,7 +128,7 @@ set `memorySearch.remote.apiKey` (and optional `memorySearch.remote.headers`).
 
 Set `memory.backend = "qmd"` to swap the built-in SQLite indexer for
 [QMD](https://github.com/tobi/qmd): a local-first search sidecar that combines
-BM25 + vectors + reranking. Markdown stays the source of truth; OpenClaw shells
+BM25 + vectors + reranking. Markdown stays the source of truth; RadioClaw shells
 out to QMD for retrieval. Key points:
 
 **Prereqs**
@@ -141,7 +141,7 @@ out to QMD for retrieval. Key points:
 - QMD runs fully locally via Bun + `node-llama-cpp` and auto-downloads GGUF
   models from HuggingFace on first use (no separate Ollama daemon required).
 - The gateway runs QMD in a self-contained XDG home under
-  `~/.openclaw/agents/<agentId>/qmd/` by setting `XDG_CONFIG_HOME` and
+  `~/.RadioClaw/agents/<agentId>/qmd/` by setting `XDG_CONFIG_HOME` and
   `XDG_CACHE_HOME`.
 - OS support: macOS and Linux work out of the box once Bun + SQLite are
   installed. Windows is best supported via WSL2.
@@ -149,7 +149,7 @@ out to QMD for retrieval. Key points:
 **How the sidecar runs**
 
 - The gateway writes a self-contained QMD home under
-  `~/.openclaw/agents/<agentId>/qmd/` (config + cache + sqlite DB).
+  `~/.RadioClaw/agents/<agentId>/qmd/` (config + cache + sqlite DB).
 - Collections are created via `qmd collection add` from `memory.qmd.paths`
   (plus default workspace memory files), then `qmd update` + `qmd embed` run
   on boot and on a configurable interval (`memory.qmd.update.interval`,
@@ -161,24 +161,24 @@ out to QMD for retrieval. Key points:
   blocking behavior.
 - Searches run via `memory.qmd.searchMode` (default `qmd search --json`; also
   supports `vsearch` and `query`). If the selected mode rejects flags on your
-  QMD build, OpenClaw retries with `qmd query`. If QMD fails or the binary is
-  missing, OpenClaw automatically falls back to the builtin SQLite manager so
+  QMD build, RadioClaw retries with `qmd query`. If QMD fails or the binary is
+  missing, RadioClaw automatically falls back to the builtin SQLite manager so
   memory tools keep working.
-- OpenClaw does not expose QMD embed batch-size tuning today; batch behavior is
+- RadioClaw does not expose QMD embed batch-size tuning today; batch behavior is
   controlled by QMD itself.
 - **First search may be slow**: QMD may download local GGUF models (reranker/query
   expansion) on the first `qmd query` run.
-  - OpenClaw sets `XDG_CONFIG_HOME`/`XDG_CACHE_HOME` automatically when it runs QMD.
-  - If you want to pre-download models manually (and warm the same index OpenClaw
+  - RadioClaw sets `XDG_CONFIG_HOME`/`XDG_CACHE_HOME` automatically when it runs QMD.
+  - If you want to pre-download models manually (and warm the same index RadioClaw
     uses), run a one-off query with the agent‚Äôs XDG dirs.
 
-    OpenClaw‚Äôs QMD state lives under your **state dir** (defaults to `~/.openclaw`).
+    RadioClaw‚Äôs QMD state lives under your **state dir** (defaults to `~/.RadioClaw`).
     You can point `qmd` at the exact same index by exporting the same XDG vars
-    OpenClaw uses:
+    RadioClaw uses:
 
     ```bash
-    # Pick the same state dir OpenClaw uses
-    STATE_DIR="${OPENCLAW_STATE_DIR:-$HOME/.openclaw}"
+    # Pick the same state dir RadioClaw uses
+    STATE_DIR="${RadioClaw_STATE_DIR:-$HOME/.RadioClaw}"
 
     export XDG_CONFIG_HOME="$STATE_DIR/agents/main/qmd/xdg-config"
     export XDG_CACHE_HOME="$STATE_DIR/agents/main/qmd/xdg-cache"
@@ -215,14 +215,14 @@ out to QMD for retrieval. Key points:
     `agent:<id>:`. Example: `agent:main:discord:`.
   - Legacy: `match.keyPrefix: "agent:..."` is still treated as a raw-key prefix,
     but prefer `rawKeyPrefix` for clarity.
-- When `scope` denies a search, OpenClaw logs a warning with the derived
+- When `scope` denies a search, RadioClaw logs a warning with the derived
   `channel`/`chatType` so empty results are easier to debug.
 - Snippets sourced outside the workspace show up as
   `qmd/<collection>/<relative-path>` in `memory_search` results; `memory_get`
   understands that prefix and reads from the configured QMD collection root.
-- When `memory.qmd.sessions.enabled = true`, OpenClaw exports sanitized session
+- When `memory.qmd.sessions.enabled = true`, RadioClaw exports sanitized session
   transcripts (User/Assistant turns) into a dedicated QMD collection under
-  `~/.openclaw/agents/<id>/qmd/sessions/`, so `memory_search` can recall recent
+  `~/.RadioClaw/agents/<id>/qmd/sessions/`, so `memory_search` can recall recent
   conversations without touching the builtin SQLite index.
 - `memory_search` snippets now include a `Source: <path#line>` footer when
   `memory.citations` is `auto`/`on`; set `memory.citations = "off"` to keep
@@ -374,8 +374,8 @@ agents: {
 
 Tools:
 
-- `memory_search` ‚Äî returns snippets with file + line ranges.
-- `memory_get` ‚Äî read memory file content by path.
+- `memory_search` ‚Ä?returns snippets with file + line ranges.
+- `memory_get` ‚Ä?read memory file content by path.
 
 Local mode:
 
@@ -385,33 +385,31 @@ Local mode:
 
 ### How the memory tools work
 
-- `memory_search` semantically searches Markdown chunks (~400 token target, 80-token overlap) from `MEMORY.md` + `memory/**/*.md`. It returns snippet text (capped ~700 chars), file path, line range, score, provider/model, and whether we fell back from local ‚Üí remote embeddings. No full file payload is returned.
+- `memory_search` semantically searches Markdown chunks (~400 token target, 80-token overlap) from `MEMORY.md` + `memory/**/*.md`. It returns snippet text (capped ~700 chars), file path, line range, score, provider/model, and whether we fell back from local ‚Ü?remote embeddings. No full file payload is returned.
 - `memory_get` reads a specific memory Markdown file (workspace-relative), optionally from a starting line and for N lines. Paths outside `MEMORY.md` / `memory/` are rejected.
 - Both tools are enabled only when `memorySearch.enabled` resolves true for the agent.
 
 ### What gets indexed (and when)
 
 - File type: Markdown only (`MEMORY.md`, `memory/**/*.md`).
-- Index storage: per-agent SQLite at `~/.openclaw/memory/<agentId>.sqlite` (configurable via `agents.defaults.memorySearch.store.path`, supports `{agentId}` token).
+- Index storage: per-agent SQLite at `~/.RadioClaw/memory/<agentId>.sqlite` (configurable via `agents.defaults.memorySearch.store.path`, supports `{agentId}` token).
 - Freshness: watcher on `MEMORY.md` + `memory/` marks the index dirty (debounce 1.5s). Sync is scheduled on session start, on search, or on an interval and runs asynchronously. Session transcripts use delta thresholds to trigger background sync.
-- Reindex triggers: the index stores the embedding **provider/model + endpoint fingerprint + chunking params**. If any of those change, OpenClaw automatically resets and reindexes the entire store.
+- Reindex triggers: the index stores the embedding **provider/model + endpoint fingerprint + chunking params**. If any of those change, RadioClaw automatically resets and reindexes the entire store.
 
 ### Hybrid search (BM25 + vector)
 
-When enabled, OpenClaw combines:
+When enabled, RadioClaw combines:
 
 - **Vector similarity** (semantic match, wording can differ)
 - **BM25 keyword relevance** (exact tokens like IDs, env vars, code symbols)
 
-If full-text search is unavailable on your platform, OpenClaw falls back to vector-only search.
+If full-text search is unavailable on your platform, RadioClaw falls back to vector-only search.
 
 #### Why hybrid?
 
-Vector search is great at ‚Äúthis means the same thing‚Äù:
+Vector search is great at ‚Äúthis means the same thing‚Ä?
 
-- ‚ÄúMac Studio gateway host‚Äù vs ‚Äúthe machine running the gateway‚Äù
-- ‚Äúdebounce file updates‚Äù vs ‚Äúavoid indexing on every write‚Äù
-
+- ‚ÄúMac Studio gateway host‚Ä?vs ‚Äúthe machine running the gateway‚Ä?- ‚Äúdebounce file updates‚Ä?vs ‚Äúavoid indexing on every write‚Ä?
 But it can be weak at exact, high-signal tokens:
 
 - IDs (`a828e60`, `b3b9895a‚Ä¶`)
@@ -455,7 +453,7 @@ After merging vector and keyword scores, two optional post-processing stages
 refine the result list before it reaches the agent:
 
 ```
-Vector + Keyword ‚Üí Weighted Merge ‚Üí Temporal Decay ‚Üí Sort ‚Üí MMR ‚Üí Top-K Results
+Vector + Keyword ‚Ü?Weighted Merge ‚Ü?Temporal Decay ‚Ü?Sort ‚Ü?MMR ‚Ü?Top-K Results
 ```
 
 Both stages are **off by default** and can be enabled independently.
@@ -472,40 +470,40 @@ ensuring the top results cover different aspects of the query instead of repeati
 How it works:
 
 1. Results are scored by their original relevance (vector + BM25 weighted score).
-2. MMR iteratively selects results that maximize: `Œª √ó relevance ‚àí (1‚àíŒª) √ó max_similarity_to_selected`.
+2. MMR iteratively selects results that maximize: `Œª √ó relevance ‚à?(1‚àíŒ? √ó max_similarity_to_selected`.
 3. Similarity between results is measured using Jaccard text similarity on tokenized content.
 
 The `lambda` parameter controls the trade-off:
 
-- `lambda = 1.0` ‚Üí pure relevance (no diversity penalty)
-- `lambda = 0.0` ‚Üí maximum diversity (ignores relevance)
+- `lambda = 1.0` ‚Ü?pure relevance (no diversity penalty)
+- `lambda = 0.0` ‚Ü?maximum diversity (ignores relevance)
 - Default: `0.7` (balanced, slight relevance bias)
 
-**Example ‚Äî query: "home network setup"**
+**Example ‚Ä?query: "home network setup"**
 
 Given these memory files:
 
 ```
-memory/2026-02-10.md  ‚Üí "Configured Omada router, set VLAN 10 for IoT devices"
-memory/2026-02-08.md  ‚Üí "Configured Omada router, moved IoT to VLAN 10"
-memory/2026-02-05.md  ‚Üí "Set up AdGuard DNS on 192.168.10.2"
-memory/network.md     ‚Üí "Router: Omada ER605, AdGuard: 192.168.10.2, VLAN 10: IoT"
+memory/2026-02-10.md  ‚Ü?"Configured Omada router, set VLAN 10 for IoT devices"
+memory/2026-02-08.md  ‚Ü?"Configured Omada router, moved IoT to VLAN 10"
+memory/2026-02-05.md  ‚Ü?"Set up AdGuard DNS on 192.168.10.2"
+memory/network.md     ‚Ü?"Router: Omada ER605, AdGuard: 192.168.10.2, VLAN 10: IoT"
 ```
 
-Without MMR ‚Äî top 3 results:
+Without MMR ‚Ä?top 3 results:
 
 ```
-1. memory/2026-02-10.md  (score: 0.92)  ‚Üê router + VLAN
-2. memory/2026-02-08.md  (score: 0.89)  ‚Üê router + VLAN (near-duplicate!)
-3. memory/network.md     (score: 0.85)  ‚Üê reference doc
+1. memory/2026-02-10.md  (score: 0.92)  ‚Ü?router + VLAN
+2. memory/2026-02-08.md  (score: 0.89)  ‚Ü?router + VLAN (near-duplicate!)
+3. memory/network.md     (score: 0.85)  ‚Ü?reference doc
 ```
 
-With MMR (Œª=0.7) ‚Äî top 3 results:
+With MMR (Œª=0.7) ‚Ä?top 3 results:
 
 ```
-1. memory/2026-02-10.md  (score: 0.92)  ‚Üê router + VLAN
-2. memory/network.md     (score: 0.85)  ‚Üê reference doc (diverse!)
-3. memory/2026-02-05.md  (score: 0.78)  ‚Üê AdGuard DNS (diverse!)
+1. memory/2026-02-10.md  (score: 0.92)  ‚Ü?router + VLAN
+2. memory/network.md     (score: 0.85)  ‚Ü?reference doc (diverse!)
+3. memory/2026-02-05.md  (score: 0.78)  ‚Ü?AdGuard DNS (diverse!)
 ```
 
 The near-duplicate from Feb 8 drops out, and the agent gets three distinct pieces of information.
@@ -544,20 +542,20 @@ With the default half-life of 30 days:
 **Dated daily files** (`memory/YYYY-MM-DD.md`) use the date extracted from the filename.
 Other sources (e.g., session transcripts) fall back to file modification time (`mtime`).
 
-**Example ‚Äî query: "what's Rod's work schedule?"**
+**Example ‚Ä?query: "what's Rod's work schedule?"**
 
 Given these memory files (today is Feb 10):
 
 ```
-memory/2025-09-15.md  ‚Üí "Rod works Mon-Fri, standup at 10am, pairing at 2pm"  (148 days old)
-memory/2026-02-10.md  ‚Üí "Rod has standup at 14:15, 1:1 with Zeb at 14:45"    (today)
-memory/2026-02-03.md  ‚Üí "Rod started new team, standup moved to 14:15"        (7 days old)
+memory/2025-09-15.md  ‚Ü?"Rod works Mon-Fri, standup at 10am, pairing at 2pm"  (148 days old)
+memory/2026-02-10.md  ‚Ü?"Rod has standup at 14:15, 1:1 with Zeb at 14:45"    (today)
+memory/2026-02-03.md  ‚Ü?"Rod started new team, standup moved to 14:15"        (7 days old)
 ```
 
 Without decay:
 
 ```
-1. memory/2025-09-15.md  (score: 0.91)  ‚Üê best semantic match, but stale!
+1. memory/2025-09-15.md  (score: 0.91)  ‚Ü?best semantic match, but stale!
 2. memory/2026-02-10.md  (score: 0.82)
 3. memory/2026-02-03.md  (score: 0.80)
 ```
@@ -565,9 +563,9 @@ Without decay:
 With decay (halfLife=30):
 
 ```
-1. memory/2026-02-10.md  (score: 0.82 √ó 1.00 = 0.82)  ‚Üê today, no decay
-2. memory/2026-02-03.md  (score: 0.80 √ó 0.85 = 0.68)  ‚Üê 7 days, mild decay
-3. memory/2025-09-15.md  (score: 0.91 √ó 0.03 = 0.03)  ‚Üê 148 days, nearly gone
+1. memory/2026-02-10.md  (score: 0.82 √ó 1.00 = 0.82)  ‚Ü?today, no decay
+2. memory/2026-02-03.md  (score: 0.80 √ó 0.85 = 0.68)  ‚Ü?7 days, mild decay
+3. memory/2025-09-15.md  (score: 0.91 √ó 0.03 = 0.03)  ‚Ü?148 days, nearly gone
 ```
 
 The stale September note drops to the bottom despite having the best raw semantic match.
@@ -609,13 +607,13 @@ agents: {
 
 You can enable either feature independently:
 
-- **MMR only** ‚Äî useful when you have many similar notes but age doesn't matter.
-- **Temporal decay only** ‚Äî useful when recency matters but your results are already diverse.
-- **Both** ‚Äî recommended for agents with large, long-running daily note histories.
+- **MMR only** ‚Ä?useful when you have many similar notes but age doesn't matter.
+- **Temporal decay only** ‚Ä?useful when recency matters but your results are already diverse.
+- **Both** ‚Ä?recommended for agents with large, long-running daily note histories.
 
 ### Embedding cache
 
-OpenClaw can cache **chunk embeddings** in SQLite so reindexing and frequent updates (especially session transcripts) don't re-embed unchanged text.
+RadioClaw can cache **chunk embeddings** in SQLite so reindexing and frequent updates (especially session transcripts) don't re-embed unchanged text.
 
 Config:
 
@@ -655,7 +653,7 @@ Notes:
 - `memory_search` never blocks on indexing; results can be slightly stale until background sync finishes.
 - Results still include snippets only; `memory_get` remains limited to memory files.
 - Session indexing is isolated per agent (only that agent‚Äôs session logs are indexed).
-- Session logs live on disk (`~/.openclaw/agents/<agentId>/sessions/*.jsonl`). Any process/user with filesystem access can read them, so treat disk access as the trust boundary. For stricter isolation, run agents under separate OS users or hosts.
+- Session logs live on disk (`~/.RadioClaw/agents/<agentId>/sessions/*.jsonl`). Any process/user with filesystem access can read them, so treat disk access as the trust boundary. For stricter isolation, run agents under separate OS users or hosts.
 
 Delta thresholds (defaults shown):
 
@@ -676,7 +674,7 @@ agents: {
 
 ### SQLite vector acceleration (sqlite-vec)
 
-When the sqlite-vec extension is available, OpenClaw stores embeddings in a
+When the sqlite-vec extension is available, RadioClaw stores embeddings in a
 SQLite virtual table (`vec0`) and performs vector distance queries in the
 database. This keeps search fast without loading every embedding into JS.
 
@@ -701,7 +699,7 @@ Notes:
 
 - `enabled` defaults to true; when disabled, search falls back to in-process
   cosine similarity over stored embeddings.
-- If the sqlite-vec extension is missing or fails to load, OpenClaw logs the
+- If the sqlite-vec extension is missing or fails to load, RadioClaw logs the
   error and continues with the JS fallback (no vector table).
 - `extensionPath` overrides the bundled sqlite-vec path (useful for custom builds
   or non-standard install locations).

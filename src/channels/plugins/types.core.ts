@@ -1,7 +1,7 @@
 import type { AgentTool, AgentToolResult } from "@mariozechner/pi-agent-core";
 import type { TSchema } from "@sinclair/typebox";
 import type { MsgContext } from "../../auto-reply/templating.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { PollInput } from "../../polls.js";
 import type { GatewayClientMode, GatewayClientName } from "../../utils/message-channel.js";
 import type { ChatType } from "../chat-type.js";
@@ -16,7 +16,7 @@ export type ChannelAgentTool = AgentTool<TSchema, unknown> & {
   ownerOnly?: boolean;
 };
 
-export type ChannelAgentToolFactory = (params: { cfg?: OpenClawConfig }) => ChannelAgentTool[];
+export type ChannelAgentToolFactory = (params: { cfg?: RadioClawConfig }) => ChannelAgentTool[];
 
 export type ChannelSetupInput = {
   name?: string;
@@ -166,7 +166,7 @@ export type ChannelLogSink = {
 };
 
 export type ChannelGroupContext = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   groupId?: string | null;
   /** Human label for channel-like group conversations (e.g. #general). */
   groupChannel?: string | null;
@@ -203,7 +203,7 @@ export type ChannelSecurityDmPolicy = {
 };
 
 export type ChannelSecurityContext<ResolvedAccount = unknown> = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
   account: ResolvedAccount;
 };
@@ -211,13 +211,13 @@ export type ChannelSecurityContext<ResolvedAccount = unknown> = {
 export type ChannelMentionAdapter = {
   stripPatterns?: (params: {
     ctx: MsgContext;
-    cfg: OpenClawConfig | undefined;
+    cfg: RadioClawConfig | undefined;
     agentId?: string;
   }) => string[];
   stripMentions?: (params: {
     text: string;
     ctx: MsgContext;
-    cfg: OpenClawConfig | undefined;
+    cfg: RadioClawConfig | undefined;
     agentId?: string;
   }) => string;
 };
@@ -231,7 +231,7 @@ export type ChannelStreamingAdapter = {
 
 export type ChannelThreadingAdapter = {
   resolveReplyToMode?: (params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     accountId?: string | null;
     chatType?: string | null;
   }) => "off" | "first" | "all";
@@ -247,7 +247,7 @@ export type ChannelThreadingAdapter = {
    */
   allowTagsWhenOff?: boolean;
   buildToolContext?: (params: {
-    cfg: OpenClawConfig;
+    cfg: RadioClawConfig;
     accountId?: string | null;
     context: ChannelThreadingContext;
     hasRepliedRef?: { value: boolean };
@@ -264,7 +264,7 @@ export type ChannelThreadingContext = {
   ReplyToIdFull?: string;
   ThreadLabel?: string;
   MessageThreadId?: string | number;
-  /** Platform-native channel/conversation id (e.g. Slack DM channel "Dâ€¦" id). */
+  /** Platform-native channel/conversation id (e.g. Slack DM channel "Dâ€? id). */
   NativeChannelId?: string;
 };
 
@@ -297,7 +297,7 @@ export type ChannelMessagingAdapter = {
 };
 
 export type ChannelAgentPromptAdapter = {
-  messageToolHints?: (params: { cfg: OpenClawConfig; accountId?: string | null }) => string[];
+  messageToolHints?: (params: { cfg: RadioClawConfig; accountId?: string | null }) => string[];
 };
 
 export type ChannelDirectoryEntryKind = "user" | "group" | "channel";
@@ -317,7 +317,7 @@ export type ChannelMessageActionName = ChannelMessageActionNameFromList;
 export type ChannelMessageActionContext = {
   channel: ChannelId;
   action: ChannelMessageActionName;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   params: Record<string, unknown>;
   mediaLocalRoots?: readonly string[];
   accountId?: string | null;
@@ -351,10 +351,10 @@ export type ChannelMessageActionAdapter = {
    * not inferred from `outbound.sendPoll`, so channels that want agents to
    * create polls should include `"poll"` here when enabled.
    */
-  listActions?: (params: { cfg: OpenClawConfig }) => ChannelMessageActionName[];
+  listActions?: (params: { cfg: RadioClawConfig }) => ChannelMessageActionName[];
   supportsAction?: (params: { action: ChannelMessageActionName }) => boolean;
-  supportsButtons?: (params: { cfg: OpenClawConfig }) => boolean;
-  supportsCards?: (params: { cfg: OpenClawConfig }) => boolean;
+  supportsButtons?: (params: { cfg: RadioClawConfig }) => boolean;
+  supportsCards?: (params: { cfg: RadioClawConfig }) => boolean;
   extractToolSend?: (params: { args: Record<string, unknown> }) => ChannelToolSend | null;
   handleAction?: (ctx: ChannelMessageActionContext) => Promise<AgentToolResult<unknown>>;
 };
@@ -368,7 +368,7 @@ export type ChannelPollResult = {
 };
 
 export type ChannelPollContext = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   to: string;
   poll: PollInput;
   accountId?: string | null;

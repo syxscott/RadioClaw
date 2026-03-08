@@ -4,7 +4,7 @@ import {
   isEmbeddedPiRunActive,
   waitForEmbeddedPiRunEnd,
 } from "../../agents/pi-embedded.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   resolveFreshSessionTotalTokens,
   resolveSessionFilePath,
@@ -20,7 +20,7 @@ import { incrementCompactionCount } from "./session-updates.js";
 function extractCompactInstructions(params: {
   rawBody?: string;
   ctx: import("../templating.js").MsgContext;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId?: string;
   isGroup: boolean;
 }): string | undefined {
@@ -112,7 +112,7 @@ export const handleCompactCommand: CommandHandler = async (params) => {
   const compactLabel = result.ok
     ? result.compacted
       ? result.result?.tokensBefore != null && result.result?.tokensAfter != null
-        ? `Compacted (${formatTokenCount(result.result.tokensBefore)} ‚Üí ${formatTokenCount(result.result.tokensAfter)})`
+        ? `Compacted (${formatTokenCount(result.result.tokensBefore)} ‚Ü?${formatTokenCount(result.result.tokensAfter)})`
         : result.result?.tokensBefore
           ? `Compacted (${formatTokenCount(result.result.tokensBefore)} before)`
           : "Compacted"
@@ -137,8 +137,8 @@ export const handleCompactCommand: CommandHandler = async (params) => {
   );
   const reason = result.reason?.trim();
   const line = reason
-    ? `${compactLabel}: ${reason} ‚Ä¢ ${contextSummary}`
-    : `${compactLabel} ‚Ä¢ ${contextSummary}`;
+    ? `${compactLabel}: ${reason} ‚Ä?${contextSummary}`
+    : `${compactLabel} ‚Ä?${contextSummary}`;
   enqueueSystemEvent(line, { sessionKey: params.sessionKey });
   return { shouldContinue: false, reply: { text: `‚öôÔ∏è ${line}` } };
 };

@@ -115,7 +115,7 @@ const pgrepResult = (() => {
       pgrepUnavailable = true;
       return "";
     }
-    // pgrep exit code 1 = no matches â€” return stdout (empty)
+    // pgrep exit code 1 = no matches â€?return stdout (empty)
     if (err && typeof err.stdout === "string") return err.stdout;
     return "";
   }
@@ -131,22 +131,22 @@ if (candidatePids.length > 0) {
   // Fetch command info only for candidate PIDs.
   lines = runFile("ps", ["-o", "pid=,command=", "-p", candidatePids.join(",")]).split("\n");
 } else if (pgrepUnavailable && username.length > 0) {
-  // pgrep not installed â€” fall back to user-scoped ps scan.
+  // pgrep not installed â€?fall back to user-scoped ps scan.
   lines = runFile("ps", ["-U", username, "-o", "pid=,command="]).split("\n");
 } else if (pgrepUnavailable) {
-  // pgrep not installed and no username â€” full scan as last resort.
+  // pgrep not installed and no username â€?full scan as last resort.
   lines = runFile("ps", ["-axo", "pid=,command="]).split("\n");
 } else {
-  // pgrep ran successfully but found no matches â€” no orphans.
+  // pgrep ran successfully but found no matches â€?no orphans.
   lines = [];
 }
 
 const includePattern = /codex|claude/i;
 
 const excludePatterns = [
-  /openclaw-gateway/i,
+  /RadioClaw-gateway/i,
   /signal-cli/i,
-  /node_modules\/\.bin\/openclaw/i,
+  /node_modules\/\.bin\/RadioClaw/i,
   /recover-orphaned-processes\.sh/i,
 ];
 

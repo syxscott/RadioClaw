@@ -206,7 +206,7 @@ export function renderExecApprovals(state: ExecApprovalsState) {
           ?disabled=${state.disabled || !state.dirty || !targetReady}
           @click=${state.onSave}
         >
-          ${state.saving ? "Savingâ€¦" : "Save"}
+          ${state.saving ? "Savingâ€? : "Save"}
         </button>
       </div>
 
@@ -217,7 +217,7 @@ export function renderExecApprovals(state: ExecApprovalsState) {
           ? html`<div class="row" style="margin-top: 12px; gap: 12px;">
             <div class="muted">Load exec approvals to edit allowlists.</div>
             <button class="btn" ?disabled=${state.loading || !targetReady} @click=${state.onLoad}>
-              ${state.loading ? "Loadingâ€¦" : "Load approvals"}
+              ${state.loading ? "Loadingâ€? : "Load approvals"}
             </button>
           </div>`
           : html`

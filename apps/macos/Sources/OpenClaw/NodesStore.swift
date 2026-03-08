@@ -46,7 +46,7 @@ final class NodesStore {
     var statusMessage: String?
     var isLoading = false
 
-    private let logger = Logger(subsystem: "ai.openclaw", category: "nodes")
+    private let logger = Logger(subsystem: "ai.RadioClaw", category: "nodes")
     private var task: Task<Void, Never>?
     private let interval: TimeInterval = 30
     private var startCount = 0
@@ -82,7 +82,7 @@ final class NodesStore {
             if Self.isCancelled(error) {
                 self.logger.debug("node.list cancelled; keeping last nodes")
                 if self.nodes.isEmpty {
-                    self.statusMessage = "Refreshing devicesâ€¦"
+                    self.statusMessage = "Refreshing devicesâ€?
                 }
                 self.lastError = nil
                 return

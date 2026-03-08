@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { resolveApiKeyForProfile } from "./oauth.js";
 import type { AuthProfileStore } from "./types.js";
 
@@ -10,7 +10,7 @@ function cfgFor(profileId: string, provider: string, mode: "api_key" | "token" |
         [profileId]: { provider, mode },
       },
     },
-  } satisfies OpenClawConfig;
+  } satisfies RadioClawConfig;
 }
 
 function tokenStore(params: {
@@ -136,7 +136,7 @@ describe("resolveApiKeyForProfile config compatibility", () => {
       store,
       profileId,
     });
-    // token â†” oauth are bidirectionally compatible bearer-token auth paths.
+    // token â†?oauth are bidirectionally compatible bearer-token auth paths.
     expect(result).toEqual({
       apiKey: "access-123", // pragma: allowlist secret
       provider: "anthropic",

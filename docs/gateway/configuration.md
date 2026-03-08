@@ -1,7 +1,7 @@
 ---
 summary: "Configuration overview: common tasks, quick setup, and links to the full reference"
 read_when:
-  - Setting up OpenClaw for the first time
+  - Setting up RadioClaw for the first time
   - Looking for common configuration patterns
   - Navigating to specific config sections
 title: "Configuration"
@@ -9,9 +9,9 @@ title: "Configuration"
 
 # Configuration
 
-OpenClaw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.openclaw/openclaw.json`.
+RadioClaw reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.RadioClaw/RadioClaw.json`.
 
-If the file is missing, OpenClaw uses safe defaults. Common reasons to add a config:
+If the file is missing, RadioClaw uses safe defaults. Common reasons to add a config:
 
 - Connect channels and control who can message the bot
 - Set models, tools, sandboxing, or automation (cron, hooks)
@@ -20,15 +20,15 @@ If the file is missing, OpenClaw uses safe defaults. Common reasons to add a con
 See the [full reference](/gateway/configuration-reference) for every available field.
 
 <Tip>
-**New to configuration?** Start with `openclaw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
+**New to configuration?** Start with `RadioClaw onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
 </Tip>
 
 ## Minimal config
 
 ```json5
-// ~/.openclaw/openclaw.json
+// ~/.RadioClaw/RadioClaw.json
 {
-  agents: { defaults: { workspace: "~/.openclaw/workspace" } },
+  agents: { defaults: { workspace: "~/.RadioClaw/workspace" } },
   channels: { whatsapp: { allowFrom: ["+15555550123"] } },
 }
 ```
@@ -38,15 +38,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 <Tabs>
   <Tab title="Interactive wizard">
     ```bash
-    openclaw onboard       # full setup wizard
-    openclaw configure     # config wizard
+    RadioClaw onboard       # full setup wizard
+    RadioClaw configure     # config wizard
     ```
   </Tab>
   <Tab title="CLI (one-liners)">
     ```bash
-    openclaw config get agents.defaults.workspace
-    openclaw config set agents.defaults.heartbeat.every "2h"
-    openclaw config unset tools.web.search.apiKey
+    RadioClaw config get agents.defaults.workspace
+    RadioClaw config set agents.defaults.heartbeat.every "2h"
+    RadioClaw config unset tools.web.search.apiKey
     ```
   </Tab>
   <Tab title="Control UI">
@@ -54,22 +54,22 @@ See the [full reference](/gateway/configuration-reference) for every available f
     The Control UI renders a form from the config schema, with a **Raw JSON** editor as an escape hatch.
   </Tab>
   <Tab title="Direct edit">
-    Edit `~/.openclaw/openclaw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
+    Edit `~/.RadioClaw/RadioClaw.json` directly. The Gateway watches the file and applies changes automatically (see [hot reload](#config-hot-reload)).
   </Tab>
 </Tabs>
 
 ## Strict validation
 
 <Warning>
-OpenClaw only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
+RadioClaw only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
 </Warning>
 
 When validation fails:
 
 - The Gateway does not boot
-- Only diagnostic commands work (`openclaw doctor`, `openclaw logs`, `openclaw health`, `openclaw status`)
-- Run `openclaw doctor` to see exact issues
-- Run `openclaw doctor --fix` (or `--yes`) to apply repairs
+- Only diagnostic commands work (`RadioClaw doctor`, `RadioClaw logs`, `RadioClaw health`, `RadioClaw status`)
+- Run `RadioClaw doctor` to see exact issues
+- Run `RadioClaw doctor --fix` (or `--yes`) to apply repairs
 
 ## Common tasks
 
@@ -77,15 +77,15 @@ When validation fails:
   <Accordion title="Set up a channel (WhatsApp, Telegram, Discord, etc.)">
     Each channel has its own config section under `channels.<provider>`. See the dedicated channel page for setup steps:
 
-    - [WhatsApp](/channels/whatsapp) â€” `channels.whatsapp`
-    - [Telegram](/channels/telegram) â€” `channels.telegram`
-    - [Discord](/channels/discord) â€” `channels.discord`
-    - [Slack](/channels/slack) â€” `channels.slack`
-    - [Signal](/channels/signal) â€” `channels.signal`
-    - [iMessage](/channels/imessage) â€” `channels.imessage`
-    - [Google Chat](/channels/googlechat) â€” `channels.googlechat`
-    - [Mattermost](/channels/mattermost) â€” `channels.mattermost`
-    - [MS Teams](/channels/msteams) â€” `channels.msteams`
+    - [WhatsApp](/channels/whatsapp) â€?`channels.whatsapp`
+    - [Telegram](/channels/telegram) â€?`channels.telegram`
+    - [Discord](/channels/discord) â€?`channels.discord`
+    - [Slack](/channels/slack) â€?`channels.slack`
+    - [Signal](/channels/signal) â€?`channels.signal`
+    - [iMessage](/channels/imessage) â€?`channels.imessage`
+    - [Google Chat](/channels/googlechat) â€?`channels.googlechat`
+    - [Mattermost](/channels/mattermost) â€?`channels.mattermost`
+    - [MS Teams](/channels/msteams) â€?`channels.msteams`
 
     All channels share the same DM policy pattern:
 
@@ -156,7 +156,7 @@ When validation fails:
           {
             id: "main",
             groupChat: {
-              mentionPatterns: ["@openclaw", "openclaw"],
+              mentionPatterns: ["@RadioClaw", "RadioClaw"],
             },
           },
         ],
@@ -307,8 +307,8 @@ When validation fails:
     {
       agents: {
         list: [
-          { id: "home", default: true, workspace: "~/.openclaw/workspace-home" },
-          { id: "work", workspace: "~/.openclaw/workspace-work" },
+          { id: "home", default: true, workspace: "~/.RadioClaw/workspace-home" },
+          { id: "work", workspace: "~/.RadioClaw/workspace-work" },
         ],
       },
       bindings: [
@@ -326,7 +326,7 @@ When validation fails:
     Use `$include` to organize large configs:
 
     ```json5
-    // ~/.openclaw/openclaw.json
+    // ~/.RadioClaw/RadioClaw.json
     {
       gateway: { port: 18789 },
       agents: { $include: "./agents.json5" },
@@ -348,14 +348,14 @@ When validation fails:
 
 ## Config hot reload
 
-The Gateway watches `~/.openclaw/openclaw.json` and applies changes automatically â€” no manual restart needed for most settings.
+The Gateway watches `~/.RadioClaw/RadioClaw.json` and applies changes automatically â€?no manual restart needed for most settings.
 
 ### Reload modes
 
 | Mode                   | Behavior                                                                                |
 | ---------------------- | --------------------------------------------------------------------------------------- |
 | **`hybrid`** (default) | Hot-applies safe changes instantly. Automatically restarts for critical ones.           |
-| **`hot`**              | Hot-applies safe changes only. Logs a warning when a restart is needed â€” you handle it. |
+| **`hot`**              | Hot-applies safe changes only. Logs a warning when a restart is needed â€?you handle it. |
 | **`restart`**          | Restarts the Gateway on any config change, safe or not.                                 |
 | **`off`**              | Disables file watching. Changes take effect on the next manual restart.                 |
 
@@ -373,7 +373,7 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
 
 | Category            | Fields                                                               | Restart needed? |
 | ------------------- | -------------------------------------------------------------------- | --------------- |
-| Channels            | `channels.*`, `web` (WhatsApp) â€” all built-in and extension channels | No              |
+| Channels            | `channels.*`, `web` (WhatsApp) â€?all built-in and extension channels | No              |
 | Agent & models      | `agent`, `agents`, `models`, `routing`                               | No              |
 | Automation          | `hooks`, `cron`, `agent.heartbeat`                                   | No              |
 | Sessions & messages | `session`, `messages`                                                | No              |
@@ -383,7 +383,7 @@ Most fields hot-apply without downtime. In `hybrid` mode, restart-required chang
 | Infrastructure      | `discovery`, `canvasHost`, `plugins`                                 | **Yes**         |
 
 <Note>
-`gateway.reload` and `gateway.remote` are exceptions â€” changing them does **not** trigger a restart.
+`gateway.reload` and `gateway.remote` are exceptions â€?changing them does **not** trigger a restart.
 </Note>
 
 ## Config RPC (programmatic updates)
@@ -397,23 +397,23 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Validates + writes the full config and restarts the Gateway in one step.
 
     <Warning>
-    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `openclaw config set` for single keys.
+    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `RadioClaw config set` for single keys.
     </Warning>
 
     Params:
 
-    - `raw` (string) â€” JSON5 payload for the entire config
-    - `baseHash` (optional) â€” config hash from `config.get` (required when config exists)
-    - `sessionKey` (optional) â€” session key for the post-restart wake-up ping
-    - `note` (optional) â€” note for the restart sentinel
-    - `restartDelayMs` (optional) â€” delay before restart (default 2000)
+    - `raw` (string) â€?JSON5 payload for the entire config
+    - `baseHash` (optional) â€?config hash from `config.get` (required when config exists)
+    - `sessionKey` (optional) â€?session key for the post-restart wake-up ping
+    - `note` (optional) â€?note for the restart sentinel
+    - `restartDelayMs` (optional) â€?delay before restart (default 2000)
 
     Restart requests are coalesced while one is already pending/in-flight, and a 30-second cooldown applies between restart cycles.
 
     ```bash
-    openclaw gateway call config.get --params '{}'  # capture payload.hash
-    openclaw gateway call config.apply --params '{
-      "raw": "{ agents: { defaults: { workspace: \"~/.openclaw/workspace\" } } }",
+    RadioClaw gateway call config.get --params '{}'  # capture payload.hash
+    RadioClaw gateway call config.apply --params '{
+      "raw": "{ agents: { defaults: { workspace: \"~/.RadioClaw/workspace\" } } }",
       "baseHash": "<hash>",
       "sessionKey": "agent:main:whatsapp:dm:+15555550123"
     }'
@@ -430,14 +430,14 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
 
     Params:
 
-    - `raw` (string) â€” JSON5 with just the keys to change
-    - `baseHash` (required) â€” config hash from `config.get`
-    - `sessionKey`, `note`, `restartDelayMs` â€” same as `config.apply`
+    - `raw` (string) â€?JSON5 with just the keys to change
+    - `baseHash` (required) â€?config hash from `config.get`
+    - `sessionKey`, `note`, `restartDelayMs` â€?same as `config.apply`
 
     Restart behavior matches `config.apply`: coalesced pending restarts plus a 30-second cooldown between restart cycles.
 
     ```bash
-    openclaw gateway call config.patch --params '{
+    RadioClaw gateway call config.patch --params '{
       "raw": "{ channels: { telegram: { groups: { \"*\": { requireMention: false } } } } }",
       "baseHash": "<hash>"
     }'
@@ -448,10 +448,10 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
 
 ## Environment variables
 
-OpenClaw reads env vars from the parent process plus:
+RadioClaw reads env vars from the parent process plus:
 
 - `.env` from the current working directory (if present)
-- `~/.openclaw/.env` (global fallback)
+- `~/.RadioClaw/.env` (global fallback)
 
 Neither file overrides existing env vars. You can also set inline env vars in config:
 
@@ -465,7 +465,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 ```
 
 <Accordion title="Shell env import (optional)">
-  If enabled and expected keys aren't set, OpenClaw runs your login shell and imports only the missing keys:
+  If enabled and expected keys aren't set, RadioClaw runs your login shell and imports only the missing keys:
 
 ```json5
 {
@@ -475,7 +475,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 }
 ```
 
-Env var equivalent: `OPENCLAW_LOAD_SHELL_ENV=1`
+Env var equivalent: `RadioClaw_LOAD_SHELL_ENV=1`
 </Accordion>
 
 <Accordion title="Env var substitution in config values">
@@ -483,7 +483,7 @@ Env var equivalent: `OPENCLAW_LOAD_SHELL_ENV=1`
 
 ```json5
 {
-  gateway: { auth: { token: "${OPENCLAW_GATEWAY_TOKEN}" } },
+  gateway: { auth: { token: "${RadioClaw_GATEWAY_TOKEN}" } },
   models: { providers: { custom: { apiKey: "${CUSTOM_API_KEY}" } } },
 }
 ```
@@ -494,7 +494,7 @@ Rules:
 - Missing/empty vars throw an error at load time
 - Escape with `$${VAR}` for literal output
 - Works inside `$include` files
-- Inline substitution: `"${BASE}/v1"` â†’ `"https://api.example.com/v1"`
+- Inline substitution: `"${BASE}/v1"` â†?`"https://api.example.com/v1"`
 
 </Accordion>
 

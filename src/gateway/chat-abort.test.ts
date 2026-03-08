@@ -49,7 +49,7 @@ describe("isChatStopCommandText", () => {
     expect(isChatStopCommandText("stop please")).toBe(true);
     expect(isChatStopCommandText("do not do that")).toBe(true);
     expect(isChatStopCommandText("停止")).toBe(true);
-    expect(isChatStopCommandText("やめて")).toBe(true);
+    expect(isChatStopCommandText("やめ�?)).toBe(true);
     expect(isChatStopCommandText("توقف")).toBe(true);
     expect(isChatStopCommandText("остановись")).toBe(true);
     expect(isChatStopCommandText("halt")).toBe(true);

@@ -300,7 +300,7 @@ export function assertGatewayAuthConfigured(
       return;
     }
     throw new Error(
-      "gateway auth mode is token, but no token was configured (set gateway.auth.token or OPENCLAW_GATEWAY_TOKEN)",
+      "gateway auth mode is token, but no token was configured (set gateway.auth.token or RadioClaw_GATEWAY_TOKEN)",
     );
   }
   if (auth.mode === "password" && !auth.password) {
@@ -309,7 +309,7 @@ export function assertGatewayAuthConfigured(
       typeof rawAuthConfig.password !== "string" // pragma: allowlist secret
     ) {
       throw new Error(
-        "gateway auth mode is password, but gateway.auth.password contains a provider reference object instead of a resolved string â€” bootstrap secrets (gateway.auth.password) must be plaintext strings or set via the OPENCLAW_GATEWAY_PASSWORD environment variable because the secrets provider system has not initialised yet at gateway startup", // pragma: allowlist secret
+        "gateway auth mode is password, but gateway.auth.password contains a provider reference object instead of a resolved string â€?bootstrap secrets (gateway.auth.password) must be plaintext strings or set via the RadioClaw_GATEWAY_PASSWORD environment variable because the secrets provider system has not initialised yet at gateway startup", // pragma: allowlist secret
       );
     }
     throw new Error("gateway auth mode is password, but no password was configured");
@@ -450,7 +450,7 @@ export async function authorizeGatewayConnect(
       return { ok: false, reason: "token_missing_config" };
     }
     if (!connectAuth?.token) {
-      // Don't burn rate-limit slots for missing credentials â€” the client
+      // Don't burn rate-limit slots for missing credentials â€?the client
       // simply hasn't provided a token yet (e.g. bare browser open).
       // Only actual *wrong* credentials should count as failures.
       return { ok: false, reason: "token_missing" };
@@ -469,7 +469,7 @@ export async function authorizeGatewayConnect(
       return { ok: false, reason: "password_missing_config" };
     }
     if (!password) {
-      // Same as token_missing â€” don't penalize absent credentials.
+      // Same as token_missing â€?don't penalize absent credentials.
       return { ok: false, reason: "password_missing" };
     }
     if (!safeEqualSecret(password, auth.password)) {

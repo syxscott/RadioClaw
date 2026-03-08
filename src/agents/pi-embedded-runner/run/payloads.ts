@@ -3,7 +3,7 @@ import { parseReplyDirectives } from "../../../auto-reply/reply/reply-directives
 import type { ReasoningLevel, VerboseLevel } from "../../../auto-reply/thinking.js";
 import { isSilentReplyText, SILENT_REPLY_TOKEN } from "../../../auto-reply/tokens.js";
 import { formatToolAggregate } from "../../../auto-reply/tool-meta.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { RadioClawConfig } from "../../../config/config.js";
 import {
   BILLING_ERROR_USER_MESSAGE,
   formatAssistantErrorText,
@@ -68,7 +68,7 @@ function resolveToolErrorWarningPolicy(params: {
     return { showWarning: false, includeDetails };
   }
   // sessions_send timeouts and errors are transient inter-session communication
-  // issues â€” the message may still have been delivered. Suppress warnings to
+  // issues â€?the message may still have been delivered. Suppress warnings to
   // prevent raw error text from leaking into the chat surface (#23989).
   if (normalizedToolName === "sessions_send") {
     return { showWarning: false, includeDetails };
@@ -92,7 +92,7 @@ export function buildEmbeddedRunPayloads(params: {
   toolMetas: ToolMetaEntry[];
   lastAssistant: AssistantMessage | undefined;
   lastToolError?: LastToolError;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   sessionKey: string;
   provider?: string;
   model?: string;

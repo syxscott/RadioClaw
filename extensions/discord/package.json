@@ -1,9 +1,9 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@RadioClaw/discord",
   "version": "2026.3.7",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "RadioClaw Discord channel plugin",
   "type": "module",
-  "openclaw": {
+  "RadioClaw": {
     "extensions": [
       "./index.ts"
     ]

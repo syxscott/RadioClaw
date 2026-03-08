@@ -349,7 +349,7 @@ describe("clearExpiredCooldowns", () => {
     const stats = store.usageStats?.["anthropic:default"];
     // cooldownUntil cleared
     expect(stats?.cooldownUntil).toBeUndefined();
-    // disabledUntil still active â€” not touched
+    // disabledUntil still active â€?not touched
     expect(stats?.disabledUntil).toBe(future);
     expect(stats?.disabledReason).toBe("billing");
     // errorCount NOT reset because profile still has an active unusable window
@@ -409,11 +409,11 @@ describe("clearExpiredCooldowns", () => {
 
     expect(clearExpiredCooldowns(store)).toBe(true);
 
-    // Anthropic: expired â†’ cleared
+    // Anthropic: expired â†?cleared
     expect(store.usageStats?.["anthropic:default"]?.cooldownUntil).toBeUndefined();
     expect(store.usageStats?.["anthropic:default"]?.errorCount).toBe(0);
 
-    // OpenAI: still active â†’ untouched
+    // OpenAI: still active â†?untouched
     expect(store.usageStats?.["openai:default"]?.cooldownUntil).toBeGreaterThan(Date.now());
     expect(store.usageStats?.["openai:default"]?.errorCount).toBe(2);
   });
@@ -441,7 +441,7 @@ describe("clearExpiredCooldowns", () => {
       },
     });
 
-    // ts >= cooldownUntil â†’ should clear (cooldown "until" means the instant
+    // ts >= cooldownUntil â†?should clear (cooldown "until" means the instant
     // at cooldownUntil the profile becomes available again).
     expect(clearExpiredCooldowns(store, fixedNow)).toBe(true);
     expect(store.usageStats?.["anthropic:default"]?.cooldownUntil).toBeUndefined();
@@ -529,8 +529,8 @@ describe("clearAuthProfileCooldown", () => {
   });
 });
 
-describe("markAuthProfileFailure â€” active windows do not extend on retry", () => {
-  // Regression for https://github.com/openclaw/openclaw/issues/23516
+describe("markAuthProfileFailure â€?active windows do not extend on retry", () => {
+  // Regression for https://github.com/RadioClaw/RadioClaw/issues/23516
   // When all providers are at saturation backoff (60 min) and retries fire every 30 min,
   // each retry was resetting cooldownUntil to now+60m, preventing recovery.
   type WindowStats = ProfileUsageStats;

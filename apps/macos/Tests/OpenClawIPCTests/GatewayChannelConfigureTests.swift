@@ -1,8 +1,8 @@
 import Foundation
-import OpenClawKit
+import RadioClawKit
 import os
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite struct GatewayConnectionTests {
     private func makeConnection(

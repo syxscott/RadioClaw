@@ -209,11 +209,11 @@ The connection string is stored in `.prose/.env`:
 ```
 your-project/
 ├── .prose/
-│   ├── .env                    # OPENPROSE_POSTGRES_URL=...
-│   └── runs/                   # Execution metadata and attachments
-│       └── {YYYYMMDD}-{HHMMSS}-{random}/
-│           ├── program.prose   # Copy of running program
-│           └── attachments/    # Large outputs (optional)
+�?  ├── .env                    # OPENPROSE_POSTGRES_URL=...
+�?  └── runs/                   # Execution metadata and attachments
+�?      └── {YYYYMMDD}-{HHMMSS}-{random}/
+�?          ├── program.prose   # Copy of running program
+�?          └── attachments/    # Large outputs (optional)
 ├── .gitignore                  # Should exclude .prose/.env
 └── your-program.prose
 ```

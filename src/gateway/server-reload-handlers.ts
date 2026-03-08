@@ -107,17 +107,17 @@ export function createGatewayReloadHandlers(params: {
         cfg: nextConfig,
         log: params.logHooks,
         onSkipped: () =>
-          params.logHooks.info("skipping gmail watcher restart (OPENCLAW_SKIP_GMAIL_WATCHER=1)"),
+          params.logHooks.info("skipping gmail watcher restart (RadioClaw_SKIP_GMAIL_WATCHER=1)"),
       });
     }
 
     if (plan.restartChannels.size > 0) {
       if (
-        isTruthyEnvValue(process.env.OPENCLAW_SKIP_CHANNELS) ||
-        isTruthyEnvValue(process.env.OPENCLAW_SKIP_PROVIDERS)
+        isTruthyEnvValue(process.env.RadioClaw_SKIP_CHANNELS) ||
+        isTruthyEnvValue(process.env.RadioClaw_SKIP_PROVIDERS)
       ) {
         params.logChannels.info(
-          "skipping channel reload (OPENCLAW_SKIP_CHANNELS=1 or OPENCLAW_SKIP_PROVIDERS=1)",
+          "skipping channel reload (RadioClaw_SKIP_CHANNELS=1 or RadioClaw_SKIP_PROVIDERS=1)",
         );
       } else {
         const restartChannel = async (name: ChannelKind) => {
@@ -190,14 +190,14 @@ export function createGatewayReloadHandlers(params: {
       // Avoid spinning up duplicate polling loops from repeated config changes.
       if (restartPending) {
         params.logReload.info(
-          `config change requires gateway restart (${reasons}) â€” already waiting for operations to complete`,
+          `config change requires gateway restart (${reasons}) â€?already waiting for operations to complete`,
         );
         return;
       }
       restartPending = true;
       const initialDetails = formatActiveDetails(active);
       params.logReload.warn(
-        `config change requires gateway restart (${reasons}) â€” deferring until ${initialDetails.join(", ")} complete`,
+        `config change requires gateway restart (${reasons}) â€?deferring until ${initialDetails.join(", ")} complete`,
       );
 
       deferGatewayRestartUntilIdle({

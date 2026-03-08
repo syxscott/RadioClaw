@@ -39,7 +39,7 @@ function formatResolutionLogDetails(base: string, details: Array<string | undefi
 
 function formatDiscordChannelResolved(entry: DiscordChannelLogEntry): string {
   const target = entry.channelId ? `${entry.guildId}/${entry.channelId}` : entry.guildId;
-  const base = `${entry.input}â†’${target}`;
+  const base = `${entry.input}â†?{target}`;
   return formatResolutionLogDetails(base, [
     entry.guildName ? `guild:${entry.guildName}` : undefined,
     entry.channelName ? `channel:${entry.channelName}` : undefined,
@@ -66,7 +66,7 @@ function formatDiscordChannelUnresolved(entry: DiscordChannelLogEntry): string {
 function formatDiscordUserResolved(entry: DiscordUserLogEntry): string {
   const displayName = entry.name?.trim();
   const target = displayName || entry.id;
-  const base = `${entry.input}â†’${target}`;
+  const base = `${entry.input}â†?{target}`;
   return formatResolutionLogDetails(base, [
     displayName && entry.id ? `id:${entry.id}` : undefined,
     entry.guildName ? `guild:${entry.guildName}` : undefined,

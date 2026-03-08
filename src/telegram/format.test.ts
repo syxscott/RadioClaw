@@ -17,7 +17,7 @@ describe("markdownToTelegramHtml", () => {
       ["escapes raw HTML", "<b>nope</b>", "&lt;b&gt;nope&lt;/b&gt;"],
       ["escapes unsafe characters", "a & b < c", "a &amp; b &lt; c"],
       ["renders paragraphs with blank lines", "first\n\nsecond", "first\n\nsecond"],
-      ["renders lists without block HTML", "- one\n- two", "â€¢ one\nâ€¢ two"],
+      ["renders lists without block HTML", "- one\n- two", "â€?one\nâ€?two"],
       ["renders ordered lists with numbering", "2. two\n3. three", "2. two\n3. three"],
       ["flattens headings", "# Title", "Title"],
     ] as const;

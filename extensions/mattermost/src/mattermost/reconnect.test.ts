@@ -71,7 +71,7 @@ describe("runWithReconnect", () => {
     expect(connectFn).toHaveBeenCalledTimes(6);
     // 5 errors produce delays: 1, 2, 4, 8, 10(cap)
     // 6th succeeds -> delay resets to 100
-    // But 6th also aborts â†’ onReconnect NOT called (abort check fires first)
+    // But 6th also aborts â†?onReconnect NOT called (abort check fires first)
     expect(delays).toEqual([1, 2, 4, 8, 10]);
   });
 
@@ -102,9 +102,9 @@ describe("runWithReconnect", () => {
 
     expect(connectFn).toHaveBeenCalledTimes(4);
     // call 1: fail -> delay 1
-    // call 2: success â†’ delay resets to 1
+    // call 2: success â†?delay resets to 1
     // call 3: fail -> delay 1 (reset held)
-    // call 4: success + abort â†’ no onReconnect
+    // call 4: success + abort â†?no onReconnect
     expect(delays).toEqual([1, 1, 1]);
   });
 

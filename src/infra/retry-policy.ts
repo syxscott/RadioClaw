@@ -91,8 +91,7 @@ export function createTelegramRetryRunner(params: {
   verbose?: boolean;
   shouldRetry?: (err: unknown) => boolean;
   /**
-   * When true, the custom shouldRetry predicate is used exclusively â€”
-   * the default TELEGRAM_RETRY_RE fallback regex is NOT OR'd in.
+   * When true, the custom shouldRetry predicate is used exclusively â€?   * the default TELEGRAM_RETRY_RE fallback regex is NOT OR'd in.
    * Use this for non-idempotent operations (e.g. sendMessage) where
    * the regex fallback would cause duplicate message delivery.
    */

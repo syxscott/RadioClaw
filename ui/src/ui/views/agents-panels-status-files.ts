@@ -152,7 +152,7 @@ export function renderAgentChannels(params: {
             <div class="card-sub">Gateway-wide channel status snapshot.</div>
           </div>
           <button class="btn btn--sm" ?disabled=${params.loading} @click=${params.onRefresh}>
-            ${params.loading ? "Refreshingâ€¦" : "Refresh"}
+            ${params.loading ? "Refreshingâ€? : "Refresh"}
           </button>
         </div>
         <div class="muted" style="margin-top: 8px;">
@@ -240,7 +240,7 @@ export function renderAgentCron(params: {
             <div class="card-sub">Gateway cron status.</div>
           </div>
           <button class="btn btn--sm" ?disabled=${params.loading} @click=${params.onRefresh}>
-            ${params.loading ? "Refreshingâ€¦" : "Refresh"}
+            ${params.loading ? "Refreshingâ€? : "Refresh"}
           </button>
         </div>
         <div class="stat-grid" style="margin-top: 16px;">
@@ -343,7 +343,7 @@ export function renderAgentFiles(params: {
           ?disabled=${params.agentFilesLoading}
           @click=${() => params.onLoadFiles(params.agentId)}
         >
-          ${params.agentFilesLoading ? "Loadingâ€¦" : "Refresh"}
+          ${params.agentFilesLoading ? "Loadingâ€? : "Refresh"}
         </button>
       </div>
       ${
@@ -401,7 +401,7 @@ export function renderAgentFiles(params: {
                                 ?disabled=${params.agentFileSaving || !isDirty}
                                 @click=${() => params.onFileSave(activeEntry.name)}
                               >
-                                ${params.agentFileSaving ? "Savingâ€¦" : "Save"}
+                                ${params.agentFileSaving ? "Savingâ€? : "Save"}
                               </button>
                             </div>
                           </div>

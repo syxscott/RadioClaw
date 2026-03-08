@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
-import { resolveOpenClawAgentDir } from "../../agents/agent-paths.js";
+import { resolveRadioClawAgentDir } from "../../agents/agent-paths.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   type AuthProfileCredential,
@@ -22,7 +22,7 @@ import {
 } from "../../agents/model-selection.js";
 import { runEmbeddedPiAgent } from "../../agents/pi-embedded.js";
 import { resolveDefaultAgentWorkspaceDir } from "../../agents/workspace.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   resolveSessionTranscriptPath,
   resolveSessionTranscriptsDirForAgent,
@@ -176,21 +176,21 @@ function mapEligibilityReasonToProbeReasonCode(
 function formatMissingCredentialProbeError(reasonCode: AuthProbeReasonCode): string {
   const legacyLine = "Auth profile credentials are missing or expired.";
   if (reasonCode === "expired") {
-    return `${legacyLine}\nâ†³ Auth reason [expired]: token credentials are expired.`;
+    return `${legacyLine}\nâ†?Auth reason [expired]: token credentials are expired.`;
   }
   if (reasonCode === "invalid_expires") {
-    return `${legacyLine}\nâ†³ Auth reason [invalid_expires]: token expires must be a positive Unix ms timestamp.`;
+    return `${legacyLine}\nâ†?Auth reason [invalid_expires]: token expires must be a positive Unix ms timestamp.`;
   }
   if (reasonCode === "missing_credential") {
-    return `${legacyLine}\nâ†³ Auth reason [missing_credential]: no inline credential or SecretRef is configured.`;
+    return `${legacyLine}\nâ†?Auth reason [missing_credential]: no inline credential or SecretRef is configured.`;
   }
   if (reasonCode === "unresolved_ref") {
-    return `${legacyLine}\nâ†³ Auth reason [unresolved_ref]: configured SecretRef could not be resolved.`;
+    return `${legacyLine}\nâ†?Auth reason [unresolved_ref]: configured SecretRef could not be resolved.`;
   }
-  return `${legacyLine}\nâ†³ Auth reason [ineligible_profile]: profile is incompatible with provider config.`;
+  return `${legacyLine}\nâ†?Auth reason [ineligible_profile]: profile is incompatible with provider config.`;
 }
 
-function resolveProbeSecretRef(profile: AuthProfileCredential, cfg: OpenClawConfig) {
+function resolveProbeSecretRef(profile: AuthProfileCredential, cfg: RadioClawConfig) {
   const defaults = cfg.secrets?.defaults;
   if (profile.type === "api_key") {
     if (normalizeSecretInputString(profile.key) !== undefined) {
@@ -209,11 +209,11 @@ function resolveProbeSecretRef(profile: AuthProfileCredential, cfg: OpenClawConf
 
 function formatUnresolvedRefProbeError(refLabel: string): string {
   const legacyLine = "Auth profile credentials are missing or expired.";
-  return `${legacyLine}\nâ†³ Auth reason [unresolved_ref]: could not resolve SecretRef "${refLabel}".`;
+  return `${legacyLine}\nâ†?Auth reason [unresolved_ref]: could not resolve SecretRef "${refLabel}".`;
 }
 
 async function maybeResolveUnresolvedRefIssue(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   profile?: AuthProfileCredential;
   cache: SecretRefResolveCache;
 }): Promise<{ reasonCode: "unresolved_ref"; error: string } | null> {
@@ -240,7 +240,7 @@ async function maybeResolveUnresolvedRefIssue(params: {
 }
 
 export async function buildProbeTargets(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;
@@ -410,7 +410,7 @@ export async function buildProbeTargets(params: {
 }
 
 async function probeTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   agentDir: string;
   workspaceDir: string;
@@ -487,7 +487,7 @@ async function probeTarget(params: {
 }
 
 async function runTargetsWithConcurrency(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   targets: AuthProbeTarget[];
   timeoutMs: number;
   maxTokens: number;
@@ -498,7 +498,7 @@ async function runTargetsWithConcurrency(params: {
   const concurrency = Math.max(1, Math.min(targets.length || 1, params.concurrency));
 
   const agentId = resolveDefaultAgentId(cfg);
-  const agentDir = resolveOpenClawAgentDir();
+  const agentDir = resolveRadioClawAgentDir();
   const workspaceDir = resolveAgentWorkspaceDir(cfg, agentId) ?? resolveDefaultAgentWorkspaceDir();
   const sessionDir = resolveSessionTranscriptsDirForAgent(agentId);
 
@@ -543,7 +543,7 @@ async function runTargetsWithConcurrency(params: {
 }
 
 export async function runAuthProbes(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;

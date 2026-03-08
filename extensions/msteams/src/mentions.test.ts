@@ -75,17 +75,17 @@ describe("parseMentions", () => {
   });
 
   it("handles Japanese characters in mention at start of message", () => {
-    const input = "@[タナカ タロウ](a1b2c3d4-e5f6-7890-abcd-ef1234567890) スキル化完了しました！";
+    const input = "@[タナ�?タロウ](a1b2c3d4-e5f6-7890-abcd-ef1234567890) スキル化完了しました�?;
     const result = parseMentions(input);
 
-    expect(result.text).toBe("<at>タナカ タロウ</at> スキル化完了しました！");
+    expect(result.text).toBe("<at>タナ�?タロ�?/at> スキル化完了しました�?);
     expect(result.entities).toHaveLength(1);
     expect(result.entities[0]).toEqual({
       type: "mention",
-      text: "<at>タナカ タロウ</at>",
+      text: "<at>タナ�?タロ�?/at>",
       mentioned: {
         id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-        name: "タナカ タロウ",
+        name: "タナ�?タロ�?,
       },
     });
 
@@ -99,17 +99,17 @@ describe("parseMentions", () => {
     // This reproduces the actual failing payload: the message contains a real mention
     // plus `@[表示名](ユーザーID)` as documentation text inside backticks.
     const input =
-      "@[タナカ タロウ](a1b2c3d4-e5f6-7890-abcd-ef1234567890) スキル化完了しました！📋\n\n" +
-      "**作成したスキル:** `teams-mention`\n" +
-      "- 機能: Teamsでのメンション形式 `@[表示名](ユーザーID)`\n\n" +
+      "@[タナ�?タロウ](a1b2c3d4-e5f6-7890-abcd-ef1234567890) スキル化完了しました！📋\n\n" +
+      "**作成したスキ�?** `teams-mention`\n" +
+      "- 機能: Teamsでのメンション形�?`@[表示名](ユーザーID)`\n\n" +
       "**追加対応:**\n" +
-      "- ユーザーのID `a1b2c3d4-e5f6-7890-abcd-ef1234567890` を登録済み";
+      "- ユーザーのID `a1b2c3d4-e5f6-7890-abcd-ef1234567890` を登録済�?;
     const result = parseMentions(input);
 
     // Only the real mention should be parsed; the documentation example should be left as-is
     expect(result.entities).toHaveLength(1);
     expect(result.entities[0]?.mentioned.id).toBe("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
-    expect(result.entities[0]?.mentioned.name).toBe("タナカ タロウ");
+    expect(result.entities[0]?.mentioned.name).toBe("タナ�?タロ�?);
 
     // The documentation pattern must remain untouched in the text
     expect(result.text).toContain("`@[表示名](ユーザーID)`");

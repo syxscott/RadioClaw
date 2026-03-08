@@ -14,7 +14,7 @@ import { makeMissingToolResult, sanitizeToolCallInputs } from "./session-transcr
 import { extractToolCallsFromAssistant, extractToolResultId } from "./tool-call-id.js";
 
 const GUARD_TRUNCATION_SUFFIX =
-  "\n\n⚠️ [Content truncated during persistence — original exceeded size limit. " +
+  "\n\n⚠️ [Content truncated during persistence �?original exceeded size limit. " +
   "Use offset/limit parameters or request specific sections for large content.]";
 
 /**

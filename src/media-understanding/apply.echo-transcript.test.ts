@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+import type { RadioClawConfig } from "../config/config.js";
+import { resolvePreferredRadioClawTmpDir } from "../infra/tmp-RadioClaw-dir.js";
 import { createSafeAudioFixtureBuffer } from "./runner.test-utils.js";
 
 // ---------------------------------------------------------------------------
@@ -66,7 +66,7 @@ vi.mock("../infra/outbound/deliver.js", () => ({
 let applyMediaUnderstanding: typeof import("./apply.js").applyMediaUnderstanding;
 let clearMediaUnderstandingBinaryCacheForTests: () => void;
 
-const TEMP_MEDIA_PREFIX = "openclaw-echo-transcript-test-";
+const TEMP_MEDIA_PREFIX = "RadioClaw-echo-transcript-test-";
 let suiteTempMediaRootDir = "";
 
 async function createTempAudioFile(): Promise<string> {
@@ -93,10 +93,10 @@ function createAudioConfigWithEcho(opts?: {
   echoFormat?: string;
   transcribedText?: string;
 }): {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   providers: Record<string, { id: string; transcribeAudio: () => Promise<{ text: string }> }>;
 } {
-  const cfg: OpenClawConfig = {
+  const cfg: RadioClawConfig = {
     tools: {
       media: {
         audio: {
@@ -143,9 +143,9 @@ function createAudioConfigWithoutEchoFlag() {
 // Tests
 // ---------------------------------------------------------------------------
 
-describe("applyMediaUnderstanding – echo transcript", () => {
+describe("applyMediaUnderstanding �?echo transcript", () => {
   beforeAll(async () => {
-    const baseDir = resolvePreferredOpenClawTmpDir();
+    const baseDir = resolvePreferredRadioClawTmpDir();
     await fs.mkdir(baseDir, { recursive: true });
     suiteTempMediaRootDir = await fs.mkdtemp(path.join(baseDir, TEMP_MEDIA_PREFIX));
     const mod = await import("./apply.js");
@@ -211,18 +211,18 @@ describe("applyMediaUnderstanding – echo transcript", () => {
     const ctx = createAudioCtxWithProvider(mediaPath);
     const { cfg, providers } = createAudioConfigWithEcho({
       echoTranscript: true,
-      echoFormat: "🎙️ Heard: {transcript}",
+      echoFormat: "🎙�?Heard: {transcript}",
       transcribedText: "custom message",
     });
 
     await applyMediaUnderstanding({ ctx, cfg, providers });
 
     const callArgs = expectSingleEchoDeliveryCall();
-    expect(callArgs.payloads[0].text).toBe("🎙️ Heard: custom message");
+    expect(callArgs.payloads[0].text).toBe("🎙�?Heard: custom message");
   });
 
   it("does NOT echo when there are no audio attachments", async () => {
-    // Image-only context — no audio attachment
+    // Image-only context �?no audio attachment
     const dir = await fs.mkdtemp(path.join(suiteTempMediaRootDir, "img-"));
     const imgPath = path.join(dir, "photo.jpg");
     await fs.writeFile(imgPath, Buffer.from([0xff, 0xd8, 0xff, 0xe0]));
@@ -243,7 +243,7 @@ describe("applyMediaUnderstanding – echo transcript", () => {
 
     await applyMediaUnderstanding({ ctx, cfg, providers });
 
-    // No audio outputs → Transcript not set → no echo
+    // No audio outputs �?Transcript not set �?no echo
     expect(ctx.Transcript).toBeUndefined();
     expect(mockDeliverOutboundPayloads).not.toHaveBeenCalled();
   });

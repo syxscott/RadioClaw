@@ -4,9 +4,9 @@ import {
   createDedupeCache,
   createPersistentDedupe,
   readJsonFileWithFallback,
-} from "openclaw/plugin-sdk/feishu";
+} from "RadioClaw/plugin-sdk/feishu";
 
-// Persistent TTL: 24 hours â€” survives restarts & WebSocket reconnects.
+// Persistent TTL: 24 hours â€?survives restarts & WebSocket reconnects.
 const DEDUP_TTL_MS = 24 * 60 * 60 * 1000;
 const MEMORY_MAX_SIZE = 1_000;
 const FILE_MAX_ENTRIES = 10_000;
@@ -15,14 +15,14 @@ type PersistentDedupeData = Record<string, number>;
 const memoryDedupe = createDedupeCache({ ttlMs: DEDUP_TTL_MS, maxSize: MEMORY_MAX_SIZE });
 
 function resolveStateDirFromEnv(env: NodeJS.ProcessEnv = process.env): string {
-  const stateOverride = env.OPENCLAW_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
+  const stateOverride = env.RadioClaw_STATE_DIR?.trim() || env.CLAWDBOT_STATE_DIR?.trim();
   if (stateOverride) {
     return stateOverride;
   }
   if (env.VITEST || env.NODE_ENV === "test") {
-    return path.join(os.tmpdir(), ["openclaw-vitest", String(process.pid)].join("-"));
+    return path.join(os.tmpdir(), ["RadioClaw-vitest", String(process.pid)].join("-"));
   }
-  return path.join(os.homedir(), ".openclaw");
+  return path.join(os.homedir(), ".RadioClaw");
 }
 
 function resolveNamespaceFilePath(namespace: string): string {
@@ -38,7 +38,7 @@ const persistentDedupe = createPersistentDedupe({
 });
 
 /**
- * Synchronous dedup â€” memory only.
+ * Synchronous dedup â€?memory only.
  * Kept for backward compatibility; prefer {@link tryRecordMessagePersistent}.
  */
 export function tryRecordMessage(messageId: string): boolean {

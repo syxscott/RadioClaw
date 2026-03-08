@@ -137,7 +137,7 @@ export function summarizeLogTail(rawLines: string[], opts?: { maxLines?: number 
       continue;
     }
 
-    // "[gws] â‡„ res âœ— agent ... errorCode=UNAVAILABLE errorMessage=Error: OAuth token refresh failed ... runId=..."
+    // "[gws] â‡?res âœ?agent ... errorCode=UNAVAILABLE errorMessage=Error: OAuth token refresh failed ... runId=..."
     if (
       line.startsWith("[gws]") &&
       line.includes("errorCode=UNAVAILABLE") &&
@@ -174,7 +174,7 @@ export function summarizeLogTail(rawLines: string[], opts?: { maxLines?: number 
   const tail = Math.max(1, maxLines - head - 1);
   const kept = [
     ...deduped.slice(0, head),
-    `â€¦ ${deduped.length - head - tail} lines omitted â€¦`,
+    `â€?${deduped.length - head - tail} lines omitted â€¦`,
     ...deduped.slice(-tail),
   ];
   return kept;

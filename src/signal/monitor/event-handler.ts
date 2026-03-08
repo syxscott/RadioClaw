@@ -500,7 +500,7 @@ export function createSignalEventHandler(deps: SignalEventHandlerDeps) {
         ? dataMessage?.reaction
         : null;
 
-    // Replace ï¿¼ (object replacement character) with @uuid or @phone from mentions
+    // Replace ï¿?(object replacement character) with @uuid or @phone from mentions
     // Signal encodes mentions as the object replacement character; hydrate them from metadata first.
     const rawMessage = dataMessage?.message ?? "";
     const normalizedMessage = renderSignalMentions(rawMessage, dataMessage?.mentions);

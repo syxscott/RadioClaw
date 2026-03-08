@@ -17,7 +17,7 @@ import { normalizeControlUiBasePath } from "../gateway/control-ui-shared.js";
 import { resolveGatewayProbeAuthSafe } from "../gateway/probe-auth.js";
 import { probeGateway } from "../gateway/probe.js";
 import { collectChannelStatusIssues } from "../infra/channels-status-issues.js";
-import { resolveOpenClawPackageRoot } from "../infra/openclaw-root.js";
+import { resolveRadioClawPackageRoot } from "../infra/RadioClaw-root.js";
 import { resolveOsSummary } from "../infra/os-summary.js";
 import { inspectPortUsage } from "../infra/ports.js";
 import { readRestartSentinel } from "../infra/restart-sentinel.js";
@@ -41,8 +41,8 @@ export async function statusAllCommand(
   runtime: RuntimeEnv,
   opts?: { timeoutMs?: number },
 ): Promise<void> {
-  await withProgress({ label: "Scanning status --allâ€¦", total: 11 }, async (progress) => {
-    progress.setLabel("Loading configâ€¦");
+  await withProgress({ label: "Scanning status --allâ€?, total: 11 }, async (progress) => {
+    progress.setLabel("Loading configâ€?);
     const loadedRaw = await readBestEffortConfig();
     const { resolvedConfig: cfg } = await resolveCommandSecretRefsViaGateway({
       config: loadedRaw,
@@ -54,7 +54,7 @@ export async function statusAllCommand(
     const snap = await readConfigFileSnapshot().catch(() => null);
     progress.tick();
 
-    progress.setLabel("Checking Tailscaleâ€¦");
+    progress.setLabel("Checking Tailscaleâ€?);
     const tailscaleMode = cfg.gateway?.tailscale?.mode ?? "off";
     const tailscale = await (async () => {
       try {
@@ -91,8 +91,8 @@ export async function statusAllCommand(
         : null;
     progress.tick();
 
-    progress.setLabel("Checking for updatesâ€¦");
-    const root = await resolveOpenClawPackageRoot({
+    progress.setLabel("Checking for updatesâ€?);
+    const root = await resolveRadioClawPackageRoot({
       moduleUrl: import.meta.url,
       argv1: process.argv[1],
       cwd: process.cwd(),
@@ -114,7 +114,7 @@ export async function statusAllCommand(
     const gitLabel = formatGitInstallLabel(update);
     progress.tick();
 
-    progress.setLabel("Probing gatewayâ€¦");
+    progress.setLabel("Probing gatewayâ€?);
     const connection = buildGatewayConnectionDetails({ config: cfg });
     const isRemoteMode = cfg.gateway?.mode === "remote";
     const remoteUrlRaw =
@@ -137,14 +137,14 @@ export async function statusAllCommand(
     const gatewaySelf = pickGatewaySelfPresence(gatewayProbe?.presence ?? null);
     progress.tick();
 
-    progress.setLabel("Checking servicesâ€¦");
+    progress.setLabel("Checking servicesâ€?);
     const readServiceSummary = async (service: GatewayService) => {
       try {
         const summary = await readServiceStatusSummary(service, service.label);
         return {
           label: summary.label,
           installed: summary.installed,
-          managedByOpenClaw: summary.managedByOpenClaw,
+          managedByRadioClaw: summary.managedByRadioClaw,
           loaded: summary.loaded,
           loadedText: summary.loadedText,
           runtime: summary.runtime,
@@ -157,10 +157,10 @@ export async function statusAllCommand(
     const nodeService = await readServiceSummary(resolveNodeService());
     progress.tick();
 
-    progress.setLabel("Scanning agentsâ€¦");
+    progress.setLabel("Scanning agentsâ€?);
     const agentStatus = await getAgentLocalStatuses(cfg);
     progress.tick();
-    progress.setLabel("Summarizing channelsâ€¦");
+    progress.setLabel("Summarizing channelsâ€?);
     const channels = await buildChannelsTable(cfg, {
       showSecrets: false,
       sourceConfig: loadedRaw,
@@ -191,7 +191,7 @@ export async function statusAllCommand(
         }
       : {};
 
-    progress.setLabel("Querying gatewayâ€¦");
+    progress.setLabel("Querying gatewayâ€?);
     const health = gatewayReachable
       ? await callGateway({
           config: cfg,
@@ -213,7 +213,7 @@ export async function statusAllCommand(
     const channelIssues = channelsStatus ? collectChannelStatusIssues(channelsStatus) : [];
     progress.tick();
 
-    progress.setLabel("Checking local stateâ€¦");
+    progress.setLabel("Checking local stateâ€?);
     const sentinel = await readRestartSentinel().catch(() => null);
     const lastErr = await readLastGatewayErrorLine(process.env).catch(() => null);
     const port = resolveGatewayPort(cfg);
@@ -304,7 +304,7 @@ export async function statusAllCommand(
       ...(probeAuthResolution.warning
         ? [{ Item: "Gateway auth warning", Value: probeAuthResolution.warning }]
         : []),
-      { Item: "Security", Value: `Run: ${formatCliCommand("openclaw security audit --deep")}` },
+      { Item: "Security", Value: `Run: ${formatCliCommand("RadioClaw security audit --deep")}` },
       gatewaySelfLine
         ? { Item: "Gateway self", Value: gatewaySelfLine }
         : { Item: "Gateway self", Value: "unknown" },
@@ -313,7 +313,7 @@ export async function statusAllCommand(
             Item: "Gateway service",
             Value: !daemon.installed
               ? `${daemon.label} not installed`
-              : `${daemon.label} ${daemon.managedByOpenClaw ? "installed Â· " : ""}${daemon.loadedText}${daemon.runtime?.status ? ` Â· ${daemon.runtime.status}` : ""}${daemon.runtime?.pid ? ` (pid ${daemon.runtime.pid})` : ""}`,
+              : `${daemon.label} ${daemon.managedByRadioClaw ? "installed Â· " : ""}${daemon.loadedText}${daemon.runtime?.status ? ` Â· ${daemon.runtime.status}` : ""}${daemon.runtime?.pid ? ` (pid ${daemon.runtime.pid})` : ""}`,
           }
         : { Item: "Gateway service", Value: "unknown" },
       nodeService
@@ -321,7 +321,7 @@ export async function statusAllCommand(
             Item: "Node service",
             Value: !nodeService.installed
               ? `${nodeService.label} not installed`
-              : `${nodeService.label} ${nodeService.managedByOpenClaw ? "installed Â· " : ""}${nodeService.loadedText}${nodeService.runtime?.status ? ` Â· ${nodeService.runtime.status}` : ""}${nodeService.runtime?.pid ? ` (pid ${nodeService.runtime.pid})` : ""}`,
+              : `${nodeService.label} ${nodeService.managedByRadioClaw ? "installed Â· " : ""}${nodeService.loadedText}${nodeService.runtime?.status ? ` Â· ${nodeService.runtime.status}` : ""}${nodeService.runtime?.pid ? ` (pid ${nodeService.runtime.pid})` : ""}`,
           }
         : { Item: "Node service", Value: "unknown" },
       {
@@ -358,7 +358,7 @@ export async function statusAllCommand(
       },
     });
 
-    progress.setLabel("Renderingâ€¦");
+    progress.setLabel("Renderingâ€?);
     runtime.log(lines.join("\n"));
     progress.tick();
   });

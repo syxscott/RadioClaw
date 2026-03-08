@@ -31,21 +31,21 @@ An alternative register for OpenProse that draws from the works of Jorge Luis Bo
 
 | Functional | Borges    | Reference                                                       |
 | ---------- | --------- | --------------------------------------------------------------- |
-| `agent`    | `dreamer` | "The Circular Ruins" â€” dreamers who dream worlds into existence |
+| `agent`    | `dreamer` | "The Circular Ruins" â€?dreamers who dream worlds into existence |
 | `session`  | `dream`   | Each execution is a dream within the dreamer                    |
-| `parallel` | `forking` | "The Garden of Forking Paths" â€” branching timelines             |
+| `parallel` | `forking` | "The Garden of Forking Paths" â€?branching timelines             |
 | `block`    | `chapter` | Books within books, self-referential structure                  |
 
 ### Composition & Binding
 
 | Functional | Borges     | Reference                                                |
 | ---------- | ---------- | -------------------------------------------------------- |
-| `use`      | `retrieve` | "The Library of Babel" â€” retrieving from infinite stacks |
+| `use`      | `retrieve` | "The Library of Babel" â€?retrieving from infinite stacks |
 | `input`    | `axiom`    | The given premise (Borges' scholarly/mathematical tone)  |
 | `output`   | `theorem`  | What is derived from the axioms                          |
 | `let`      | `inscribe` | Writing something into being                             |
-| `const`    | `zahir`    | "The Zahir" â€” unforgettable, unchangeable, fixed in mind |
-| `context`  | `memory`   | "Funes the Memorious" â€” perfect, total recall            |
+| `const`    | `zahir`    | "The Zahir" â€?unforgettable, unchangeable, fixed in mind |
+| `context`  | `memory`   | "Funes the Memorious" â€?perfect, total recall            |
 
 ### Control Flow
 
@@ -83,12 +83,12 @@ An alternative register for OpenProse that draws from the works of Jorge Luis Bo
 
 These keywords already work or are too functional to replace sensibly:
 
-- `**...**` discretion markers â€” already "breaking the fourth wall"
-- `until`, `while` â€” already work
-- `map`, `filter`, `reduce`, `pmap` â€” pipeline operators
-- `max` â€” constraint modifier
-- `as` â€” aliasing
-- Model names: `sonnet`, `opus`, `haiku` â€” already literary
+- `**...**` discretion markers â€?already "breaking the fourth wall"
+- `until`, `while` â€?already work
+- `map`, `filter`, `reduce`, `pmap` â€?pipeline operators
+- `max` â€?constraint modifier
+- `as` â€?aliasing
+- Model names: `sonnet`, `opus`, `haiku` â€?already literary
 
 ---
 
@@ -290,7 +290,7 @@ zahir config = { author: "opus", recur: 3 }
 
 1. **Requires familiarity.** "Zahir" and "Funes" are obscure to those who haven't read Borges.
 2. **Potentially pretentious.** May feel like showing off rather than communicating.
-3. **Translation overhead.** Users must map `labyrinth` â†’ `loop` mentally.
+3. **Translation overhead.** Users must map `labyrinth` â†?`loop` mentally.
 4. **Cultural specificity.** Less universal than folk/fairy tale tropes.
 
 ---
@@ -353,8 +353,8 @@ Preserved for benchmarking against the functional and folk registers. The Borges
 
 Potential benchmarking questions:
 
-1. **Learnability** â€” Is `labyrinth` intuitive for loops?
-2. **Memorability** â€” Does `zahir` stick better than `const`?
-3. **Comprehension** â€” Do users understand `dreamer`/`dream` immediately?
-4. **Preference** â€” Which register do users find most pleasant?
-5. **Error rates** â€” Does the metaphorical mapping cause mistakes?
+1. **Learnability** â€?Is `labyrinth` intuitive for loops?
+2. **Memorability** â€?Does `zahir` stick better than `const`?
+3. **Comprehension** â€?Do users understand `dreamer`/`dream` immediately?
+4. **Preference** â€?Which register do users find most pleasant?
+5. **Error rates** â€?Does the metaphorical mapping cause mistakes?

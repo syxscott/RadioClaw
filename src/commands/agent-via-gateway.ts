@@ -100,7 +100,7 @@ export async function agentViaGatewayCommand(opts: AgentCliOpts, runtime: Runtim
     const knownAgents = listAgentIds(cfg);
     if (!knownAgents.includes(agentId)) {
       throw new Error(
-        `Unknown agent id "${agentIdRaw}". Use "${formatCliCommand("openclaw agents list")}" to see configured agents.`,
+        `Unknown agent id "${agentIdRaw}". Use "${formatCliCommand("RadioClaw agents list")}" to see configured agents.`,
       );
     }
   }
@@ -122,7 +122,7 @@ export async function agentViaGatewayCommand(opts: AgentCliOpts, runtime: Runtim
 
   const response = await withProgress(
     {
-      label: "Waiting for agent replyâ€¦",
+      label: "Waiting for agent replyâ€?,
       indeterminate: true,
       enabled: opts.json !== true,
     },

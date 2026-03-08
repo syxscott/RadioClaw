@@ -1,5 +1,5 @@
 import type * as Lark from "@larksuiteoapi/node-sdk";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { RadioClawPluginApi } from "RadioClaw/plugin-sdk/feishu";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { createFeishuToolClient, resolveAnyEnabledFeishuToolsConfig } from "./tool-account.js";
 import {
@@ -14,7 +14,7 @@ type ObjType = "doc" | "sheet" | "mindnote" | "bitable" | "file" | "docx" | "sli
 // ============ Actions ============
 
 const WIKI_ACCESS_HINT =
-  "To grant wiki access: Open wiki space â†’ Settings â†’ Members â†’ Add the bot. " +
+  "To grant wiki access: Open wiki space â†?Settings â†?Members â†?Add the bot. " +
   "See: https://open.feishu.cn/document/server-docs/docs/wiki-v2/wiki-qa#a40ad4ca";
 
 async function listSpaces(client: Lark.Client) {
@@ -151,7 +151,7 @@ async function renameNode(client: Lark.Client, spaceId: string, nodeToken: strin
 
 // ============ Tool Registration ============
 
-export function registerFeishuWikiTools(api: OpenClawPluginApi) {
+export function registerFeishuWikiTools(api: RadioClawPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_wiki: No config available, skipping wiki tools");
     return;

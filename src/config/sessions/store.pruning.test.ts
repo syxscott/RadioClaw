@@ -8,7 +8,7 @@ import type { SessionEntry } from "./types.js";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-const fixtureSuite = createFixtureSuite("openclaw-pruning-suite-");
+const fixtureSuite = createFixtureSuite("RadioClaw-pruning-suite-");
 
 beforeAll(async () => {
   await fixtureSuite.setup();
@@ -27,7 +27,7 @@ function makeStore(entries: Array<[string, SessionEntry]>): Record<string, Sessi
 }
 
 // ---------------------------------------------------------------------------
-// Unit tests â€” each function called with explicit override parameters.
+// Unit tests â€?each function called with explicit override parameters.
 // No config loading needed; overrides bypass resolveMaintenanceConfig().
 // ---------------------------------------------------------------------------
 

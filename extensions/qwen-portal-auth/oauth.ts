@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import {
   generatePkceVerifierChallenge,
   toFormUrlEncoded,
-} from "openclaw/plugin-sdk/qwen-portal-auth";
+} from "RadioClaw/plugin-sdk/qwen-portal-auth";
 
 const QWEN_OAUTH_BASE_URL = "https://chat.qwen.ai";
 const QWEN_OAUTH_DEVICE_CODE_ENDPOINT = `${QWEN_OAUTH_BASE_URL}/api/v1/oauth2/device/code`;
@@ -157,7 +157,7 @@ export async function loginQwenPortalOAuth(params: {
   const timeoutMs = device.expires_in * 1000;
 
   while (Date.now() - start < timeoutMs) {
-    params.progress.update("Waiting for Qwen OAuth approvalâ€¦");
+    params.progress.update("Waiting for Qwen OAuth approvalâ€?);
     const result = await pollDeviceToken({
       deviceCode: device.device_code,
       verifier,

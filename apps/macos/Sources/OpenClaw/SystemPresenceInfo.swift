@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-import OpenClawKit
+import RadioClawKit
 
 enum SystemPresenceInfo {
     static func lastInputSeconds() -> Int? {

@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawIPC
+import RadioClawIPC
 import Testing
 
 @Suite struct CameraIPCTests {

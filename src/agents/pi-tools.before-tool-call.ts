@@ -9,7 +9,7 @@ import type { AnyAgentTool } from "./tools/common.js";
 export type HookContext = {
   agentId?: string;
   sessionKey?: string;
-  /** Ephemeral session UUID â€” regenerated on /new and /reset. */
+  /** Ephemeral session UUID â€?regenerated on /new and /reset. */
   sessionId?: string;
   runId?: string;
   loopDetection?: ToolLoopDetectionConfig;

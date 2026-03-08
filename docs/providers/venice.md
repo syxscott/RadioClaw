@@ -1,7 +1,7 @@
 ---
-summary: "Use Venice AI privacy-focused models in OpenClaw"
+summary: "Use Venice AI privacy-focused models in RadioClaw"
 read_when:
-  - You want privacy-focused inference in OpenClaw
+  - You want privacy-focused inference in RadioClaw
   - You want Venice AI setup guidance
 title: "Venice AI"
 ---
@@ -12,7 +12,7 @@ title: "Venice AI"
 
 Venice AI provides privacy-focused AI inference with support for uncensored models and access to major proprietary models through their anonymized proxy. All inference is private by defaultâ€”no training on your data, no logging.
 
-## Why Venice in OpenClaw
+## Why Venice in RadioClaw
 
 - **Private inference** for open-source models (no logging).
 - **Uncensored models** when you need them.
@@ -21,7 +21,7 @@ Venice AI provides privacy-focused AI inference with support for uncensored mode
 
 ## Privacy Modes
 
-Venice offers two privacy levels â€” understanding this is key to choosing your model:
+Venice offers two privacy levels â€?understanding this is key to choosing your model:
 
 | Mode           | Description                                                                                                                       | Models                                                        |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -34,9 +34,9 @@ Venice offers two privacy levels â€” understanding this is key to choosing your 
 - **Uncensored models**: Access to models without content restrictions
 - **Major model access**: Use Claude, GPT, Gemini, and Grok via Venice's anonymized proxy
 - **OpenAI-compatible API**: Standard `/v1` endpoints for easy integration
-- **Streaming**: âœ… Supported on all models
-- **Function calling**: âœ… Supported on select models (check model capabilities)
-- **Vision**: âœ… Supported on models with vision capability
+- **Streaming**: âœ?Supported on all models
+- **Function calling**: âœ?Supported on select models (check model capabilities)
+- **Vision**: âœ?Supported on models with vision capability
 - **No hard rate limits**: Fair-use throttling may apply for extreme usage
 
 ## Setup
@@ -44,10 +44,10 @@ Venice offers two privacy levels â€” understanding this is key to choosing your 
 ### 1. Get API Key
 
 1. Sign up at [venice.ai](https://venice.ai)
-2. Go to **Settings â†’ API Keys â†’ Create new key**
+2. Go to **Settings â†?API Keys â†?Create new key**
 3. Copy your API key (format: `vapi_xxxxxxxxxxxx`)
 
-### 2. Configure OpenClaw
+### 2. Configure RadioClaw
 
 **Option A: Environment Variable**
 
@@ -58,7 +58,7 @@ export VENICE_API_KEY="vapi_xxxxxxxxxxxx"
 **Option B: Interactive Setup (Recommended)**
 
 ```bash
-openclaw onboard --auth-choice venice-api-key
+RadioClaw onboard --auth-choice venice-api-key
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 **Option C: Non-interactive**
 
 ```bash
-openclaw onboard --non-interactive \
+RadioClaw onboard --non-interactive \
   --auth-choice venice-api-key \
   --venice-api-key "vapi_xxxxxxxxxxxx"
 ```
@@ -79,12 +79,12 @@ openclaw onboard --non-interactive \
 ### 3. Verify Setup
 
 ```bash
-openclaw agent --model venice/kimi-k2-5 --message "Hello, are you working?"
+RadioClaw agent --model venice/kimi-k2-5 --message "Hello, are you working?"
 ```
 
 ## Model Selection
 
-After setup, OpenClaw shows all available Venice models. Pick based on your needs:
+After setup, RadioClaw shows all available Venice models. Pick based on your needs:
 
 - **Default model**: `venice/kimi-k2-5` for strong private reasoning plus vision.
 - **High-capability option**: `venice/claude-opus-4-6` for the strongest anonymized Venice path.
@@ -94,19 +94,19 @@ After setup, OpenClaw shows all available Venice models. Pick based on your need
 Change your default model anytime:
 
 ```bash
-openclaw models set venice/kimi-k2-5
-openclaw models set venice/claude-opus-4-6
+RadioClaw models set venice/kimi-k2-5
+RadioClaw models set venice/claude-opus-4-6
 ```
 
 List all available models:
 
 ```bash
-openclaw models list | grep venice
+RadioClaw models list | grep venice
 ```
 
-## Configure via `openclaw configure`
+## Configure via `RadioClaw configure`
 
-1. Run `openclaw configure`
+1. Run `RadioClaw configure`
 2. Select **Model/auth**
 3. Choose **Venice AI**
 
@@ -124,7 +124,7 @@ openclaw models list | grep venice
 
 ## Available Models (41 Total)
 
-### Private Models (26) â€” Fully Private, No Logging
+### Private Models (26) â€?Fully Private, No Logging
 
 | Model ID                               | Name                                | Context | Features                   |
 | -------------------------------------- | ----------------------------------- | ------- | -------------------------- |
@@ -155,7 +155,7 @@ openclaw models list | grep venice
 | `minimax-m21`                          | MiniMax M2.1                        | 198k    | Reasoning                  |
 | `minimax-m25`                          | MiniMax M2.5                        | 198k    | Reasoning                  |
 
-### Anonymized Models (15) â€” Via Venice Proxy
+### Anonymized Models (15) â€?Via Venice Proxy
 
 | Model ID                        | Name                           | Context | Features                  |
 | ------------------------------- | ------------------------------ | ------- | ------------------------- |
@@ -177,7 +177,7 @@ openclaw models list | grep venice
 
 ## Model Discovery
 
-OpenClaw automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
+RadioClaw automatically discovers models from the Venice API when `VENICE_API_KEY` is set. If the API is unreachable, it falls back to a static catalog.
 
 The `/models` endpoint is public (no auth needed for listing), but inference requires a valid API key.
 
@@ -185,10 +185,10 @@ The `/models` endpoint is public (no auth needed for listing), but inference req
 
 | Feature              | Support                                                 |
 | -------------------- | ------------------------------------------------------- |
-| **Streaming**        | âœ… All models                                           |
-| **Function calling** | âœ… Most models (check `supportsFunctionCalling` in API) |
-| **Vision/Images**    | âœ… Models marked with "Vision" feature                  |
-| **JSON mode**        | âœ… Supported via `response_format`                      |
+| **Streaming**        | âœ?All models                                           |
+| **Function calling** | âœ?Most models (check `supportsFunctionCalling` in API) |
+| **Vision/Images**    | âœ?Models marked with "Vision" feature                  |
+| **JSON mode**        | âœ?Supported via `response_format`                      |
 
 ## Pricing
 
@@ -210,19 +210,19 @@ Venice uses a credit-based system. Check [venice.ai/pricing](https://venice.ai/p
 
 ```bash
 # Use the default private model
-openclaw agent --model venice/kimi-k2-5 --message "Quick health check"
+RadioClaw agent --model venice/kimi-k2-5 --message "Quick health check"
 
 # Use Claude Opus via Venice (anonymized)
-openclaw agent --model venice/claude-opus-4-6 --message "Summarize this task"
+RadioClaw agent --model venice/claude-opus-4-6 --message "Summarize this task"
 
 # Use uncensored model
-openclaw agent --model venice/venice-uncensored --message "Draft options"
+RadioClaw agent --model venice/venice-uncensored --message "Draft options"
 
 # Use vision model with image
-openclaw agent --model venice/qwen3-vl-235b-a22b --message "Review attached image"
+RadioClaw agent --model venice/qwen3-vl-235b-a22b --message "Review attached image"
 
 # Use coding model
-openclaw agent --model venice/qwen3-coder-480b-a35b-instruct --message "Refactor this function"
+RadioClaw agent --model venice/qwen3-coder-480b-a35b-instruct --message "Refactor this function"
 ```
 
 ## Troubleshooting
@@ -231,14 +231,14 @@ openclaw agent --model venice/qwen3-coder-480b-a35b-instruct --message "Refactor
 
 ```bash
 echo $VENICE_API_KEY
-openclaw models list | grep venice
+RadioClaw models list | grep venice
 ```
 
 Ensure the key starts with `vapi_`.
 
 ### Model not available
 
-The Venice model catalog updates dynamically. Run `openclaw models list` to see currently available models. Some models may be temporarily offline.
+The Venice model catalog updates dynamically. Run `RadioClaw models list` to see currently available models. Some models may be temporarily offline.
 
 ### Connection issues
 

@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui
+package ai.RadioClaw.app.ui
 
 import android.Manifest
 import android.content.Context
@@ -66,10 +66,10 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import ai.openclaw.app.BuildConfig
-import ai.openclaw.app.LocationMode
-import ai.openclaw.app.MainViewModel
-import ai.openclaw.app.node.DeviceNotificationListenerService
+import ai.RadioClaw.app.BuildConfig
+import ai.RadioClaw.app.LocationMode
+import ai.RadioClaw.app.MainViewModel
+import ai.RadioClaw.app.node.DeviceNotificationListenerService
 
 @Composable
 fun SettingsSheet(viewModel: MainViewModel) {
@@ -391,7 +391,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       }
       item { HorizontalDivider(color = mobileBorder) }
 
-    // Order parity: Node â†’ Voice â†’ Camera â†’ Messaging â†’ Location â†’ Screen.
+    // Order parity: Node â†?Voice â†?Camera â†?Messaging â†?Location â†?Screen.
       item {
         Text(
           "NODE",
@@ -821,7 +821,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
             headlineContent = { Text("While Using", style = mobileHeadline) },
-            supportingContent = { Text("Only while OpenClaw is open.", style = mobileCallout) },
+            supportingContent = { Text("Only while RadioClaw is open.", style = mobileCallout) },
             trailingContent = {
               RadioButton(
                 selected = locationMode == LocationMode.WhileUsing,
@@ -881,7 +881,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
         modifier = Modifier.settingsRowModifier(),
         colors = listItemColors,
         headlineContent = { Text("Prevent Sleep", style = mobileHeadline) },
-        supportingContent = { Text("Keeps the screen awake while OpenClaw is open.", style = mobileCallout) },
+        supportingContent = { Text("Keeps the screen awake while RadioClaw is open.", style = mobileCallout) },
         trailingContent = { Switch(checked = preventSleep, onCheckedChange = viewModel::setPreventSleep) },
       )
     }

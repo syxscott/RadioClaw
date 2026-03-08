@@ -33,7 +33,7 @@ describe("markdownToSlackMrkdwn", () => {
       ],
       ["escapes raw HTML", "<b>nope</b>", "&lt;b&gt;nope&lt;/b&gt;"],
       ["renders paragraphs with blank lines", "first\n\nsecond", "first\n\nsecond"],
-      ["renders bullet lists", "- one\n- two", "â€¢ one\nâ€¢ two"],
+      ["renders bullet lists", "- one\n- two", "â€?one\nâ€?two"],
       ["renders ordered lists with numbering", "2. two\n3. three", "2. two\n3. three"],
       ["renders headings as bold text", "# Title", "*Title*"],
       ["renders blockquotes", "> Quote", "> Quote"],
@@ -46,7 +46,7 @@ describe("markdownToSlackMrkdwn", () => {
   it("handles nested list items", () => {
     const res = markdownToSlackMrkdwn("- item\n  - nested");
     // markdown-it correctly parses this as a nested list
-    expect(res).toBe("â€¢ item\n  â€¢ nested");
+    expect(res).toBe("â€?item\n  â€?nested");
   });
 
   it("handles complex message with multiple elements", () => {
@@ -54,7 +54,7 @@ describe("markdownToSlackMrkdwn", () => {
       "**Important:** Check the _docs_ at [link](https://example.com)\n\n- first\n- second",
     );
     expect(res).toBe(
-      "*Important:* Check the _docs_ at <https://example.com|link>\n\nâ€¢ first\nâ€¢ second",
+      "*Important:* Check the _docs_ at <https://example.com|link>\n\nâ€?first\nâ€?second",
     );
   });
 

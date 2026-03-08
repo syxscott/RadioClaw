@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { compileSafeRegex } from "../security/safe-regex.js";
 import { resolveNodeRequireFromMeta } from "./node-require.js";
 import { replacePatternBounded } from "./redact-bounded.js";
@@ -71,7 +71,7 @@ function maskToken(token: string): string {
   }
   const start = token.slice(0, DEFAULT_REDACT_KEEP_START);
   const end = token.slice(-DEFAULT_REDACT_KEEP_END);
-  return `${start}â€¦${end}`;
+  return `${start}â€?{end}`;
 }
 
 function redactPemBlock(block: string): string {
@@ -106,11 +106,11 @@ function redactText(text: string, patterns: RegExp[]): string {
 }
 
 function resolveConfigRedaction(): RedactOptions {
-  let cfg: OpenClawConfig["logging"] | undefined;
+  let cfg: RadioClawConfig["logging"] | undefined;
   try {
     const loaded = requireConfig?.("../config/config.js") as
       | {
-          loadConfig?: () => OpenClawConfig;
+          loadConfig?: () => RadioClawConfig;
         }
       | undefined;
     cfg = loaded?.loadConfig?.().logging;

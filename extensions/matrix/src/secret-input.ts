@@ -3,7 +3,7 @@ import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   normalizeSecretInputString,
-} from "openclaw/plugin-sdk/matrix";
+} from "RadioClaw/plugin-sdk/matrix";
 
 export {
   buildSecretInputSchema,

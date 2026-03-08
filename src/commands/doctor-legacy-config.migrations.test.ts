@@ -23,16 +23,16 @@ describe("normalizeCompatibilityConfigValues", () => {
   };
 
   beforeEach(() => {
-    previousOauthDir = process.env.OPENCLAW_OAUTH_DIR;
-    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-oauth-"));
-    process.env.OPENCLAW_OAUTH_DIR = tempOauthDir;
+    previousOauthDir = process.env.RadioClaw_OAUTH_DIR;
+    tempOauthDir = fs.mkdtempSync(path.join(os.tmpdir(), "RadioClaw-oauth-"));
+    process.env.RadioClaw_OAUTH_DIR = tempOauthDir;
   });
 
   afterEach(() => {
     if (previousOauthDir === undefined) {
-      delete process.env.OPENCLAW_OAUTH_DIR;
+      delete process.env.RadioClaw_OAUTH_DIR;
     } else {
-      process.env.OPENCLAW_OAUTH_DIR = previousOauthDir;
+      process.env.RadioClaw_OAUTH_DIR = previousOauthDir;
     }
     if (tempOauthDir) {
       fs.rmSync(tempOauthDir, { recursive: true, force: true });
@@ -61,7 +61,7 @@ describe("normalizeCompatibilityConfigValues", () => {
       group: "mentions",
     });
     expect(res.changes).toEqual([
-      "Copied messages.ackReaction â†’ channels.whatsapp.ackReaction (scope: group-mentions).",
+      "Copied messages.ackReaction â†?channels.whatsapp.ackReaction (scope: group-mentions).",
     ]);
   });
 
@@ -87,7 +87,7 @@ describe("normalizeCompatibilityConfigValues", () => {
   });
 
   it("copies legacy ack reaction when authDir override exists", () => {
-    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-wa-auth-"));
+    const customDir = fs.mkdtempSync(path.join(os.tmpdir(), "RadioClaw-wa-auth-"));
     try {
       writeCreds(customDir);
 
@@ -119,8 +119,8 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.slack?.allowFrom).toEqual(["*"]);
     expect(res.config.channels?.slack?.dm).toEqual({ enabled: true });
     expect(res.changes).toEqual([
-      "Moved channels.slack.dm.policy â†’ channels.slack.dmPolicy.",
-      "Moved channels.slack.dm.allowFrom â†’ channels.slack.allowFrom.",
+      "Moved channels.slack.dm.policy â†?channels.slack.dmPolicy.",
+      "Moved channels.slack.dm.allowFrom â†?channels.slack.allowFrom.",
     ]);
   });
 
@@ -141,8 +141,8 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.discord?.accounts?.work?.allowFrom).toEqual(["123"]);
     expect(res.config.channels?.discord?.accounts?.work?.dm).toEqual({ groupEnabled: true });
     expect(res.changes).toEqual([
-      "Moved channels.discord.accounts.work.dm.policy â†’ channels.discord.accounts.work.dmPolicy.",
-      "Moved channels.discord.accounts.work.dm.allowFrom â†’ channels.discord.accounts.work.allowFrom.",
+      "Moved channels.discord.accounts.work.dm.policy â†?channels.discord.accounts.work.dmPolicy.",
+      "Moved channels.discord.accounts.work.dm.allowFrom â†?channels.discord.accounts.work.allowFrom.",
     ]);
   });
 
@@ -165,10 +165,10 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.discord?.accounts?.work?.streaming).toBe("off");
     expect(res.config.channels?.discord?.accounts?.work?.streamMode).toBeUndefined();
     expect(res.changes).toContain(
-      "Normalized channels.discord.streaming boolean â†’ enum (partial).",
+      "Normalized channels.discord.streaming boolean â†?enum (partial).",
     );
     expect(res.changes).toContain(
-      "Normalized channels.discord.accounts.work.streaming boolean â†’ enum (off).",
+      "Normalized channels.discord.accounts.work.streaming boolean â†?enum (off).",
     );
   });
 
@@ -185,8 +185,8 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.discord?.streaming).toBe("block");
     expect(res.config.channels?.discord?.streamMode).toBeUndefined();
     expect(res.changes).toEqual([
-      "Moved channels.discord.streamMode â†’ channels.discord.streaming (block).",
-      "Normalized channels.discord.streaming boolean â†’ enum (block).",
+      "Moved channels.discord.streamMode â†?channels.discord.streaming (block).",
+      "Normalized channels.discord.streaming boolean â†?enum (block).",
     ]);
   });
 
@@ -202,7 +202,7 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.telegram?.streaming).toBe("block");
     expect(res.config.channels?.telegram?.streamMode).toBeUndefined();
     expect(res.changes).toEqual([
-      "Moved channels.telegram.streamMode â†’ channels.telegram.streaming (block).",
+      "Moved channels.telegram.streamMode â†?channels.telegram.streaming (block).",
     ]);
   });
 
@@ -220,8 +220,8 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.channels?.slack?.nativeStreaming).toBe(false);
     expect(res.config.channels?.slack?.streamMode).toBeUndefined();
     expect(res.changes).toEqual([
-      "Moved channels.slack.streamMode â†’ channels.slack.streaming (progress).",
-      "Moved channels.slack.streaming (boolean) â†’ channels.slack.nativeStreaming (false).",
+      "Moved channels.slack.streamMode â†?channels.slack.streaming (progress).",
+      "Moved channels.slack.streaming (boolean) â†?channels.slack.nativeStreaming (false).",
     ]);
   });
 
@@ -277,7 +277,7 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.browser?.ssrfPolicy?.dangerouslyAllowPrivateNetwork).toBe(true);
     expect(res.config.browser?.ssrfPolicy?.allowedHostnames).toEqual(["localhost"]);
     expect(res.changes).toContain(
-      "Moved browser.ssrfPolicy.allowPrivateNetwork â†’ browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (true).",
+      "Moved browser.ssrfPolicy.allowPrivateNetwork â†?browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (true).",
     );
   });
 
@@ -294,7 +294,7 @@ describe("normalizeCompatibilityConfigValues", () => {
     expect(res.config.browser?.ssrfPolicy?.allowPrivateNetwork).toBeUndefined();
     expect(res.config.browser?.ssrfPolicy?.dangerouslyAllowPrivateNetwork).toBe(true);
     expect(res.changes).toContain(
-      "Moved browser.ssrfPolicy.allowPrivateNetwork â†’ browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (true).",
+      "Moved browser.ssrfPolicy.allowPrivateNetwork â†?browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (true).",
     );
   });
 });

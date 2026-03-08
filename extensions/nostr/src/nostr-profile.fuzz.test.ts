@@ -123,7 +123,7 @@ describe("profile unicode attacks", () => {
 
     it("handles Japanese hiragana and katakana", () => {
       const profile: NostrProfile = {
-        name: "ボット",
+        name: "ボッ�?,
         about: "これはテストです",
       };
       const result = validateProfile(profile);
@@ -167,7 +167,7 @@ describe("profile unicode attacks", () => {
   describe("emoji edge cases", () => {
     it("handles emoji sequences (ZWJ)", () => {
       const profile: NostrProfile = {
-        name: "👨‍👩‍👧‍👦", // Family emoji using ZWJ
+        name: "👨‍👩‍👧‍�?, // Family emoji using ZWJ
       };
       const result = validateProfile(profile);
       expect(result.valid).toBe(true);

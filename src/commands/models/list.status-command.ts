@@ -1,5 +1,5 @@
 import path from "node:path";
-import { resolveOpenClawAgentDir } from "../../agents/agent-paths.js";
+import { resolveRadioClawAgentDir } from "../../agents/agent-paths.js";
 import {
   resolveAgentDir,
   resolveAgentExplicitModelPrimary,
@@ -79,7 +79,7 @@ export async function modelsStatusCommand(
   }
   const cfg = await loadModelsConfig({ commandName: "models status", runtime });
   const agentId = resolveKnownAgentId({ cfg, rawAgentId: opts.agent });
-  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveOpenClawAgentDir();
+  const agentDir = agentId ? resolveAgentDir(cfg, agentId) : resolveRadioClawAgentDir();
   const agentModelPrimary = agentId ? resolveAgentExplicitModelPrimary(cfg, agentId) : undefined;
   const agentFallbacksOverride = agentId
     ? resolveAgentModelFallbacksOverride(cfg, agentId)
@@ -236,7 +236,7 @@ export async function modelsStatusCommand(
   let probeSummary: AuthProbeSummary | undefined;
   if (opts.probe) {
     probeSummary = await withProgressTotals(
-      { label: "Probing auth profilesâ€¦", total: 1 },
+      { label: "Probing auth profilesâ€?, total: 1 },
       async (update) => {
         return await runAuthProbes({
           cfg,
@@ -537,8 +537,8 @@ export async function modelsStatusCommand(
     for (const provider of missingProvidersInUse) {
       const hint =
         provider === "anthropic"
-          ? `Run \`claude setup-token\`, then \`${formatCliCommand("openclaw models auth setup-token")}\` or \`${formatCliCommand("openclaw configure")}\`.`
-          : `Run \`${formatCliCommand("openclaw configure")}\` or set an API key env var.`;
+          ? `Run \`claude setup-token\`, then \`${formatCliCommand("RadioClaw models auth setup-token")}\` or \`${formatCliCommand("RadioClaw configure")}\`.`
+          : `Run \`${formatCliCommand("RadioClaw configure")}\` or set an API key env var.`;
       runtime.log(`- ${theme.heading(provider)} ${hint}`);
     }
   }
@@ -657,7 +657,7 @@ export async function modelsStatusCommand(
         const modeLabel = result.mode ? ` ${colorize(rich, theme.muted, `(${result.mode})`)}` : "";
         const profile = `${colorize(rich, theme.accent, result.label)}${modeLabel}`;
         const detail = result.error?.trim();
-        const detailLabel = detail ? `\n${colorize(rich, theme.muted, `â†³ ${detail}`)}` : "";
+        const detailLabel = detail ? `\n${colorize(rich, theme.muted, `â†?${detail}`)}` : "";
         const statusLabel = `${status}${colorize(rich, theme.muted, ` Â· ${latency}`)}${detailLabel}`;
         return {
           Model: colorize(rich, theme.heading, modelLabel),

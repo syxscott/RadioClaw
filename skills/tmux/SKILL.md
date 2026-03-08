@@ -2,7 +2,7 @@
 name: tmux
 description: Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.
 metadata:
-  { "openclaw": { "emoji": "üßµ", "os": ["darwin", "linux"], "requires": { "bins": ["tmux"] } } }
+  { "RadioClaw": { "emoji": "üßµ", "os": ["darwin", "linux"], "requires": { "bins": ["tmux"] } } }
 ---
 
 # tmux Session Control
@@ -11,7 +11,7 @@ Control tmux sessions by sending keystrokes and reading output. Essential for ma
 
 ## When to Use
 
-‚úÖ **USE this skill when:**
+‚ú?**USE this skill when:**
 
 - Monitoring Claude/Codex sessions in tmux
 - Sending input to interactive terminal applications
@@ -21,13 +21,13 @@ Control tmux sessions by sending keystrokes and reading output. Essential for ma
 
 ## When NOT to Use
 
-‚ùå **DON'T use this skill when:**
+‚ù?**DON'T use this skill when:**
 
-- Running one-off shell commands ‚Üí use `exec` tool directly
-- Starting new background processes ‚Üí use `exec` with `background:true`
-- Non-interactive scripts ‚Üí use `exec` tool
+- Running one-off shell commands ‚Ü?use `exec` tool directly
+- Starting new background processes ‚Ü?use `exec` with `background:true`
+- Non-interactive scripts ‚Ü?use `exec` tool
 - The process isn't in tmux
-- You need to create a new tmux session ‚Üí use `exec` with `tmux new-session`
+- You need to create a new tmux session ‚Ü?use `exec` with `tmux new-session`
 
 ## Example Sessions
 

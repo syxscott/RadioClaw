@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui.chat
+package ai.RadioClaw.app.ui.chat
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -25,24 +25,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ai.openclaw.app.chat.ChatMessage
-import ai.openclaw.app.chat.ChatMessageContent
-import ai.openclaw.app.chat.ChatPendingToolCall
-import ai.openclaw.app.tools.ToolDisplayRegistry
-import ai.openclaw.app.ui.mobileAccent
-import ai.openclaw.app.ui.mobileAccentSoft
-import ai.openclaw.app.ui.mobileBorder
-import ai.openclaw.app.ui.mobileBorderStrong
-import ai.openclaw.app.ui.mobileCallout
-import ai.openclaw.app.ui.mobileCaption1
-import ai.openclaw.app.ui.mobileCaption2
-import ai.openclaw.app.ui.mobileCodeBg
-import ai.openclaw.app.ui.mobileCodeText
-import ai.openclaw.app.ui.mobileHeadline
-import ai.openclaw.app.ui.mobileText
-import ai.openclaw.app.ui.mobileTextSecondary
-import ai.openclaw.app.ui.mobileWarning
-import ai.openclaw.app.ui.mobileWarningSoft
+import ai.RadioClaw.app.chat.ChatMessage
+import ai.RadioClaw.app.chat.ChatMessageContent
+import ai.RadioClaw.app.chat.ChatPendingToolCall
+import ai.RadioClaw.app.tools.ToolDisplayRegistry
+import ai.RadioClaw.app.ui.mobileAccent
+import ai.RadioClaw.app.ui.mobileAccentSoft
+import ai.RadioClaw.app.ui.mobileBorder
+import ai.RadioClaw.app.ui.mobileBorderStrong
+import ai.RadioClaw.app.ui.mobileCallout
+import ai.RadioClaw.app.ui.mobileCaption1
+import ai.RadioClaw.app.ui.mobileCaption2
+import ai.RadioClaw.app.ui.mobileCodeBg
+import ai.RadioClaw.app.ui.mobileCodeText
+import ai.RadioClaw.app.ui.mobileHeadline
+import ai.RadioClaw.app.ui.mobileText
+import ai.RadioClaw.app.ui.mobileTextSecondary
+import ai.RadioClaw.app.ui.mobileWarning
+import ai.RadioClaw.app.ui.mobileWarningSoft
 import java.util.Locale
 
 private data class ChatBubbleStyle(

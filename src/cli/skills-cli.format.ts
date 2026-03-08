@@ -27,15 +27,15 @@ function appendClawHubHint(output: string, json?: boolean): string {
 
 function formatSkillStatus(skill: SkillStatusEntry): string {
   if (skill.eligible) {
-    return theme.success("âœ“ ready");
+    return theme.success("âœ?ready");
   }
   if (skill.disabled) {
-    return theme.warn("â¸ disabled");
+    return theme.warn("â?disabled");
   }
   if (skill.blockedByAllowlist) {
     return theme.warn("ğŸš« blocked");
   }
-  return theme.error("âœ— missing");
+  return theme.error("âœ?missing");
 }
 
 function formatSkillName(skill: SkillStatusEntry): string {
@@ -89,7 +89,7 @@ export function formatSkillsList(report: SkillStatusReport, opts: SkillsListOpti
 
   if (skills.length === 0) {
     const message = opts.eligible
-      ? `No eligible skills found. Run \`${formatCliCommand("openclaw skills list")}\` to see all skills.`
+      ? `No eligible skills found. Run \`${formatCliCommand("RadioClaw skills list")}\` to see all skills.`
       : "No skills found.";
     return appendClawHubHint(message, opts.json);
   }
@@ -144,7 +144,7 @@ export function formatSkillInfo(
       return JSON.stringify({ error: "not found", skill: skillName }, null, 2);
     }
     return appendClawHubHint(
-      `Skill "${skillName}" not found. Run \`${formatCliCommand("openclaw skills list")}\` to see available skills.`,
+      `Skill "${skillName}" not found. Run \`${formatCliCommand("RadioClaw skills list")}\` to see available skills.`,
       opts.json,
     );
   }
@@ -156,12 +156,12 @@ export function formatSkillInfo(
   const lines: string[] = [];
   const emoji = skill.emoji ?? "ğŸ“¦";
   const status = skill.eligible
-    ? theme.success("âœ“ Ready")
+    ? theme.success("âœ?Ready")
     : skill.disabled
-      ? theme.warn("â¸ Disabled")
+      ? theme.warn("â?Disabled")
       : skill.blockedByAllowlist
         ? theme.warn("ğŸš« Blocked by allowlist")
-        : theme.error("âœ— Missing requirements");
+        : theme.error("âœ?Missing requirements");
 
   lines.push(`${emoji} ${theme.heading(skill.name)} ${status}`);
   lines.push("");
@@ -191,7 +191,7 @@ export function formatSkillInfo(
     if (skill.requirements.bins.length > 0) {
       const binsStatus = skill.requirements.bins.map((bin) => {
         const missing = skill.missing.bins.includes(bin);
-        return missing ? theme.error(`âœ— ${bin}`) : theme.success(`âœ“ ${bin}`);
+        return missing ? theme.error(`âœ?${bin}`) : theme.success(`âœ?${bin}`);
       });
       lines.push(`${theme.muted("  Binaries:")} ${binsStatus.join(", ")}`);
     }
@@ -199,28 +199,28 @@ export function formatSkillInfo(
       const anyBinsMissing = skill.missing.anyBins.length > 0;
       const anyBinsStatus = skill.requirements.anyBins.map((bin) => {
         const missing = anyBinsMissing;
-        return missing ? theme.error(`âœ— ${bin}`) : theme.success(`âœ“ ${bin}`);
+        return missing ? theme.error(`âœ?${bin}`) : theme.success(`âœ?${bin}`);
       });
       lines.push(`${theme.muted("  Any binaries:")} ${anyBinsStatus.join(", ")}`);
     }
     if (skill.requirements.env.length > 0) {
       const envStatus = skill.requirements.env.map((env) => {
         const missing = skill.missing.env.includes(env);
-        return missing ? theme.error(`âœ— ${env}`) : theme.success(`âœ“ ${env}`);
+        return missing ? theme.error(`âœ?${env}`) : theme.success(`âœ?${env}`);
       });
       lines.push(`${theme.muted("  Environment:")} ${envStatus.join(", ")}`);
     }
     if (skill.requirements.config.length > 0) {
       const configStatus = skill.requirements.config.map((cfg) => {
         const missing = skill.missing.config.includes(cfg);
-        return missing ? theme.error(`âœ— ${cfg}`) : theme.success(`âœ“ ${cfg}`);
+        return missing ? theme.error(`âœ?${cfg}`) : theme.success(`âœ?${cfg}`);
       });
       lines.push(`${theme.muted("  Config:")} ${configStatus.join(", ")}`);
     }
     if (skill.requirements.os.length > 0) {
       const osStatus = skill.requirements.os.map((osName) => {
         const missing = skill.missing.os.includes(osName);
-        return missing ? theme.error(`âœ— ${osName}`) : theme.success(`âœ“ ${osName}`);
+        return missing ? theme.error(`âœ?${osName}`) : theme.success(`âœ?${osName}`);
       });
       lines.push(`${theme.muted("  OS:")} ${osStatus.join(", ")}`);
     }
@@ -230,7 +230,7 @@ export function formatSkillInfo(
     lines.push("");
     lines.push(theme.heading("Install options:"));
     for (const inst of skill.install) {
-      lines.push(`  ${theme.warn("â†’")} ${inst.label}`);
+      lines.push(`  ${theme.warn("â†?)} ${inst.label}`);
     }
   }
 
@@ -273,10 +273,10 @@ export function formatSkillsCheck(report: SkillStatusReport, opts: SkillsCheckOp
   lines.push(theme.heading("Skills Status Check"));
   lines.push("");
   lines.push(`${theme.muted("Total:")} ${report.skills.length}`);
-  lines.push(`${theme.success("âœ“")} ${theme.muted("Eligible:")} ${eligible.length}`);
-  lines.push(`${theme.warn("â¸")} ${theme.muted("Disabled:")} ${disabled.length}`);
+  lines.push(`${theme.success("âœ?)} ${theme.muted("Eligible:")} ${eligible.length}`);
+  lines.push(`${theme.warn("â?)} ${theme.muted("Disabled:")} ${disabled.length}`);
   lines.push(`${theme.warn("ğŸš«")} ${theme.muted("Blocked by allowlist:")} ${blocked.length}`);
-  lines.push(`${theme.error("âœ—")} ${theme.muted("Missing requirements:")} ${missingReqs.length}`);
+  lines.push(`${theme.error("âœ?)} ${theme.muted("Missing requirements:")} ${missingReqs.length}`);
 
   if (eligible.length > 0) {
     lines.push("");

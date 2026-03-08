@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "OpenClaw",
+  "name": "RadioClaw",
   "description": "Self-hosted gateway that connects WhatsApp, Telegram, Discord, iMessage, and more to AI coding agents. Run a single Gateway process on your own machine and message your AI assistant from anywhere.",
   "theme": "mint",
   "icons": {
@@ -36,12 +36,12 @@
     "links": [
       {
         "label": "GitHub",
-        "href": "https://github.com/openclaw/openclaw",
+        "href": "https://github.com/RadioClaw/RadioClaw",
         "icon": "github"
       },
       {
         "label": "Releases",
-        "href": "https://github.com/openclaw/openclaw/releases",
+        "href": "https://github.com/RadioClaw/RadioClaw/releases",
         "icon": "package"
       }
     ]
@@ -265,15 +265,15 @@
     },
     {
       "source": "/clawd",
-      "destination": "/start/openclaw"
+      "destination": "/start/RadioClaw"
     },
     {
       "source": "/start/clawd",
-      "destination": "/start/openclaw"
+      "destination": "/start/RadioClaw"
     },
     {
       "source": "/start/clawd/",
-      "destination": "/start/openclaw"
+      "destination": "/start/RadioClaw"
     },
     {
       "source": "/start/pairing",
@@ -840,7 +840,7 @@
               {
                 "group": "Guides",
                 "pages": [
-                  "start/openclaw",
+                  "start/RadioClaw",
                   "start/wizard-cli-reference",
                   "start/wizard-cli-automation"
                 ]
@@ -1415,7 +1415,7 @@
         "language": "zh-Hans",
         "tabs": [
           {
-            "tab": "快速开始",
+            "tab": "快速开�?,
             "groups": [
               {
                 "group": "首页",
@@ -1430,7 +1430,7 @@
                 "pages": ["zh-CN/concepts/features"]
               },
               {
-                "group": "第一步",
+                "group": "第一�?,
                 "pages": [
                   "zh-CN/start/getting-started",
                   "zh-CN/start/wizard",
@@ -1439,7 +1439,7 @@
               },
               {
                 "group": "指南",
-                "pages": ["zh-CN/start/openclaw"]
+                "pages": ["zh-CN/start/RadioClaw"]
               }
             ]
           },
@@ -1468,7 +1468,7 @@
                 ]
               },
               {
-                "group": "托管与部署",
+                "group": "托管与部�?,
                 "pages": [
                   "zh-CN/vps",
                   "zh-CN/install/fly",
@@ -1554,7 +1554,7 @@
                 "pages": ["zh-CN/start/bootstrapping"]
               },
               {
-                "group": "会话与记忆",
+                "group": "会话与记�?,
                 "pages": [
                   "zh-CN/concepts/session",
                   "zh-CN/concepts/session-pruning",
@@ -1564,11 +1564,11 @@
                 ]
               },
               {
-                "group": "多代理",
+                "group": "多代�?,
                 "pages": ["zh-CN/concepts/multi-agent", "zh-CN/concepts/presence"]
               },
               {
-                "group": "消息与投递",
+                "group": "消息与投�?,
                 "pages": [
                   "zh-CN/concepts/messages",
                   "zh-CN/concepts/streaming",
@@ -1604,7 +1604,7 @@
                 ]
               },
               {
-                "group": "浏览器",
+                "group": "浏览�?,
                 "pages": [
                   "zh-CN/tools/browser",
                   "zh-CN/tools/browser-login",
@@ -1621,7 +1621,7 @@
                 ]
               },
               {
-                "group": "技能",
+                "group": "技�?,
                 "pages": [
                   "zh-CN/tools/creating-skills",
                   "zh-CN/tools/slash-commands",
@@ -1642,7 +1642,7 @@
                 ]
               },
               {
-                "group": "自动化",
+                "group": "自动�?,
                 "pages": [
                   "zh-CN/automation/hooks",
                   "zh-CN/automation/cron-jobs",
@@ -1655,7 +1655,7 @@
                 ]
               },
               {
-                "group": "媒体与设备",
+                "group": "媒体与设�?,
                 "pages": [
                   "zh-CN/nodes/index",
                   "zh-CN/nodes/troubleshooting",
@@ -1687,7 +1687,7 @@
                 "pages": ["zh-CN/concepts/model-providers", "zh-CN/concepts/model-failover"]
               },
               {
-                "group": "提供商",
+                "group": "提供�?,
                 "pages": [
                   "zh-CN/providers/anthropic",
                   "zh-CN/providers/bedrock",
@@ -1755,14 +1755,14 @@
             ]
           },
           {
-            "tab": "网关与运维",
+            "tab": "网关与运�?,
             "groups": [
               {
                 "group": "网关",
                 "pages": [
                   "zh-CN/gateway/index",
                   {
-                    "group": "配置与运维",
+                    "group": "配置与运�?,
                     "pages": [
                       "zh-CN/gateway/configuration",
                       "zh-CN/gateway/configuration-examples",
@@ -1778,7 +1778,7 @@
                     ]
                   },
                   {
-                    "group": "安全与沙箱",
+                    "group": "安全与沙�?,
                     "pages": [
                       "zh-CN/gateway/security/index",
                       "zh-CN/gateway/sandboxing",
@@ -1786,7 +1786,7 @@
                     ]
                   },
                   {
-                    "group": "协议与 API",
+                    "group": "协议�?API",
                     "pages": [
                       "zh-CN/gateway/protocol",
                       "zh-CN/gateway/bridge-protocol",
@@ -1798,7 +1798,7 @@
                     ]
                   },
                   {
-                    "group": "网络与发现",
+                    "group": "网络与发�?,
                     "pages": [
                       "zh-CN/gateway/network-model",
                       "zh-CN/gateway/pairing",
@@ -1837,7 +1837,7 @@
             ]
           },
           {
-            "tab": "参考",
+            "tab": "参�?,
             "groups": [
               {
                 "group": "CLI 命令",
@@ -1886,7 +1886,7 @@
                 ]
               },
               {
-                "group": "RPC 与 API",
+                "group": "RPC �?API",
                 "pages": ["zh-CN/reference/rpc", "zh-CN/reference/device-models"]
               },
               {
@@ -1904,7 +1904,7 @@
                 ]
               },
               {
-                "group": "技术参考",
+                "group": "技术参�?,
                 "pages": [
                   "zh-CN/reference/wizard",
                   "zh-CN/reference/token-use",
@@ -1932,7 +1932,7 @@
                 "pages": ["zh-CN/reference/RELEASING", "zh-CN/reference/test"]
               },
               {
-                "group": "实验性功能",
+                "group": "实验性功�?,
                 "pages": [
                   "zh-CN/experiments/onboarding-config-protocol",
                   "zh-CN/experiments/plans/openresponses-gateway",
@@ -1966,7 +1966,7 @@
                 "pages": ["zh-CN/start/lore"]
               },
               {
-                "group": "环境与调试",
+                "group": "环境与调�?,
                 "pages": [
                   "zh-CN/help/environment",
                   "zh-CN/help/debugging",
@@ -1977,19 +1977,19 @@
                 ]
               },
               {
-                "group": "Node 运行时",
+                "group": "Node 运行�?,
                 "pages": ["zh-CN/install/node"]
               },
               {
-                "group": "压缩机制内部参考",
+                "group": "压缩机制内部参�?,
                 "pages": ["zh-CN/reference/session-management-compaction"]
               },
               {
-                "group": "开发者设置",
+                "group": "开发者设�?,
                 "pages": ["zh-CN/start/setup", "zh-CN/pi-dev"]
               },
               {
-                "group": "文档元信息",
+                "group": "文档元信�?,
                 "pages": ["zh-CN/start/hubs", "zh-CN/start/docs-directory", "zh-CN/AGENTS"]
               }
             ]

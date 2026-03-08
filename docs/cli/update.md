@@ -1,30 +1,30 @@
 ---
-summary: "CLI reference for `openclaw update` (safe-ish source update + gateway auto-restart)"
+summary: "CLI reference for `RadioClaw update` (safe-ish source update + gateway auto-restart)"
 read_when:
   - You want to update a source checkout safely
   - You need to understand `--update` shorthand behavior
 title: "update"
 ---
 
-# `openclaw update`
+# `RadioClaw update`
 
-Safely update OpenClaw and switch between stable/beta/dev channels.
+Safely update RadioClaw and switch between stable/beta/dev channels.
 
 If you installed via **npm/pnpm** (global install, no git metadata), updates happen via the package manager flow in [Updating](/install/updating).
 
 ## Usage
 
 ```bash
-openclaw update
-openclaw update status
-openclaw update wizard
-openclaw update --channel beta
-openclaw update --channel dev
-openclaw update --tag beta
-openclaw update --dry-run
-openclaw update --no-restart
-openclaw update --json
-openclaw --update
+RadioClaw update
+RadioClaw update status
+RadioClaw update wizard
+RadioClaw update --channel beta
+RadioClaw update --channel dev
+RadioClaw update --tag beta
+RadioClaw update --dry-run
+RadioClaw update --no-restart
+RadioClaw update --json
+RadioClaw --update
 ```
 
 ## Options
@@ -43,9 +43,9 @@ Note: downgrades require confirmation because older versions can break configura
 Show the active update channel + git tag/branch/SHA (for source checkouts), plus update availability.
 
 ```bash
-openclaw update status
-openclaw update status --json
-openclaw update status --timeout 10
+RadioClaw update status
+RadioClaw update status --json
+RadioClaw update status --timeout 10
 ```
 
 Options:
@@ -61,12 +61,12 @@ offers to create one.
 
 ## What it does
 
-When you switch channels explicitly (`--channel ...`), OpenClaw also keeps the
+When you switch channels explicitly (`--channel ...`), RadioClaw also keeps the
 install method aligned:
 
-- `dev` ‚Üí ensures a git checkout (default: `~/openclaw`, override with `OPENCLAW_GIT_DIR`),
+- `dev` ‚Ü?ensures a git checkout (default: `~/RadioClaw`, override with `RadioClaw_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
-- `stable`/`beta` ‚Üí installs from npm using the matching dist-tag.
+- `stable`/`beta` ‚Ü?installs from npm using the matching dist-tag.
 
 The Gateway core auto-updater (when enabled via config) reuses this same update path.
 
@@ -87,16 +87,16 @@ High-level:
 5. Rebases onto the selected commit (dev only).
 6. Installs deps (pnpm preferred; npm fallback).
 7. Builds + builds the Control UI.
-8. Runs `openclaw doctor` as the final ‚Äúsafe update‚Äù check.
+8. Runs `RadioClaw doctor` as the final ‚Äúsafe update‚Ä?check.
 9. Syncs plugins to the active channel (dev uses bundled extensions; stable/beta uses npm) and updates npm-installed plugins.
 
 ## `--update` shorthand
 
-`openclaw --update` rewrites to `openclaw update` (useful for shells and launcher scripts).
+`RadioClaw --update` rewrites to `RadioClaw update` (useful for shells and launcher scripts).
 
 ## See also
 
-- `openclaw doctor` (offers to run update first on git checkouts)
+- `RadioClaw doctor` (offers to run update first on git checkouts)
 - [Development channels](/install/development-channels)
 - [Updating](/install/updating)
 - [CLI reference](/cli)

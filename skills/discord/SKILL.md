@@ -1,7 +1,7 @@
 ---
 name: discord
 description: "Discord ops via the message tool (channel=discord)."
-metadata: { "openclaw": { "emoji": "🎮", "requires": { "config": ["channels.discord.token"] } } }
+metadata: { "RadioClaw": { "emoji": "🎮", "requires": { "config": ["channels.discord.token"] } } }
 allowed-tools: ["message"]
 ---
 
@@ -92,7 +92,7 @@ React:
   "channel": "discord",
   "channelId": "123",
   "messageId": "456",
-  "emoji": "✅"
+  "emoji": "�?
 }
 ```
 

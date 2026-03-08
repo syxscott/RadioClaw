@@ -221,7 +221,7 @@ function renderUsageMosaic(
         <div class="usage-mosaic-section">
           <div class="usage-mosaic-section-title">
             <span>Hours</span>
-            <span class="usage-mosaic-sub">0 â†’ 23</span>
+            <span class="usage-mosaic-sub">0 â†?23</span>
           </div>
           <div class="usage-hour-grid">
             ${stats.hourTotals.map((value, hour) => {
@@ -250,7 +250,7 @@ function renderUsageMosaic(
           </div>
           <div class="usage-hour-legend">
             <span></span>
-            Low â†’ High token density
+            Low â†?High token density
           </div>
         </div>
       </div>

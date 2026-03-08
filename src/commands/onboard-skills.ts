@@ -1,7 +1,7 @@
 import { installSkill } from "../agents/skills-install.js";
 import { buildWorkspaceSkillStatus } from "../agents/skills-status.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
 import type { WizardPrompter } from "../wizard/prompts.js";
@@ -22,7 +22,7 @@ function formatSkillHint(skill: {
 }): string {
   const desc = skill.description?.trim();
   const installLabel = skill.install[0]?.label?.trim();
-  const combined = desc && installLabel ? `${desc} â€” ${installLabel}` : desc || installLabel;
+  const combined = desc && installLabel ? `${desc} â€?${installLabel}` : desc || installLabel;
   if (!combined) {
     return "install";
   }
@@ -31,10 +31,10 @@ function formatSkillHint(skill: {
 }
 
 function upsertSkillEntry(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   skillKey: string,
   patch: { apiKey?: string },
-): OpenClawConfig {
+): RadioClawConfig {
   const entries = { ...cfg.skills?.entries };
   const existing = (entries[skillKey] as { apiKey?: string } | undefined) ?? {};
   entries[skillKey] = { ...existing, ...patch };
@@ -48,11 +48,11 @@ function upsertSkillEntry(
 }
 
 export async function setupSkills(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   workspaceDir: string,
   runtime: RuntimeEnv,
   prompter: WizardPrompter,
-): Promise<OpenClawConfig> {
+): Promise<RadioClawConfig> {
   const report = buildWorkspaceSkillStatus(workspaceDir, { config: cfg });
   const eligible = report.skills.filter((s) => s.eligible);
   const unsupportedOs = report.skills.filter(
@@ -84,7 +84,7 @@ export async function setupSkills(
   const installable = missing.filter(
     (skill) => skill.install.length > 0 && skill.missing.bins.length > 0,
   );
-  let next: OpenClawConfig = cfg;
+  let next: RadioClawConfig = cfg;
   if (installable.length > 0) {
     const toInstall = await prompter.multiselect({
       message: "Install missing skill dependencies",
@@ -182,7 +182,7 @@ export async function setupSkills(
       }
       const code = result.code == null ? "" : ` (exit ${result.code})`;
       const detail = summarizeInstallFailure(result.message);
-      spin.stop(`Install failed: ${name}${code}${detail ? ` â€” ${detail}` : ""}`);
+      spin.stop(`Install failed: ${name}${code}${detail ? ` â€?${detail}` : ""}`);
       for (const warning of warnings) {
         runtime.log(warning);
       }
@@ -192,9 +192,9 @@ export async function setupSkills(
         runtime.log(result.stdout.trim());
       }
       runtime.log(
-        `Tip: run \`${formatCliCommand("openclaw doctor")}\` to review skills + requirements.`,
+        `Tip: run \`${formatCliCommand("RadioClaw doctor")}\` to review skills + requirements.`,
       );
-      runtime.log("Docs: https://docs.openclaw.ai/skills");
+      runtime.log("Docs: https://docs.RadioClaw.ai/skills");
     }
   }
 

@@ -48,7 +48,7 @@ export const en: TranslationMap = {
     skills: "Manage skill availability and API key injection.",
     nodes: "Paired devices, capabilities, and command exposure.",
     chat: "Direct gateway chat session for quick interventions.",
-    config: "Edit ~/.openclaw/openclaw.json safely.",
+    config: "Edit ~/.RadioClaw/RadioClaw.json safely.",
     debug: "Gateway snapshots, events, and manual RPC calls.",
     logs: "Live tail of the gateway file logs.",
   },
@@ -99,7 +99,7 @@ export const en: TranslationMap = {
     pairing: {
       hint: "This device needs pairing approval from the gateway host.",
       mobileHint:
-        "On mobile? Copy the full URL (including #token=...) from openclaw dashboard --no-open on your desktop.",
+        "On mobile? Copy the full URL (including #token=...) from RadioClaw dashboard --no-open on your desktop.",
     },
     insecure: {
       hint: "This page is HTTP, so the browser blocks device identity. Use HTTPS (Tailscale Serve) or open {url} on the gateway host.",
@@ -118,7 +118,7 @@ export const en: TranslationMap = {
   },
   languages: {
     en: "English",
-    zhCN: "简体中文 (Simplified Chinese)",
+    zhCN: "简体中�?(Simplified Chinese)",
     zhTW: "繁體中文 (Traditional Chinese)",
     ptBR: "Português (Brazilian Portuguese)",
     de: "Deutsch (German)",
@@ -216,7 +216,7 @@ export const en: TranslationMap = {
       timezoneOptional: "Timezone (optional)",
       timezonePlaceholder: "America/Los_Angeles",
       timezoneHelp: "Pick a common timezone or enter any valid IANA timezone.",
-      jitterHelp: "Need jitter? Use Advanced → Stagger window / Stagger unit.",
+      jitterHelp: "Need jitter? Use Advanced �?Stagger window / Stagger unit.",
       execution: "Execution",
       executionSub: "Choose when to wake, and what this job should do.",
       session: "Session",

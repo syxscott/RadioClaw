@@ -43,13 +43,13 @@ extension CronSettings {
         Button(job.enabled ? "Disable" : "Enable") {
             Task { await self.store.setJobEnabled(id: job.id, enabled: !job.enabled) }
         }
-        Button("Editâ€¦") {
+        Button("Editâ€?) {
             self.editingJob = job
             self.editorError = nil
             self.showEditor = true
         }
         Divider()
-        Button("Deleteâ€¦", role: .destructive) {
+        Button("Deleteâ€?, role: .destructive) {
             self.confirmDelete = job
         }
     }
@@ -109,14 +109,14 @@ extension CronSettings {
                 if let date = job.nextRunDate {
                     Text(date.formatted(date: .abbreviated, time: .standard))
                 } else {
-                    Text("â€”").foregroundStyle(.secondary)
+                    Text("â€?).foregroundStyle(.secondary)
                 }
             }
             LabeledContent("Last run") {
                 if let date = job.lastRunDate {
                     Text("\(date.formatted(date: .abbreviated, time: .standard)) Â· \(relativeAge(from: date))")
                 } else {
-                    Text("â€”").foregroundStyle(.secondary)
+                    Text("â€?).foregroundStyle(.secondary)
                 }
             }
             if let status = job.state.lastStatus {

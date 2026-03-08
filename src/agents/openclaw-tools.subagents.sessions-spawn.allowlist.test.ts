@@ -5,12 +5,12 @@ import {
   getSessionsSpawnTool,
   resetSessionsSpawnConfigOverride,
   setSessionsSpawnConfigOverride,
-} from "./openclaw-tools.subagents.sessions-spawn.test-harness.js";
+} from "./RadioClaw-tools.subagents.sessions-spawn.test-harness.js";
 import { resetSubagentRegistryForTests } from "./subagent-registry.js";
 
 const callGatewayMock = getCallGatewayMock();
 
-describe("openclaw-tools: subagents (sessions_spawn allowlist)", () => {
+describe("RadioClaw-tools: subagents (sessions_spawn allowlist)", () => {
   function setAllowAgents(allowAgents: string[]) {
     setSessionsSpawnConfigOverride({
       session: {
@@ -281,7 +281,7 @@ describe("openclaw-tools: subagents (sessions_spawn allowlist)", () => {
       agents: {
         list: [
           { id: "main", subagents: { allowAgents: ["research"] } },
-          // "research" is NOT in agents.list â€” only in allowAgents
+          // "research" is NOT in agents.list â€?only in allowAgents
         ],
       },
     });

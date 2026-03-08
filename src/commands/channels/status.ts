@@ -12,7 +12,7 @@ import { formatCliCommand } from "../../cli/command-format.js";
 import { resolveCommandSecretRefsViaGateway } from "../../cli/command-secret-gateway.js";
 import { getChannelsCommandSecretTargetIds } from "../../cli/command-secret-targets.js";
 import { withProgress } from "../../cli/progress.js";
-import { type OpenClawConfig, readConfigFileSnapshot } from "../../config/config.js";
+import { type RadioClawConfig, readConfigFileSnapshot } from "../../config/config.js";
 import { callGateway } from "../../gateway/call.js";
 import { collectChannelStatusIssues } from "../../infra/channels-status-issues.js";
 import { formatTimeAgo } from "../../infra/format-time/format-relative.ts";
@@ -200,7 +200,7 @@ export function formatGatewayChannelsStatusLines(payload: Record<string, unknown
         `- ${issue.channel} ${issue.accountId}: ${issue.message}${issue.fix ? ` (${issue.fix})` : ""}`,
       );
     }
-    lines.push(`- Run: ${formatCliCommand("openclaw doctor")}`);
+    lines.push(`- Run: ${formatCliCommand("RadioClaw doctor")}`);
     lines.push("");
   }
   lines.push(
@@ -210,9 +210,9 @@ export function formatGatewayChannelsStatusLines(payload: Record<string, unknown
 }
 
 export async function formatConfigChannelsStatusLines(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   meta: { path?: string; mode?: "local" | "remote" },
-  opts?: { sourceConfig?: OpenClawConfig },
+  opts?: { sourceConfig?: RadioClawConfig },
 ): Promise<string[]> {
   const lines: string[] = [];
   lines.push(theme.warn("Gateway not reachable; showing config-only status."));
@@ -281,7 +281,7 @@ export async function channelsStatusCommand(
   runtime: RuntimeEnv = defaultRuntime,
 ) {
   const timeoutMs = Number(opts.timeout ?? 10_000);
-  const statusLabel = opts.probe ? "Checking channel status (probe)â€¦" : "Checking channel statusâ€¦";
+  const statusLabel = opts.probe ? "Checking channel status (probe)â€? : "Checking channel statusâ€?;
   const shouldLogStatus = opts.json !== true && !process.stderr.isTTY;
   if (shouldLogStatus) {
     runtime.log(statusLabel);

@@ -2132,8 +2132,8 @@ finally:
 
 #### Execution Order
 
-1. **Try succeeds**: try body â†’ finally body
-2. **Try fails**: try body (until failure) â†’ catch body â†’ finally body
+1. **Try succeeds**: try body â†?finally body
+2. **Try fails**: try body (until failure) â†?catch body â†?finally body
 
 ### Try/Finally (No Catch)
 
@@ -2854,22 +2854,22 @@ All core features through Tier 12 have been implemented. Potential future enhanc
 ## Syntax Grammar (Implemented)
 
 ```
-program     â†’ statement* EOF
-statement   â†’ useStatement | inputDecl | agentDef | session | resumeStmt
+program     â†?statement* EOF
+statement   â†?useStatement | inputDecl | agentDef | session | resumeStmt
             | letBinding | constBinding | assignment | outputBinding
             | parallelBlock | repeatBlock | forEachBlock | loopBlock
             | tryBlock | choiceBlock | ifStatement | doBlock | blockDef
             | throwStatement | comment
 
 # Program Composition
-useStatement â†’ "use" string ( "as" IDENTIFIER )?
-inputDecl   â†’ "input" IDENTIFIER ":" string
-outputBinding â†’ "output" IDENTIFIER "=" expression
-programCall â†’ IDENTIFIER "(" ( IDENTIFIER ":" expression )* ")"
+useStatement â†?"use" string ( "as" IDENTIFIER )?
+inputDecl   â†?"input" IDENTIFIER ":" string
+outputBinding â†?"output" IDENTIFIER "=" expression
+programCall â†?IDENTIFIER "(" ( IDENTIFIER ":" expression )* ")"
 
 # Definitions
-agentDef    â†’ "agent" IDENTIFIER ":" NEWLINE INDENT agentProperty* DEDENT
-agentProperty â†’ "model:" ( "sonnet" | "opus" | "haiku" )
+agentDef    â†?"agent" IDENTIFIER ":" NEWLINE INDENT agentProperty* DEDENT
+agentProperty â†?"model:" ( "sonnet" | "opus" | "haiku" )
               | "prompt:" string
               | "persist:" ( "true" | "project" | string )
               | "context:" ( IDENTIFIER | array | objectContext )
@@ -2877,83 +2877,83 @@ agentProperty â†’ "model:" ( "sonnet" | "opus" | "haiku" )
               | "backoff:" ( "none" | "linear" | "exponential" )
               | "skills:" "[" string* "]"
               | "permissions:" NEWLINE INDENT permission* DEDENT
-blockDef    â†’ "block" IDENTIFIER params? ":" NEWLINE INDENT statement* DEDENT
-params      â†’ "(" IDENTIFIER ( "," IDENTIFIER )* ")"
+blockDef    â†?"block" IDENTIFIER params? ":" NEWLINE INDENT statement* DEDENT
+params      â†?"(" IDENTIFIER ( "," IDENTIFIER )* ")"
 
 # Control Flow
-parallelBlock â†’ "parallel" parallelMods? ":" NEWLINE INDENT parallelBranch* DEDENT
-parallelMods  â†’ "(" ( joinStrategy | onFail | countMod ) ( "," ( joinStrategy | onFail | countMod ) )* ")"
-joinStrategy  â†’ string                              # "all" | "first" | "any"
-onFail        â†’ "on-fail" ":" string                # "fail-fast" | "continue" | "ignore"
-countMod      â†’ "count" ":" NUMBER                  # only valid with "any"
-parallelBranch â†’ ( IDENTIFIER "=" )? statement
+parallelBlock â†?"parallel" parallelMods? ":" NEWLINE INDENT parallelBranch* DEDENT
+parallelMods  â†?"(" ( joinStrategy | onFail | countMod ) ( "," ( joinStrategy | onFail | countMod ) )* ")"
+joinStrategy  â†?string                              # "all" | "first" | "any"
+onFail        â†?"on-fail" ":" string                # "fail-fast" | "continue" | "ignore"
+countMod      â†?"count" ":" NUMBER                  # only valid with "any"
+parallelBranch â†?( IDENTIFIER "=" )? statement
 
 # Loops
-repeatBlock â†’ "repeat" NUMBER ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement* DEDENT
-forEachBlock â†’ "parallel"? "for" IDENTIFIER ( "," IDENTIFIER )? "in" collection ":" NEWLINE INDENT statement* DEDENT
-loopBlock   â†’ "loop" ( ( "until" | "while" ) discretion )? loopMods? ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement* DEDENT
-loopMods    â†’ "(" "max" ":" NUMBER ")"
+repeatBlock â†?"repeat" NUMBER ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement* DEDENT
+forEachBlock â†?"parallel"? "for" IDENTIFIER ( "," IDENTIFIER )? "in" collection ":" NEWLINE INDENT statement* DEDENT
+loopBlock   â†?"loop" ( ( "until" | "while" ) discretion )? loopMods? ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement* DEDENT
+loopMods    â†?"(" "max" ":" NUMBER ")"
 
 # Error Handling
-tryBlock    â†’ "try" ":" NEWLINE INDENT statement+ DEDENT catchBlock? finallyBlock?
-catchBlock  â†’ "catch" ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement+ DEDENT
-finallyBlock â†’ "finally" ":" NEWLINE INDENT statement+ DEDENT
-throwStatement â†’ "throw" string?
+tryBlock    â†?"try" ":" NEWLINE INDENT statement+ DEDENT catchBlock? finallyBlock?
+catchBlock  â†?"catch" ( "as" IDENTIFIER )? ":" NEWLINE INDENT statement+ DEDENT
+finallyBlock â†?"finally" ":" NEWLINE INDENT statement+ DEDENT
+throwStatement â†?"throw" string?
 
 # Conditionals
-choiceBlock â†’ "choice" discretion ":" NEWLINE INDENT choiceOption+ DEDENT
-choiceOption â†’ "option" string ":" NEWLINE INDENT statement+ DEDENT
-ifStatement â†’ "if" discretion ":" NEWLINE INDENT statement+ DEDENT elifClause* elseClause?
-elifClause  â†’ "elif" discretion ":" NEWLINE INDENT statement+ DEDENT
-elseClause  â†’ "else" ":" NEWLINE INDENT statement+ DEDENT
+choiceBlock â†?"choice" discretion ":" NEWLINE INDENT choiceOption+ DEDENT
+choiceOption â†?"option" string ":" NEWLINE INDENT statement+ DEDENT
+ifStatement â†?"if" discretion ":" NEWLINE INDENT statement+ DEDENT elifClause* elseClause?
+elifClause  â†?"elif" discretion ":" NEWLINE INDENT statement+ DEDENT
+elseClause  â†?"else" ":" NEWLINE INDENT statement+ DEDENT
 
 # Composition
-doBlock     â†’ "do" ( ":" NEWLINE INDENT statement* DEDENT | IDENTIFIER args? )
-args        â†’ "(" expression ( "," expression )* ")"
-arrowExpr   â†’ session ( "->" session )+
+doBlock     â†?"do" ( ":" NEWLINE INDENT statement* DEDENT | IDENTIFIER args? )
+args        â†?"(" expression ( "," expression )* ")"
+arrowExpr   â†?session ( "->" session )+
 
 # Sessions
-session     â†’ "session" ( string | ":" IDENTIFIER | IDENTIFIER ":" IDENTIFIER )
+session     â†?"session" ( string | ":" IDENTIFIER | IDENTIFIER ":" IDENTIFIER )
               ( NEWLINE INDENT sessionProperty* DEDENT )?
-resumeStmt  â†’ "resume" ":" IDENTIFIER ( NEWLINE INDENT sessionProperty* DEDENT )?
-sessionProperty â†’ "model:" ( "sonnet" | "opus" | "haiku" )
+resumeStmt  â†?"resume" ":" IDENTIFIER ( NEWLINE INDENT sessionProperty* DEDENT )?
+sessionProperty â†?"model:" ( "sonnet" | "opus" | "haiku" )
                 | "prompt:" string
                 | "context:" ( IDENTIFIER | array | objectContext )
                 | "retry:" NUMBER
                 | "backoff:" ( "none" | "linear" | "exponential" )
 
 # Bindings
-letBinding  â†’ "let" IDENTIFIER "=" expression
-constBinding â†’ "const" IDENTIFIER "=" expression
-assignment  â†’ IDENTIFIER "=" expression
+letBinding  â†?"let" IDENTIFIER "=" expression
+constBinding â†?"const" IDENTIFIER "=" expression
+assignment  â†?IDENTIFIER "=" expression
 
 # Expressions
-expression  â†’ session | doBlock | parallelBlock | repeatBlock | forEachBlock
+expression  â†?session | doBlock | parallelBlock | repeatBlock | forEachBlock
             | loopBlock | arrowExpr | pipeExpr | programCall | string | IDENTIFIER | array | objectContext
 
 # Pipelines
-pipeExpr    â†’ ( IDENTIFIER | array ) ( "|" pipeOp )+
-pipeOp      â†’ ( "map" | "filter" | "pmap" ) ":" NEWLINE INDENT statement* DEDENT
+pipeExpr    â†?( IDENTIFIER | array ) ( "|" pipeOp )+
+pipeOp      â†?( "map" | "filter" | "pmap" ) ":" NEWLINE INDENT statement* DEDENT
             | "reduce" "(" IDENTIFIER "," IDENTIFIER ")" ":" NEWLINE INDENT statement* DEDENT
 
 # Properties
-property    â†’ ( "model" | "prompt" | "context" | "retry" | "backoff" | IDENTIFIER )
+property    â†?( "model" | "prompt" | "context" | "retry" | "backoff" | IDENTIFIER )
             ":" ( IDENTIFIER | string | array | objectContext | NUMBER )
 
 # Primitives
-discretion  â†’ "**" text "**" | "***" text "***"
-collection  â†’ IDENTIFIER | array
-array       â†’ "[" ( expression ( "," expression )* )? "]"
-objectContext â†’ "{" ( IDENTIFIER ( "," IDENTIFIER )* )? "}"
-comment     â†’ "#" text NEWLINE
+discretion  â†?"**" text "**" | "***" text "***"
+collection  â†?IDENTIFIER | array
+array       â†?"[" ( expression ( "," expression )* )? "]"
+objectContext â†?"{" ( IDENTIFIER ( "," IDENTIFIER )* )? "}"
+comment     â†?"#" text NEWLINE
 
 # Strings
-string      â†’ singleString | tripleString | interpolatedString
-singleString â†’ '"' character* '"'
-tripleString â†’ '"""' ( character | NEWLINE )* '"""'
-interpolatedString â†’ string containing "{" IDENTIFIER "}"
-character   â†’ escape | non-quote
-escape      â†’ "\\" | "\"" | "\n" | "\t"
+string      â†?singleString | tripleString | interpolatedString
+singleString â†?'"' character* '"'
+tripleString â†?'"""' ( character | NEWLINE )* '"""'
+interpolatedString â†?string containing "{" IDENTIFIER "}"
+character   â†?escape | non-quote
+escape      â†?"\\" | "\"" | "\n" | "\t"
 ```
 
 ---

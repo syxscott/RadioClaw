@@ -11,7 +11,7 @@ import {
   type APIApplicationCommandChannelOption,
 } from "discord-api-types/v10";
 import { resolveCommandAuthorizedFromAuthorizers } from "../../channels/command-gating.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { isDangerousNameMatchingEnabled } from "../../config/dangerous-name-matching.js";
 import type { DiscordAccountConfig } from "../../config/types.js";
 import { formatMention } from "../mentions.js";
@@ -34,7 +34,7 @@ const VOICE_CHANNEL_TYPES: NonNullable<APIApplicationCommandChannelOption["chann
 ];
 
 type VoiceCommandContext = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   discordConfig: DiscordAccountConfig;
   accountId: string;
   groupPolicy: "open" | "disabled" | "allowlist";
@@ -354,7 +354,7 @@ export function createDiscordVoiceCommand(params: VoiceCommandContext): CommandW
         return;
       }
       const lines = sessions.map(
-        (entry) => `â€¢ ${formatMention({ channelId: entry.channelId })} (guild ${entry.guildId})`,
+        (entry) => `â€?${formatMention({ channelId: entry.channelId })} (guild ${entry.guildId})`,
       );
       await interaction.reply({ content: lines.join("\n"), ephemeral: true });
     }

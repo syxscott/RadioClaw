@@ -50,7 +50,7 @@ function makeShareChatEvent(content: unknown) {
   };
 }
 
-describe("parseFeishuMessageEvent – mentionedBot", () => {
+describe("parseFeishuMessageEvent �?mentionedBot", () => {
   const BOT_OPEN_ID = "ou_bot_123";
 
   it("returns mentionedBot=false when there are no mentions", () => {
@@ -78,9 +78,9 @@ describe("parseFeishuMessageEvent – mentionedBot", () => {
 
   it("returns mentionedBot=true when bot mention name differs from configured botName", () => {
     const event = makeEvent("group", [
-      { key: "@_user_1", name: "OpenClaw Bot (Alias)", id: { open_id: BOT_OPEN_ID } },
+      { key: "@_user_1", name: "RadioClaw Bot (Alias)", id: { open_id: BOT_OPEN_ID } },
     ]);
-    const ctx = parseFeishuMessageEvent(event as any, BOT_OPEN_ID, "OpenClaw Bot");
+    const ctx = parseFeishuMessageEvent(event as any, BOT_OPEN_ID, "RadioClaw Bot");
     expect(ctx.mentionedBot).toBe(true);
   });
 

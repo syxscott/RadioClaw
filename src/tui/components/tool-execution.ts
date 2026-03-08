@@ -124,7 +124,7 @@ export class ToolExecutionComponent extends Container {
     this.argsLine.setText(argLine ? theme.dim(argLine) : theme.dim(" "));
 
     const raw = extractText(this.result);
-    const text = raw || (this.isPartial ? "â€¦" : "");
+    const text = raw || (this.isPartial ? "â€? : "");
     if (!this.expanded && text) {
       const lines = text.split("\n");
       const preview =

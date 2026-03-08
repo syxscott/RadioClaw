@@ -1,7 +1,7 @@
 import Foundation
-import OpenClawProtocol
+import RadioClawProtocol
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite
 @MainActor
@@ -68,7 +68,7 @@ struct WorkActivityStoreTests {
             meta: nil,
             args: [
                 "command": AnyCodable("echo hi\necho bye"),
-                "path": AnyCodable("\(home)/Projects/openclaw"),
+                "path": AnyCodable("\(home)/Projects/RadioClaw"),
             ])
 
         #expect(store.current?.label == "bash: echo hi")

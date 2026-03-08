@@ -1,11 +1,11 @@
-# OpenClaw docs i18n assets
+# RadioClaw docs i18n assets
 
 This folder stores **generated** and **config** files for documentation translations.
 
 ## Files
 
-- `glossary.<lang>.json` â€” preferred term mappings (used in prompt guidance).
-- `<lang>.tm.jsonl` â€” translation memory (cache) keyed by workflow + model + text hash.
+- `glossary.<lang>.json` â€?preferred term mappings (used in prompt guidance).
+- `<lang>.tm.jsonl` â€?translation memory (cache) keyed by workflow + model + text hash.
 
 ## Glossary format
 

@@ -28,7 +28,7 @@ function isAnthropicMessagesModel(model: Model<Api>): model is Model<"anthropic-
  * pi-ai constructs the Anthropic API endpoint as `${baseUrl}/v1/messages`.
  * If a user configures `baseUrl` with a trailing `/v1` (e.g. the previously
  * recommended format "https://api.anthropic.com/v1"), the resulting URL
- * becomes "â€¦/v1/v1/messages" which the Anthropic API rejects with a 404.
+ * becomes "â€?v1/v1/messages" which the Anthropic API rejects with a 404.
  *
  * Strip a single trailing `/v1` (with optional trailing slash) from the
  * baseUrl for anthropic-messages models so users with either format work.
@@ -69,7 +69,7 @@ export function normalizeModelCompat(model: Model<Api>): Model<Api> {
     return model;
   }
 
-  // Return a new object â€” do not mutate the caller's model reference.
+  // Return a new object â€?do not mutate the caller's model reference.
   return {
     ...model,
     compat: compat

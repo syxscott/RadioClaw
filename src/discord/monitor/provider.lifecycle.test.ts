@@ -441,7 +441,7 @@ describe("runDiscordGatewayLifecycle", () => {
     const connectedFalse = statusUpdates.find((s) => s.connected === false);
     expect(connectedFalse).toBeDefined();
 
-    // No connected: true should appear â€” the isConnected check must be
+    // No connected: true should appear â€?the isConnected check must be
     // guarded by !lifecycleStopping to avoid contradicting the abort.
     const connectedTrue = statusUpdates.find((s) => s.connected === true);
     expect(connectedTrue).toBeUndefined();

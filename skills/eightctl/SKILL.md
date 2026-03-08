@@ -4,9 +4,9 @@ description: Control Eight Sleep pods (status, temperature, alarms, schedules).
 homepage: https://eightctl.sh
 metadata:
   {
-    "openclaw":
+    "RadioClaw":
       {
-        "emoji": "🎛️",
+        "emoji": "🎛�?,
         "requires": { "bins": ["eightctl"] },
         "install":
           [

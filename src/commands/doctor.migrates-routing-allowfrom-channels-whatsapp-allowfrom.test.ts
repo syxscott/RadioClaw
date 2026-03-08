@@ -6,7 +6,7 @@ import {
   mockDoctorConfigSnapshot,
   note,
   readConfigFileSnapshot,
-  resolveOpenClawPackageRoot,
+  resolveRadioClawPackageRoot,
   runCommandWithTimeout,
   runGatewayUpdate,
   serviceInstall,
@@ -42,7 +42,7 @@ describe("doctor command", () => {
         channels: { whatsapp: { allowFrom: ["+15555550123"] } },
         gateway: { remote: { token: "legacy-remote-token" } },
       },
-      changes: ["Moved routing.allowFrom â†’ channels.whatsapp.allowFrom."],
+      changes: ["Moved routing.allowFrom â†?channels.whatsapp.allowFrom."],
     });
 
     await doctorCommand(runtime, { repair: true });
@@ -73,7 +73,7 @@ describe("doctor command", () => {
       findLegacyGatewayServices.mockResolvedValueOnce([
         {
           platform: "darwin",
-          label: "com.steipete.openclaw.gateway",
+          label: "com.steipete.RadioClaw.gateway",
           detail: "loaded",
         },
       ]);
@@ -88,10 +88,10 @@ describe("doctor command", () => {
   );
 
   it("offers to update first for git checkouts", async () => {
-    delete process.env.OPENCLAW_UPDATE_IN_PROGRESS;
+    delete process.env.RadioClaw_UPDATE_IN_PROGRESS;
 
-    const root = "/tmp/openclaw";
-    resolveOpenClawPackageRoot.mockResolvedValueOnce(root);
+    const root = "/tmp/RadioClaw";
+    resolveRadioClawPackageRoot.mockResolvedValueOnce(root);
     runCommandWithTimeout.mockResolvedValueOnce({
       stdout: `${root}\n`,
       stderr: "",

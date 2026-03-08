@@ -98,7 +98,7 @@ export type MsgContext = {
   StickerMediaIncluded?: boolean;
   OutputDir?: string;
   OutputBase?: string;
-  /** Remote host for SCP when media lives on a different machine (e.g., openclaw@192.168.64.3). */
+  /** Remote host for SCP when media lives on a different machine (e.g., RadioClaw@192.168.64.3). */
   MediaRemoteHost?: string;
   Transcript?: string;
   MediaUnderstanding?: MediaUnderstandingOutput[];
@@ -142,7 +142,7 @@ export type MsgContext = {
   GatewayClientScopes?: string[];
   /** Thread identifier (Telegram topic id or Matrix thread event id). */
   MessageThreadId?: string | number;
-  /** Platform-native channel/conversation id (e.g. Slack DM channel "Dâ€¦" id). */
+  /** Platform-native channel/conversation id (e.g. Slack DM channel "Dâ€? id). */
   NativeChannelId?: string;
   /** Telegram forum supergroup marker. */
   IsForum?: boolean;

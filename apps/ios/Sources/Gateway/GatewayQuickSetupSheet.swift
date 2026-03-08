@@ -54,7 +54,7 @@ struct GatewayQuickSetupSheet: View {
                             if self.connecting {
                                 HStack(spacing: 8) {
                                     ProgressView().progressViewStyle(.circular)
-                                    Text("Connectingâ€¦")
+                                    Text("Connectingâ€?)
                                 }
                             } else {
                                 Text("Connect")

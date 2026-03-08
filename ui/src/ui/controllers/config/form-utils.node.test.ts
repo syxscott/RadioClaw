@@ -5,7 +5,7 @@ import { cloneConfigObject, serializeConfigForm, setPathValue } from "./form-uti
 
 /**
  * Minimal model provider schema matching the Zod-generated JSON Schema for
- * `models.providers` (see zod-schema.core.ts â†’ ModelDefinitionSchema).
+ * `models.providers` (see zod-schema.core.ts â†?ModelDefinitionSchema).
  */
 const modelDefinitionSchema: JsonSchema = {
   type: "object",

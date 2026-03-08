@@ -109,7 +109,7 @@ describe("web search provider auto-detection", () => {
     expect(resolveSearchProvider({})).toBe("kimi");
   });
 
-  it("follows priority order â€” perplexity wins when multiple keys available", () => {
+  it("follows priority order â€?perplexity wins when multiple keys available", () => {
     process.env.PERPLEXITY_API_KEY = "test-perplexity-key"; // pragma: allowlist secret
     process.env.BRAVE_API_KEY = "test-brave-key"; // pragma: allowlist secret
     process.env.GEMINI_API_KEY = "test-gemini-key"; // pragma: allowlist secret

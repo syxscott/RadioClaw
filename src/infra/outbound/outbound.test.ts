@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ReplyPayload } from "../../auto-reply/types.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { typedCases } from "../../test-utils/typed-cases.js";
 import {
   ackDelivery,
@@ -45,7 +45,7 @@ describe("delivery-queue", () => {
   let fixtureCount = 0;
 
   beforeAll(() => {
-    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-dq-suite-"));
+    fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "RadioClaw-dq-suite-"));
   });
 
   beforeEach(() => {
@@ -149,7 +149,7 @@ describe("delivery-queue", () => {
       const queueDir = path.join(tmpDir, "delivery-queue");
 
       // Simulate crash between ack phase 1 (rename) and phase 2 (unlink):
-      // rename .json â†’ .delivered, then pretend the process died.
+      // rename .json â†?.delivered, then pretend the process died.
       fs.renameSync(path.join(queueDir, `${id}.json`), path.join(queueDir, `${id}.delivered`));
 
       const entries = await loadPendingDeliveries(tmpDir);
@@ -619,7 +619,7 @@ describe("delivery-queue", () => {
 });
 
 describe("DirectoryCache", () => {
-  const cfg = {} as OpenClawConfig;
+  const cfg = {} as RadioClawConfig;
 
   afterEach(() => {
     vi.useRealTimers();
@@ -744,13 +744,13 @@ describe("formatOutboundDeliverySummary", () => {
         name: "fallback telegram",
         channel: "telegram" as const,
         result: undefined,
-        expected: "âœ… Sent via Telegram. Message ID: unknown",
+        expected: "âœ?Sent via Telegram. Message ID: unknown",
       },
       {
         name: "fallback imessage",
         channel: "imessage" as const,
         result: undefined,
-        expected: "âœ… Sent via iMessage. Message ID: unknown",
+        expected: "âœ?Sent via iMessage. Message ID: unknown",
       },
       {
         name: "telegram with chat detail",
@@ -760,7 +760,7 @@ describe("formatOutboundDeliverySummary", () => {
           messageId: "m1",
           chatId: "c1",
         },
-        expected: "âœ… Sent via Telegram. Message ID: m1 (chat c1)",
+        expected: "âœ?Sent via Telegram. Message ID: m1 (chat c1)",
       },
       {
         name: "discord with channel detail",
@@ -770,7 +770,7 @@ describe("formatOutboundDeliverySummary", () => {
           messageId: "d1",
           channelId: "chan",
         },
-        expected: "âœ… Sent via Discord. Message ID: d1 (channel chan)",
+        expected: "âœ?Sent via Discord. Message ID: d1 (channel chan)",
       },
     ];
 
@@ -848,12 +848,12 @@ describe("formatGatewaySummary", () => {
       {
         name: "default send action",
         input: { channel: "whatsapp", messageId: "m1" },
-        expected: "âœ… Sent via gateway (whatsapp). Message ID: m1",
+        expected: "âœ?Sent via gateway (whatsapp). Message ID: m1",
       },
       {
         name: "custom action",
         input: { action: "Poll sent", channel: "discord", messageId: "p1" },
-        expected: "âœ… Poll sent via gateway (discord). Message ID: p1",
+        expected: "âœ?Poll sent via gateway (discord). Message ID: p1",
       },
     ];
 
@@ -870,13 +870,13 @@ const slackConfig = {
       appToken: "xapp-test",
     },
   },
-} as OpenClawConfig;
+} as RadioClawConfig;
 
 const discordConfig = {
   channels: {
     discord: {},
   },
-} as OpenClawConfig;
+} as RadioClawConfig;
 
 describe("outbound policy", () => {
   it("allows cross-provider sends when enabled", () => {
@@ -885,7 +885,7 @@ describe("outbound policy", () => {
       tools: {
         message: { crossContext: { allowAcrossProviders: true } },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     expect(() =>
       enforceCrossContextPolicy({
@@ -921,10 +921,10 @@ describe("outbound policy", () => {
 });
 
 describe("resolveOutboundSessionRoute", () => {
-  const baseConfig = {} as OpenClawConfig;
+  const baseConfig = {} as RadioClawConfig;
 
   it("resolves provider-specific session routes", async () => {
-    const perChannelPeerCfg = { session: { dmScope: "per-channel-peer" } } as OpenClawConfig;
+    const perChannelPeerCfg = { session: { dmScope: "per-channel-peer" } } as RadioClawConfig;
     const identityLinksCfg = {
       session: {
         dmScope: "per-peer",
@@ -932,7 +932,7 @@ describe("resolveOutboundSessionRoute", () => {
           alice: ["discord:123"],
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     const slackMpimCfg = {
       channels: {
         slack: {
@@ -941,10 +941,10 @@ describe("resolveOutboundSessionRoute", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     const cases: Array<{
       name: string;
-      cfg: OpenClawConfig;
+      cfg: RadioClawConfig;
       channel: string;
       target: string;
       replyToId?: string;
@@ -1123,7 +1123,7 @@ describe("resolveOutboundSessionRoute", () => {
 
   it("uses resolved Discord user targets to route bare numeric ids as DMs", async () => {
     const route = await resolveOutboundSessionRoute({
-      cfg: { session: { dmScope: "per-channel-peer" } } as OpenClawConfig,
+      cfg: { session: { dmScope: "per-channel-peer" } } as RadioClawConfig,
       channel: "discord",
       agentId: "main",
       target: "123",
@@ -1145,7 +1145,7 @@ describe("resolveOutboundSessionRoute", () => {
   it("rejects bare numeric Discord targets when the caller has no kind hint", async () => {
     await expect(
       resolveOutboundSessionRoute({
-        cfg: { session: { dmScope: "per-channel-peer" } } as OpenClawConfig,
+        cfg: { session: { dmScope: "per-channel-peer" } } as RadioClawConfig,
         channel: "discord",
         agentId: "main",
         target: "123",

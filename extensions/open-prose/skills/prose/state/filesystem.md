@@ -36,20 +36,20 @@ File-based state persists all execution artifacts to disk. This enables:
 .prose/
 ├── .env                              # Config (simple key=value format)
 ├── runs/
-│   └── {YYYYMMDD}-{HHMMSS}-{random}/
-│       ├── program.prose             # Copy of running program
-│       ├── state.md                  # Execution state with code snippets
-│       ├── bindings/
-│       │   ├── {name}.md             # Root scope bindings
-│       │   └── {name}__{execution_id}.md  # Scoped bindings (block invocations)
-│       ├── imports/
-│       │   └── {handle}--{slug}/     # Nested program executions (same structure recursively)
-│       └── agents/
-│           └── {name}/
-│               ├── memory.md         # Agent's current state
-│               ├── {name}-001.md     # Historical segments (flattened)
-│               ├── {name}-002.md
-│               └── ...
+�?  └── {YYYYMMDD}-{HHMMSS}-{random}/
+�?      ├── program.prose             # Copy of running program
+�?      ├── state.md                  # Execution state with code snippets
+�?      ├── bindings/
+�?      �?  ├── {name}.md             # Root scope bindings
+�?      �?  └── {name}__{execution_id}.md  # Scoped bindings (block invocations)
+�?      ├── imports/
+�?      �?  └── {handle}--{slug}/     # Nested program executions (same structure recursively)
+�?      └── agents/
+�?          └── {name}/
+�?              ├── memory.md         # Agent's current state
+�?              ├── {name}-001.md     # Historical segments (flattened)
+�?              ├── {name}-002.md
+�?              └── ...
 └── agents/                           # Project-scoped agent memory
     └── {name}/
         ├── memory.md
@@ -264,8 +264,8 @@ When a binding is created inside a block invocation, it's scoped to that executi
 
 Examples:
 
-- `bindings/result__43.md` — binding `result` in execution_id 43
-- `bindings/parts__44.md` — binding `parts` in execution_id 44
+- `bindings/result__43.md` �?binding `result` in execution_id 43
+- `bindings/parts__44.md` �?binding `parts` in execution_id 44
 
 **File format with execution scope:**
 
@@ -450,10 +450,10 @@ Imported programs use the **same unified structure recursively**:
 ├── program.prose
 ├── state.md
 ├── bindings/
-│ └── {name}.md
+�?└── {name}.md
 ├── imports/ # Nested imports go here
-│ └── {handle2}--{slug2}/
-│ └── ...
+�?└── {handle2}--{slug2}/
+�?└── ...
 └── agents/
 └── {name}/
 

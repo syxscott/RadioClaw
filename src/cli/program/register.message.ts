@@ -31,22 +31,22 @@ export function registerMessageCommands(program: Command, ctx: ProgramContext) {
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['openclaw message send --target +15555550123 --message "Hi"', "Send a text message."],
+  ['RadioClaw message send --target +15555550123 --message "Hi"', "Send a text message."],
   [
-    'openclaw message send --target +15555550123 --message "Hi" --media photo.jpg',
+    'RadioClaw message send --target +15555550123 --message "Hi" --media photo.jpg',
     "Send a message with media.",
   ],
   [
-    'openclaw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
+    'RadioClaw message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
     "Create a Discord poll.",
   ],
   [
-    'openclaw message react --channel discord --target 123 --message-id 456 --emoji "âœ…"',
+    'RadioClaw message react --channel discord --target 123 --message-id 456 --emoji "âœ?',
     "React to a message.",
   ],
 ])}
 
-${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.openclaw.ai/cli/message")}`,
+${theme.muted("Docs:")} ${formatDocsLink("/cli/message", "docs.RadioClaw.ai/cli/message")}`,
     )
     .action(() => {
       message.help({ error: true });

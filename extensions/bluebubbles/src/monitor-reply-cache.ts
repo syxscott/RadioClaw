@@ -16,7 +16,7 @@ type BlueBubblesReplyCacheEntry = {
 // Best-effort cache for resolving reply context when BlueBubbles webhooks omit sender/body.
 const blueBubblesReplyCacheByMessageId = new Map<string, BlueBubblesReplyCacheEntry>();
 
-// Bidirectional maps for short ID â†” message GUID resolution (token savings optimization)
+// Bidirectional maps for short ID â†?message GUID resolution (token savings optimization)
 const blueBubblesShortIdToUuid = new Map<string, string>();
 const blueBubblesUuidToShortId = new Map<string, string>();
 let blueBubblesShortIdCounter = 0;

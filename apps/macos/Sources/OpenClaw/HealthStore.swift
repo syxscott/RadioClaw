@@ -72,7 +72,7 @@ enum HealthState: Equatable {
 final class HealthStore {
     static let shared = HealthStore()
 
-    private static let logger = Logger(subsystem: "ai.openclaw", category: "health")
+    private static let logger = Logger(subsystem: "ai.RadioClaw", category: "health")
 
     private(set) var snapshot: HealthSnapshot?
     private(set) var lastSuccess: Date?
@@ -213,7 +213,7 @@ final class HealthStore {
     }
 
     var summaryLine: String {
-        if self.isRefreshing { return "Health check runningâ€¦" }
+        if self.isRefreshing { return "Health check runningâ€? }
         if let error = self.lastError { return "Health check failed: \(error)" }
         guard let snap = self.snapshot else { return "Health check pending" }
         guard let link = self.resolveLinkChannel(snap) else { return "Health check pending" }
@@ -221,9 +221,9 @@ final class HealthStore {
             if let fallback = self.resolveFallbackChannel(snap, excluding: link.id) {
                 let fallbackLabel = snap.channelLabels?[fallback.id] ?? fallback.id.capitalized
                 let fallbackState = (fallback.summary.probe?.ok ?? true) ? "ok" : "degraded"
-                return "\(fallbackLabel) \(fallbackState) Â· Not linked â€” run openclaw login"
+                return "\(fallbackLabel) \(fallbackState) Â· Not linked â€?run RadioClaw login"
             }
-            return "Not linked â€” run openclaw login"
+            return "Not linked â€?run RadioClaw login"
         }
         let auth = link.summary.authAgeMs.map { msToAge($0) } ?? "unknown"
         if let probe = link.summary.probe, probe.ok == false {
@@ -241,7 +241,7 @@ final class HealthStore {
             if lower.contains("connection refused") {
                 let port = GatewayEnvironment.gatewayPort()
                 let host = GatewayConnectivityCoordinator.shared.localEndpointHostLabel ?? "127.0.0.1:\(port)"
-                return "The gateway control port (\(host)) isnâ€™t listening â€” restart OpenClaw to bring it back."
+                return "The gateway control port (\(host)) isnâ€™t listening â€?restart RadioClaw to bring it back."
             }
             if lower.contains("timeout") {
                 return "Timed out waiting for the control server; the gateway may be crashed or still starting."
@@ -253,7 +253,7 @@ final class HealthStore {
 
     func describeFailure(from snap: HealthSnapshot, fallback: String?) -> String {
         if let link = self.resolveLinkChannel(snap), link.summary.linked != true {
-            return "Not linked â€” run openclaw login"
+            return "Not linked â€?run RadioClaw login"
         }
         if let link = self.resolveLinkChannel(snap), let probe = link.summary.probe, probe.ok == false {
             return Self.describeProbeFailure(probe)

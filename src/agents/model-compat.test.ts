@@ -103,7 +103,7 @@ function expectResolvedForwardCompat(
   expect(model?.provider).toBe(expected.provider);
 }
 
-describe("normalizeModelCompat â€” Anthropic baseUrl", () => {
+describe("normalizeModelCompat â€?Anthropic baseUrl", () => {
   const anthropicBase = (): Model<Api> =>
     ({
       id: "claude-opus-4-6",

@@ -1,9 +1,9 @@
 import { collectTextContentBlocks } from "../../agents/content-blocks.js";
-import { createOpenClawTools } from "../../agents/openclaw-tools.js";
+import { createRadioClawTools } from "../../agents/RadioClaw-tools.js";
 import type { SkillCommandSpec } from "../../agents/skills.js";
 import { applyOwnerOnlyToolPolicy } from "../../agents/tool-policy.js";
 import { getChannelDock } from "../../channels/dock.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { SessionEntry } from "../../config/sessions.js";
 import { logVerbose } from "../../globals.js";
 import { generateSecureToken } from "../../infra/secure-random.js";
@@ -80,7 +80,7 @@ function extractTextFromToolResult(result: any): string | null {
 export async function handleInlineActions(params: {
   ctx: MsgContext;
   sessionCtx: TemplateContext;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   agentDir?: string;
   sessionEntry?: SessionEntry;
@@ -199,7 +199,7 @@ export async function handleInlineActions(params: {
         resolveGatewayMessageChannel(ctx.Provider) ??
         undefined;
 
-      const tools = createOpenClawTools({
+      const tools = createRadioClawTools({
         agentSessionKey: sessionKey,
         agentChannel: channel,
         agentAccountId: (ctx as { AccountId?: string }).AccountId,
@@ -214,7 +214,7 @@ export async function handleInlineActions(params: {
       const tool = authorizedTools.find((candidate) => candidate.name === dispatch.toolName);
       if (!tool) {
         typing.cleanup();
-        return { kind: "reply", reply: { text: `‚ùå Tool not available: ${dispatch.toolName}` } };
+        return { kind: "reply", reply: { text: `‚ù?Tool not available: ${dispatch.toolName}` } };
       }
 
       const toolCallId = `cmd_${generateSecureToken(8)}`;
@@ -225,13 +225,13 @@ export async function handleInlineActions(params: {
           skillName: skillInvocation.command.skillName,
           // oxlint-disable-next-line typescript/no-explicit-any
         } as any);
-        const text = extractTextFromToolResult(result) ?? "‚úÖ Done.";
+        const text = extractTextFromToolResult(result) ?? "‚ú?Done.";
         typing.cleanup();
         return { kind: "reply", reply: { text } };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         typing.cleanup();
-        return { kind: "reply", reply: { text: `‚ùå ${message}` } };
+        return { kind: "reply", reply: { text: `‚ù?${message}` } };
       }
     }
 

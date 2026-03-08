@@ -7,7 +7,7 @@ import {
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { clearBootstrapSnapshotOnSessionRollover } from "../../agents/bootstrap-cache.js";
 import { normalizeChatType } from "../../channels/chat-type.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   DEFAULT_RESET_TRIGGERS,
   deriveSessionMetaPatch,
@@ -169,7 +169,7 @@ function resolveAcpResetBindingContext(ctx: MsgContext): {
 }
 
 function resolveBoundAcpSessionForReset(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   ctx: MsgContext;
 }): string | undefined {
   const activeSessionKey = normalizeSessionText(params.ctx.SessionKey);
@@ -189,7 +189,7 @@ function resolveBoundAcpSessionForReset(params: {
 
 export async function initSessionState(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   commandAuthorized: boolean;
 }): Promise<SessionInitResult> {
   const { ctx, cfg, commandAuthorized } = params;
@@ -292,7 +292,7 @@ export async function initSessionState(params: {
       if (shouldBypassAcpResetForTrigger(triggerLower)) {
         // ACP-bound conversations handle /new and /reset in command handling
         // so the bound ACP runtime can be reset in place without rotating the
-        // normal OpenClaw session/transcript.
+        // normal RadioClaw session/transcript.
         break;
       }
       isNewSession = true;
@@ -487,17 +487,17 @@ export async function initSessionState(params: {
   ) {
     const parentTokens = sessionStore[parentSessionKey].totalTokens ?? 0;
     if (parentForkMaxTokens > 0 && parentTokens > parentForkMaxTokens) {
-      // Parent context is too large â€” forking would create a thread session
+      // Parent context is too large â€?forking would create a thread session
       // that immediately overflows the model's context window. Start fresh
       // instead and mark as forked to prevent re-attempts. See #26905.
       log.warn(
-        `skipping parent fork (parent too large): parentKey=${parentSessionKey} â†’ sessionKey=${sessionKey} ` +
+        `skipping parent fork (parent too large): parentKey=${parentSessionKey} â†?sessionKey=${sessionKey} ` +
           `parentTokens=${parentTokens} maxTokens=${parentForkMaxTokens}`,
       );
       sessionEntry.forkedFromParent = true;
     } else {
       log.warn(
-        `forking from parent session: parentKey=${parentSessionKey} â†’ sessionKey=${sessionKey} ` +
+        `forking from parent session: parentKey=${parentSessionKey} â†?sessionKey=${sessionKey} ` +
           `parentTokens=${parentTokens}`,
       );
       const forked = forkSessionFromParent({

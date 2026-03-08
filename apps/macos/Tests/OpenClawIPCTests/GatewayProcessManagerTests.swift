@@ -1,7 +1,7 @@
 import Foundation
-import OpenClawKit
+import RadioClawKit
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite(.serialized)
 @MainActor

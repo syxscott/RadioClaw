@@ -1,14 +1,14 @@
 ---
 summary: "Hugging Face Inference setup (auth + model selection)"
 read_when:
-  - You want to use Hugging Face Inference with OpenClaw
+  - You want to use Hugging Face Inference with RadioClaw
   - You need the HF token env var or CLI auth choice
 title: "Hugging Face (Inference)"
 ---
 
 # Hugging Face (Inference)
 
-[Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers) offer OpenAI-compatible chat completions through a single router API. You get access to many models (DeepSeek, Llama, and more) with one token. OpenClaw uses the **OpenAI-compatible endpoint** (chat completions only); for text-to-image, embeddings, or speech use the [HF inference clients](https://huggingface.co/docs/api-inference/quicktour) directly.
+[Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers) offer OpenAI-compatible chat completions through a single router API. You get access to many models (DeepSeek, Llama, and more) with one token. RadioClaw uses the **OpenAI-compatible endpoint** (chat completions only); for text-to-image, embeddings, or speech use the [HF inference clients](https://huggingface.co/docs/api-inference/quicktour) directly.
 
 - Provider: `huggingface`
 - Auth: `HUGGINGFACE_HUB_TOKEN` or `HF_TOKEN` (fine-grained token with **Make calls to Inference Providers**)
@@ -17,11 +17,11 @@ title: "Hugging Face (Inference)"
 
 ## Quick start
 
-1. Create a fine-grained token at [Hugging Face ‚Üí Settings ‚Üí Tokens](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained) with the **Make calls to Inference Providers** permission.
+1. Create a fine-grained token at [Hugging Face ‚Ü?Settings ‚Ü?Tokens](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained) with the **Make calls to Inference Providers** permission.
 2. Run onboarding and choose **Hugging Face** in the provider dropdown, then enter your API key when prompted:
 
 ```bash
-openclaw onboard --auth-choice huggingface-api-key
+RadioClaw onboard --auth-choice huggingface-api-key
 ```
 
 3. In the **Default Hugging Face model** dropdown, pick the model you want (the list is loaded from the Inference API when you have a valid token; otherwise a built-in list is shown). Your choice is saved as the default model.
@@ -40,7 +40,7 @@ openclaw onboard --auth-choice huggingface-api-key
 ## Non-interactive example
 
 ```bash
-openclaw onboard --non-interactive \
+RadioClaw onboard --non-interactive \
   --mode local \
   --auth-choice huggingface-api-key \
   --huggingface-api-key "$HF_TOKEN"
@@ -51,12 +51,12 @@ This will set `huggingface/deepseek-ai/DeepSeek-R1` as the default model.
 ## Environment note
 
 If the Gateway runs as a daemon (launchd/systemd), make sure `HUGGINGFACE_HUB_TOKEN` or `HF_TOKEN`
-is available to that process (for example, in `~/.openclaw/.env` or via
+is available to that process (for example, in `~/.RadioClaw/.env` or via
 `env.shellEnv`).
 
 ## Model discovery and onboarding dropdown
 
-OpenClaw discovers models by calling the **Inference endpoint directly**:
+RadioClaw discovers models by calling the **Inference endpoint directly**:
 
 ```bash
 GET https://router.huggingface.co/v1/models
@@ -64,11 +64,11 @@ GET https://router.huggingface.co/v1/models
 
 (Optional: send `Authorization: Bearer $HUGGINGFACE_HUB_TOKEN` or `$HF_TOKEN` for the full list; some endpoints return a subset without auth.) The response is OpenAI-style `{ "object": "list", "data": [ { "id": "Qwen/Qwen3-8B", "owned_by": "Qwen", ... }, ... ] }`.
 
-When you configure a Hugging Face API key (via onboarding, `HUGGINGFACE_HUB_TOKEN`, or `HF_TOKEN`), OpenClaw uses this GET to discover available chat-completion models. During **interactive onboarding**, after you enter your token you see a **Default Hugging Face model** dropdown populated from that list (or the built-in catalog if the request fails). At runtime (e.g. Gateway startup), when a key is present, OpenClaw again calls **GET** `https://router.huggingface.co/v1/models` to refresh the catalog. The list is merged with a built-in catalog (for metadata like context window and cost). If the request fails or no key is set, only the built-in catalog is used.
+When you configure a Hugging Face API key (via onboarding, `HUGGINGFACE_HUB_TOKEN`, or `HF_TOKEN`), RadioClaw uses this GET to discover available chat-completion models. During **interactive onboarding**, after you enter your token you see a **Default Hugging Face model** dropdown populated from that list (or the built-in catalog if the request fails). At runtime (e.g. Gateway startup), when a key is present, RadioClaw again calls **GET** `https://router.huggingface.co/v1/models` to refresh the catalog. The list is merged with a built-in catalog (for metadata like context window and cost). If the request fails or no key is set, only the built-in catalog is used.
 
 ## Model names and editable options
 
-- **Name from API:** The model display name is **hydrated from GET /v1/models** when the API returns `name`, `title`, or `display_name`; otherwise it is derived from the model id (e.g. `deepseek-ai/DeepSeek-R1` ‚Üí ‚ÄúDeepSeek R1‚Äù).
+- **Name from API:** The model display name is **hydrated from GET /v1/models** when the API returns `name`, `title`, or `display_name`; otherwise it is derived from the model id (e.g. `deepseek-ai/DeepSeek-R1` ‚Ü?‚ÄúDeepSeek R1‚Ä?.
 - **Override display name:** You can set a custom label per model in config so it appears the way you want in the CLI and UI:
 
 ```json5
@@ -85,11 +85,11 @@ When you configure a Hugging Face API key (via onboarding, `HUGGINGFACE_HUB_TOKE
 ```
 
 - **Provider / policy selection:** Append a suffix to the **model id** to choose how the router picks the backend:
-  - **`:fastest`** ‚Äî highest throughput (router picks; provider choice is **locked** ‚Äî no interactive backend picker).
-  - **`:cheapest`** ‚Äî lowest cost per output token (router picks; provider choice is **locked**).
-  - **`:provider`** ‚Äî force a specific backend (e.g. `:sambanova`, `:together`).
+  - **`:fastest`** ‚Ä?highest throughput (router picks; provider choice is **locked** ‚Ä?no interactive backend picker).
+  - **`:cheapest`** ‚Ä?lowest cost per output token (router picks; provider choice is **locked**).
+  - **`:provider`** ‚Ä?force a specific backend (e.g. `:sambanova`, `:together`).
 
-  When you select **:cheapest** or **:fastest** (e.g. in the onboarding model dropdown), the provider is locked: the router decides by cost or speed and no optional ‚Äúprefer specific backend‚Äù step is shown. You can add these as separate entries in `models.providers.huggingface.models` or set `model.primary` with the suffix. You can also set your default order in [Inference Provider settings](https://hf.co/settings/inference-providers) (no suffix = use that order).
+  When you select **:cheapest** or **:fastest** (e.g. in the onboarding model dropdown), the provider is locked: the router decides by cost or speed and no optional ‚Äúprefer specific backend‚Ä?step is shown. You can add these as separate entries in `models.providers.huggingface.models` or set `model.primary` with the suffix. You can also set your default order in [Inference Provider settings](https://hf.co/settings/inference-providers) (no suffix = use that order).
 
 - **Config merge:** Existing entries in `models.providers.huggingface.models` (e.g. in `models.json`) are kept when config is merged. So any custom `name`, `alias`, or model options you set there are preserved.
 

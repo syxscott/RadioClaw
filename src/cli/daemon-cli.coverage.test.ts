@@ -27,8 +27,8 @@ const buildGatewayInstallPlan = vi.fn(
     programArguments: ["/bin/node", "cli", "gateway", "--port", String(params.port)],
     workingDirectory: process.cwd(),
     environment: {
-      OPENCLAW_GATEWAY_PORT: String(params.port),
-      ...(params.token ? { OPENCLAW_GATEWAY_TOKEN: params.token } : {}),
+      RadioClaw_GATEWAY_PORT: String(params.port),
+      ...(params.token ? { RadioClaw_GATEWAY_TOKEN: params.token } : {}),
     },
   }),
 );
@@ -119,15 +119,15 @@ describe("daemon-cli coverage", () => {
   beforeEach(() => {
     daemonProgram = createDaemonProgram();
     envSnapshot = captureEnv([
-      "OPENCLAW_STATE_DIR",
-      "OPENCLAW_CONFIG_PATH",
-      "OPENCLAW_GATEWAY_PORT",
-      "OPENCLAW_PROFILE",
+      "RadioClaw_STATE_DIR",
+      "RadioClaw_CONFIG_PATH",
+      "RadioClaw_GATEWAY_PORT",
+      "RadioClaw_PROFILE",
     ]);
-    process.env.OPENCLAW_STATE_DIR = "/tmp/openclaw-cli-state";
-    process.env.OPENCLAW_CONFIG_PATH = "/tmp/openclaw-cli-state/openclaw.json";
-    delete process.env.OPENCLAW_GATEWAY_PORT;
-    delete process.env.OPENCLAW_PROFILE;
+    process.env.RadioClaw_STATE_DIR = "/tmp/RadioClaw-cli-state";
+    process.env.RadioClaw_CONFIG_PATH = "/tmp/RadioClaw-cli-state/RadioClaw.json";
+    delete process.env.RadioClaw_GATEWAY_PORT;
+    delete process.env.RadioClaw_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
     resolveGatewayProbeAuthWithSecretInputs.mockClear();
     buildGatewayInstallPlan.mockClear();
@@ -157,12 +157,12 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        OPENCLAW_PROFILE: "dev",
-        OPENCLAW_STATE_DIR: "/tmp/openclaw-daemon-state",
-        OPENCLAW_CONFIG_PATH: "/tmp/openclaw-daemon-state/openclaw.json",
-        OPENCLAW_GATEWAY_PORT: "19001",
+        RadioClaw_PROFILE: "dev",
+        RadioClaw_STATE_DIR: "/tmp/RadioClaw-daemon-state",
+        RadioClaw_CONFIG_PATH: "/tmp/RadioClaw-daemon-state/RadioClaw.json",
+        RadioClaw_GATEWAY_PORT: "19001",
       },
-      sourcePath: "/tmp/ai.openclaw.gateway.plist",
+      sourcePath: "/tmp/ai.RadioClaw.gateway.plist",
     });
 
     await runDaemonCommand(["daemon", "status", "--json"]);

@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui.chat
+package ai.RadioClaw.app.ui.chat
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,13 +15,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ai.openclaw.app.chat.ChatMessage
-import ai.openclaw.app.chat.ChatPendingToolCall
-import ai.openclaw.app.ui.mobileBorder
-import ai.openclaw.app.ui.mobileCallout
-import ai.openclaw.app.ui.mobileHeadline
-import ai.openclaw.app.ui.mobileText
-import ai.openclaw.app.ui.mobileTextSecondary
+import ai.RadioClaw.app.chat.ChatMessage
+import ai.RadioClaw.app.chat.ChatPendingToolCall
+import ai.RadioClaw.app.ui.mobileBorder
+import ai.RadioClaw.app.ui.mobileCallout
+import ai.RadioClaw.app.ui.mobileHeadline
+import ai.RadioClaw.app.ui.mobileText
+import ai.RadioClaw.app.ui.mobileTextSecondary
 
 @Composable
 fun ChatMessageListCard(
@@ -48,7 +48,7 @@ fun ChatMessageListCard(
       contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 8.dp),
     ) {
       // With reverseLayout = true, index 0 renders at the BOTTOM.
-      // So we emit newest items first: streaming â†’ tools â†’ typing â†’ messages (newestâ†’oldest).
+      // So we emit newest items first: streaming â†?tools â†?typing â†?messages (newestâ†’oldest).
 
       val stream = streamingAssistantText?.trim()
       if (!stream.isNullOrEmpty()) {

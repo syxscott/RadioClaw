@@ -1,4 +1,4 @@
-package ai.openclaw.app
+package ai.RadioClaw.app
 
 import android.Manifest
 import android.content.Context
@@ -6,22 +6,22 @@ import android.content.pm.PackageManager
 import android.os.SystemClock
 import android.util.Log
 import androidx.core.content.ContextCompat
-import ai.openclaw.app.chat.ChatController
-import ai.openclaw.app.chat.ChatMessage
-import ai.openclaw.app.chat.ChatPendingToolCall
-import ai.openclaw.app.chat.ChatSessionEntry
-import ai.openclaw.app.chat.OutgoingAttachment
-import ai.openclaw.app.gateway.DeviceAuthStore
-import ai.openclaw.app.gateway.DeviceIdentityStore
-import ai.openclaw.app.gateway.GatewayDiscovery
-import ai.openclaw.app.gateway.GatewayEndpoint
-import ai.openclaw.app.gateway.GatewaySession
-import ai.openclaw.app.gateway.probeGatewayTlsFingerprint
-import ai.openclaw.app.node.*
-import ai.openclaw.app.protocol.OpenClawCanvasA2UIAction
-import ai.openclaw.app.voice.MicCaptureManager
-import ai.openclaw.app.voice.TalkModeManager
-import ai.openclaw.app.voice.VoiceConversationEntry
+import ai.RadioClaw.app.chat.ChatController
+import ai.RadioClaw.app.chat.ChatMessage
+import ai.RadioClaw.app.chat.ChatPendingToolCall
+import ai.RadioClaw.app.chat.ChatSessionEntry
+import ai.RadioClaw.app.chat.OutgoingAttachment
+import ai.RadioClaw.app.gateway.DeviceAuthStore
+import ai.RadioClaw.app.gateway.DeviceIdentityStore
+import ai.RadioClaw.app.gateway.GatewayDiscovery
+import ai.RadioClaw.app.gateway.GatewayEndpoint
+import ai.RadioClaw.app.gateway.GatewaySession
+import ai.RadioClaw.app.gateway.probeGatewayTlsFingerprint
+import ai.RadioClaw.app.node.*
+import ai.RadioClaw.app.protocol.RadioClawCanvasA2UIAction
+import ai.RadioClaw.app.voice.MicCaptureManager
+import ai.RadioClaw.app.voice.TalkModeManager
+import ai.RadioClaw.app.voice.VoiceConversationEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -494,7 +494,7 @@ class NodeRuntime(context: Context) {
           _canvasRehydratePending.value = false
           _canvasRehydrateErrorText.value = "Failed to request restore. Tap to retry."
         }
-        Log.w("OpenClawCanvas", "canvas rehydrate request failed ($source): transport unavailable")
+        Log.w("RadioClawCanvas", "canvas rehydrate request failed ($source): transport unavailable")
         return@launch
       }
       scope.launch {
@@ -667,7 +667,7 @@ class NodeRuntime(context: Context) {
 
   fun setVoiceScreenActive(active: Boolean) {
     if (!active) {
-      // User left voice screen â€” stop mic and TTS
+      // User left voice screen â€?stop mic and TTS
       talkMode.ttsOnAllResponses = false
       talkMode.stopTts()
       micCapture.setMicEnabled(false)
@@ -706,7 +706,7 @@ class NodeRuntime(context: Context) {
         _statusText.value = "Failed: no cached gateway endpoint"
         return
       }
-    operatorStatusText = "Connectingâ€¦"
+    operatorStatusText = "Connectingâ€?
     updateStatus()
     val token = prefs.loadGatewayToken()
     val password = prefs.loadGatewayPassword()
@@ -721,7 +721,7 @@ class NodeRuntime(context: Context) {
     val tls = connectionManager.resolveTlsParams(endpoint)
     if (tls?.required == true && tls.expectedFingerprint.isNullOrBlank()) {
       // First-time TLS: capture fingerprint, ask user to verify out-of-band, then store and connect.
-      _statusText.value = "Verify gateway TLS fingerprintâ€¦"
+      _statusText.value = "Verify gateway TLS fingerprintâ€?
       scope.launch {
         val fp = probeGatewayTlsFingerprint(endpoint.host, endpoint.port) ?: run {
           _statusText.value = "Failed: can't read TLS fingerprint"
@@ -733,8 +733,8 @@ class NodeRuntime(context: Context) {
     }
 
     connectedEndpoint = endpoint
-    operatorStatusText = "Connectingâ€¦"
-    nodeStatusText = "Connectingâ€¦"
+    operatorStatusText = "Connectingâ€?
+    nodeStatusText = "Connectingâ€?
     updateStatus()
     val token = prefs.loadGatewayToken()
     val password = prefs.loadGatewayPassword()
@@ -794,7 +794,7 @@ class NodeRuntime(context: Context) {
       val actionId = (userActionObj["id"] as? JsonPrimitive)?.content?.trim().orEmpty().ifEmpty {
         java.util.UUID.randomUUID().toString()
       }
-      val name = OpenClawCanvasA2UIAction.extractActionName(userActionObj) ?: return@launch
+      val name = RadioClawCanvasA2UIAction.extractActionName(userActionObj) ?: return@launch
 
       val surfaceId =
         (userActionObj["surfaceId"] as? JsonPrimitive)?.content?.trim().orEmpty().ifEmpty { "main" }
@@ -804,7 +804,7 @@ class NodeRuntime(context: Context) {
 
       val sessionKey = resolveMainSessionKey()
       val message =
-        OpenClawCanvasA2UIAction.formatAgentMessage(
+        RadioClawCanvasA2UIAction.formatAgentMessage(
           actionName = name,
           sessionKey = sessionKey,
           surfaceId = surfaceId,
@@ -838,7 +838,7 @@ class NodeRuntime(context: Context) {
 
       try {
         canvas.eval(
-          OpenClawCanvasA2UIAction.jsDispatchA2UIActionStatus(
+          RadioClawCanvasA2UIAction.jsDispatchA2UIActionStatus(
             actionId = actionId,
             ok = connected && error == null,
             error = error,

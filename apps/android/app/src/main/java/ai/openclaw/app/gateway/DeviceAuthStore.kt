@@ -1,6 +1,6 @@
-package ai.openclaw.app.gateway
+package ai.RadioClaw.app.gateway
 
-import ai.openclaw.app.SecurePrefs
+import ai.RadioClaw.app.SecurePrefs
 
 interface DeviceAuthTokenStore {
   fun loadToken(deviceId: String, role: String): String?

@@ -2,7 +2,7 @@
   "version": 1,
   "tools": {
     "exec": {
-      "emoji": "🛠️",
+      "emoji": "🛠�?,
       "title": "Exec",
       "detailKeys": ["command"]
     },
@@ -22,7 +22,7 @@
       "detailKeys": ["sessionKey", "model"]
     },
     "sessions_list": {
-      "emoji": "🗂️",
+      "emoji": "🗂�?,
       "title": "Sessions",
       "detailKeys": ["kinds", "limit", "activeMinutes", "messageLimit"]
     },
@@ -37,7 +37,7 @@
       "detailKeys": ["sessionKey", "limit", "includeTools"]
     },
     "sessions_spawn": {
-      "emoji": "🧑‍🔧",
+      "emoji": "🧑‍�?,
       "title": "Sub-agent",
       "detailKeys": [
         "label",

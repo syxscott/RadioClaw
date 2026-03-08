@@ -540,7 +540,7 @@ export function renderConfig(props: ConfigProps) {
                         </div>
                       `
                 }
-                <span class="config-search__tag-caret" aria-hidden="true">â–¾</span>
+                <span class="config-search__tag-caret" aria-hidden="true">â–?/span>
               </summary>
               <div class="config-search__tag-menu">
                 ${TAG_SEARCH_PRESETS.map((tag) => {
@@ -638,28 +638,28 @@ export function renderConfig(props: ConfigProps) {
               ?disabled=${props.loading}
               @click=${props.onReload}
             >
-              ${props.loading ? "Loadingâ€¦" : "Reload"}
+              ${props.loading ? "Loadingâ€? : "Reload"}
             </button>
             <button
               class="btn btn--sm primary"
               ?disabled=${!canSave}
               @click=${props.onSave}
             >
-              ${props.saving ? "Savingâ€¦" : "Save"}
+              ${props.saving ? "Savingâ€? : "Save"}
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!canApply}
               @click=${props.onApply}
             >
-              ${props.applying ? "Applyingâ€¦" : "Apply"}
+              ${props.applying ? "Applyingâ€? : "Apply"}
             </button>
             <button
               class="btn btn--sm"
               ?disabled=${!canUpdate}
               @click=${props.onUpdate}
             >
-              ${props.updating ? "Updatingâ€¦" : "Update"}
+              ${props.updating ? "Updatingâ€? : "Update"}
             </button>
           </div>
         </div>
@@ -693,7 +693,7 @@ export function renderConfig(props: ConfigProps) {
                           <span class="config-diff__from"
                             >${truncateValue(change.from)}</span
                           >
-                          <span class="config-diff__arrow">â†’</span>
+                          <span class="config-diff__arrow">â†?/span>
                           <span class="config-diff__to"
                             >${truncateValue(change.to)}</span
                           >
@@ -767,7 +767,7 @@ export function renderConfig(props: ConfigProps) {
                     ? html`
                         <div class="config-loading">
                           <div class="config-loading__spinner"></div>
-                          <span>Loading schemaâ€¦</span>
+                          <span>Loading schemaâ€?/span>
                         </div>
                       `
                     : renderConfigForm({

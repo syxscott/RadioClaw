@@ -1,7 +1,7 @@
 import {
   buildAccountScopedDmSecurityPolicy,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import type {
   ChannelAccountSnapshot,
   ChannelDirectoryEntry,
@@ -9,9 +9,9 @@ import type {
   ChannelGroupContext,
   ChannelMessageActionAdapter,
   ChannelPlugin,
-  OpenClawConfig,
+  RadioClawConfig,
   GroupToolPolicyConfig,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   applyAccountNameToChannelSection,
   applySetupAccountConfigPatch,
@@ -27,7 +27,7 @@ import {
   normalizeAccountId,
   sendPayloadWithChunkedTextAndMedia,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   listZalouserAccountIds,
   resolveDefaultZalouserAccountId,

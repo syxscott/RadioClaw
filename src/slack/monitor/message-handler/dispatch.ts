@@ -64,7 +64,7 @@ function shouldUseStreaming(params: {
     return false;
   }
   if (!params.threadTs) {
-    logVerbose("slack-stream: streaming disabled â€” no reply thread target available");
+    logVerbose("slack-stream: streaming disabled â€?no reply thread target available");
     return false;
   }
   return true;

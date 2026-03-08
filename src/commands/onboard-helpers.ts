@@ -4,7 +4,7 @@ import path from "node:path";
 import { inspect } from "node:util";
 import { cancel, isCancel } from "@clack/prompts";
 import { DEFAULT_AGENT_WORKSPACE_DIR, ensureAgentWorkspace } from "../agents/workspace.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { CONFIG_PATH } from "../config/config.js";
 import { resolveAgentModelPrimaryValue } from "../config/model-input.js";
 import { resolveSessionTranscriptsDirForAgent } from "../config/sessions.js";
@@ -37,7 +37,7 @@ export function guardCancel<T>(value: T | symbol, runtime: RuntimeEnv): T {
   return value;
 }
 
-export function summarizeExistingConfig(config: OpenClawConfig): string {
+export function summarizeExistingConfig(config: RadioClawConfig): string {
   const rows: string[] = [];
   const defaults = config.agents?.defaults;
   if (defaults?.workspace) {
@@ -76,7 +76,7 @@ export function normalizeGatewayTokenInput(value: unknown): string {
     return "";
   }
   const trimmed = value.trim();
-  // Reject the literal string "undefined" — a common bug when JS undefined
+  // Reject the literal string "undefined" �?a common bug when JS undefined
   // gets coerced to a string via template literals or String(undefined).
   if (trimmed === "undefined" || trimmed === "null") {
     return "";
@@ -101,20 +101,20 @@ export function validateGatewayPasswordInput(value: unknown): string | undefined
 export function printWizardHeader(runtime: RuntimeEnv) {
   const header = [
     "▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
-    "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██",
+    "██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░█�?,
     "██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██",
-    "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██",
+    "██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄█�?,
     "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
-    "                  🦞 OPENCLAW 🦞                    ",
+    "                  🦞 RadioClaw 🦞                    ",
     " ",
   ].join("\n");
   runtime.log(header);
 }
 
 export function applyWizardMetadata(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   params: { command: string; mode: OnboardMode },
-): OpenClawConfig {
+): RadioClawConfig {
   const commit = process.env.GIT_COMMIT?.trim() || process.env.GIT_SHA?.trim() || undefined;
   return {
     ...cfg,
@@ -221,8 +221,8 @@ export function formatControlUiSshHint(params: {
     localUrl,
     authedUrl,
     "Docs:",
-    "https://docs.openclaw.ai/gateway/remote",
-    "https://docs.openclaw.ai/web/control-ui",
+    "https://docs.RadioClaw.ai/gateway/remote",
+    "https://docs.RadioClaw.ai/web/control-ui",
   ]
     .filter(Boolean)
     .join("\n");

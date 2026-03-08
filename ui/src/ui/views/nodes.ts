@@ -60,7 +60,7 @@ export function renderNodes(props: NodesProps) {
           <div class="card-sub">Paired devices and live links.</div>
         </div>
         <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-          ${props.loading ? "Loadingâ€¦" : "Refresh"}
+          ${props.loading ? "Loadingâ€? : "Refresh"}
         </button>
       </div>
       <div class="list" style="margin-top: 16px;">
@@ -88,7 +88,7 @@ function renderDevices(props: NodesProps) {
           <div class="card-sub">Pairing requests + role tokens.</div>
         </div>
         <button class="btn" ?disabled=${props.devicesLoading} @click=${props.onDevicesRefresh}>
-          ${props.devicesLoading ? "Loadingâ€¦" : "Refresh"}
+          ${props.devicesLoading ? "Loadingâ€? : "Refresh"}
         </button>
       </div>
       ${
@@ -282,7 +282,7 @@ function renderBindings(state: BindingState) {
           ?disabled=${state.disabled || !state.configDirty}
           @click=${state.onSave}
         >
-          ${state.configSaving ? "Savingâ€¦" : "Save"}
+          ${state.configSaving ? "Savingâ€? : "Save"}
         </button>
       </div>
 
@@ -301,7 +301,7 @@ function renderBindings(state: BindingState) {
           ? html`<div class="row" style="margin-top: 12px; gap: 12px;">
             <div class="muted">Load config to edit bindings.</div>
             <button class="btn" ?disabled=${state.configLoading} @click=${state.onLoadConfig}>
-              ${state.configLoading ? "Loadingâ€¦" : "Load config"}
+              ${state.configLoading ? "Loadingâ€? : "Load config"}
             </button>
           </div>`
           : html`

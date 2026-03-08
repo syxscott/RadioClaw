@@ -2,7 +2,7 @@ import { ChannelType } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { NativeCommandSpec } from "../../auto-reply/commands-registry.js";
 import * as dispatcherModule from "../../auto-reply/reply/provider-dispatcher.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import * as pluginCommandsModule from "../../plugins/commands.js";
 import { createDiscordNativeCommand } from "./native-command.js";
 import {
@@ -24,7 +24,7 @@ function createInteraction(params?: { userId?: string }): MockCommandInteraction
   });
 }
 
-function createConfig(): OpenClawConfig {
+function createConfig(): RadioClawConfig {
   return {
     commands: {
       allowFrom: {
@@ -46,10 +46,10 @@ function createConfig(): OpenClawConfig {
         },
       },
     },
-  } as OpenClawConfig;
+  } as RadioClawConfig;
 }
 
-function createCommand(cfg: OpenClawConfig) {
+function createCommand(cfg: RadioClawConfig) {
   const commandSpec: NativeCommandSpec = {
     name: "status",
     description: "Status",
@@ -78,7 +78,7 @@ function createDispatchSpy() {
 
 async function runGuildSlashCommand(params?: {
   userId?: string;
-  mutateConfig?: (cfg: OpenClawConfig) => void;
+  mutateConfig?: (cfg: RadioClawConfig) => void;
 }) {
   const cfg = createConfig();
   params?.mutateConfig?.(cfg);

@@ -1,7 +1,7 @@
 import AppKit
-import OpenClawChatUI
-import OpenClawDiscovery
-import OpenClawIPC
+import RadioClawChatUI
+import RadioClawDiscovery
+import RadioClawIPC
 import SwiftUI
 
 extension OnboardingView {
@@ -30,9 +30,9 @@ extension OnboardingView {
     func welcomePage() -> some View {
         self.onboardingPage {
             VStack(spacing: 22) {
-                Text("Welcome to OpenClaw")
+                Text("Welcome to RadioClaw")
                     .font(.largeTitle.weight(.semibold))
-                Text("OpenClaw is a powerful personal AI assistant that can connect to WhatsApp or Telegram.")
+                Text("RadioClaw is a powerful personal AI assistant that can connect to WhatsApp or Telegram.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -53,9 +53,9 @@ extension OnboardingView {
                                 .font(.headline)
                             Text(
                                 "The connected AI agent (e.g. Claude) can trigger powerful actions on your Mac, " +
-                                    "including running commands, reading/writing files, and capturing screenshots ‚Äî " +
+                                    "including running commands, reading/writing files, and capturing screenshots ‚Ä?" +
                                     "depending on the permissions you grant.\n\n" +
-                                    "Only enable OpenClaw if you understand the risks and trust the prompts and " +
+                                    "Only enable RadioClaw if you understand the risks and trust the prompts and " +
                                     "integrations you use.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
@@ -74,7 +74,7 @@ extension OnboardingView {
             Text("Choose your Gateway")
                 .font(.largeTitle.weight(.semibold))
             Text(
-                "OpenClaw uses a single Gateway that stays running. Pick this Mac, " +
+                "RadioClaw uses a single Gateway that stays running. Pick this Mac, " +
                     "connect to a discovered gateway nearby, or configure later.")
                 .font(.body)
                 .foregroundStyle(.secondary)
@@ -143,7 +143,7 @@ extension OnboardingView {
         }
 
         if self.gatewayDiscovery.gateways.isEmpty {
-            Text("Searching for nearby gateways‚Ä¶")
+            Text("Searching for nearby gateways‚Ä?)
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .padding(.leading, 4)
@@ -172,7 +172,7 @@ extension OnboardingView {
 
     @ViewBuilder
     private func advancedConnectionSection() -> some View {
-        Button(self.showAdvancedConnection ? "Hide Advanced" : "Advanced‚Ä¶") {
+        Button(self.showAdvancedConnection ? "Hide Advanced" : "Advanced‚Ä?) {
             withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
                 self.showAdvancedConnection.toggle()
             }
@@ -242,7 +242,7 @@ extension OnboardingView {
                             Text("Project root")
                                 .font(.callout.weight(.semibold))
                                 .frame(width: labelWidth, alignment: .leading)
-                            TextField("/home/you/Projects/openclaw", text: self.$state.remoteProjectRoot)
+                            TextField("/home/you/Projects/RadioClaw", text: self.$state.remoteProjectRoot)
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: fieldWidth)
                         }
@@ -251,7 +251,7 @@ extension OnboardingView {
                                 .font(.callout.weight(.semibold))
                                 .frame(width: labelWidth, alignment: .leading)
                             TextField(
-                                "/Applications/OpenClaw.app/.../openclaw",
+                                "/Applications/RadioClaw.app/.../RadioClaw",
                                 text: self.$state.remoteCliPath)
                                 .textFieldStyle(.roundedBorder)
                                 .frame(width: fieldWidth)
@@ -317,7 +317,7 @@ extension OnboardingView {
                 Spacer(minLength: 0)
                 SelectionStateIndicator(selected: selected)
             }
-            .openClawSelectableRowChrome(selected: selected)
+            .RadioClawSelectableRowChrome(selected: selected)
         }
         .buttonStyle(.plain)
     }
@@ -326,7 +326,7 @@ extension OnboardingView {
         self.onboardingPage {
             Text("Grant permissions")
                 .font(.largeTitle.weight(.semibold))
-            Text("These macOS permissions let OpenClaw automate apps and capture context on this Mac.")
+            Text("These macOS permissions let RadioClaw automate apps and capture context on this Mac.")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -367,7 +367,7 @@ extension OnboardingView {
         self.onboardingPage {
             Text("Install the CLI")
                 .font(.largeTitle.weight(.semibold))
-            Text("Required for local mode: installs `openclaw` so launchd can run the gateway.")
+            Text("Required for local mode: installs `RadioClaw` so launchd can run the gateway.")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -427,7 +427,7 @@ extension OnboardingView {
             Text("Agent workspace")
                 .font(.largeTitle.weight(.semibold))
             Text(
-                "OpenClaw runs the agent from a dedicated workspace so it can load `AGENTS.md` " +
+                "RadioClaw runs the agent from a dedicated workspace so it can load `AGENTS.md` " +
                     "and write files there without mixing into your other projects.")
                 .font(.body)
                 .foregroundStyle(.secondary)
@@ -454,7 +454,7 @@ extension OnboardingView {
                         Text("Workspace folder")
                             .font(.headline)
                         TextField(
-                            AgentWorkspace.displayPath(for: OpenClawConfigFile.defaultWorkspaceURL()),
+                            AgentWorkspace.displayPath(for: RadioClawConfigFile.defaultWorkspaceURL()),
                             text: self.$workspacePath)
                             .textFieldStyle(.roundedBorder)
 
@@ -484,7 +484,7 @@ extension OnboardingView {
                                     let saved = await self.saveAgentWorkspace(AgentWorkspace.displayPath(for: url))
                                     if saved {
                                         self.workspaceStatus =
-                                            "Saved to ~/.openclaw/openclaw.json (agents.defaults.workspace)"
+                                            "Saved to ~/.RadioClaw/RadioClaw.json (agents.defaults.workspace)"
                                     }
                                 }
                             }
@@ -502,7 +502,7 @@ extension OnboardingView {
                         Text(
                             "Tip: edit AGENTS.md in this folder to shape the assistant‚Äôs behavior. " +
                                 "For backup, make the workspace a private git repo so your agent‚Äôs " +
-                                "‚Äúmemory‚Äù is versioned.")
+                                "‚Äúmemory‚Ä?is versioned.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
@@ -526,7 +526,7 @@ extension OnboardingView {
                 .fixedSize(horizontal: false, vertical: true)
 
             self.onboardingGlassCard(padding: 8) {
-                OpenClawChatView(viewModel: self.onboardingChatModel, style: .onboarding)
+                RadioClawChatView(viewModel: self.onboardingChatModel, style: .onboarding)
                     .frame(maxHeight: .infinity)
             }
             .frame(maxHeight: .infinity)
@@ -543,7 +543,7 @@ extension OnboardingView {
                 if self.state.connectionMode == .unconfigured {
                     self.featureRow(
                         title: "Configure later",
-                        subtitle: "Pick Local or Remote in Settings ‚Üí General whenever you‚Äôre ready.",
+                        subtitle: "Pick Local or Remote in Settings ‚Ü?General whenever you‚Äôre ready.",
                         systemImage: "gearshape")
                     Divider()
                         .padding(.vertical, 6)
@@ -552,8 +552,8 @@ extension OnboardingView {
                     self.featureRow(
                         title: "Remote gateway checklist",
                         subtitle: """
-                        On your gateway host: install/update the `openclaw` package and make sure credentials exist
-                        (typically `~/.openclaw/credentials/oauth.json`). Then connect again if needed.
+                        On your gateway host: install/update the `RadioClaw` package and make sure credentials exist
+                        (typically `~/.RadioClaw/credentials/oauth.json`). Then connect again if needed.
                         """,
                         systemImage: "network")
                     Divider()
@@ -561,13 +561,13 @@ extension OnboardingView {
                 }
                 self.featureRow(
                     title: "Open the menu bar panel",
-                    subtitle: "Click the OpenClaw menu bar icon for quick chat and status.",
+                    subtitle: "Click the RadioClaw menu bar icon for quick chat and status.",
                     systemImage: "bubble.left.and.bubble.right")
                 self.featureActionRow(
                     title: "Connect WhatsApp or Telegram",
-                    subtitle: "Open Settings ‚Üí Channels to link channels and monitor status.",
+                    subtitle: "Open Settings ‚Ü?Channels to link channels and monitor status.",
                     systemImage: "link",
-                    buttonTitle: "Open Settings ‚Üí Channels")
+                    buttonTitle: "Open Settings ‚Ü?Channels")
                 {
                     self.openSettings(tab: .channels)
                 }
@@ -582,9 +582,9 @@ extension OnboardingView {
                     systemImage: "rectangle.inset.filled.and.person.filled")
                 self.featureActionRow(
                     title: "Give your agent more powers",
-                    subtitle: "Enable optional skills (Peekaboo, oracle, camsnap, ‚Ä¶) from Settings ‚Üí Skills.",
+                    subtitle: "Enable optional skills (Peekaboo, oracle, camsnap, ‚Ä? from Settings ‚Ü?Skills.",
                     systemImage: "sparkles",
-                    buttonTitle: "Open Settings ‚Üí Skills")
+                    buttonTitle: "Open Settings ‚Ü?Skills")
                 {
                     self.openSettings(tab: .skills)
                 }
@@ -631,7 +631,7 @@ extension OnboardingView {
                         .foregroundStyle(.orange)
                     Text(
                         "Make sure the Gateway is running and connected, " +
-                            "then hit Refresh (or open Settings ‚Üí Skills).")
+                            "then hit Refresh (or open Settings ‚Ü?Skills).")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -649,7 +649,7 @@ extension OnboardingView {
                     LazyVStack(alignment: .leading, spacing: 10) {
                         ForEach(self.onboardingSkillsModel.skills) { skill in
                             HStack(alignment: .top, spacing: 10) {
-                                Text(skill.emoji ?? "‚ú®")
+                                Text(skill.emoji ?? "‚ú?)
                                     .font(.callout)
                                     .frame(width: 22, alignment: .leading)
                                 VStack(alignment: .leading, spacing: 2) {

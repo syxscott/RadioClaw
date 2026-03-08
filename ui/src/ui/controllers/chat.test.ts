@@ -465,7 +465,7 @@ describe("handleChatEvent", () => {
       },
     };
 
-    // User messages with NO_REPLY text should NOT be filtered â€” only assistant messages.
+    // User messages with NO_REPLY text should NOT be filtered â€?only assistant messages.
     // normalizeFinalAssistantMessage returns null for user role, so this falls through.
     expect(handleChatEvent(state, payload)).toBe("final");
   });
@@ -488,7 +488,7 @@ describe("handleChatEvent", () => {
       },
     };
 
-    // entry.text takes precedence â€” "real reply" is NOT silent, so the message is kept.
+    // entry.text takes precedence â€?"real reply" is NOT silent, so the message is kept.
     expect(handleChatEvent(state, payload)).toBe("final");
     expect(state.chatMessages).toHaveLength(1);
   });
@@ -531,7 +531,7 @@ describe("loadChatHistory", () => {
 
     await loadChatHistory(state);
 
-    // text takes precedence â€” "real reply" is NOT silent, so message is kept.
+    // text takes precedence â€?"real reply" is NOT silent, so message is kept.
     expect(state.chatMessages).toHaveLength(1);
   });
 });

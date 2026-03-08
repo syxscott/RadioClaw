@@ -1,5 +1,5 @@
 ---
-summary: "OpenClaw logging: rolling diagnostics file log + unified log privacy flags"
+summary: "RadioClaw logging: rolling diagnostics file log + unified log privacy flags"
 read_when:
   - Capturing macOS logs or investigating private data logging
   - Debugging voice wake/session lifecycle issues
@@ -10,12 +10,12 @@ title: "macOS Logging"
 
 ## Rolling diagnostics file log (Debug pane)
 
-OpenClaw routes macOS app logs through swift-log (unified logging by default) and can write a local, rotating file log to disk when you need a durable capture.
+RadioClaw routes macOS app logs through swift-log (unified logging by default) and can write a local, rotating file log to disk when you need a durable capture.
 
-- Verbosity: **Debug pane ‚Üí Logs ‚Üí App logging ‚Üí Verbosity**
-- Enable: **Debug pane ‚Üí Logs ‚Üí App logging ‚Üí ‚ÄúWrite rolling diagnostics log (JSONL)‚Äù**
-- Location: `~/Library/Logs/OpenClaw/diagnostics.jsonl` (rotates automatically; old files are suffixed with `.1`, `.2`, ‚Ä¶)
-- Clear: **Debug pane ‚Üí Logs ‚Üí App logging ‚Üí ‚ÄúClear‚Äù**
+- Verbosity: **Debug pane ‚Ü?Logs ‚Ü?App logging ‚Ü?Verbosity**
+- Enable: **Debug pane ‚Ü?Logs ‚Ü?App logging ‚Ü?‚ÄúWrite rolling diagnostics log (JSONL)‚Ä?*
+- Location: `~/Library/Logs/RadioClaw/diagnostics.jsonl` (rotates automatically; old files are suffixed with `.1`, `.2`, ‚Ä?
+- Clear: **Debug pane ‚Ü?Logs ‚Ü?App logging ‚Ü?‚ÄúClear‚Ä?*
 
 Notes:
 
@@ -26,12 +26,12 @@ Notes:
 
 Unified logging redacts most payloads unless a subsystem opts into `privacy -off`. Per Peter's write-up on macOS [logging privacy shenanigans](https://steipete.me/posts/2025/logging-privacy-shenanigans) (2025) this is controlled by a plist in `/Library/Preferences/Logging/Subsystems/` keyed by the subsystem name. Only new log entries pick up the flag, so enable it before reproducing an issue.
 
-## Enable for OpenClaw (`ai.openclaw`)
+## Enable for RadioClaw (`ai.RadioClaw`)
 
 - Write the plist to a temp file first, then install it atomically as root:
 
 ```bash
-cat <<'EOF' >/tmp/ai.openclaw.plist
+cat <<'EOF' >/tmp/ai.RadioClaw.plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -44,7 +44,7 @@ cat <<'EOF' >/tmp/ai.openclaw.plist
 </dict>
 </plist>
 EOF
-sudo install -m 644 -o root -g wheel /tmp/ai.openclaw.plist /Library/Preferences/Logging/Subsystems/ai.openclaw.plist
+sudo install -m 644 -o root -g wheel /tmp/ai.RadioClaw.plist /Library/Preferences/Logging/Subsystems/ai.RadioClaw.plist
 ```
 
 - No reboot is required; logd notices the file quickly, but only new log lines will include private payloads.
@@ -52,6 +52,6 @@ sudo install -m 644 -o root -g wheel /tmp/ai.openclaw.plist /Library/Preferences
 
 ## Disable after debugging
 
-- Remove the override: `sudo rm /Library/Preferences/Logging/Subsystems/ai.openclaw.plist`.
+- Remove the override: `sudo rm /Library/Preferences/Logging/Subsystems/ai.RadioClaw.plist`.
 - Optionally run `sudo log config --reload` to force logd to drop the override immediately.
 - Remember this surface can include phone numbers and message bodies; keep the plist in place only while you actively need the extra detail.

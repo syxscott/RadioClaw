@@ -40,8 +40,7 @@ describe("isNonRecoverableAuthError", () => {
   });
 
   it("allows reconnect for AUTH_TOKEN_MISMATCH (device-token fallback flow)", () => {
-    // Browser client fallback: stale device token â†’ mismatch â†’ sendConnect() clears it â†’
-    // next reconnect uses opts.token (shared gateway token). Blocking here breaks recovery.
+    // Browser client fallback: stale device token â†?mismatch â†?sendConnect() clears it â†?    // next reconnect uses opts.token (shared gateway token). Blocking here breaks recovery.
     expect(isNonRecoverableAuthError(makeError(ConnectErrorDetailCodes.AUTH_TOKEN_MISMATCH))).toBe(
       false,
     );

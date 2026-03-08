@@ -1,4 +1,4 @@
-package ai.openclaw.app.voice
+package ai.RadioClaw.app.voice
 
 import android.Manifest
 import android.content.Context
@@ -147,7 +147,7 @@ class MicCaptureManager(
         null
       } ?: return
 
-    val runId = pendingRunId ?: run { Log.d("MicCapture", "no pendingRunId â€” drop"); return }
+    val runId = pendingRunId ?: run { Log.d("MicCapture", "no pendingRunId â€?drop"); return }
     val eventRunId = payload["runId"].asStringOrNull() ?: return
     if (eventRunId != runId) { Log.d("MicCapture", "runId mismatch: event=$eventRunId pending=$runId"); return }
 
@@ -211,7 +211,7 @@ class MicCaptureManager(
     restartJob?.cancel()
     restartJob = null
     _isListening.value = false
-    _statusText.value = if (_isSending.value) "Mic off Â· sendingâ€¦" else "Mic off"
+    _statusText.value = if (_isSending.value) "Mic off Â· sendingâ€? else "Mic off"
     _inputLevel.value = 0f
     mainHandler.post {
       recognizer?.cancel()
@@ -549,7 +549,7 @@ class MicCaptureManager(
         val text = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).orEmpty().firstOrNull()
         if (!text.isNullOrBlank()) {
           onFinalTranscript(text)
-          // Don't auto-send on silence â€” accumulate transcript.
+          // Don't auto-send on silence â€?accumulate transcript.
           // Send happens when mic is toggled off (setMicEnabled(false)).
         }
         scheduleRestart()

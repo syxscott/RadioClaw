@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { TelegramAccountConfig } from "../config/types.js";
 import { evaluateTelegramGroupPolicyAccess } from "./group-access.js";
 
@@ -8,7 +8,7 @@ import { evaluateTelegramGroupPolicyAccess } from "./group-access.js";
  */
 const baseCfg = {
   channels: { telegram: {} },
-} as unknown as OpenClawConfig;
+} as unknown as RadioClawConfig;
 
 const baseTelegramCfg: TelegramAccountConfig = {
   groupPolicy: "allowlist",
@@ -54,7 +54,7 @@ function runAccess(overrides: Partial<GroupAccessParams>) {
   });
 }
 
-describe("evaluateTelegramGroupPolicyAccess â€“ chat allowlist vs sender allowlist ordering", () => {
+describe("evaluateTelegramGroupPolicyAccess â€?chat allowlist vs sender allowlist ordering", () => {
   it("allows a group explicitly listed in groups config even when no allowFrom entries exist", () => {
     // Issue #30613: a group configured with a dedicated entry (groupConfig set)
     // should be allowed even without any allowFrom / groupAllowFrom entries.
@@ -62,7 +62,7 @@ describe("evaluateTelegramGroupPolicyAccess â€“ chat allowlist vs sender allowli
       resolveGroupPolicy: () => ({
         allowlistEnabled: true,
         allowed: true,
-        groupConfig: { requireMention: false }, // dedicated entry â€” not just wildcard
+        groupConfig: { requireMention: false }, // dedicated entry â€?not just wildcard
       }),
     });
 
@@ -70,12 +70,12 @@ describe("evaluateTelegramGroupPolicyAccess â€“ chat allowlist vs sender allowli
   });
 
   it("still blocks when only wildcard match and no allowFrom entries", () => {
-    // groups: { "*": ... } with no allowFrom â†’ wildcard does NOT bypass sender checks.
+    // groups: { "*": ... } with no allowFrom â†?wildcard does NOT bypass sender checks.
     const result = runAccess({
       resolveGroupPolicy: () => ({
         allowlistEnabled: true,
         allowed: true,
-        groupConfig: undefined, // wildcard match only â€” no dedicated entry
+        groupConfig: undefined, // wildcard match only â€?no dedicated entry
       }),
     });
 

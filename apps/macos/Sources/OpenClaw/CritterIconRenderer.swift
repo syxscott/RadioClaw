@@ -334,7 +334,7 @@ enum CritterIconRenderer {
         // - Increase diameter so tool activity is noticeable.
         // - Draw a filled "puck", then knock out the symbol shape (transparent hole).
         //   This reads better in template-rendered menu bar icons than tiny monochrome glyphs.
-        let diameter = canvas.snapX(canvas.w * 0.52 * (0.92 + 0.08 * strength)) // ~9â€“10pt on an 18pt canvas
+        let diameter = canvas.snapX(canvas.w * 0.52 * (0.92 + 0.08 * strength)) // ~9â€?0pt on an 18pt canvas
         let margin = canvas.snapX(max(0.45, canvas.w * 0.03))
         let rect = CGRect(
             x: canvas.snapX(canvas.w - diameter - margin),

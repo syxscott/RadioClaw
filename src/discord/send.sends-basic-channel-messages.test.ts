@@ -361,7 +361,7 @@ describe("reactMessageDiscord", () => {
 
   it("reacts with unicode emoji", async () => {
     const { rest, putMock } = makeDiscordRest();
-    await reactMessageDiscord("chan1", "msg1", "âœ…", { rest, token: "t" });
+    await reactMessageDiscord("chan1", "msg1", "âœ?, { rest, token: "t" });
     expect(putMock).toHaveBeenCalledWith(
       Routes.channelMessageOwnReaction("chan1", "msg1", "%E2%9C%85"),
     );
@@ -394,7 +394,7 @@ describe("removeReactionDiscord", () => {
 
   it("removes a unicode emoji reaction", async () => {
     const { rest, deleteMock } = makeDiscordRest();
-    await removeReactionDiscord("chan1", "msg1", "âœ…", { rest, token: "t" });
+    await removeReactionDiscord("chan1", "msg1", "âœ?, { rest, token: "t" });
     expect(deleteMock).toHaveBeenCalledWith(
       Routes.channelMessageOwnReaction("chan1", "msg1", "%E2%9C%85"),
     );
@@ -410,7 +410,7 @@ describe("removeOwnReactionsDiscord", () => {
     const { rest, getMock, deleteMock } = makeDiscordRest();
     getMock.mockResolvedValue({
       reactions: [
-        { emoji: { name: "âœ…", id: null } },
+        { emoji: { name: "âœ?, id: null } },
         { emoji: { name: "party_blob", id: "123" } },
       ],
     });
@@ -418,7 +418,7 @@ describe("removeOwnReactionsDiscord", () => {
       rest,
       token: "t",
     });
-    expect(res).toEqual({ ok: true, removed: ["âœ…", "party_blob:123"] });
+    expect(res).toEqual({ ok: true, removed: ["âœ?, "party_blob:123"] });
     expect(deleteMock).toHaveBeenCalledWith(
       Routes.channelMessageOwnReaction("chan1", "msg1", "%E2%9C%85"),
     );
@@ -438,7 +438,7 @@ describe("fetchReactionsDiscord", () => {
     getMock
       .mockResolvedValueOnce({
         reactions: [
-          { count: 2, emoji: { name: "âœ…", id: null } },
+          { count: 2, emoji: { name: "âœ?, id: null } },
           { count: 1, emoji: { name: "party_blob", id: "123" } },
         ],
       })
@@ -450,7 +450,7 @@ describe("fetchReactionsDiscord", () => {
     });
     expect(res).toEqual([
       {
-        emoji: { id: null, name: "âœ…", raw: "âœ…" },
+        emoji: { id: null, name: "âœ?, raw: "âœ? },
         count: 2,
         users: [{ id: "u1", username: "alpha", tag: "alpha#0001" }],
       },

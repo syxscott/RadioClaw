@@ -10,7 +10,7 @@ title: "API Usage and Costs"
 # API usage & costs
 
 This doc lists **features that can invoke API keys** and where their costs show up. It focuses on
-OpenClaw features that can generate provider usage or paid API calls.
+RadioClaw features that can generate provider usage or paid API calls.
 
 ## Where costs show up (chat + CLI)
 
@@ -26,14 +26,14 @@ OpenClaw features that can generate provider usage or paid API calls.
 
 **CLI usage windows (provider quotas)**
 
-- `openclaw status --usage` and `openclaw channels list` show provider **usage windows**
+- `RadioClaw status --usage` and `RadioClaw channels list` show provider **usage windows**
   (quota snapshots, not per-message costs).
 
 See [Token use & costs](/reference/token-use) for details and examples.
 
 ## How keys are discovered
 
-OpenClaw can pick up credentials from:
+RadioClaw can pick up credentials from:
 
 - **Auth profiles** (per-agent, stored in `auth-profiles.json`).
 - **Environment variables** (e.g. `OPENAI_API_KEY`, `BRAVE_API_KEY`, `FIRECRAWL_API_KEY`).
@@ -64,11 +64,11 @@ See [Media understanding](/nodes/media-understanding).
 
 Semantic memory search uses **embedding APIs** when configured for remote providers:
 
-- `memorySearch.provider = "openai"` â†’ OpenAI embeddings
-- `memorySearch.provider = "gemini"` â†’ Gemini embeddings
-- `memorySearch.provider = "voyage"` â†’ Voyage embeddings
-- `memorySearch.provider = "mistral"` â†’ Mistral embeddings
-- `memorySearch.provider = "ollama"` â†’ Ollama embeddings (local/self-hosted; typically no hosted API billing)
+- `memorySearch.provider = "openai"` â†?OpenAI embeddings
+- `memorySearch.provider = "gemini"` â†?Gemini embeddings
+- `memorySearch.provider = "voyage"` â†?Voyage embeddings
+- `memorySearch.provider = "mistral"` â†?Mistral embeddings
+- `memorySearch.provider = "ollama"` â†?Ollama embeddings (local/self-hosted; typically no hosted API billing)
 - Optional fallback to a remote provider if local embeddings fail
 
 You can keep it local with `memorySearch.provider = "local"` (no API usage).
@@ -102,8 +102,8 @@ See [Web tools](/tools/web).
 Some status commands call **provider usage endpoints** to display quota windows or auth health.
 These are typically low-volume calls but still hit provider APIs:
 
-- `openclaw status --usage`
-- `openclaw models status --json`
+- `RadioClaw status --usage`
+- `RadioClaw models status --json`
 
 See [Models CLI](/cli/models).
 
@@ -116,7 +116,7 @@ See [Session management + compaction](/reference/session-management-compaction).
 
 ### 8) Model scan / probe
 
-`openclaw models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
+`RadioClaw models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
 probing is enabled.
 
 See [Models CLI](/cli/models).

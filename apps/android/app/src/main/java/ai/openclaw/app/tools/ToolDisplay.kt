@@ -1,4 +1,4 @@
-package ai.openclaw.app.tools
+package ai.RadioClaw.app.tools
 
 import android.content.Context
 import kotlinx.serialization.Serializable
@@ -184,7 +184,7 @@ object ToolDisplayRegistry {
         if (trimmed.isEmpty()) return null
         val firstLine = trimmed.lineSequence().firstOrNull()?.trim().orEmpty()
         if (firstLine.isEmpty()) return null
-        return if (firstLine.length > 160) "${firstLine.take(157)}â€¦" else firstLine
+        return if (firstLine.length > 160) "${firstLine.take(157)}â€? else firstLine
       }
       val raw = value.contentOrNull?.trim().orEmpty()
       raw.toBooleanStrictOrNull()?.let { return it.toString() }
@@ -195,7 +195,7 @@ object ToolDisplayRegistry {
       val items = value.mapNotNull { renderValue(it) }
       if (items.isEmpty()) return null
       val preview = items.take(3).joinToString(", ")
-      return if (items.size > 3) "${preview}â€¦" else preview
+      return if (items.size > 3) "${preview}â€? else preview
     }
     return null
   }

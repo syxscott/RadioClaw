@@ -187,5 +187,5 @@ export async function handleSubagentsFocusAction(
     bindingContext.placement === "child"
       ? `created thread ${binding.conversation.conversationId} and bound it to ${binding.targetSessionKey}`
       : `bound this ${bindingContext.labelNoun} to ${binding.targetSessionKey}`;
-  return stopWithText(`âœ… ${actionText} (${focusTarget.targetKind}).`);
+  return stopWithText(`âœ?${actionText} (${focusTarget.targetKind}).`);
 }

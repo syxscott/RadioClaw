@@ -6,7 +6,7 @@
 set -euo pipefail
 
 # Configuration
-SUBSYSTEM="ai.openclaw"
+SUBSYSTEM="ai.RadioClaw"
 DEFAULT_LEVEL="info"
 
 # Colors for output
@@ -49,25 +49,25 @@ STYLE_JSON=false
 # Function to show usage
 show_usage() {
     cat << EOF
-clawlog - OpenClaw Logging Utility
+clawlog - RadioClaw Logging Utility
 
 USAGE:
     clawlog [OPTIONS]
 
 DESCRIPTION:
-    View OpenClaw logs with full details (bypasses Apple's privacy redaction).
+    View RadioClaw logs with full details (bypasses Apple's privacy redaction).
     Requires sudo access configured for /usr/bin/log command.
 
 LOG FLOW ARCHITECTURE:
-    OpenClaw logs flow through the macOS unified log (subsystem: ai.openclaw).
+    RadioClaw logs flow through the macOS unified log (subsystem: ai.RadioClaw).
 
 LOG CATEGORIES (examples):
-    â€¢ voicewake           - Voice wake detection/test harness
-    â€¢ gateway             - Gateway process manager
-    â€¢ xpc                 - XPC service calls
-    â€¢ notifications       - Notification helper
-    â€¢ screenshot          - Screenshotter
-    â€¢ shell               - ShellExecutor
+    â€?voicewake           - Voice wake detection/test harness
+    â€?gateway             - Gateway process manager
+    â€?xpc                 - XPC service calls
+    â€?notifications       - Notification helper
+    â€?screenshot          - Screenshotter
+    â€?shell               - ShellExecutor
 
 QUICK START:
     clawlog -n 100             Show last 100 lines from all components
@@ -132,7 +132,7 @@ list_categories() {
         sed -E 's/.*category: "([^"]+)".*/\1/' | \
         sort | uniq | \
         while read -r cat; do
-            echo "  â€¢ $cat"
+            echo "  â€?$cat"
         done
 
     echo -e "\n${YELLOW}Note: Only categories with recent activity are shown${NC}"
@@ -300,9 +300,9 @@ if [[ -n "$OUTPUT_FILE" ]]; then
     # Check if file was created and has content
     if [[ -s "$OUTPUT_FILE" ]]; then
         LINE_COUNT=$(wc -l < "$OUTPUT_FILE" | tr -d ' ')
-        echo -e "${GREEN}âœ“ Exported $LINE_COUNT lines to $OUTPUT_FILE${NC}"
+        echo -e "${GREEN}âœ?Exported $LINE_COUNT lines to $OUTPUT_FILE${NC}"
     else
-        echo -e "${YELLOW}âš  No logs found matching the criteria${NC}"
+        echo -e "${YELLOW}âš?No logs found matching the criteria${NC}"
     fi
 else
     # Run interactively

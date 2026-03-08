@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { RadioClawConfig } from "../../../config/config.js";
 import type { DiscordGuildEntry } from "../../../config/types.discord.js";
 import { hasConfiguredSecretInput } from "../../../config/types.secrets.js";
 import { inspectDiscordAccount } from "../../../discord/account-inspect.js";
@@ -39,10 +39,10 @@ const channel = "discord" as const;
 async function noteDiscordTokenHelp(prompter: WizardPrompter): Promise<void> {
   await prompter.note(
     [
-      "1) Discord Developer Portal â†’ Applications â†’ New Application",
-      "2) Bot â†’ Add Bot â†’ Reset Token â†’ copy token",
-      "3) OAuth2 â†’ URL Generator â†’ scope 'bot' â†’ invite to your server",
-      "Tip: enable Message Content Intent if you need message text. (Bot â†’ Privileged Gateway Intents â†’ Message Content Intent)",
+      "1) Discord Developer Portal â†?Applications â†?New Application",
+      "2) Bot â†?Add Bot â†?Reset Token â†?copy token",
+      "3) OAuth2 â†?URL Generator â†?scope 'bot' â†?invite to your server",
+      "Tip: enable Message Content Intent if you need message text. (Bot â†?Privileged Gateway Intents â†?Message Content Intent)",
       `Docs: ${formatDocsLink("/discord", "discord")}`,
     ].join("\n"),
     "Discord bot token",
@@ -50,13 +50,13 @@ async function noteDiscordTokenHelp(prompter: WizardPrompter): Promise<void> {
 }
 
 function setDiscordGuildChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   accountId: string,
   entries: Array<{
     guildKey: string;
     channelKey?: string;
   }>,
-): OpenClawConfig {
+): RadioClawConfig {
   const baseGuilds =
     accountId === DEFAULT_ACCOUNT_ID
       ? (cfg.channels?.discord?.guilds ?? {})
@@ -82,10 +82,10 @@ function setDiscordGuildChannelAllowlist(
 }
 
 async function promptDiscordAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<RadioClawConfig> {
   const accountId = resolveOnboardingAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultDiscordAccountId(params.cfg),

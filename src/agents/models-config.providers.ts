@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { ModelDefinitionConfig } from "../config/types.models.js";
 import { coerceSecretRef, resolveSecretInputRef } from "../config/types.secrets.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -64,7 +64,7 @@ import {
 } from "./together-models.js";
 import { discoverVeniceModels, VENICE_BASE_URL } from "./venice-models.js";
 
-type ModelsConfig = NonNullable<OpenClawConfig["models"]>;
+type ModelsConfig = NonNullable<RadioClawConfig["models"]>;
 export type ProviderConfig = NonNullable<ModelsConfig["providers"]>[string];
 
 const MINIMAX_PORTAL_BASE_URL = "https://api.minimax.io/anthropic";
@@ -72,7 +72,7 @@ const MINIMAX_DEFAULT_MODEL_ID = "MiniMax-M2.5";
 const MINIMAX_DEFAULT_VISION_MODEL_ID = "MiniMax-VL-01";
 const MINIMAX_DEFAULT_CONTEXT_WINDOW = 200000;
 const MINIMAX_DEFAULT_MAX_TOKENS = 8192;
-// Pricing per 1M tokens (USD) â€” https://platform.minimaxi.com/document/Price
+// Pricing per 1M tokens (USD) â€?https://platform.minimaxi.com/document/Price
 const MINIMAX_API_COST = {
   input: 0.3,
   output: 1.2,
@@ -550,7 +550,7 @@ export function normalizeGoogleModelId(id: string): string {
   if (id === "gemini-3.1-flash-lite") {
     return "gemini-3.1-flash-lite-preview";
   }
-  // Preserve compatibility with earlier OpenClaw docs/config that pointed at a
+  // Preserve compatibility with earlier RadioClaw docs/config that pointed at a
   // non-existent Gemini Flash preview ID. Google's current Flash text model is
   // `gemini-3-flash-preview`.
   if (id === "gemini-3.1-flash" || id === "gemini-3.1-flash-preview") {
@@ -974,7 +974,7 @@ function buildOpenrouterProvider(): ProviderConfig {
         // applyExtraParamsToAgent skips the reasoning effort injection for
         // model id "auto" because it dynamically routes to any OpenRouter model
         // (including ones where reasoning is mandatory and cannot be disabled).
-        // See: openclaw/openclaw#24851
+        // See: RadioClaw/RadioClaw#24851
         reasoning: false,
         input: ["text", "image"],
         cost: OPENROUTER_DEFAULT_COST,
@@ -1345,7 +1345,7 @@ export async function resolveImplicitCopilotProvider(params: {
   }
 
   // We deliberately do not write pi-coding-agent auth.json here.
-  // OpenClaw keeps auth in auth-profiles and resolves runtime availability from that store.
+  // RadioClaw keeps auth in auth-profiles and resolves runtime availability from that store.
 
   // We intentionally do NOT define custom models for Copilot in models.json.
   // pi-coding-agent treats providers with models as replacements requiring apiKey.
@@ -1358,7 +1358,7 @@ export async function resolveImplicitCopilotProvider(params: {
 
 export async function resolveImplicitBedrockProvider(params: {
   agentDir: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   env?: NodeJS.ProcessEnv;
 }): Promise<ProviderConfig | null> {
   const env = params.env ?? process.env;

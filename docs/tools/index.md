@@ -1,20 +1,20 @@
 ---
-summary: "Agent tool surface for OpenClaw (browser, canvas, nodes, message, cron) replacing legacy `openclaw-*` skills"
+summary: "Agent tool surface for RadioClaw (browser, canvas, nodes, message, cron) replacing legacy `RadioClaw-*` skills"
 read_when:
   - Adding or modifying agent tools
-  - Retiring or changing `openclaw-*` skills
+  - Retiring or changing `RadioClaw-*` skills
 title: "Tools"
 ---
 
-# Tools (OpenClaw)
+# Tools (RadioClaw)
 
-OpenClaw exposes **first-class agent tools** for browser, canvas, nodes, and cron.
-These replace the old `openclaw-*` skills: the tools are typed, no shelling,
+RadioClaw exposes **first-class agent tools** for browser, canvas, nodes, and cron.
+These replace the old `RadioClaw-*` skills: the tools are typed, no shelling,
 and the agent should rely on them directly.
 
 ## Disabling tools
 
-You can globally allow/deny tools via `tools.allow` / `tools.deny` in `openclaw.json`
+You can globally allow/deny tools via `tools.allow` / `tools.deny` in `RadioClaw.json`
 (deny wins). This prevents disallowed tools from being sent to model providers.
 
 ```json5
@@ -27,7 +27,7 @@ Notes:
 
 - Matching is case-insensitive.
 - `*` wildcards are supported (`"*"` means all tools).
-- If `tools.allow` only references unknown or unloaded plugin tool names, OpenClaw logs a warning and ignores the allowlist so core tools stay available.
+- If `tools.allow` only references unknown or unloaded plugin tool names, RadioClaw logs a warning and ignores the allowlist so core tools stay available.
 
 ## Tool profiles (base allowlist)
 
@@ -151,7 +151,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:openclaw`: all built-in OpenClaw tools (excludes provider plugins)
+- `group:RadioClaw`: all built-in RadioClaw tools (excludes provider plugins)
 
 Example (allow only file tools + browser):
 
@@ -208,7 +208,7 @@ Notes:
 - If `process` is disallowed, `exec` runs synchronously and ignores `yieldMs`/`background`.
 - `elevated` is gated by `tools.elevated` plus any `agents.list[].tools.elevated` override (both must allow) and is an alias for `host=gateway` + `security=full`.
 - `elevated` only changes behavior when the agent is sandboxed (otherwise it‚Äôs a no-op).
-- `host=node` can target a macOS companion app or a headless node host (`openclaw node run`).
+- `host=node` can target a macOS companion app or a headless node host (`RadioClaw node run`).
 - gateway/node approvals and allowlists: [Exec approvals](/tools/exec-approvals).
 
 ### `process`
@@ -227,7 +227,7 @@ Notes:
 
 ### `loop-detection` (tool-call loop guardrails)
 
-OpenClaw tracks recent tool-call history and blocks or warns when it detects repetitive no-progress loops.
+RadioClaw tracks recent tool-call history and blocks or warns when it detects repetitive no-progress loops.
 Enable with `tools.loopDetection.enabled: true` (default is `false`).
 
 ```json5
@@ -261,18 +261,18 @@ Search the web using Perplexity, Brave, Gemini, Grok, or Kimi.
 Core parameters:
 
 - `query` (required)
-- `count` (1‚Äì10; default from `tools.web.search.maxResults`)
+- `count` (1‚Ä?0; default from `tools.web.search.maxResults`)
 
 Notes:
 
-- Requires an API key for the chosen provider (recommended: `openclaw configure --section web`).
+- Requires an API key for the chosen provider (recommended: `RadioClaw configure --section web`).
 - Enable via `tools.web.search.enabled`.
 - Responses are cached (default 15 min).
 - See [Web tools](/tools/web) for setup.
 
 ### `web_fetch`
 
-Fetch and extract readable content from a URL (HTML ‚Üí markdown/text).
+Fetch and extract readable content from a URL (HTML ‚Ü?markdown/text).
 
 Core parameters:
 
@@ -291,7 +291,7 @@ Notes:
 
 ### `browser`
 
-Control the dedicated OpenClaw-managed browser.
+Control the dedicated RadioClaw-managed browser.
 
 Core actions:
 
@@ -303,10 +303,10 @@ Core actions:
 
 Profile management:
 
-- `profiles` ‚Äî list all browser profiles with status
-- `create-profile` ‚Äî create new profile with auto-allocated port (or `cdpUrl`)
-- `delete-profile` ‚Äî stop browser, delete user data, remove from config (local only)
-- `reset-profile` ‚Äî kill orphan process on profile's port (local only)
+- `profiles` ‚Ä?list all browser profiles with status
+- `create-profile` ‚Ä?create new profile with auto-allocated port (or `cdpUrl`)
+- `delete-profile` ‚Ä?stop browser, delete user data, remove from config (local only)
+- `reset-profile` ‚Ä?kill orphan process on profile's port (local only)
 
 Common parameters:
 
@@ -324,7 +324,7 @@ Common parameters:
 - `snapshot` defaults to `ai` when Playwright is installed; use `aria` for the accessibility tree.
 - `snapshot` also supports role-snapshot options (`interactive`, `compact`, `depth`, `selector`) which return refs like `e12`.
 - `act` requires `ref` from `snapshot` (numeric `12` from AI snapshots, or `e12` from role snapshots); use `evaluate` for rare CSS selector needs.
-- Avoid `act` ‚Üí `wait` by default; use it only in exceptional cases (no reliable UI state to wait on).
+- Avoid `act` ‚Ü?`wait` by default; use it only in exceptional cases (no reliable UI state to wait on).
 - `upload` can optionally pass a `ref` to auto-click after arming.
 - `upload` also supports `inputRef` (aria ref) or `element` (CSS selector) to set `<input type="file">` directly.
 
@@ -343,7 +343,7 @@ Notes:
 - Uses gateway `node.invoke` under the hood.
 - If no `node` is provided, the tool picks a default (single connected node or local mac node).
 - A2UI is v0.8 only (no `createSurface`); the CLI rejects v0.9 JSONL with line errors.
-- Quick smoke: `openclaw nodes canvas a2ui push --node <id> --text "Hello from A2UI"`.
+- Quick smoke: `RadioClaw nodes canvas a2ui push --node <id> --text "Hello from A2UI"`.
 
 ### `nodes`
 
@@ -452,7 +452,7 @@ Restart or apply updates to the running Gateway process (in-place).
 
 Core actions:
 
-- `restart` (authorizes + sends `SIGUSR1` for in-process restart; `openclaw gateway` restart in-place)
+- `restart` (authorizes + sends `SIGUSR1` for in-process restart; `RadioClaw gateway` restart in-place)
 - `config.schema.lookup` (inspect one config path at a time without loading the full schema into prompt context)
 - `config.get`
 - `config.apply` (validate + write config + restart + wake)
@@ -492,19 +492,19 @@ Notes:
   - Supports one-shot mode (`mode: "run"`) and persistent thread-bound mode (`mode: "session"` with `thread: true`).
   - If `thread: true` and `mode` is omitted, mode defaults to `session`.
   - `mode: "session"` requires `thread: true`.
-  - If `runTimeoutSeconds` is omitted, OpenClaw uses `agents.defaults.subagents.runTimeoutSeconds` when set; otherwise timeout defaults to `0` (no timeout).
+  - If `runTimeoutSeconds` is omitted, RadioClaw uses `agents.defaults.subagents.runTimeoutSeconds` when set; otherwise timeout defaults to `0` (no timeout).
   - Discord thread-bound flows depend on `session.threadBindings.*` and `channels.discord.threadBindings.*`.
   - Reply format includes `Status`, `Result`, and compact stats.
   - `Result` is the assistant completion text; if missing, the latest `toolResult` is used as fallback.
 - Manual completion-mode spawns send directly first, with queue fallback and retry on transient failures (`status: "ok"` means run finished, not that announce delivered).
-- `sessions_spawn` supports inline file attachments for subagent runtime only (ACP rejects them). Each attachment has `name`, `content`, and optional `encoding` (`utf8` or `base64`) and `mimeType`. Files are materialized into the child workspace at `.openclaw/attachments/<uuid>/` with a `.manifest.json` metadata file. The tool returns a receipt with `count`, `totalBytes`, per file `sha256`, and `relDir`. Attachment content is automatically redacted from transcript persistence.
+- `sessions_spawn` supports inline file attachments for subagent runtime only (ACP rejects them). Each attachment has `name`, `content`, and optional `encoding` (`utf8` or `base64`) and `mimeType`. Files are materialized into the child workspace at `.RadioClaw/attachments/<uuid>/` with a `.manifest.json` metadata file. The tool returns a receipt with `count`, `totalBytes`, per file `sha256`, and `relDir`. Attachment content is automatically redacted from transcript persistence.
   - Configure limits via `tools.sessions_spawn.attachments` (`enabled`, `maxTotalBytes`, `maxFiles`, `maxFileBytes`, `retainOnSessionKeep`).
   - `attachAs.mountPath` is a reserved hint for future mount implementations.
 - `sessions_spawn` is non-blocking and returns `status: "accepted"` immediately.
 - ACP `streamTo: "parent"` responses may include `streamLogPath` (session-scoped `*.acp-stream.jsonl`) for tailing progress history.
-- `sessions_send` runs a reply‚Äëback ping‚Äëpong (reply `REPLY_SKIP` to stop; max turns via `session.agentToAgent.maxPingPongTurns`, 0‚Äì5).
+- `sessions_send` runs a reply‚Äëback ping‚Äëpong (reply `REPLY_SKIP` to stop; max turns via `session.agentToAgent.maxPingPongTurns`, 0‚Ä?).
 - After the ping‚Äëpong, the target agent runs an **announce step**; reply `ANNOUNCE_SKIP` to suppress the announcement.
-- Sandbox clamp: when the current session is sandboxed and `agents.defaults.sandbox.sessionToolsVisibility: "spawned"`, OpenClaw clamps `tools.sessions.visibility` to `tree`.
+- Sandbox clamp: when the current session is sandboxed and `agents.defaults.sandbox.sessionToolsVisibility: "spawned"`, RadioClaw clamps `tools.sessions.visibility` to `tree`.
 
 ### `agents_list`
 
@@ -536,26 +536,26 @@ Browser tool:
 
 Browser automation:
 
-1. `browser` ‚Üí `status` / `start`
+1. `browser` ‚Ü?`status` / `start`
 2. `snapshot` (ai or aria)
 3. `act` (click/type/press)
 4. `screenshot` if you need visual confirmation
 
 Canvas render:
 
-1. `canvas` ‚Üí `present`
+1. `canvas` ‚Ü?`present`
 2. `a2ui_push` (optional)
 3. `snapshot`
 
 Node targeting:
 
-1. `nodes` ‚Üí `status`
+1. `nodes` ‚Ü?`status`
 2. `describe` on the chosen node
 3. `notify` / `run` / `camera_snap` / `screen_record`
 
 ## Safety
 
-- Avoid direct `system.run`; use `nodes` ‚Üí `run` only with explicit user consent.
+- Avoid direct `system.run`; use `nodes` ‚Ü?`run` only with explicit user consent.
 - Respect user consent for camera/screen capture.
 - Use `status/describe` to ensure permissions before invoking media commands.
 
@@ -566,5 +566,5 @@ Tools are exposed in two parallel channels:
 1. **System prompt text**: a human-readable list + guidance.
 2. **Tool schema**: the structured function definitions sent to the model API.
 
-That means the agent sees both ‚Äúwhat tools exist‚Äù and ‚Äúhow to call them.‚Äù If a tool
+That means the agent sees both ‚Äúwhat tools exist‚Ä?and ‚Äúhow to call them.‚Ä?If a tool
 doesn‚Äôt appear in the system prompt or the schema, the model cannot call it.

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { readPostCompactionContext } from "./post-compaction-context.js";
 
 describe("readPostCompactionContext", () => {
@@ -204,7 +204,7 @@ Never modify memory/YYYY-MM-DD.md destructively.
     fs.writeFileSync(path.join(tmpDir, "AGENTS.md"), content);
     const cfg = {
       agents: { defaults: { userTimezone: "America/New_York", timeFormat: "12" } },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     // 2026-03-03 14:00 UTC = 2026-03-03 09:00 EST
     const nowMs = Date.UTC(2026, 2, 3, 14, 0, 0);
     const result = await readPostCompactionContext(tmpDir, cfg, nowMs);
@@ -212,7 +212,7 @@ Never modify memory/YYYY-MM-DD.md destructively.
     expect(result).toContain("memory/2026-03-03.md");
     expect(result).not.toContain("memory/YYYY-MM-DD.md");
     expect(result).toContain(
-      "Current time: Tuesday, March 3rd, 2026 â€” 9:00 AM (America/New_York) / 2026-03-03 14:00 UTC",
+      "Current time: Tuesday, March 3rd, 2026 â€?9:00 AM (America/New_York) / 2026-03-03 14:00 UTC",
     );
   });
 
@@ -250,7 +250,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Critical Rules"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       expect(result).toContain("Critical Rules");
@@ -269,7 +269,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Onboarding", "Safety"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       expect(result).toContain("Onboard things");
@@ -286,7 +286,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: [] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       // Empty array = opt-out: no post-compaction context injection
       expect(result).toBeNull();
@@ -301,7 +301,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Nonexistent Section"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).toBeNull();
     });
@@ -318,7 +318,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Boot Sequence"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       // Must not reference the hardcoded default section name
@@ -338,7 +338,7 @@ Read WORKFLOW.md on startup.
     it("falls back to legacy sections when defaults are explicitly configured", async () => {
       // Older AGENTS.md templates use "Every Session" / "Safety" instead of
       // "Session Startup" / "Red Lines". Explicitly setting the defaults should
-      // still trigger the legacy fallback â€” same behavior as leaving the field unset.
+      // still trigger the legacy fallback â€?same behavior as leaving the field unset.
       const content = `## Every Session\n\nDo startup things.\n\n## Safety\n\nBe safe.\n`;
       fs.writeFileSync(path.join(tmpDir, "AGENTS.md"), content);
       const cfg = {
@@ -347,7 +347,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Session Startup", "Red Lines"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       expect(result).toContain("Do startup things");
@@ -363,7 +363,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["Red Lines", "Session Startup"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       expect(result).toContain("Do startup things");
@@ -380,7 +380,7 @@ Read WORKFLOW.md on startup.
             compaction: { postCompactionSections: ["workflow init"] },
           },
         },
-      } as OpenClawConfig;
+      } as RadioClawConfig;
       const result = await readPostCompactionContext(tmpDir, cfg);
       expect(result).not.toBeNull();
       expect(result).toContain("Init things");

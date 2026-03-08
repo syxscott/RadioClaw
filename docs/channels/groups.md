@@ -7,19 +7,19 @@ title: "Groups"
 
 # Groups
 
-OpenClaw treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
+RadioClaw treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
 
 ## Beginner intro (2 minutes)
 
-OpenClaw “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, OpenClaw can see that group and respond there.
+RadioClaw “lives�?on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, RadioClaw can see that group and respond there.
 
 Default behavior:
 
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger OpenClaw by mentioning it.
+Translation: allowlisted senders can trigger RadioClaw by mentioning it.
 
 > TL;DR
 >
@@ -56,16 +56,16 @@ If you want...
 
 ## Pattern: personal DMs + public groups (single agent)
 
-Yes — this works well if your “personal” traffic is **DMs** and your “public” traffic is **groups**.
+Yes �?this works well if your “personal�?traffic is **DMs** and your “public�?traffic is **groups**.
 
 Why: in single-agent mode, DMs typically land in the **main** session key (`agent:main:main`), while groups always use **non-main** session keys (`agent:main:<channel>:group:<id>`). If you enable sandboxing with `mode: "non-main"`, those group sessions run in Docker while your main DM session stays on-host.
 
-This gives you one agent “brain” (shared workspace + memory), but two execution postures:
+This gives you one agent “brain�?(shared workspace + memory), but two execution postures:
 
 - **DMs**: full tools (host)
 - **Groups**: sandbox + restricted tools (Docker)
 
-> If you need truly separate workspaces/personas (“personal” and “public” must never mix), use a second agent + bindings. See [Multi-Agent Routing](/concepts/multi-agent).
+> If you need truly separate workspaces/personas (“personal�?and “public�?must never mix), use a second agent + bindings. See [Multi-Agent Routing](/concepts/multi-agent).
 
 Example (DMs on host, groups sandboxed + messaging-only tools):
 
@@ -92,7 +92,7 @@ Example (DMs on host, groups sandboxed + messaging-only tools):
 }
 ```
 
-Want “groups can only see folder X” instead of “no host access”? Keep `workspaceAccess: "none"` and mount only allowlisted paths into the sandbox:
+Want “groups can only see folder X�?instead of “no host access�? Keep `workspaceAccess: "none"` and mount only allowlisted paths into the sandbox:
 
 ```json5
 {
@@ -232,7 +232,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@openclaw", "openclaw", "\\+15555550123"],
+          mentionPatterns: ["@RadioClaw", "RadioClaw", "\\+15555550123"],
           historyLimit: 50,
         },
       },

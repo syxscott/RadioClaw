@@ -116,7 +116,7 @@ export function renderAgents(props: AgentsProps) {
             <div class="card-sub">${agents.length} configured.</div>
           </div>
           <button class="btn btn--sm" ?disabled=${props.loading} @click=${props.onRefresh}>
-            ${props.loading ? "Loadingâ€¦" : "Refresh"}
+            ${props.loading ? "Loadingâ€? : "Refresh"}
           </button>
         </div>
         ${
@@ -406,7 +406,7 @@ function renderAgentOverview(params: {
   const skillFilter = Array.isArray(config.entry?.skills) ? config.entry?.skills : null;
   const skillCount = skillFilter?.length ?? null;
   const identityStatus = agentIdentityLoading
-    ? "Loadingâ€¦"
+    ? "Loadingâ€?
     : agentIdentityError
       ? "Unavailable"
       : "";
@@ -490,7 +490,7 @@ function renderAgentOverview(params: {
             ?disabled=${configSaving || !configDirty}
             @click=${onConfigSave}
           >
-            ${configSaving ? "Savingâ€¦" : "Save"}
+            ${configSaving ? "Savingâ€? : "Save"}
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { DiscordActionConfig, OpenClawConfig } from "../../config/config.js";
+import type { DiscordActionConfig, RadioClawConfig } from "../../config/config.js";
 import { handleDiscordGuildAction } from "./discord-actions-guild.js";
 import { handleDiscordMessagingAction } from "./discord-actions-messaging.js";
 import { handleDiscordModerationAction } from "./discord-actions-moderation.js";
@@ -88,7 +88,7 @@ describe("handleDiscordMessagingAction", () => {
       params: {
         channelId: "C1",
         messageId: "M1",
-        emoji: "âœ…",
+        emoji: "âœ?,
       },
       expectedOptions: undefined,
     },
@@ -97,7 +97,7 @@ describe("handleDiscordMessagingAction", () => {
       params: {
         channelId: "C1",
         messageId: "M1",
-        emoji: "âœ…",
+        emoji: "âœ?,
         accountId: "ops",
       },
       expectedOptions: { accountId: "ops" },
@@ -105,10 +105,10 @@ describe("handleDiscordMessagingAction", () => {
   ])("adds reactions $name", async ({ params, expectedOptions }) => {
     await handleDiscordMessagingAction("react", params, enableAllActions);
     if (expectedOptions) {
-      expect(reactMessageDiscord).toHaveBeenCalledWith("C1", "M1", "âœ…", expectedOptions);
+      expect(reactMessageDiscord).toHaveBeenCalledWith("C1", "M1", "âœ?, expectedOptions);
       return;
     }
-    expect(reactMessageDiscord).toHaveBeenCalledWith("C1", "M1", "âœ…", {});
+    expect(reactMessageDiscord).toHaveBeenCalledWith("C1", "M1", "âœ?, {});
   });
 
   it("removes reactions on empty emoji", async () => {
@@ -130,12 +130,12 @@ describe("handleDiscordMessagingAction", () => {
       {
         channelId: "C1",
         messageId: "M1",
-        emoji: "âœ…",
+        emoji: "âœ?,
         remove: true,
       },
       enableAllActions,
     );
-    expect(removeReactionDiscord).toHaveBeenCalledWith("C1", "M1", "âœ…", {});
+    expect(removeReactionDiscord).toHaveBeenCalledWith("C1", "M1", "âœ?, {});
   });
 
   it("rejects removes without emoji", async () => {
@@ -160,7 +160,7 @@ describe("handleDiscordMessagingAction", () => {
         {
           channelId: "C1",
           messageId: "M1",
-          emoji: "âœ…",
+          emoji: "âœ?,
         },
         disabledActions,
       ),
@@ -627,7 +627,7 @@ describe("handleDiscordAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await handleDiscordAction(
       { action: "timeout", guildId: "G1", userId: "U1", durationMinutes: 5, accountId: "ops" },
@@ -648,7 +648,7 @@ describe("handleDiscordAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await expect(
       handleDiscordAction(
@@ -669,7 +669,7 @@ describe("handleDiscordAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await handleDiscordAction(
       { action: "kick", guildId: "G1", userId: "U1", accountId: "ops" },
@@ -688,7 +688,7 @@ describe("handleDiscordAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await expect(
       handleDiscordAction(
@@ -711,7 +711,7 @@ describe("handleDiscordAction per-account gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await handleDiscordAction(
       { action: "channelCreate", guildId: "G1", name: "alerts", accountId: "ops" },

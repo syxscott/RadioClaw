@@ -3,7 +3,7 @@ import { formatForLog, shortId, summarizeAgentEventForWsLog } from "./ws-log.js"
 
 describe("gateway ws log helpers", () => {
   test("shortId compacts uuids and long strings", () => {
-    expect(shortId("12345678-1234-1234-1234-123456789abc")).toBe("12345678â€¦9abc");
+    expect(shortId("12345678-1234-1234-1234-123456789abc")).toBe("12345678â€?abc");
     expect(shortId("a".repeat(30))).toBe("aaaaaaaaaaaaâ€¦aaaa");
     expect(shortId("short")).toBe("short");
   });
@@ -23,7 +23,7 @@ describe("gateway ws log helpers", () => {
     const out = formatForLog({ token });
     expect(out).toContain("token");
     expect(out).not.toContain(token);
-    expect(out).toContain("â€¦");
+    expect(out).toContain("â€?);
   });
 
   test("summarizeAgentEventForWsLog extracts useful fields", () => {
@@ -36,7 +36,7 @@ describe("gateway ws log helpers", () => {
     });
     expect(summary).toMatchObject({
       agent: "main",
-      run: "12345678â€¦9abc",
+      run: "12345678â€?abc",
       session: "main",
       stream: "assistant",
       aseq: 2,

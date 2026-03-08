@@ -3,14 +3,14 @@ import { shortenText } from "./text-format.js";
 
 describe("shortenText", () => {
   it("returns original text when it fits", () => {
-    expect(shortenText("openclaw", 16)).toBe("openclaw");
+    expect(shortenText("RadioClaw", 16)).toBe("RadioClaw");
   });
 
   it("truncates and appends ellipsis when over limit", () => {
-    expect(shortenText("openclaw-status-output", 10)).toBe("openclaw-…");
+    expect(shortenText("RadioClaw-status-output", 10)).toBe("RadioClaw-�?);
   });
 
   it("counts multi-byte characters correctly", () => {
-    expect(shortenText("hello🙂world", 7)).toBe("hello🙂…");
+    expect(shortenText("hello🙂world", 7)).toBe("hello🙂�?);
   });
 });

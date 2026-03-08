@@ -9,7 +9,7 @@ import {
   isRequestBodyLimitError,
   readRequestBodyWithLimit,
   requestBodyErrorToText,
-} from "openclaw/plugin-sdk/synology-chat";
+} from "RadioClaw/plugin-sdk/synology-chat";
 import { sendMessage, resolveChatUserId } from "./client.js";
 import { validateToken, authorizeUserForDm, sanitizeInput, RateLimiter } from "./security.js";
 import type { SynologyWebhookPayload, ResolvedSynologyChatAccount } from "./types.js";
@@ -124,7 +124,7 @@ function extractTokenFromHeaders(req: IncomingMessage): string | undefined {
   const explicit =
     headerValue(req.headers["x-synology-token"]) ??
     headerValue(req.headers["x-webhook-token"]) ??
-    headerValue(req.headers["x-openclaw-token"]);
+    headerValue(req.headers["x-RadioClaw-token"]);
   if (explicit) return explicit;
 
   const auth = headerValue(req.headers.authorization);
@@ -352,7 +352,7 @@ export function createWebhookHandler(deps: WebhookHandlerDeps) {
         replyUserId = String(chatUserId);
       } else {
         log?.warn(
-          `Could not resolve Chat API user_id for "${payload.username}" â€” falling back to webhook user_id ${payload.user_id}. Reply delivery may fail.`,
+          `Could not resolve Chat API user_id for "${payload.username}" â€?falling back to webhook user_id ${payload.user_id}. Reply delivery may fail.`,
         );
       }
 

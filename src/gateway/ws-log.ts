@@ -62,7 +62,7 @@ function buildWsStatusToken(kind: string, ok?: boolean): string | undefined {
   if (kind !== "res" || ok === undefined) {
     return undefined;
   }
-  return ok ? chalk.greenBright("‚úì") : chalk.redBright("‚úó");
+  return ok ? chalk.greenBright("‚ú?) : chalk.redBright("‚ú?);
 }
 
 function logWsInfoLine(params: {
@@ -91,12 +91,12 @@ export function shouldLogWs(): boolean {
 export function shortId(value: string): string {
   const s = value.trim();
   if (UUID_RE.test(s)) {
-    return `${s.slice(0, 8)}‚Ä¶${s.slice(-4)}`;
+    return `${s.slice(0, 8)}‚Ä?{s.slice(-4)}`;
   }
   if (s.length <= 24) {
     return s;
   }
-  return `${s.slice(0, 12)}‚Ä¶${s.slice(-4)}`;
+  return `${s.slice(0, 12)}‚Ä?{s.slice(-4)}`;
 }
 
 export function formatForLog(value: unknown): string {
@@ -291,7 +291,7 @@ export function logWs(direction: "in" | "out", kind: string, meta?: Record<strin
         })()
       : undefined;
 
-  const dirArrow = direction === "in" ? "‚Üê" : "‚Üí";
+  const dirArrow = direction === "in" ? "‚Ü? : "‚Ü?;
   const dirColor = direction === "in" ? chalk.greenBright : chalk.cyanBright;
   const prefix = `${dirColor(dirArrow)} ${chalk.bold(kind)}`;
 
@@ -333,7 +333,7 @@ function logWsOptimized(direction: "in" | "out", kind: string, meta?: Record<str
     const errorMsg = typeof meta?.error === "string" ? formatForLog(meta.error) : undefined;
     wsLog.warn(
       [
-        `${chalk.redBright("‚úó")} ${chalk.bold("parse-error")}`,
+        `${chalk.redBright("‚ú?)} ${chalk.bold("parse-error")}`,
         errorMsg ? `${chalk.dim("error")}=${errorMsg}` : undefined,
         `${chalk.dim("conn")}=${chalk.gray(shortId(connId ?? "?"))}`,
       ]
@@ -365,7 +365,7 @@ function logWsOptimized(direction: "in" | "out", kind: string, meta?: Record<str
   const restMeta = collectWsRestMeta(meta);
 
   logWsInfoLine({
-    prefix: `${chalk.yellowBright("‚áÑ")} ${chalk.bold("res")}`,
+    prefix: `${chalk.yellowBright("‚á?)} ${chalk.bold("res")}`,
     statusToken,
     headline: method ? chalk.bold(method) : undefined,
     durationToken,
@@ -392,9 +392,9 @@ function logWsCompact(direction: "in" | "out", kind: string, meta?: Record<strin
 
   const compactArrow = (() => {
     if (kind === "req" || kind === "res") {
-      return "‚áÑ";
+      return "‚á?;
     }
-    return direction === "in" ? "‚Üê" : "‚Üí";
+    return direction === "in" ? "‚Ü? : "‚Ü?;
   })();
   const arrowColor =
     kind === "req" || kind === "res"

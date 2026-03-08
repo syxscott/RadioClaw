@@ -7,7 +7,7 @@ import {
   summarizeMapping,
   warnMissingProviderGroupPolicyFallbackOnce,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/matrix";
+} from "RadioClaw/plugin-sdk/matrix";
 import { resolveMatrixTargets } from "../../resolve-targets.js";
 import { getMatrixRuntime } from "../../runtime.js";
 import type { CoreConfig, MatrixConfig, MatrixRoomConfig, ReplyToMode } from "../../types.js";
@@ -98,7 +98,7 @@ async function resolveMatrixUserAllowlist(params: {
       if (entry.resolved && entry.id) {
         const normalizedId = normalizeMatrixUserId(entry.id);
         additions.push(normalizedId);
-        mapping.push(`${entry.input}â†’${normalizedId}`);
+        mapping.push(`${entry.input}â†?{normalizedId}`);
       } else {
         unresolved.push(entry.input);
       }
@@ -144,7 +144,7 @@ async function resolveMatrixRoomsConfig(params: {
         nextRooms[cleaned] = roomConfig;
       }
       if (cleaned !== entry) {
-        mapping.push(`${entry}â†’${cleaned}`);
+        mapping.push(`${entry}â†?{cleaned}`);
       }
       continue;
     }
@@ -166,7 +166,7 @@ async function resolveMatrixRoomsConfig(params: {
         if (!nextRooms[entry.id]) {
           nextRooms[entry.id] = source.config;
         }
-        mapping.push(`${source.input}â†’${entry.id}`);
+        mapping.push(`${source.input}â†?{entry.id}`);
       } else {
         unresolved.push(source.input);
       }

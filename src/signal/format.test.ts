@@ -54,7 +54,7 @@ describe("markdownToSignalText", () => {
   it("renders lists without extra block markup", () => {
     const res = markdownToSignalText("- one\n- two");
 
-    expect(res.text).toBe("â€¢ one\nâ€¢ two");
+    expect(res.text).toBe("â€?one\nâ€?two");
     expect(res.styles).toEqual([]);
   });
 

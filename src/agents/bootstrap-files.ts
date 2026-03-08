@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { getOrLoadBootstrapFiles } from "./bootstrap-cache.js";
 import { applyBootstrapHookOverrides } from "./bootstrap-hooks.js";
 import type { EmbeddedContextFile } from "./pi-embedded-helpers.js";
@@ -35,7 +35,7 @@ function sanitizeBootstrapFiles(
     const pathValue = typeof file.path === "string" ? file.path.trim() : "";
     if (!pathValue) {
       warn?.(
-        `skipping bootstrap file "${file.name}" â€” missing or invalid "path" field (hook may have used "filePath" instead)`,
+        `skipping bootstrap file "${file.name}" â€?missing or invalid "path" field (hook may have used "filePath" instead)`,
       );
       continue;
     }
@@ -63,7 +63,7 @@ function applyContextModeFilter(params: {
 
 export async function resolveBootstrapFilesForRun(params: {
   workspaceDir: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   sessionKey?: string;
   sessionId?: string;
   agentId?: string;
@@ -97,7 +97,7 @@ export async function resolveBootstrapFilesForRun(params: {
 
 export async function resolveBootstrapContextForRun(params: {
   workspaceDir: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   sessionKey?: string;
   sessionId?: string;
   agentId?: string;

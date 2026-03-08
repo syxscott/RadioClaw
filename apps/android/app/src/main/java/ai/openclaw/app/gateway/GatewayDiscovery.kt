@@ -1,4 +1,4 @@
-package ai.openclaw.app.gateway
+package ai.RadioClaw.app.gateway
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -51,16 +51,16 @@ class GatewayDiscovery(
   private val nsd = context.getSystemService(NsdManager::class.java)
   private val connectivity = context.getSystemService(ConnectivityManager::class.java)
   private val dns = DnsResolver.getInstance()
-  private val serviceType = "_openclaw-gw._tcp."
-  private val wideAreaDomain = System.getenv("OPENCLAW_WIDE_AREA_DOMAIN")
-  private val logTag = "OpenClaw/GatewayDiscovery"
+  private val serviceType = "_RadioClaw-gw._tcp."
+  private val wideAreaDomain = System.getenv("RadioClaw_WIDE_AREA_DOMAIN")
+  private val logTag = "RadioClaw/GatewayDiscovery"
 
   private val localById = ConcurrentHashMap<String, GatewayEndpoint>()
   private val unicastById = ConcurrentHashMap<String, GatewayEndpoint>()
   private val _gateways = MutableStateFlow<List<GatewayEndpoint>>(emptyList())
   val gateways: StateFlow<List<GatewayEndpoint>> = _gateways.asStateFlow()
 
-  private val _statusText = MutableStateFlow("Searchingâ€¦")
+  private val _statusText = MutableStateFlow("Searchingâ€?)
   val statusText: StateFlow<String> = _statusText.asStateFlow()
 
   private var unicastJob: Job? = null
@@ -186,9 +186,9 @@ class GatewayDiscovery(
       }
 
     return when {
-      localCount == 0 && wideRcode == null -> "Searching for gatewaysâ€¦"
+      localCount == 0 && wideRcode == null -> "Searching for gatewaysâ€?
       localCount == 0 -> "$wide"
-      else -> "Local: $localCount â€¢ $wide"
+      else -> "Local: $localCount â€?$wide"
     }
   }
 

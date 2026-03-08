@@ -15,22 +15,22 @@ export const formatElevatedRuntimeHint = () =>
 
 export const formatElevatedEvent = (level: ElevatedLevel) => {
   if (level === "full") {
-    return "Elevated FULL â€” exec runs on host with auto-approval.";
+    return "Elevated FULL â€?exec runs on host with auto-approval.";
   }
   if (level === "ask" || level === "on") {
-    return "Elevated ASK â€” exec runs on host; approvals may still apply.";
+    return "Elevated ASK â€?exec runs on host; approvals may still apply.";
   }
-  return "Elevated OFF â€” exec stays in sandbox.";
+  return "Elevated OFF â€?exec stays in sandbox.";
 };
 
 export const formatReasoningEvent = (level: ReasoningLevel) => {
   if (level === "stream") {
-    return "Reasoning STREAM â€” emit live <think>.";
+    return "Reasoning STREAM â€?emit live <think>.";
   }
   if (level === "on") {
-    return "Reasoning ON â€” include <think>.";
+    return "Reasoning ON â€?include <think>.";
   }
-  return "Reasoning OFF â€” hide <think>.";
+  return "Reasoning OFF â€?hide <think>.";
 };
 
 export function enqueueModeSwitchEvents(params: {
@@ -75,7 +75,7 @@ export function formatElevatedUnavailableText(params: {
   }
   if (params.sessionKey) {
     lines.push(
-      `See: ${formatCliCommand(`openclaw sandbox explain --session ${params.sessionKey}`)}`,
+      `See: ${formatCliCommand(`RadioClaw sandbox explain --session ${params.sessionKey}`)}`,
     );
   }
   return lines.join("\n");

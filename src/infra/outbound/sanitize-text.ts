@@ -7,8 +7,8 @@
  * Converts common inline HTML to lightweight-markup equivalents used by
  * WhatsApp/Signal/Telegram and strips any remaining tags.
  *
- * @see https://github.com/openclaw/openclaw/issues/31884
- * @see https://github.com/openclaw/openclaw/issues/18558
+ * @see https://github.com/RadioClaw/RadioClaw/issues/31884
+ * @see https://github.com/RadioClaw/RadioClaw/issues/18558
  */
 
 /** Channels where HTML tags should be converted/stripped. */
@@ -31,7 +31,7 @@ export function isPlainTextSurface(channelId: string): boolean {
  * Convert common HTML tags to their plain-text/lightweight-markup equivalents
  * and strip anything that remains.
  *
- * The function is intentionally conservative â€” it only targets tags that models
+ * The function is intentionally conservative â€?it only targets tags that models
  * are known to produce and avoids false positives on angle brackets in normal
  * prose (e.g. `a < b`).
  */
@@ -42,20 +42,20 @@ export function sanitizeForPlainText(text: string): string {
       .replace(/<((?:https?:\/\/|mailto:)[^<>\s]+)>/gi, "$1")
       // Line breaks
       .replace(/<br\s*\/?>/gi, "\n")
-      // Block elements â†’ newlines
+      // Block elements â†?newlines
       .replace(/<\/?(p|div)>/gi, "\n")
-      // Bold â†’ WhatsApp/Signal bold
+      // Bold â†?WhatsApp/Signal bold
       .replace(/<(b|strong)>(.*?)<\/\1>/gi, "*$2*")
-      // Italic â†’ WhatsApp/Signal italic
+      // Italic â†?WhatsApp/Signal italic
       .replace(/<(i|em)>(.*?)<\/\1>/gi, "_$2_")
-      // Strikethrough â†’ WhatsApp/Signal strikethrough
+      // Strikethrough â†?WhatsApp/Signal strikethrough
       .replace(/<(s|strike|del)>(.*?)<\/\1>/gi, "~$2~")
       // Inline code
       .replace(/<code>(.*?)<\/code>/gi, "`$1`")
-      // Headings â†’ bold text with newline
+      // Headings â†?bold text with newline
       .replace(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi, "\n*$1*\n")
-      // List items â†’ bullet points
-      .replace(/<li[^>]*>(.*?)<\/li>/gi, "â€¢ $1\n")
+      // List items â†?bullet points
+      .replace(/<li[^>]*>(.*?)<\/li>/gi, "â€?$1\n")
       // Strip remaining HTML tags (require tag-like structure: <word...>)
       .replace(/<\/?[a-z][a-z0-9]*\b[^>]*>/gi, "")
       // Collapse 3+ consecutive newlines into 2

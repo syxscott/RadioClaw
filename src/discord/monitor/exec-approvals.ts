@@ -10,7 +10,7 @@ import {
   type TopLevelComponents,
 } from "@buape/carbon";
 import { ButtonStyle, Routes } from "discord-api-types/v10";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { loadSessionStore, resolveStorePath } from "../../config/sessions.js";
 import type { DiscordExecApprovalConfig } from "../../config/types.discord.js";
 import { buildGatewayConnectionDetails } from "../../gateway/call.js";
@@ -98,7 +98,7 @@ export function parseExecApprovalData(
 }
 
 type ExecApprovalContainerParams = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
   title: string;
   description?: string;
@@ -182,7 +182,7 @@ class ExecApprovalActionRow extends Row<Button> {
 }
 
 function resolveExecApprovalAccountId(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   request: ExecApprovalRequest;
 }): string | null {
   const sessionKey = params.request.request.sessionKey?.trim();
@@ -235,7 +235,7 @@ function formatCommandPreview(commandText: string, maxChars: number): string {
 
 function createExecApprovalRequestContainer(params: {
   request: ExecApprovalRequest;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
   actionRow?: Row<Button>;
 }): ExecApprovalContainer {
@@ -260,7 +260,7 @@ function createResolvedContainer(params: {
   request: ExecApprovalRequest;
   decision: ExecApprovalDecision;
   resolvedBy?: string | null;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
 }): ExecApprovalContainer {
   const commandText = params.request.request.command;
@@ -293,7 +293,7 @@ function createResolvedContainer(params: {
 
 function createExpiredContainer(params: {
   request: ExecApprovalRequest;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
 }): ExecApprovalContainer {
   const commandText = params.request.request.command;
@@ -315,7 +315,7 @@ export type DiscordExecApprovalHandlerOpts = {
   accountId: string;
   config: DiscordExecApprovalConfig;
   gatewayUrl?: string;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   runtime?: RuntimeEnv;
   onResolve?: (id: string, decision: ExecApprovalDecision) => Promise<void>;
 };
@@ -408,7 +408,7 @@ export class DiscordExecApprovalHandler {
     const gatewayUrlOverrideSource =
       urlSource === "cli --url"
         ? "cli"
-        : urlSource === "env OPENCLAW_GATEWAY_URL"
+        : urlSource === "env RadioClaw_GATEWAY_URL"
           ? "env"
           : undefined;
     const auth = await resolveGatewayConnectionAuth({
@@ -532,7 +532,7 @@ export class DiscordExecApprovalHandler {
       } else {
         if (!sendToDm) {
           logError(
-            `discord exec approvals: target is "channel" but could not extract channel id from session key "${request.request.sessionKey ?? "(none)"}" â€” falling back to DM delivery for approval ${request.id}`,
+            `discord exec approvals: target is "channel" but could not extract channel id from session key "${request.request.sessionKey ?? "(none)"}" â€?falling back to DM delivery for approval ${request.id}`,
           );
           fallbackToDm = true;
         } else {
@@ -784,7 +784,7 @@ export class ExecApprovalButton extends Button {
     if (!approvers.some((id) => String(id) === userId)) {
       try {
         await interaction.reply({
-          content: "â›” You are not authorized to approve exec requests.",
+          content: "â›?You are not authorized to approve exec requests.",
           ephemeral: true,
         });
       } catch {

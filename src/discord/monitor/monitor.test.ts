@@ -7,7 +7,7 @@ import type {
 import type { Client } from "@buape/carbon";
 import type { GatewayPresenceUpdate } from "discord-api-types/v10";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import type { DiscordAccountConfig } from "../../config/types.discord.js";
 import { buildAgentSessionKey } from "../../routing/resolve-route.js";
 import {
@@ -89,7 +89,7 @@ vi.mock("../../config/sessions.js", async (importOriginal) => {
 });
 
 describe("agent components", () => {
-  const createCfg = (): OpenClawConfig => ({}) as OpenClawConfig;
+  const createCfg = (): RadioClawConfig => ({}) as RadioClawConfig;
 
   const createBaseDmInteraction = (overrides: Record<string, unknown> = {}) => {
     const reply = vi.fn().mockResolvedValue(undefined);
@@ -179,7 +179,7 @@ describe("agent components", () => {
     await select.run(interaction, { componentId: "hello" } as ComponentData);
 
     expect(defer).toHaveBeenCalledWith({ ephemeral: true });
-    expect(reply).toHaveBeenCalledWith({ content: "âœ“" });
+    expect(reply).toHaveBeenCalledWith({ content: "âœ? });
     expect(enqueueSystemEventMock).toHaveBeenCalled();
   });
 
@@ -195,7 +195,7 @@ describe("agent components", () => {
     await button.run(interaction, { cid: "hello_cid" } as ComponentData);
 
     expect(defer).toHaveBeenCalledWith({ ephemeral: true });
-    expect(reply).toHaveBeenCalledWith({ content: "âœ“" });
+    expect(reply).toHaveBeenCalledWith({ content: "âœ? });
     expect(enqueueSystemEventMock).toHaveBeenCalledWith(
       expect.stringContaining("hello_cid"),
       expect.any(Object),
@@ -214,7 +214,7 @@ describe("agent components", () => {
     await button.run(interaction, { cid: "hello%2G" } as ComponentData);
 
     expect(defer).toHaveBeenCalledWith({ ephemeral: true });
-    expect(reply).toHaveBeenCalledWith({ content: "âœ“" });
+    expect(reply).toHaveBeenCalledWith({ content: "âœ? });
     expect(enqueueSystemEventMock).toHaveBeenCalledWith(
       expect.stringContaining("hello%2G"),
       expect.any(Object),
@@ -223,14 +223,14 @@ describe("agent components", () => {
 });
 
 describe("discord component interactions", () => {
-  const createCfg = (): OpenClawConfig =>
+  const createCfg = (): RadioClawConfig =>
     ({
       channels: {
         discord: {
           replyToMode: "first",
         },
       },
-    }) as OpenClawConfig;
+    }) as RadioClawConfig;
 
   const createDiscordConfig = (overrides?: Partial<DiscordAccountConfig>): DiscordAccountConfig =>
     ({
@@ -340,7 +340,7 @@ describe("discord component interactions", () => {
     deliverDiscordReplyMock.mockClear();
     recordInboundSessionMock.mockClear().mockResolvedValue(undefined);
     readSessionUpdatedAtMock.mockClear().mockReturnValue(undefined);
-    resolveStorePathMock.mockClear().mockReturnValue("/tmp/openclaw-sessions-test.json");
+    resolveStorePathMock.mockClear().mockReturnValue("/tmp/RadioClaw-sessions-test.json");
   });
 
   it("routes button clicks with reply references", async () => {
@@ -354,7 +354,7 @@ describe("discord component interactions", () => {
 
     await button.run(interaction, { cid: "btn_1" } as ComponentData);
 
-    expect(reply).toHaveBeenCalledWith({ content: "âœ“" });
+    expect(reply).toHaveBeenCalledWith({ content: "âœ? });
     expect(lastDispatchCtx?.BodyForAgent).toBe('Clicked "Approve".');
     expect(dispatchReplyMock).toHaveBeenCalledTimes(1);
     expect(deliverDiscordReplyMock).toHaveBeenCalledTimes(1);
@@ -440,7 +440,7 @@ describe("discord component interactions", () => {
         cfg: {
           commands: { useAccessGroups: true },
           channels: { discord: { replyToMode: "first" } },
-        } as OpenClawConfig,
+        } as RadioClawConfig,
         allowFrom: ["owner-1"],
       }),
     );
@@ -472,7 +472,7 @@ describe("discord component interactions", () => {
         cfg: {
           commands: { useAccessGroups: true },
           channels: { discord: { replyToMode: "first" } },
-        } as OpenClawConfig,
+        } as RadioClawConfig,
         allowFrom: ["123456789"],
       }),
     );
@@ -743,14 +743,14 @@ describe("resolveDiscordPresenceUpdate", () => {
     const presence = resolveDiscordPresenceUpdate({
       activity: "Live",
       activityType: 1,
-      activityUrl: "https://twitch.tv/openclaw",
+      activityUrl: "https://twitch.tv/RadioClaw",
     });
     expect(presence).not.toBeNull();
     expect(presence?.activities).toHaveLength(1);
     expect(presence?.activities[0]).toMatchObject({
       type: 1,
       name: "Live",
-      url: "https://twitch.tv/openclaw",
+      url: "https://twitch.tv/RadioClaw",
     });
   });
 });

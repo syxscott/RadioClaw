@@ -372,7 +372,7 @@ export function createAgendaCard(params: {
       contents: [
         {
           type: "text",
-          text: event.time ?? "â€”",
+          text: event.time ?? "â€?,
           size: "sm",
           weight: isActive ? "bold" : "regular",
           color: isActive ? "#06C755" : "#666666",

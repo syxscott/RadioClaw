@@ -115,14 +115,14 @@ export async function buildExportSessionReply(params: HandleCommandsParams): Pro
   // 1. Resolve session file
   const sessionEntry = params.sessionEntry;
   if (!sessionEntry?.sessionId) {
-    return { text: "‚ùå No active session found." };
+    return { text: "‚ù?No active session found." };
   }
 
   const storePath = resolveDefaultSessionStorePath(params.agentId);
   const store = loadSessionStore(storePath, { skipCache: true });
   const entry = store[params.sessionKey] as SessionEntry | undefined;
   if (!entry?.sessionId) {
-    return { text: `‚ùå Session not found: ${params.sessionKey}` };
+    return { text: `‚ù?Session not found: ${params.sessionKey}` };
   }
 
   let sessionFile: string;
@@ -134,12 +134,12 @@ export async function buildExportSessionReply(params: HandleCommandsParams): Pro
     );
   } catch (err) {
     return {
-      text: `‚ùå Failed to resolve session file: ${err instanceof Error ? err.message : String(err)}`,
+      text: `‚ù?Failed to resolve session file: ${err instanceof Error ? err.message : String(err)}`,
     };
   }
 
   if (!fs.existsSync(sessionFile)) {
-    return { text: `‚ùå Session file not found: ${sessionFile}` };
+    return { text: `‚ù?Session file not found: ${sessionFile}` };
   }
 
   // 2. Load session entries
@@ -169,7 +169,7 @@ export async function buildExportSessionReply(params: HandleCommandsParams): Pro
 
   // 6. Determine output path
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
-  const defaultFileName = `openclaw-session-${entry.sessionId.slice(0, 8)}-${timestamp}.html`;
+  const defaultFileName = `RadioClaw-session-${entry.sessionId.slice(0, 8)}-${timestamp}.html`;
   const outputPath = args.outputPath
     ? path.resolve(
         args.outputPath.startsWith("~")
@@ -192,7 +192,7 @@ export async function buildExportSessionReply(params: HandleCommandsParams): Pro
 
   return {
     text: [
-      "‚úÖ Session exported!",
+      "‚ú?Session exported!",
       "",
       `üìÑ File: ${displayPath}`,
       `üìä Entries: ${entries.length}`,

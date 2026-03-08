@@ -2,8 +2,8 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct OpenClawActivityWidgetBundle: WidgetBundle {
+struct RadioClawActivityWidgetBundle: WidgetBundle {
     var body: some Widget {
-        OpenClawLiveActivity()
+        RadioClawLiveActivity()
     }
 }

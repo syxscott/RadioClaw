@@ -90,7 +90,7 @@ describe("tool-helpers", () => {
       const result = getTruncatedPreview(input);
 
       expect(result.length).toBe(101); // 100 chars + ellipsis
-      expect(result.endsWith("â€¦")).toBe(true);
+      expect(result.endsWith("â€?)).toBe(true);
     });
 
     it("truncates to max lines", () => {
@@ -98,14 +98,14 @@ describe("tool-helpers", () => {
       const result = getTruncatedPreview(input);
 
       // Should only show first 2 lines (PREVIEW_MAX_LINES = 2)
-      expect(result).toBe("Line 1\nLine 2â€¦");
+      expect(result).toBe("Line 1\nLine 2â€?);
     });
 
     it("adds ellipsis when lines are truncated", () => {
       const input = "Line 1\nLine 2\nLine 3";
       const result = getTruncatedPreview(input);
 
-      expect(result.endsWith("â€¦")).toBe(true);
+      expect(result.endsWith("â€?)).toBe(true);
     });
 
     it("does not add ellipsis when all lines fit", () => {
@@ -113,7 +113,7 @@ describe("tool-helpers", () => {
       const result = getTruncatedPreview(input);
 
       expect(result).toBe("Line 1\nLine 2");
-      expect(result.endsWith("â€¦")).toBe(false);
+      expect(result.endsWith("â€?)).toBe(false);
     });
 
     it("handles single line within limits", () => {
@@ -135,7 +135,7 @@ describe("tool-helpers", () => {
       const result = getTruncatedPreview(input);
 
       expect(result.length).toBe(101); // 100 + ellipsis
-      expect(result.endsWith("â€¦")).toBe(true);
+      expect(result.endsWith("â€?)).toBe(true);
     });
   });
 });

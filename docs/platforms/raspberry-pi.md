@@ -1,17 +1,17 @@
 ---
-summary: "OpenClaw on Raspberry Pi (budget self-hosted setup)"
+summary: "RadioClaw on Raspberry Pi (budget self-hosted setup)"
 read_when:
-  - Setting up OpenClaw on a Raspberry Pi
-  - Running OpenClaw on ARM devices
+  - Setting up RadioClaw on a Raspberry Pi
+  - Running RadioClaw on ARM devices
   - Building a cheap always-on personal AI
 title: "Raspberry Pi"
 ---
 
-# OpenClaw on Raspberry Pi
+# RadioClaw on Raspberry Pi
 
 ## Goal
 
-Run a persistent, always-on OpenClaw Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
+Run a persistent, always-on RadioClaw Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
 
 Perfect for:
 
@@ -23,12 +23,12 @@ Perfect for:
 
 | Pi Model        | RAM     | Works?   | Notes                              |
 | --------------- | ------- | -------- | ---------------------------------- |
-| **Pi 5**        | 4GB/8GB | âœ… Best  | Fastest, recommended               |
-| **Pi 4**        | 4GB     | âœ… Good  | Sweet spot for most users          |
-| **Pi 4**        | 2GB     | âœ… OK    | Works, add swap                    |
+| **Pi 5**        | 4GB/8GB | âœ?Best  | Fastest, recommended               |
+| **Pi 4**        | 4GB     | âœ?Good  | Sweet spot for most users          |
+| **Pi 4**        | 2GB     | âœ?OK    | Works, add swap                    |
 | **Pi 4**        | 1GB     | âš ï¸ Tight | Possible with swap, minimal config |
 | **Pi 3B+**      | 1GB     | âš ï¸ Slow  | Works but sluggish                 |
-| **Pi Zero 2 W** | 512MB   | âŒ       | Not recommended                    |
+| **Pi Zero 2 W** | 512MB   | â?      | Not recommended                    |
 
 **Minimum specs:** 1GB RAM, 1 core, 500MB disk  
 **Recommended:** 2GB+ RAM, 64-bit OS, 16GB+ SD card (or USB SSD)
@@ -43,7 +43,7 @@ Perfect for:
 
 ## 1) Flash the OS
 
-Use **Raspberry Pi OS Lite (64-bit)** â€” no desktop needed for a headless server.
+Use **Raspberry Pi OS Lite (64-bit)** â€?no desktop needed for a headless server.
 
 1. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
 2. Choose OS: **Raspberry Pi OS Lite (64-bit)**
@@ -107,30 +107,30 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) Install OpenClaw
+## 6) Install RadioClaw
 
 ### Option A: Standard Install (Recommended)
 
 ```bash
-curl -fsSL https://openclaw.ai/install.sh | bash
+curl -fsSL https://RadioClaw.ai/install.sh | bash
 ```
 
 ### Option B: Hackable Install (For tinkering)
 
 ```bash
-git clone https://github.com/openclaw/openclaw.git
-cd openclaw
+git clone https://github.com/RadioClaw/RadioClaw.git
+cd RadioClaw
 npm install
 npm run build
 npm link
 ```
 
-The hackable install gives you direct access to logs and code â€” useful for debugging ARM-specific issues.
+The hackable install gives you direct access to logs and code â€?useful for debugging ARM-specific issues.
 
 ## 7) Run Onboarding
 
 ```bash
-openclaw onboard --install-daemon
+RadioClaw onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -144,13 +144,13 @@ Follow the wizard:
 
 ```bash
 # Check status
-openclaw status
+RadioClaw status
 
 # Check service
-sudo systemctl status openclaw
+sudo systemctl status RadioClaw
 
 # View logs
-journalctl -u openclaw -f
+journalctl -u RadioClaw -f
 ```
 
 ## 9) Access the Dashboard
@@ -173,8 +173,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 
 # Update config
-openclaw config set gateway.bind tailnet
-sudo systemctl restart openclaw
+RadioClaw config set gateway.bind tailnet
+sudo systemctl restart RadioClaw
 ```
 
 ---
@@ -197,10 +197,10 @@ See [Pi USB boot guide](https://www.raspberrypi.com/documentation/computers/rasp
 On lower-power Pi hosts, enable Node's module compile cache so repeated CLI runs are faster:
 
 ```bash
-grep -q 'NODE_COMPILE_CACHE=/var/tmp/openclaw-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF' # pragma: allowlist secret
-export NODE_COMPILE_CACHE=/var/tmp/openclaw-compile-cache
-mkdir -p /var/tmp/openclaw-compile-cache
-export OPENCLAW_NO_RESPAWN=1
+grep -q 'NODE_COMPILE_CACHE=/var/tmp/RadioClaw-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF' # pragma: allowlist secret
+export NODE_COMPILE_CACHE=/var/tmp/RadioClaw-compile-cache
+mkdir -p /var/tmp/RadioClaw-compile-cache
+export RadioClaw_NO_RESPAWN=1
 EOF
 source ~/.bashrc
 ```
@@ -209,22 +209,22 @@ Notes:
 
 - `NODE_COMPILE_CACHE` speeds up subsequent runs (`status`, `health`, `--help`).
 - `/var/tmp` survives reboots better than `/tmp`.
-- `OPENCLAW_NO_RESPAWN=1` avoids extra startup cost from CLI self-respawn.
+- `RadioClaw_NO_RESPAWN=1` avoids extra startup cost from CLI self-respawn.
 - First run warms the cache; later runs benefit most.
 
 ### systemd startup tuning (optional)
 
-If this Pi is mostly running OpenClaw, add a service drop-in to reduce restart
+If this Pi is mostly running RadioClaw, add a service drop-in to reduce restart
 jitter and keep startup env stable:
 
 ```bash
-sudo systemctl edit openclaw
+sudo systemctl edit RadioClaw
 ```
 
 ```ini
 [Service]
-Environment=OPENCLAW_NO_RESPAWN=1
-Environment=NODE_COMPILE_CACHE=/var/tmp/openclaw-compile-cache
+Environment=RadioClaw_NO_RESPAWN=1
+Environment=NODE_COMPILE_CACHE=/var/tmp/RadioClaw-compile-cache
 Restart=always
 RestartSec=2
 TimeoutStartSec=90
@@ -234,10 +234,10 @@ Then apply:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl restart openclaw
+sudo systemctl restart RadioClaw
 ```
 
-If possible, keep OpenClaw state/cache on SSD-backed storage to avoid SD-card
+If possible, keep RadioClaw state/cache on SSD-backed storage to avoid SD-card
 random-I/O bottlenecks during cold starts.
 
 How `Restart=` policies help automated recovery:
@@ -272,15 +272,15 @@ htop
 
 ### Binary Compatibility
 
-Most OpenClaw features work on ARM64, but some external binaries may need ARM builds:
+Most RadioClaw features work on ARM64, but some external binaries may need ARM builds:
 
 | Tool               | ARM64 Status | Notes                               |
 | ------------------ | ------------ | ----------------------------------- |
-| Node.js            | âœ…           | Works great                         |
-| WhatsApp (Baileys) | âœ…           | Pure JS, no issues                  |
-| Telegram           | âœ…           | Pure JS, no issues                  |
+| Node.js            | âœ?          | Works great                         |
+| WhatsApp (Baileys) | âœ?          | Pure JS, no issues                  |
+| Telegram           | âœ?          | Pure JS, no issues                  |
 | gog (Gmail CLI)    | âš ï¸           | Check for ARM release               |
-| Chromium (browser) | âœ…           | `sudo apt install chromium-browser` |
+| Chromium (browser) | âœ?          | `sudo apt install chromium-browser` |
 
 If a skill fails, check if its binary has an ARM build. Many Go/Rust tools do; some don't.
 
@@ -312,7 +312,7 @@ Since the Pi is just the Gateway (models run in the cloud), use API-based models
 }
 ```
 
-**Don't try to run local LLMs on a Pi** â€” even small models are too slow. Let Claude/GPT do the heavy lifting.
+**Don't try to run local LLMs on a Pi** â€?even small models are too slow. Let Claude/GPT do the heavy lifting.
 
 ---
 
@@ -322,13 +322,13 @@ The onboarding wizard sets this up, but to verify:
 
 ```bash
 # Check service is enabled
-sudo systemctl is-enabled openclaw
+sudo systemctl is-enabled RadioClaw
 
 # Enable if not
-sudo systemctl enable openclaw
+sudo systemctl enable RadioClaw
 
 # Start on boot
-sudo systemctl start openclaw
+sudo systemctl start RadioClaw
 ```
 
 ---
@@ -355,12 +355,12 @@ free -h
 
 ```bash
 # Check logs
-journalctl -u openclaw --no-pager -n 100
+journalctl -u RadioClaw --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/openclaw  # if using hackable install
+cd ~/RadioClaw  # if using hackable install
 npm run build
-sudo systemctl restart openclaw
+sudo systemctl restart RadioClaw
 ```
 
 ### ARM Binary Issues
@@ -394,7 +394,7 @@ echo 'wireless-power off' | sudo tee -a /etc/network/interfaces
 | **Pi 5 (4GB)** | ~$60          | $0           | Best performance          |
 | **Pi 5 (8GB)** | ~$80          | $0           | Overkill but future-proof |
 | DigitalOcean   | $0            | $6/mo        | $72/year                  |
-| Hetzner        | $0            | â‚¬3.79/mo     | ~$50/year                 |
+| Hetzner        | $0            | â‚?.79/mo     | ~$50/year                 |
 
 **Break-even:** A Pi pays for itself in ~6-12 months vs cloud VPS.
 
@@ -402,8 +402,8 @@ echo 'wireless-power off' | sudo tee -a /etc/network/interfaces
 
 ## See Also
 
-- [Linux guide](/platforms/linux) â€” general Linux setup
-- [DigitalOcean guide](/platforms/digitalocean) â€” cloud alternative
-- [Hetzner guide](/install/hetzner) â€” Docker setup
-- [Tailscale](/gateway/tailscale) â€” remote access
-- [Nodes](/nodes) â€” pair your laptop/phone with the Pi gateway
+- [Linux guide](/platforms/linux) â€?general Linux setup
+- [DigitalOcean guide](/platforms/digitalocean) â€?cloud alternative
+- [Hetzner guide](/install/hetzner) â€?Docker setup
+- [Tailscale](/gateway/tailscale) â€?remote access
+- [Nodes](/nodes) â€?pair your laptop/phone with the Pi gateway

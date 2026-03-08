@@ -19,15 +19,15 @@ enum StatusActivityBuilder {
         let gatewayStatus = appModel.gatewayStatusText.trimmingCharacters(in: .whitespacesAndNewlines)
         let gatewayLower = gatewayStatus.lowercased()
         if gatewayLower.contains("repair") {
-            return StatusPill.Activity(title: "Repairingâ€¦", systemImage: "wrench.and.screwdriver", tint: .orange)
+            return StatusPill.Activity(title: "Repairingâ€?, systemImage: "wrench.and.screwdriver", tint: .orange)
         }
         if gatewayLower.contains("approval") || gatewayLower.contains("pairing") {
             return StatusPill.Activity(title: "Approval pending", systemImage: "person.crop.circle.badge.clock")
         }
-        // Avoid duplicating the primary gateway status ("Connectingâ€¦") in the activity slot.
+        // Avoid duplicating the primary gateway status ("Connectingâ€?) in the activity slot.
 
         if appModel.screenRecordActive {
-            return StatusPill.Activity(title: "Recording screenâ€¦", systemImage: "record.circle.fill", tint: .red)
+            return StatusPill.Activity(title: "Recording screenâ€?, systemImage: "record.circle.fill", tint: .red)
         }
 
         if let cameraHUDText, !cameraHUDText.isEmpty, let cameraHUDKind {

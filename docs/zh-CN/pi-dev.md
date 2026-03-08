@@ -1,6 +1,5 @@
 ---
-title: Pi 开发工作流程
-x-i18n:
+title: Pi 开发工作流�?x-i18n:
   generated_at: "2026-02-03T10:07:59Z"
   model: claude-opus-4-5
   provider: pi
@@ -9,12 +8,9 @@ x-i18n:
   workflow: 15
 ---
 
-# Pi 开发工作流程
-
-本指南总结了在 OpenClaw 中开发 Pi 集成的合理工作流程。
-
-## 类型检查和代码检查
-
+# Pi 开发工作流�?
+本指南总结了在 RadioClaw 中开�?Pi 集成的合理工作流程�?
+## 类型检查和代码检�?
 - 类型检查和构建：`pnpm build`
 - 代码检查：`pnpm lint`
 - 格式检查：`pnpm format`
@@ -34,7 +30,7 @@ scripts/pi/run-tests.sh
 scripts/pi/run-tests.sh --live
 ```
 
-该脚本通过以下 glob 模式运行所有 Pi 相关的单元测试：
+该脚本通过以下 glob 模式运行所�?Pi 相关的单元测试：
 
 - `src/agents/pi-*.test.ts`
 - `src/agents/pi-embedded-*.test.ts`
@@ -45,33 +41,26 @@ scripts/pi/run-tests.sh --live
 
 ## 手动测试
 
-推荐流程：
-
-- 以开发模式运行 Gateway 网关：
-  - `pnpm gateway:dev`
+推荐流程�?
+- 以开发模式运�?Gateway 网关�?  - `pnpm gateway:dev`
 - 直接触发智能体：
-  - `pnpm openclaw agent --message "Hello" --thinking low`
+  - `pnpm RadioClaw agent --message "Hello" --thinking low`
 - 使用 TUI 进行交互式调试：
   - `pnpm tui`
 
-对于工具调用行为，提示执行 `read` 或 `exec` 操作，以便查看工具流式传输和负载处理。
-
+对于工具调用行为，提示执�?`read` �?`exec` 操作，以便查看工具流式传输和负载处理�?
 ## 完全重置
 
-状态存储在 OpenClaw 状态目录下。默认为 `~/.openclaw`。如果设置了 `OPENCLAW_STATE_DIR`，则使用该目录。
-
+状态存储在 RadioClaw 状态目录下。默认为 `~/.RadioClaw`。如果设置了 `RadioClaw_STATE_DIR`，则使用该目录�?
 要重置所有内容：
 
-- `openclaw.json` 用于配置
-- `credentials/` 用于认证配置文件和 token
-- `agents/<agentId>/sessions/` 用于智能体会话历史
-- `agents/<agentId>/sessions.json` 用于会话索引
+- `RadioClaw.json` 用于配置
+- `credentials/` 用于认证配置文件�?token
+- `agents/<agentId>/sessions/` 用于智能体会话历�?- `agents/<agentId>/sessions.json` 用于会话索引
 - `sessions/` 如果存在旧版路径
 - `workspace/` 如果你想要一个空白工作区
 
-如果只想重置会话，删除该智能体的 `agents/<agentId>/sessions/` 和 `agents/<agentId>/sessions.json`。如果不想重新认证，保留 `credentials/`。
-
-## 参考资料
-
-- https://docs.openclaw.ai/testing
-- https://docs.openclaw.ai/start/getting-started
+如果只想重置会话，删除该智能体的 `agents/<agentId>/sessions/` �?`agents/<agentId>/sessions.json`。如果不想重新认证，保留 `credentials/`�?
+## 参考资�?
+- https://docs.RadioClaw.ai/testing
+- https://docs.RadioClaw.ai/start/getting-started

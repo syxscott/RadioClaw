@@ -283,7 +283,7 @@ describe("resolveDiscordChannelAllowlist", () => {
       if (url.endsWith("/users/@me/guilds")) {
         return jsonResponse([{ id: "111222333444555666", name: "Guild One" }]);
       }
-      // Should never be called â€” if it is, the ID was misrouted as a channel
+      // Should never be called â€?if it is, the ID was misrouted as a channel
       if (url.includes("/channels/")) {
         throw new Error("guild id was incorrectly routed to /channels/");
       }
@@ -310,14 +310,14 @@ describe("resolveDiscordChannelAllowlist", () => {
       if (url.endsWith("/users/@me/guilds")) {
         return jsonResponse([{ id: "999", name: "My Server" }]);
       }
-      // Guild ID hitting /channels/ returns 404 â€” just like real Discord
+      // Guild ID hitting /channels/ returns 404 â€?just like real Discord
       if (url.includes("/channels/")) {
         return new Response(JSON.stringify({ message: "Unknown Channel" }), { status: 404 });
       }
       return new Response("not found", { status: 404 });
     });
 
-    // Without the guild: prefix, a bare numeric string hits /channels/999 â†’ 404 â†’ unresolved
+    // Without the guild: prefix, a bare numeric string hits /channels/999 â†?404 â†?unresolved
     const res = await resolveDiscordChannelAllowlist({
       token: "test",
       entries: ["999"],

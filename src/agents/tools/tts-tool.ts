@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import { SILENT_REPLY_TOKEN } from "../../auto-reply/tokens.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { loadConfig } from "../../config/config.js";
 import { textToSpeech } from "../../tts/tts.js";
 import type { GatewayMessageChannel } from "../../utils/message-channel.js";
@@ -15,13 +15,13 @@ const TtsToolSchema = Type.Object({
 });
 
 export function createTtsTool(opts?: {
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   agentChannel?: GatewayMessageChannel;
 }): AnyAgentTool {
   return {
     label: "TTS",
     name: "tts",
-    description: `Convert text to speech. Audio is delivered automatically from the tool result â€” reply with ${SILENT_REPLY_TOKEN} after a successful call to avoid duplicate messages.`,
+    description: `Convert text to speech. Audio is delivered automatically from the tool result â€?reply with ${SILENT_REPLY_TOKEN} after a successful call to avoid duplicate messages.`,
     parameters: TtsToolSchema,
     execute: async (_toolCallId, args) => {
       const params = args as Record<string, unknown>;

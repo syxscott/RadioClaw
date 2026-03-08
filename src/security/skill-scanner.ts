@@ -178,7 +178,7 @@ const SOURCE_RULES: SourceRule[] = [
   {
     ruleId: "potential-exfiltration",
     severity: "warn",
-    message: "File read combined with network send â€” possible data exfiltration",
+    message: "File read combined with network send â€?possible data exfiltration",
     pattern: /readFileSync|readFile/,
     requiresContext: /\bfetch\b|\bpost\b|http\.request/i,
   },
@@ -198,7 +198,7 @@ const SOURCE_RULES: SourceRule[] = [
     ruleId: "env-harvesting",
     severity: "critical",
     message:
-      "Environment variable access combined with network send â€” possible credential harvesting",
+      "Environment variable access combined with network send â€?possible credential harvesting",
     pattern: /process\.env/,
     requiresContext: /\bfetch\b|\bpost\b|http\.request/i,
   },

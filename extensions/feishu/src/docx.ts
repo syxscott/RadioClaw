@@ -4,7 +4,7 @@ import { isAbsolute } from "node:path";
 import { basename } from "node:path";
 import type * as Lark from "@larksuiteoapi/node-sdk";
 import { Type } from "@sinclair/typebox";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { RadioClawPluginApi } from "RadioClaw/plugin-sdk/feishu";
 import { listEnabledFeishuAccounts } from "./accounts.js";
 import { FeishuDocSchema, type FeishuDocParams } from "./doc-schema.js";
 import { BATCH_SIZE, insertBlocksInBatches } from "./docx-batch-insert.js";
@@ -449,7 +449,7 @@ async function resolveUploadInput(
   // Absolute paths (/...) are supported but must exist on disk. If an absolute
   // path does not exist we throw immediately rather than falling through to
   // base64 decoding, which would silently upload garbage bytes.
-  // Note: JPEG base64 starts with "/9j/" â€” pass as data:image/jpeg;base64,...
+  // Note: JPEG base64 starts with "/9j/" â€?pass as data:image/jpeg;base64,...
   // to avoid ambiguity with absolute paths.
   if (imageInput) {
     const candidate = imageInput.startsWith("~") ? imageInput.replace(/^~/, homedir()) : imageInput;
@@ -1226,7 +1226,7 @@ async function listAppScopes(client: Lark.Client) {
 
 // ============ Tool Registration ============
 
-export function registerFeishuDocTools(api: OpenClawPluginApi) {
+export function registerFeishuDocTools(api: RadioClawPluginApi) {
   if (!api.config) {
     api.logger.debug?.("feishu_doc: No config available, skipping doc tools");
     return;

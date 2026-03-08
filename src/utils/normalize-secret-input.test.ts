@@ -14,7 +14,7 @@ describe("normalizeSecretInput", () => {
   });
 
   it("drops non-Latin1 code points that can break HTTP ByteString headers", () => {
-    // U+0417 (Cyrillic З) and U+2502 (box drawing │) are > 255.
+    // U+0417 (Cyrillic З) and U+2502 (box drawing �? are > 255.
     expect(normalizeSecretInput("key-\u0417\u2502-token")).toBe("key--token");
   });
 

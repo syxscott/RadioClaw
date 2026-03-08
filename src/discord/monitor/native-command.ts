@@ -43,7 +43,7 @@ import type { ReplyPayload } from "../../auto-reply/types.js";
 import { resolveCommandAuthorizedFromAuthorizers } from "../../channels/command-gating.js";
 import { resolveNativeCommandSessionTargets } from "../../channels/native-command-session-targets.js";
 import { createReplyPrefixOptions } from "../../channels/reply-prefix.js";
-import type { OpenClawConfig, loadConfig } from "../../config/config.js";
+import type { RadioClawConfig, loadConfig } from "../../config/config.js";
 import { isDangerousNameMatchingEnabled } from "../../config/dangerous-name-matching.js";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../../config/runtime-group-policy.js";
 import { loadSessionStore, resolveStorePath } from "../../config/sessions.js";
@@ -92,11 +92,11 @@ import { resolveDiscordSenderIdentity } from "./sender-identity.js";
 import type { ThreadBindingManager } from "./thread-bindings.js";
 import { resolveDiscordThreadParentInfo } from "./threading.js";
 
-type DiscordConfig = NonNullable<OpenClawConfig["channels"]>["discord"];
+type DiscordConfig = NonNullable<RadioClawConfig["channels"]>["discord"];
 const log = createSubsystemLogger("discord/native-command");
 
 function resolveDiscordNativeCommandAllowlistAccess(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
   sender: { id: string; name?: string; tag?: string };
   chatType: "direct" | "group" | "thread" | "channel";
@@ -910,7 +910,7 @@ async function handleDiscordModelPickerInteraction(
         await safeDiscordInteractionCall("model picker follow-up", () =>
           interaction.followUp({
             ...buildDiscordModelPickerNoticePayload(
-              `â³ Model change to ${resolvedModelRef} is still processing. Check /status in a few seconds.`,
+              `â?Model change to ${resolvedModelRef} is still processing. Check /status in a few seconds.`,
             ),
             ephemeral: true,
           }),
@@ -921,7 +921,7 @@ async function handleDiscordModelPickerInteraction(
       await safeDiscordInteractionCall("model picker follow-up", () =>
         interaction.followUp({
           ...buildDiscordModelPickerNoticePayload(
-            `âŒ Failed to apply ${resolvedModelRef}. Try /model ${resolvedModelRef} directly.`,
+            `â?Failed to apply ${resolvedModelRef}. Try /model ${resolvedModelRef} directly.`,
           ),
           ephemeral: true,
         }),
@@ -943,7 +943,7 @@ async function handleDiscordModelPickerInteraction(
 
     if (!persisted) {
       logVerbose(
-        `discord: model picker override mismatch â€” expected ${resolvedModelRef} but read ${effectiveModelRef} from session key ${route.sessionKey}`,
+        `discord: model picker override mismatch â€?expected ${resolvedModelRef} but read ${effectiveModelRef} from session key ${route.sessionKey}`,
       );
     }
 
@@ -959,7 +959,7 @@ async function handleDiscordModelPickerInteraction(
       interaction.followUp({
         ...buildDiscordModelPickerNoticePayload(
           persisted
-            ? `âœ… Model set to ${resolvedModelRef}.`
+            ? `âœ?Model set to ${resolvedModelRef}.`
             : `âš ï¸ Tried to set ${resolvedModelRef}, but current model is ${effectiveModelRef}.`,
         ),
         ephemeral: true,
@@ -1010,7 +1010,7 @@ async function handleDiscordCommandArgInteraction(
   }
   const argUpdateResult = await safeDiscordInteractionCall("command arg update", () =>
     interaction.update({
-      content: `âœ… Selected ${parsed.value}.`,
+      content: `âœ?Selected ${parsed.value}.`,
       components: [],
     }),
   );
@@ -1746,7 +1746,7 @@ async function dispatchDiscordCommandInteraction(params: {
   ) {
     await safeDiscordInteractionCall("interaction empty fallback", async () => {
       const payload = {
-        content: "âœ… Done.",
+        content: "âœ?Done.",
         ephemeral: true,
       };
       if (preferFollowUp) {

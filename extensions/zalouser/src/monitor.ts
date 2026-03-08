@@ -7,13 +7,13 @@ import {
   clearHistoryEntriesIfEnabled,
   recordPendingHistoryEntryIfEnabled,
   resolveDmGroupAccessWithLists,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import type {
   MarkdownTableMode,
-  OpenClawConfig,
+  RadioClawConfig,
   OutboundReplyPayload,
   RuntimeEnv,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   createTypingCallbacks,
   createScopedPairingAccess,
@@ -29,7 +29,7 @@ import {
   sendMediaWithLeadingCaption,
   summarizeMapping,
   warnMissingProviderGroupPolicyFallbackOnce,
-} from "openclaw/plugin-sdk/zalouser";
+} from "RadioClaw/plugin-sdk/zalouser";
 import {
   buildZalouserGroupCandidates,
   findZalouserGroupEntry,
@@ -53,7 +53,7 @@ import {
 
 export type ZalouserMonitorOptions = {
   account: ResolvedZalouserAccount;
-  config: OpenClawConfig;
+  config: RadioClawConfig;
   runtime: RuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -138,14 +138,14 @@ function createDeferred<T>() {
   return { promise, resolve, reject };
 }
 
-function resolveZalouserDmSessionScope(config: OpenClawConfig) {
+function resolveZalouserDmSessionScope(config: RadioClawConfig) {
   const configured = config.session?.dmScope;
   return configured === "main" || !configured ? "per-channel-peer" : configured;
 }
 
 function resolveZalouserInboundSessionKey(params: {
   core: ZalouserCoreRuntime;
-  config: OpenClawConfig;
+  config: RadioClawConfig;
   route: { agentId: string; accountId: string; sessionKey: string };
   storePath: string;
   isGroup: boolean;
@@ -249,7 +249,7 @@ async function sendZalouserDeliveryAcks(params: {
 async function processMessage(
   message: ZaloInboundMessage,
   account: ResolvedZalouserAccount,
-  config: OpenClawConfig,
+  config: RadioClawConfig,
   core: ZalouserCoreRuntime,
   runtime: RuntimeEnv,
   historyState: ZalouserGroupHistoryState,
@@ -694,7 +694,7 @@ async function deliverZalouserReply(params: {
   isGroup: boolean;
   runtime: RuntimeEnv;
   core: ZalouserCoreRuntime;
-  config: OpenClawConfig;
+  config: RadioClawConfig;
   accountId?: string;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   tableMode?: MarkdownTableMode;
@@ -820,7 +820,7 @@ export async function monitorZalouserProvider(
           if (!nextGroups[cleaned]) {
             nextGroups[cleaned] = groupsConfig[entry];
           }
-          mapping.push(`${entry}â†’${cleaned}`);
+          mapping.push(`${entry}â†?{cleaned}`);
           continue;
         }
         const matches = byName.get(cleaned.toLowerCase()) ?? [];
@@ -830,7 +830,7 @@ export async function monitorZalouserProvider(
           if (!nextGroups[id]) {
             nextGroups[id] = groupsConfig[entry];
           }
-          mapping.push(`${entry}â†’${id}`);
+          mapping.push(`${entry}â†?{id}`);
         } else {
           unresolved.push(entry);
         }
@@ -954,7 +954,7 @@ export const __testing = {
   processMessage: async (params: {
     message: ZaloInboundMessage;
     account: ResolvedZalouserAccount;
-    config: OpenClawConfig;
+    config: RadioClawConfig;
     runtime: RuntimeEnv;
     historyState?: {
       historyLimit?: number;

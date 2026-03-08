@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/bluebubbles";
+import type { RadioClawConfig } from "RadioClaw/plugin-sdk/bluebubbles";
 import { resolveBlueBubblesServerAccount } from "./account-resolve.js";
 import { getCachedBlueBubblesPrivateApiStatus } from "./probe.js";
 import { blueBubblesFetchWithTimeout, buildBlueBubblesApiUrl } from "./types.js";
@@ -8,7 +8,7 @@ export type BlueBubblesReactionOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: OpenClawConfig;
+  cfg?: RadioClawConfig;
 };
 
 const REACTION_TYPES = new Set(["love", "like", "dislike", "laugh", "emphasize", "question"]);
@@ -17,7 +17,7 @@ const REACTION_ALIASES = new Map<string, string>([
   // General
   ["heart", "love"],
   ["love", "love"],
-  ["❤", "love"],
+  ["�?, "love"],
   ["❤️", "love"],
   ["red_heart", "love"],
   ["thumbs_up", "like"],
@@ -47,16 +47,16 @@ const REACTION_ALIASES = new Map<string, string>([
   ["emphasize", "emphasize"],
   ["exclaim", "emphasize"],
   ["!!", "emphasize"],
-  ["‼", "emphasize"],
+  ["�?, "emphasize"],
   ["‼️", "emphasize"],
-  ["❗", "emphasize"],
+  ["�?, "emphasize"],
   ["important", "emphasize"],
   ["bang", "emphasize"],
   // Question
   ["question", "question"],
   ["?", "question"],
-  ["❓", "question"],
-  ["❔", "question"],
+  ["�?, "question"],
+  ["�?, "question"],
   ["ask", "question"],
   // Apple/Messages names
   ["loved", "love"],
@@ -81,9 +81,9 @@ const REACTION_ALIASES = new Map<string, string>([
 const REACTION_EMOJIS = new Map<string, string>([
   // Love
   ["❤️", "love"],
-  ["❤", "love"],
+  ["�?, "love"],
   ["♥️", "love"],
-  ["♥", "love"],
+  ["�?, "love"],
   ["😍", "love"],
   ["💕", "love"],
   // Like
@@ -100,14 +100,14 @@ const REACTION_EMOJIS = new Map<string, string>([
   ["😹", "laugh"],
   // Emphasize
   ["‼️", "emphasize"],
-  ["‼", "emphasize"],
+  ["�?, "emphasize"],
   ["!!", "emphasize"],
-  ["❗", "emphasize"],
-  ["❕", "emphasize"],
+  ["�?, "emphasize"],
+  ["�?, "emphasize"],
   ["!", "emphasize"],
   // Question
-  ["❓", "question"],
-  ["❔", "question"],
+  ["�?, "question"],
+  ["�?, "question"],
   ["?", "question"],
 ]);
 

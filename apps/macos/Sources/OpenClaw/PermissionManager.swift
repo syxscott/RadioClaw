@@ -5,7 +5,7 @@ import CoreGraphics
 import CoreLocation
 import Foundation
 import Observation
-import OpenClawIPC
+import RadioClawIPC
 import Speech
 import UserNotifications
 
@@ -349,14 +349,14 @@ final class LocationPermissionRequester: NSObject, CLLocationManagerDelegate {
 }
 
 enum AppleScriptPermission {
-    private static let logger = Logger(subsystem: "ai.openclaw", category: "AppleScriptPermission")
+    private static let logger = Logger(subsystem: "ai.RadioClaw", category: "AppleScriptPermission")
 
     /// Sends a benign AppleScript to Terminal to verify Automation permission.
     @MainActor
     static func isAuthorized() -> Bool {
         let script = """
         tell application "Terminal"
-            return "openclaw-ok"
+            return "RadioClaw-ok"
         end tell
         """
 
@@ -375,7 +375,7 @@ enum AppleScriptPermission {
         return result != nil
     }
 
-    /// Triggers the TCC prompt and opens System Settings â†’ Privacy & Security â†’ Automation.
+    /// Triggers the TCC prompt and opens System Settings â†?Privacy & Security â†?Automation.
     @MainActor
     static func requestAuthorization() async {
         _ = self.isAuthorized() // first attempt triggers the dialog if not granted

@@ -56,7 +56,7 @@ export const handleConfigCommand: CommandHandler = async (params, allowTextComma
     const missingAdminScope = requireGatewayClientScopeForInternalChannel(params, {
       label: "/config write",
       allowedScopes: ["operator.admin"],
-      missingText: "‚ùå /config set|unset requires operator.admin for gateway clients.",
+      missingText: "‚ù?/config set|unset requires operator.admin for gateway clients.",
     });
     if (missingAdminScope) {
       return missingAdminScope;

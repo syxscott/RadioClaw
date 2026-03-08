@@ -2,7 +2,7 @@
 title: Deploy on Render
 ---
 
-Deploy OpenClaw on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
+Deploy RadioClaw on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Deploy OpenClaw on Render using Infrastructure as Code. The included `render.yam
 
 ## Deploy with a Render Blueprint
 
-[Deploy to Render](https://render.com/deploy?repo=https://github.com/openclaw/openclaw)
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/RadioClaw/RadioClaw)
 
 Clicking this link will:
 
@@ -24,12 +24,12 @@ Once deployed, your service URL follows the pattern `https://<service-name>.onre
 ## Understanding the Blueprint
 
 Render Blueprints are YAML files that define your infrastructure. The `render.yaml` in this
-repository configures everything needed to run OpenClaw:
+repository configures everything needed to run RadioClaw:
 
 ```yaml
 services:
   - type: web
-    name: openclaw
+    name: RadioClaw
     runtime: docker
     plan: starter
     healthCheckPath: /health
@@ -38,14 +38,14 @@ services:
         value: "8080"
       - key: SETUP_PASSWORD
         sync: false # prompts during deploy
-      - key: OPENCLAW_STATE_DIR
-        value: /data/.openclaw
-      - key: OPENCLAW_WORKSPACE_DIR
+      - key: RadioClaw_STATE_DIR
+        value: /data/.RadioClaw
+      - key: RadioClaw_WORKSPACE_DIR
         value: /data/workspace
-      - key: OPENCLAW_GATEWAY_TOKEN
+      - key: RadioClaw_GATEWAY_TOKEN
         generateValue: true # auto-generates a secure token
     disk:
-      name: openclaw-data
+      name: RadioClaw-data
       mountPath: /data
       sizeGB: 1
 ```
@@ -83,13 +83,13 @@ The Blueprint defaults to `starter`. To use free tier, change `plan: free` in yo
 
 ### Access the Control UI
 
-The web dashboard is available at `https://<your-service>.onrender.com/openclaw`.
+The web dashboard is available at `https://<your-service>.onrender.com/RadioClaw`.
 
 ## Render Dashboard features
 
 ### Logs
 
-View real-time logs in **Dashboard â†’ your service â†’ Logs**. Filter by:
+View real-time logs in **Dashboard â†?your service â†?Logs**. Filter by:
 
 - Build logs (Docker image creation)
 - Deploy logs (service startup)
@@ -97,19 +97,19 @@ View real-time logs in **Dashboard â†’ your service â†’ Logs**. Filter by:
 
 ### Shell access
 
-For debugging, open a shell session via **Dashboard â†’ your service â†’ Shell**. The persistent disk is mounted at `/data`.
+For debugging, open a shell session via **Dashboard â†?your service â†?Shell**. The persistent disk is mounted at `/data`.
 
 ### Environment variables
 
-Modify variables in **Dashboard â†’ your service â†’ Environment**. Changes trigger an automatic redeploy.
+Modify variables in **Dashboard â†?your service â†?Environment**. Changes trigger an automatic redeploy.
 
 ### Auto-deploy
 
-If you use the original OpenClaw repository, Render will not auto-deploy your OpenClaw. To update it, run a manual Blueprint sync from the dashboard.
+If you use the original RadioClaw repository, Render will not auto-deploy your RadioClaw. To update it, run a manual Blueprint sync from the dashboard.
 
 ## Custom domain
 
-1. Go to **Dashboard â†’ your service â†’ Settings â†’ Custom Domains**
+1. Go to **Dashboard â†?your service â†?Settings â†?Custom Domains**
 2. Add your domain
 3. Configure DNS as instructed (CNAME to `*.onrender.com`)
 4. Render provisions a TLS certificate automatically
@@ -121,7 +121,7 @@ Render supports horizontal and vertical scaling:
 - **Vertical**: Change the plan to get more CPU/RAM
 - **Horizontal**: Increase instance count (Standard plan and above)
 
-For OpenClaw, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
+For RadioClaw, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
 
 ## Backups and migration
 
@@ -131,7 +131,7 @@ Export your configuration and workspace at any time:
 https://<your-service>.onrender.com/setup/export
 ```
 
-This downloads a portable backup you can restore on any OpenClaw host.
+This downloads a portable backup you can restore on any RadioClaw host.
 
 ## Troubleshooting
 
@@ -139,8 +139,8 @@ This downloads a portable backup you can restore on any OpenClaw host.
 
 Check the deploy logs in the Render Dashboard. Common issues:
 
-- Missing `SETUP_PASSWORD` â€” the Blueprint prompts for this, but verify it's set
-- Port mismatch â€” ensure `PORT=8080` matches the Dockerfile's exposed port
+- Missing `SETUP_PASSWORD` â€?the Blueprint prompts for this, but verify it's set
+- Port mismatch â€?ensure `PORT=8080` matches the Dockerfile's exposed port
 
 ### Slow cold starts (free tier)
 

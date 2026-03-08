@@ -69,7 +69,7 @@ function formatPathEnv(raw?: string): string | null {
   }
   const parts = trimmed.split(":").filter(Boolean);
   const display =
-    parts.length <= 3 ? trimmed : `${parts.slice(0, 2).join(":")}:â€¦:${parts.slice(-1)[0]}`;
+    parts.length <= 3 ? trimmed : `${parts.slice(0, 2).join(":")}:â€?${parts.slice(-1)[0]}`;
   return shortenHomeInString(display);
 }
 

@@ -16,7 +16,7 @@ final class GatewayProcessManager {
         var label: String {
             switch self {
             case .stopped: return "Stopped"
-            case .starting: return "Startingâ€¦"
+            case .starting: return "Startingâ€?
             case let .running(details):
                 if let details, !details.isEmpty { return "Running (\(details))" }
                 return "Running"
@@ -45,7 +45,7 @@ final class GatewayProcessManager {
     #if DEBUG
     private var testingConnection: GatewayConnection?
     #endif
-    private let logger = Logger(subsystem: "ai.openclaw", category: "gateway.process")
+    private let logger = Logger(subsystem: "ai.RadioClaw", category: "gateway.process")
 
     private let logLimit = 20000 // characters to keep in-memory
     private let environmentRefreshMinInterval: TimeInterval = 30
@@ -229,7 +229,7 @@ final class GatewayProcessManager {
                     return true
                 }
 
-                // No reachable gateway (and no listener) â€” fall through to spawn.
+                // No reachable gateway (and no listener) â€?fall through to spawn.
                 self.existingGatewayDetails = nil
                 return false
             }

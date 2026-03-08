@@ -1,6 +1,6 @@
 import CoreImage
 import Combine
-import OpenClawKit
+import RadioClawKit
 import PhotosUI
 import SwiftUI
 import UIKit
@@ -20,7 +20,7 @@ private enum OnboardingStep: Int, CaseIterable {
         Self(rawValue: self.rawValue + 1)
     }
 
-    /// Progress label for the manual setup flow (mode â†’ connect â†’ auth â†’ success).
+    /// Progress label for the manual setup flow (mode â†?connect â†?auth â†?success).
     var manualProgressTitle: String {
         let manualSteps: [OnboardingStep] = [.mode, .connect, .auth, .success]
         guard let idx = manualSteps.firstIndex(of: self) else { return "" }
@@ -307,7 +307,7 @@ struct OnboardingWizardView: View {
                 .font(.largeTitle.weight(.bold))
                 .padding(.bottom, 8)
 
-            Text("Connect to your OpenClaw gateway")
+            Text("Connect to your RadioClaw gateway")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -317,7 +317,7 @@ struct OnboardingWizardView: View {
 
             VStack(spacing: 12) {
                 Button {
-                    self.statusLine = "Opening QR scannerâ€¦"
+                    self.statusLine = "Opening QR scannerâ€?
                     self.showQRScanner = true
                 } label: {
                     Label("Scan QR Code", systemImage: "qrcode")
@@ -457,7 +457,7 @@ struct OnboardingWizardView: View {
                                     ProgressView()
                                         .progressViewStyle(.circular)
                                 } else if !hasHost {
-                                    Text("Resolvingâ€¦")
+                                    Text("Resolvingâ€?)
                                 } else {
                                     Text("Connect")
                                 }
@@ -531,14 +531,14 @@ struct OnboardingWizardView: View {
                         if let id = self.issue.requestId, !id.isEmpty {
                             return "Request ID: \(id)"
                         }
-                        return "Request ID: check `openclaw devices list`."
+                        return "Request ID: check `RadioClaw devices list`."
                     }()
                     Text(
                         "Approve this device on the gateway.\n"
-                            + "1) `openclaw devices approve` (or `openclaw devices approve <requestId>`)\n"
+                            + "1) `RadioClaw devices approve` (or `RadioClaw devices approve <requestId>`)\n"
                             + "2) `/pair approve` in Telegram\n"
                             + "\(requestLine)\n"
-                            + "OpenClaw will also retry automatically when you return to this app.")
+                            + "RadioClaw will also retry automatically when you return to this app.")
                 }
             }
 
@@ -595,7 +595,7 @@ struct OnboardingWizardView: View {
             Button {
                 self.onClose()
             } label: {
-                Text("Open OpenClaw")
+                Text("Open RadioClaw")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -629,7 +629,7 @@ struct OnboardingWizardView: View {
                 HStack(spacing: 8) {
                     ProgressView()
                         .progressViewStyle(.circular)
-                    Text("Connectingâ€¦")
+                    Text("Connectingâ€?)
                 }
             } else {
                 Text("Connect")
@@ -650,8 +650,8 @@ struct OnboardingWizardView: View {
         }
         self.saveGatewayCredentials(token: self.gatewayToken, password: self.gatewayPassword)
         self.showQRScanner = false
-        self.connectMessage = "Connecting via QR codeâ€¦"
-        self.statusLine = "QR loaded. Connecting to \(link.host):\(link.port)â€¦"
+        self.connectMessage = "Connecting via QR codeâ€?
+        self.statusLine = "QR loaded. Connecting to \(link.host):\(link.port)â€?
         if self.selectedMode == nil {
             self.selectedMode = link.tls ? .remoteDomain : .homeNetwork
         }
@@ -665,7 +665,7 @@ struct OnboardingWizardView: View {
         self.connectMessage = nil
         self.issue = .none
         self.pairingRequestId = nil
-        self.statusLine = "Opening QR scannerâ€¦"
+        self.statusLine = "Opening QR scannerâ€?
         self.showQRScanner = true
     }
 
@@ -678,8 +678,8 @@ struct OnboardingWizardView: View {
         // Once the user explicitly resumes after approving, clear the sticky issue
         // so new status/auth errors can surface instead of being masked as pairing.
         self.issue = .none
-        self.connectMessage = "Retrying after approvalâ€¦"
-        self.statusLine = "Retrying after approvalâ€¦"
+        self.connectMessage = "Retrying after approvalâ€?
+        self.statusLine = "Retrying after approvalâ€?
         Task { await self.retryLastAttempt() }
     }
 
@@ -741,12 +741,12 @@ struct OnboardingWizardView: View {
                     self.manualPort = port
                     self.manualTLS = useTLS
                 case .discovered:
-                    self.manualHost = "openclaw.local"
+                    self.manualHost = "RadioClaw.local"
                     self.manualPort = 18789
                     self.manualTLS = true
                 }
             } else {
-                self.manualHost = "openclaw.local"
+                self.manualHost = "RadioClaw.local"
                 self.manualPort = 18789
                 self.manualTLS = true
             }
@@ -755,7 +755,7 @@ struct OnboardingWizardView: View {
         if self.selectedMode == nil {
             self.selectedMode = OnboardingStateStore.lastMode()
         }
-        if self.selectedMode == .developerLocal && self.manualHost == "openclaw.local" {
+        if self.selectedMode == .developerLocal && self.manualHost == "RadioClaw.local" {
             self.manualHost = "localhost"
             self.manualTLS = false
         }
@@ -797,8 +797,8 @@ struct OnboardingWizardView: View {
     private func connectDiscoveredGateway(_ gateway: GatewayDiscoveryModel.DiscoveredGateway) async {
         self.connectingGatewayID = gateway.id
         self.issue = .none
-        self.connectMessage = "Connecting to \(gateway.name)â€¦"
-        self.statusLine = "Connecting to \(gateway.name)â€¦"
+        self.connectMessage = "Connecting to \(gateway.name)â€?
+        self.statusLine = "Connecting to \(gateway.name)â€?
         defer { self.connectingGatewayID = nil }
         await self.gatewayController.connect(gateway)
     }
@@ -810,15 +810,15 @@ struct OnboardingWizardView: View {
 
     private func applyModeDefaults(_ mode: OnboardingConnectionMode) {
         let host = self.manualHost.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let hostIsDefaultLike = host.isEmpty || host == "openclaw.local" || host == "localhost"
+        let hostIsDefaultLike = host.isEmpty || host == "RadioClaw.local" || host == "localhost"
 
         switch mode {
         case .homeNetwork:
-            if hostIsDefaultLike { self.manualHost = "openclaw.local" }
+            if hostIsDefaultLike { self.manualHost = "RadioClaw.local" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .remoteDomain:
-            if host == "openclaw.local" || host == "localhost" { self.manualHost = "" }
+            if host == "RadioClaw.local" || host == "localhost" { self.manualHost = "" }
             self.manualTLS = true
             if self.manualPort <= 0 || self.manualPort > 65535 { self.manualPort = 18789 }
         case .developerLocal:
@@ -840,8 +840,8 @@ struct OnboardingWizardView: View {
         guard !host.isEmpty, self.manualPort > 0, self.manualPort <= 65535 else { return }
         self.connectingGatewayID = "manual"
         self.issue = .none
-        self.connectMessage = "Connecting to \(host)â€¦"
-        self.statusLine = "Connecting to \(host):\(self.manualPort)â€¦"
+        self.connectMessage = "Connecting to \(host)â€?
+        self.statusLine = "Connecting to \(host):\(self.manualPort)â€?
         defer { self.connectingGatewayID = nil }
         await self.gatewayController.connectManual(host: host, port: self.manualPort, useTLS: self.manualTLS)
     }
@@ -850,8 +850,8 @@ struct OnboardingWizardView: View {
         self.connectingGatewayID = silent ? "retry-auto" : "retry"
         // Keep current auth/pairing issue sticky while retrying to avoid Step 3 UI flip-flop.
         if !silent {
-            self.connectMessage = "Retryingâ€¦"
-            self.statusLine = "Retrying last connectionâ€¦"
+            self.connectMessage = "Retryingâ€?
+            self.statusLine = "Retrying last connectionâ€?
         }
         defer { self.connectingGatewayID = nil }
         await self.gatewayController.connectLastKnown()

@@ -19,7 +19,7 @@ export function renderInstances(props: InstancesProps) {
           <div class="card-sub">Presence beacons from the gateway and clients.</div>
         </div>
         <button class="btn" ?disabled=${props.loading} @click=${props.onRefresh}>
-          ${props.loading ? "Loadingâ€¦" : "Refresh"}
+          ${props.loading ? "Loadingâ€? : "Refresh"}
         </button>
       </div>
       ${

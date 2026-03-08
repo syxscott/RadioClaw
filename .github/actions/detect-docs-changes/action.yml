@@ -2,7 +2,7 @@ name: Detect docs-only changes
 description: >
   Outputs docs_only=true when all changed files are under docs/ or are
   markdown (.md/.mdx). Fail-safe: if detection fails, outputs false (run
-  everything). Uses git diff â€” no API calls, no extra permissions needed.
+  everything). Uses git diff â€?no API calls, no extra permissions needed.
 
 outputs:
   docs_only:
@@ -22,7 +22,7 @@ runs:
         if [ "${{ github.event_name }}" = "push" ]; then
           BASE="${{ github.event.before }}"
         else
-          # Use the exact base SHA from the event payload â€” stable regardless
+          # Use the exact base SHA from the event payload â€?stable regardless
           # of base branch movement (avoids origin/<ref> drift).
           BASE="${{ github.event.pull_request.base.sha }}"
         fi
@@ -47,7 +47,7 @@ runs:
         NON_DOCS=$(echo "$CHANGED" | grep -vE '^docs/|\.md$|\.mdx$' || true)
         if [ -z "$NON_DOCS" ]; then
           echo "docs_only=true" >> "$GITHUB_OUTPUT"
-          echo "Docs-only change detected â€” skipping heavy jobs"
+          echo "Docs-only change detected â€?skipping heavy jobs"
         else
           echo "docs_only=false" >> "$GITHUB_OUTPUT"
         fi

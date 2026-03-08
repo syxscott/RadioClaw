@@ -76,7 +76,7 @@ describe("msteams media-helpers", () => {
     });
 
     it("handles URLs without extension by deriving from MIME", async () => {
-      // Now defaults to application/octet-stream â†’ .bin fallback
+      // Now defaults to application/octet-stream â†?.bin fallback
       expect(await extractFilename("https://example.com/images/photo")).toBe("photo.bin");
     });
 
@@ -155,7 +155,7 @@ describe("msteams media-helpers", () => {
     });
 
     it("returns true for Windows rooted paths", () => {
-      expect(isLocalPath("\\tmp\\openclaw\\file.txt")).toBe(true);
+      expect(isLocalPath("\\tmp\\RadioClaw\\file.txt")).toBe(true);
     });
 
     it("returns false for http URLs", () => {

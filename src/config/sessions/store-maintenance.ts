@@ -124,7 +124,7 @@ function resolveHighWaterBytes(
 }
 
 /**
- * Resolve maintenance settings from openclaw.json (`session.maintenance`).
+ * Resolve maintenance settings from RadioClaw.json (`session.maintenance`).
  * Falls back to built-in defaults when config is missing or unset.
  */
 export function resolveMaintenanceConfig(): ResolvedSessionMaintenanceConfig {
@@ -301,7 +301,7 @@ export async function rotateSessionFile(
     return false;
   }
 
-  // Clean up old backups â€” keep only the 3 most recent .bak.* files.
+  // Clean up old backups â€?keep only the 3 most recent .bak.* files.
   try {
     const dir = path.dirname(storePath);
     const baseName = path.basename(storePath);

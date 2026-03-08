@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { AgentMessage } from "@mariozechner/pi-agent-core";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { truncateUtf16Safe } from "../../utils.js";
 import type { WorkspaceBootstrapFile } from "../workspace.js";
 import type { EmbeddedContextFile } from "./types.js";
@@ -96,7 +96,7 @@ type TrimBootstrapResult = {
   originalLength: number;
 };
 
-export function resolveBootstrapMaxChars(cfg?: OpenClawConfig): number {
+export function resolveBootstrapMaxChars(cfg?: RadioClawConfig): number {
   const raw = cfg?.agents?.defaults?.bootstrapMaxChars;
   if (typeof raw === "number" && Number.isFinite(raw) && raw > 0) {
     return Math.floor(raw);
@@ -104,7 +104,7 @@ export function resolveBootstrapMaxChars(cfg?: OpenClawConfig): number {
   return DEFAULT_BOOTSTRAP_MAX_CHARS;
 }
 
-export function resolveBootstrapTotalMaxChars(cfg?: OpenClawConfig): number {
+export function resolveBootstrapTotalMaxChars(cfg?: RadioClawConfig): number {
   const raw = cfg?.agents?.defaults?.bootstrapTotalMaxChars;
   if (typeof raw === "number" && Number.isFinite(raw) && raw > 0) {
     return Math.floor(raw);
@@ -113,7 +113,7 @@ export function resolveBootstrapTotalMaxChars(cfg?: OpenClawConfig): number {
 }
 
 export function resolveBootstrapPromptTruncationWarningMode(
-  cfg?: OpenClawConfig,
+  cfg?: RadioClawConfig,
 ): "off" | "once" | "always" {
   const raw = cfg?.agents?.defaults?.bootstrapPromptTruncationWarning;
   if (raw === "off" || raw === "once" || raw === "always") {
@@ -145,7 +145,7 @@ function trimBootstrapContent(
   const marker = [
     "",
     `[...truncated, read ${fileName} for full content...]`,
-    `…(truncated ${fileName}: kept ${headChars}+${tailChars} chars of ${trimmed.length})…`,
+    `�?truncated ${fileName}: kept ${headChars}+${tailChars} chars of ${trimmed.length})…`,
     "",
   ].join("\n");
   const contentWithMarker = [head, marker, tail].join("\n");
@@ -213,7 +213,7 @@ export function buildBootstrapContextFiles(
     const pathValue = typeof file.path === "string" ? file.path.trim() : "";
     if (!pathValue) {
       opts?.warn?.(
-        `skipping bootstrap file "${file.name}" — missing or invalid "path" field (hook may have used "filePath" instead)`,
+        `skipping bootstrap file "${file.name}" �?missing or invalid "path" field (hook may have used "filePath" instead)`,
       );
       continue;
     }

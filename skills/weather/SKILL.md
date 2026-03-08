@@ -2,7 +2,7 @@
 name: weather
 description: "Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed."
 homepage: https://wttr.in/:help
-metadata: { "openclaw": { "emoji": "ğŸŒ¤ï¸", "requires": { "bins": ["curl"] } } }
+metadata: { "RadioClaw": { "emoji": "ğŸŒ¤ï¸?, "requires": { "bins": ["curl"] } } }
 ---
 
 # Weather Skill
@@ -11,7 +11,7 @@ Get current weather conditions and forecasts.
 
 ## When to Use
 
-âœ… **USE this skill when:**
+âœ?**USE this skill when:**
 
 - "What's the weather?"
 - "Will it rain today/tomorrow?"
@@ -21,13 +21,13 @@ Get current weather conditions and forecasts.
 
 ## When NOT to Use
 
-âŒ **DON'T use this skill when:**
+â?**DON'T use this skill when:**
 
-- Historical weather data â†’ use weather archives/APIs
-- Climate analysis or trends â†’ use specialized data sources
-- Hyper-local microclimate data â†’ use local sensors
-- Severe weather alerts â†’ check official NWS sources
-- Aviation/marine weather â†’ use specialized services (METAR, etc.)
+- Historical weather data â†?use weather archives/APIs
+- Climate analysis or trends â†?use specialized data sources
+- Hyper-local microclimate data â†?use local sensors
+- Severe weather alerts â†?check official NWS sources
+- Aviation/marine weather â†?use specialized services (METAR, etc.)
 
 ## Location
 
@@ -76,13 +76,13 @@ curl "wttr.in/London.png"
 
 ### Format Codes
 
-- `%c` â€” Weather condition emoji
-- `%t` â€” Temperature
-- `%f` â€” "Feels like"
-- `%w` â€” Wind
-- `%h` â€” Humidity
-- `%p` â€” Precipitation
-- `%l` â€” Location
+- `%c` â€?Weather condition emoji
+- `%t` â€?Temperature
+- `%f` â€?"Feels like"
+- `%w` â€?Wind
+- `%h` â€?Humidity
+- `%p` â€?Precipitation
+- `%l` â€?Location
 
 ## Quick Responses
 

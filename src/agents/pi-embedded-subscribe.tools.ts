@@ -13,7 +13,7 @@ function truncateToolText(text: string): string {
   if (text.length <= TOOL_RESULT_MAX_CHARS) {
     return text;
   }
-  return `${truncateUtf16Safe(text, TOOL_RESULT_MAX_CHARS)}\n…(truncated)…`;
+  return `${truncateUtf16Safe(text, TOOL_RESULT_MAX_CHARS)}\n�?truncated)…`;
 }
 
 function normalizeToolErrorText(text: string): string | undefined {
@@ -186,8 +186,8 @@ export function filterToolResultMediaUrls(
  * Extract media file paths from a tool result.
  *
  * Strategy (first match wins):
- * 1. Parse `MEDIA:` tokens from text content blocks (all OpenClaw tools).
- * 2. Fall back to `details.path` when image content exists (OpenClaw imageResult).
+ * 1. Parse `MEDIA:` tokens from text content blocks (all RadioClaw tools).
+ * 2. Fall back to `details.path` when image content exists (RadioClaw imageResult).
  *
  * Returns an empty array when no media is found (e.g. Pi SDK `read` tool
  * returns base64 image data but no file path; those need a different delivery

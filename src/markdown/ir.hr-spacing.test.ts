@@ -132,7 +132,7 @@ Para 2`;
 - ---
 - Item 2`;
       const result = markdownToIR(input);
-      expect(result.text).toBe("• Item 1\n\n───\n\n• Item 2");
+      expect(result.text).toBe("�?Item 1\n\n───\n\n�?Item 2");
       expect(result.text).not.toMatch(/\n{3,}/);
     });
 

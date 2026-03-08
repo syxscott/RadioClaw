@@ -1,8 +1,6 @@
 ---
 read_when:
-  - 你想快速访问关键文档页面
-summary: 精选的常用 OpenClaw 文档链接。
-title: 文档目录
+  - 你想快速访问关键文档页�?summary: 精选的常用 RadioClaw 文档链接�?title: 文档目录
 x-i18n:
   generated_at: "2026-02-04T17:53:20Z"
   model: claude-opus-4-5
@@ -13,11 +11,9 @@ x-i18n:
 ---
 
 <Note>
-如需查看完整的文档地图，请参阅[文档中心](/start/hubs)。
-</Note>
+如需查看完整的文档地图，请参阅[文档中心](/start/hubs)�?</Note>
 
-## 从这里开始
-
+## 从这里开�?
 - [文档中心（所有页面链接）](/start/hubs)
 - [帮助](/help)
 - [配置](/gateway/configuration)
@@ -27,14 +23,14 @@ x-i18n:
 - [更新与回滚](/install/updating)
 - [配对（私信和节点）](/channels/pairing)
 - [Nix 模式](/install/nix)
-- [OpenClaw 助手设置](/start/openclaw)
+- [RadioClaw 助手设置](/start/RadioClaw)
 - [Skills](/tools/skills)
 - [Skills 配置](/tools/skills-config)
 - [工作区模板](/reference/templates/AGENTS)
 - [RPC 适配器](/reference/rpc)
 - [Gateway 网关运维手册](/gateway)
-- [节点（iOS 和 Android）](/nodes)
-- [Web 界面（控制面板 UI）](/web)
+- [节点（iOS �?Android）](/nodes)
+- [Web 界面（控制面�?UI）](/web)
 - [设备发现与传输协议](/gateway/discovery)
 - [远程访问](/gateway/remote)
 
@@ -60,8 +56,7 @@ x-i18n:
 - [Windows (WSL2)](/platforms/windows)
 - [Linux 应用](/platforms/linux)
 
-## 运维与安全
-
+## 运维与安�?
 - [会话](/concepts/session)
 - [定时任务](/automation/cron-jobs)
 - [Webhooks](/automation/webhook)

@@ -550,7 +550,7 @@ function renderTextInput(params: {
     hint?.placeholder ??
     // oxlint-disable typescript/no-base-to-string
     (isSensitive
-      ? "••••"
+      ? "•••�?
       : schema.default !== undefined
         ? `Default: ${String(schema.default)}`
         : "");
@@ -598,7 +598,7 @@ function renderTextInput(params: {
             title="Reset to default"
             ?disabled=${disabled}
             @click=${() => onPatch(path, schema.default)}
-          >↺</button>
+          >�?/button>
         `
             : nothing
         }
@@ -634,7 +634,7 @@ function renderNumberInput(params: {
           class="cfg-number__btn"
           ?disabled=${disabled}
           @click=${() => onPatch(path, numValue - 1)}
-        >−</button>
+        >�?/button>
         <input
           type="number"
           class="cfg-number__input"

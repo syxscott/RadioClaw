@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { resolveBrewExecutable } from "../infra/brew.js";
 import { runCommandWithTimeout, type CommandOptions } from "../process/exec.js";
 import { scanDirectoryWithSummary } from "../security/skill-scanner.js";
@@ -21,7 +21,7 @@ export type SkillInstallRequest = {
   skillName: string;
   installId: string;
   timeoutMs?: number;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
 };
 
 export type SkillInstallResult = {
@@ -72,12 +72,12 @@ async function collectSkillInstallScanWarnings(entry: SkillEntry): Promise<strin
       );
     } else if (summary.warn > 0) {
       warnings.push(
-        `Skill "${skillName}" has ${summary.warn} suspicious code pattern(s). Run "openclaw security audit --deep" for details.`,
+        `Skill "${skillName}" has ${summary.warn} suspicious code pattern(s). Run "RadioClaw security audit --deep" for details.`,
       );
     }
   } catch (err) {
     warnings.push(
-      `Skill "${skillName}" code safety scan failed (${String(err)}). Installation continues; run "openclaw security audit --deep" after install.`,
+      `Skill "${skillName}" code safety scan failed (${String(err)}). Installation continues; run "RadioClaw security audit --deep" after install.`,
     );
   }
 
@@ -250,7 +250,7 @@ function resolveBrewMissingFailure(spec: SkillInstallSpec): SkillInstallResult {
     process.platform === "linux"
       ? `Homebrew is not installed. Install it from https://brew.sh or install "${formula}" manually using your system package manager (e.g. apt, dnf, pacman).`
       : "Homebrew is not installed. Install it from https://brew.sh";
-  return createInstallFailure({ message: `brew not installed â€” ${hint}` });
+  return createInstallFailure({ message: `brew not installed â€?${hint}` });
 }
 
 async function ensureUvInstalled(params: {
@@ -265,7 +265,7 @@ async function ensureUvInstalled(params: {
   if (!params.brewExe) {
     return createInstallFailure({
       message:
-        "uv not installed â€” install manually: https://docs.astral.sh/uv/getting-started/installation/",
+        "uv not installed â€?install manually: https://docs.astral.sh/uv/getting-started/installation/",
     });
   }
 
@@ -286,7 +286,7 @@ async function installGoViaApt(timeoutMs: number): Promise<SkillInstallResult | 
   const aptInstallArgv = ["apt-get", "install", "-y", "golang-go"];
   const aptUpdateArgv = ["apt-get", "update", "-qq"];
   const aptFailureMessage =
-    "go not installed â€” automatic install via apt failed. Install manually: https://go.dev/doc/install";
+    "go not installed â€?automatic install via apt failed. Install manually: https://go.dev/doc/install";
 
   const isRoot = typeof process.getuid === "function" && process.getuid() === 0;
   if (isRoot) {
@@ -305,7 +305,7 @@ async function installGoViaApt(timeoutMs: number): Promise<SkillInstallResult | 
   if (!hasBinary("sudo")) {
     return createInstallFailure({
       message:
-        "go not installed â€” apt-get is available but sudo is not installed. Install manually: https://go.dev/doc/install",
+        "go not installed â€?apt-get is available but sudo is not installed. Install manually: https://go.dev/doc/install",
     });
   }
 
@@ -315,7 +315,7 @@ async function installGoViaApt(timeoutMs: number): Promise<SkillInstallResult | 
   if (sudoCheck.code !== 0) {
     return createInstallFailure({
       message:
-        "go not installed â€” apt-get is available but sudo is not usable (missing or requires a password). Install manually: https://go.dev/doc/install",
+        "go not installed â€?apt-get is available but sudo is not usable (missing or requires a password). Install manually: https://go.dev/doc/install",
       ...sudoCheck,
     });
   }
@@ -362,7 +362,7 @@ async function ensureGoInstalled(params: {
   }
 
   return createInstallFailure({
-    message: "go not installed â€” install manually: https://go.dev/doc/install",
+    message: "go not installed â€?install manually: https://go.dev/doc/install",
   });
 }
 

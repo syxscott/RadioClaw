@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawProtocol
+import RadioClawProtocol
 
 extension ChannelsStore {
     func start() {

@@ -1,6 +1,6 @@
-import OpenClawProtocol
+import RadioClawProtocol
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite struct TalkModeConfigParsingTests {
     @Test func prefersNormalizedTalkProviderPayload() {

@@ -21,7 +21,7 @@ describe("provider location helpers", () => {
       caption: "Bring snacks",
     });
     expect(text).toBe(
-      "📍 Statue of Liberty — Liberty Island, NY (40.689247, -74.044502 ±8m)\nBring snacks",
+      "📍 Statue of Liberty �?Liberty Island, NY (40.689247, -74.044502 ±8m)\nBring snacks",
     );
   });
 

@@ -38,11 +38,11 @@ describe("subscribeEmbeddedPiSession", () => {
     emit({ type: "auto_compaction_start" });
     expect(subscription.getCompactionCount()).toBe(0);
 
-    // willRetry with result â€” counter IS incremented (overflow compaction succeeded)
+    // willRetry with result â€?counter IS incremented (overflow compaction succeeded)
     emit({ type: "auto_compaction_end", willRetry: true, result: { summary: "s" } });
     expect(subscription.getCompactionCount()).toBe(1);
 
-    // willRetry=false with result â€” counter incremented again
+    // willRetry=false with result â€?counter incremented again
     emit({ type: "auto_compaction_end", willRetry: false, result: { summary: "s2" } });
     expect(subscription.getCompactionCount()).toBe(2);
   });
@@ -52,7 +52,7 @@ describe("subscribeEmbeddedPiSession", () => {
       runId: "run-compaction-no-result",
     });
 
-    // No result (e.g. aborted or cancelled) â€” counter stays at 0
+    // No result (e.g. aborted or cancelled) â€?counter stays at 0
     emit({ type: "auto_compaction_end", willRetry: false, result: undefined });
     expect(subscription.getCompactionCount()).toBe(0);
 

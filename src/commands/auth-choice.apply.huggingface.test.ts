@@ -44,15 +44,15 @@ async function runHuggingfaceApply(
 
 describe("applyAuthChoiceHuggingface", () => {
   const lifecycle = createAuthTestLifecycle([
-    "OPENCLAW_STATE_DIR",
-    "OPENCLAW_AGENT_DIR",
+    "RadioClaw_STATE_DIR",
+    "RadioClaw_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
     "HF_TOKEN",
     "HUGGINGFACE_HUB_TOKEN",
   ]);
 
   async function setupTempState() {
-    const env = await setupAuthTestEnv("openclaw-hf-");
+    const env = await setupAuthTestEnv("RadioClaw-hf-");
     lifecycle.setStateDir(env.stateDir);
     return env.agentDir;
   }
@@ -187,7 +187,7 @@ describe("applyAuthChoiceHuggingface", () => {
       ":cheapest",
     );
     expect(note).toHaveBeenCalledWith(
-      "Provider locked â€” router will choose backend by cost or speed.",
+      "Provider locked â€?router will choose backend by cost or speed.",
       "Hugging Face",
     );
   });

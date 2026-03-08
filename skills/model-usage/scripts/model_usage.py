@@ -160,7 +160,7 @@ def pick_current_model(entries: List[Dict[str, Any]]) -> Tuple[Optional[str], Op
 
 def usd(value: Optional[float]) -> str:
     if value is None:
-        return "â€”"
+        return "â€?
     return f"${value:,.2f}"
 
 

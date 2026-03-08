@@ -50,10 +50,10 @@ Every skill consists of a required SKILL.md file and optional bundled resources:
 ```
 skill-name/
 ├── SKILL.md (required)
-│   ├── YAML frontmatter metadata (required)
-│   │   ├── name: (required)
-│   │   └── description: (required)
-│   └── Markdown instructions (required)
+�?  ├── YAML frontmatter metadata (required)
+�?  �?  ├── name: (required)
+�?  �?  └── description: (required)
+�?  └── Markdown instructions (required)
 └── Bundled Resources (optional)
     ├── scripts/          - Executable code (Python/Bash/etc.)
     ├── references/       - Documentation intended to be loaded into context as needed

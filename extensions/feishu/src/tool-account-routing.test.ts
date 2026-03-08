@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { RadioClawPluginApi } from "RadioClaw/plugin-sdk/feishu";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { registerFeishuBitableTools } from "./bitable.js";
 import { registerFeishuDriveTools } from "./drive.js";
@@ -26,7 +26,7 @@ function createConfig(params: {
     perm?: boolean;
   };
   defaultAccount?: string;
-}): OpenClawPluginApi["config"] {
+}): RadioClawPluginApi["config"] {
   return {
     channels: {
       feishu: {
@@ -46,7 +46,7 @@ function createConfig(params: {
         },
       },
     },
-  } as OpenClawPluginApi["config"];
+  } as RadioClawPluginApi["config"];
 }
 
 describe("feishu tool account routing", () => {

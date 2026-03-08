@@ -82,12 +82,12 @@ An alternative register for OpenProse that draws from One Thousand and One Night
 
 These keywords already work or are too functional to replace sensibly:
 
-- `**...**` discretion markers â€” already work
-- `until`, `while` â€” already work
-- `map`, `filter`, `reduce`, `pmap` â€” pipeline operators
-- `max` â€” constraint modifier
-- `as` â€” aliasing
-- Model names: `sonnet`, `opus`, `haiku` â€” already poetic
+- `**...**` discretion markers â€?already work
+- `until`, `while` â€?already work
+- `map`, `filter`, `reduce`, `pmap` â€?pipeline operators
+- `max` â€?constraint modifier
+- `as` â€?aliasing
+- Model names: `sonnet`, `opus`, `haiku` â€?already poetic
 
 ---
 
@@ -300,11 +300,11 @@ oath config = { spirit: "opus", persist: 3 }
 | Term         | Meaning                                 | Used for              |
 | ------------ | --------------------------------------- | --------------------- |
 | Scheherazade | The narrator who tells tales to survive | (the program author)  |
-| Djinn        | Supernatural spirit, bound to serve     | `agent` â†’ `djinn`     |
-| Frame story  | A story that contains other stories     | `block` â†’ `frame`     |
-| Wish         | What is asked of the djinn              | `input` â†’ `wish`      |
-| Oath         | Unbreakable promise                     | `const` â†’ `oath`      |
-| Bazaar       | Marketplace, many vendors               | `parallel` â†’ `bazaar` |
+| Djinn        | Supernatural spirit, bound to serve     | `agent` â†?`djinn`     |
+| Frame story  | A story that contains other stories     | `block` â†?`frame`     |
+| Wish         | What is asked of the djinn              | `input` â†?`wish`      |
+| Oath         | Unbreakable promise                     | `const` â†?`oath`      |
+| Bazaar       | Marketplace, many vendors               | `parallel` â†?`bazaar` |
 
 ---
 

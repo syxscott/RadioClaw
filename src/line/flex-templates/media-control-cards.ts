@@ -158,7 +158,7 @@ export function createMediaPlayerCard(params: {
           type: "button",
           action: {
             type: "postback",
-            label: "‚èÆ",
+            label: "‚è?,
             data: controls.previous.data,
           },
           style: "secondary",
@@ -172,7 +172,7 @@ export function createMediaPlayerCard(params: {
           type: "button",
           action: {
             type: "postback",
-            label: "‚ñ∂",
+            label: "‚ñ?,
             data: controls.play.data,
           },
           style: isPlaying ? "secondary" : "primary",
@@ -187,7 +187,7 @@ export function createMediaPlayerCard(params: {
           type: "button",
           action: {
             type: "postback",
-            label: "‚è∏",
+            label: "‚è?,
             data: controls.pause.data,
           },
           style: isPlaying ? "primary" : "secondary",
@@ -202,7 +202,7 @@ export function createMediaPlayerCard(params: {
           type: "button",
           action: {
             type: "postback",
-            label: "‚è≠",
+            label: "‚è?,
             data: controls.next.data,
           },
           style: "secondary",
@@ -324,22 +324,22 @@ export function createAppleTvRemoteCard(params: {
     {
       type: "box",
       layout: "horizontal",
-      contents: [{ type: "filler" }, makeButton("‚Üë", actionData.up), { type: "filler" }],
+      contents: [{ type: "filler" }, makeButton("‚Ü?, actionData.up), { type: "filler" }],
     } as FlexBox,
     {
       type: "box",
       layout: "horizontal",
       contents: [
-        makeButton("‚Üê", actionData.left),
+        makeButton("‚Ü?, actionData.left),
         makeButton("OK", actionData.select, "primary"),
-        makeButton("‚Üí", actionData.right),
+        makeButton("‚Ü?, actionData.right),
       ],
       margin: "md",
     } as FlexBox,
     {
       type: "box",
       layout: "horizontal",
-      contents: [{ type: "filler" }, makeButton("‚Üì", actionData.down), { type: "filler" }],
+      contents: [{ type: "filler" }, makeButton("‚Ü?, actionData.down), { type: "filler" }],
       margin: "md",
     } as FlexBox,
   ];

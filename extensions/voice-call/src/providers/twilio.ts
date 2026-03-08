@@ -688,7 +688,7 @@ export class TwilioProvider implements VoiceCallProvider {
       const status = normalizeProviderStatus(data.status);
       return { status, isTerminal: isProviderStatusTerminal(status) };
     } catch {
-      // Transient error â€” keep the call and rely on timer fallback
+      // Transient error â€?keep the call and rely on timer fallback
       return { status: "error", isTerminal: false, isUnknown: true };
     }
   }

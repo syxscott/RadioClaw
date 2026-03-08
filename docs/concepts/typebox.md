@@ -60,12 +60,12 @@ Authoritative list lives in `src/gateway/server.ts` (`METHODS`, `EVENTS`).
 - Server handshake + method dispatch: `src/gateway/server.ts`
 - Node client: `src/gateway/client.ts`
 - Generated JSON Schema: `dist/protocol.schema.json`
-- Generated Swift models: `apps/macos/Sources/OpenClawProtocol/GatewayModels.swift`
+- Generated Swift models: `apps/macos/Sources/RadioClawProtocol/GatewayModels.swift`
 
 ## Current pipeline
 
 - `pnpm protocol:gen`
-  - writes JSON Schema (draftâ€‘07) to `dist/protocol.schema.json`
+  - writes JSON Schema (draftâ€?7) to `dist/protocol.schema.json`
 - `pnpm protocol:gen:swift`
   - generates Swift gateway models
 - `pnpm protocol:check`
@@ -93,7 +93,7 @@ Connect (first message):
     "minProtocol": 2,
     "maxProtocol": 2,
     "client": {
-      "id": "openclaw-macos",
+      "id": "RadioClaw-macos",
       "displayName": "macos",
       "version": "1.0.0",
       "platform": "macos 15.1",
@@ -282,7 +282,7 @@ Unknown frame types are preserved as raw payloads for forward compatibility.
 Generated JSON Schema is in the repo at `dist/protocol.schema.json`. The
 published raw file is typically available at:
 
-- [https://raw.githubusercontent.com/openclaw/openclaw/main/dist/protocol.schema.json](https://raw.githubusercontent.com/openclaw/openclaw/main/dist/protocol.schema.json)
+- [https://raw.githubusercontent.com/RadioClaw/RadioClaw/main/dist/protocol.schema.json](https://raw.githubusercontent.com/RadioClaw/RadioClaw/main/dist/protocol.schema.json)
 
 ## When you change schemas
 

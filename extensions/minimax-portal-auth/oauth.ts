@@ -2,7 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import {
   generatePkceVerifierChallenge,
   toFormUrlEncoded,
-} from "openclaw/plugin-sdk/minimax-portal-auth";
+} from "RadioClaw/plugin-sdk/minimax-portal-auth";
 
 export type MiniMaxRegion = "cn" | "global";
 
@@ -209,7 +209,7 @@ export async function loginMiniMaxPortalOAuth(params: {
   const expireTimeMs = oauth.expired_in;
 
   while (Date.now() < expireTimeMs) {
-    params.progress.update("Waiting for MiniMax OAuth approvalâ€¦");
+    params.progress.update("Waiting for MiniMax OAuth approvalâ€?);
     const result = await pollOAuthToken({
       userCode: oauth.user_code,
       verifier,

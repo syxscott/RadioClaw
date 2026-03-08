@@ -167,7 +167,7 @@ describe("tui command handlers", () => {
 
     expect(sendChat).not.toHaveBeenCalled();
     expect(addUser).not.toHaveBeenCalled();
-    expect(addSystem).toHaveBeenCalledWith("not connected to gateway â€” message not sent");
+    expect(addSystem).toHaveBeenCalledWith("not connected to gateway â€?message not sent");
     expect(setActivityStatus).toHaveBeenLastCalledWith("disconnected");
   });
 });

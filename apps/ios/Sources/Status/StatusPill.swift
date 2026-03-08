@@ -13,7 +13,7 @@ struct StatusPill: View {
         var title: String {
             switch self {
             case .connected: "Connected"
-            case .connecting: "Connectingâ€¦"
+            case .connecting: "Connectingâ€?
             case .error: "Error"
             case .disconnected: "Offline"
             }

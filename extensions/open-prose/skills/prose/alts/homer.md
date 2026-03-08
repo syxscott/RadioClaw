@@ -39,11 +39,11 @@ An alternative register for OpenProse that draws from Greek epic poetryâ€”the Il
 
 | Functional | Homeric   | Reference                              |
 | ---------- | --------- | -------------------------------------- |
-| `use`      | `invoke`  | "Sing, O Muse..." â€” calling upon       |
+| `use`      | `invoke`  | "Sing, O Muse..." â€?calling upon       |
 | `input`    | `omen`    | Signs from the gods, the given portent |
-| `output`   | `glory`   | Kleos â€” the glory won, what endures    |
+| `output`   | `glory`   | Kleos â€?the glory won, what endures    |
 | `let`      | `decree`  | Fate declared, spoken into being       |
-| `const`    | `fate`    | Moira â€” unchangeable destiny           |
+| `const`    | `fate`    | Moira â€?unchangeable destiny           |
 | `context`  | `tidings` | News carried by herald or messenger    |
 
 ### Control Flow
@@ -66,7 +66,7 @@ An alternative register for OpenProse that draws from Greek epic poetryâ€”the Il
 | Functional | Homeric            | Reference                    |
 | ---------- | ------------------ | ---------------------------- |
 | `try`      | `venture`          | Setting forth on the journey |
-| `catch`    | `should ruin come` | AtÃ© â€” divine ruin, disaster  |
+| `catch`    | `should ruin come` | AtÃ© â€?divine ruin, disaster  |
 | `finally`  | `in the end`       | The inevitable conclusion    |
 | `throw`    | `lament`           | The hero's cry of anguish    |
 | `retry`    | `persist`          | Enduring, trying again       |
@@ -82,12 +82,12 @@ An alternative register for OpenProse that draws from Greek epic poetryâ€”the Il
 
 These keywords already work or are too functional to replace sensibly:
 
-- `**...**` discretion markers â€” already work
-- `until`, `while` â€” already work
-- `map`, `filter`, `reduce`, `pmap` â€” pipeline operators
-- `max` â€” constraint modifier
-- `as` â€” aliasing
-- Model names: `sonnet`, `opus`, `haiku` â€” already poetic
+- `**...**` discretion markers â€?already work
+- `until`, `while` â€?already work
+- `map`, `filter`, `reduce`, `pmap` â€?pipeline operators
+- `max` â€?constraint modifier
+- `as` â€?aliasing
+- Model names: `sonnet`, `opus`, `haiku` â€?already poetic
 
 ---
 
@@ -298,12 +298,12 @@ fate config = { muse: "opus", persist: 3 }
 
 | Term   | Meaning                             | Used for                           |
 | ------ | ----------------------------------- | ---------------------------------- |
-| Kleos  | Glory, fame that outlives you       | `output` â†’ `glory`                 |
-| Moira  | Fate, one's allotted portion        | `const` â†’ `fate`                   |
-| AtÃ©    | Divine ruin, blindness sent by gods | `catch` â†’ `should ruin come`       |
+| Kleos  | Glory, fame that outlives you       | `output` â†?`glory`                 |
+| Moira  | Fate, one's allotted portion        | `const` â†?`fate`                   |
+| AtÃ©    | Divine ruin, blindness sent by gods | `catch` â†?`should ruin come`       |
 | Nostos | The return journey                  | (not used, but could be `finally`) |
 | Xenia  | Guest-friendship, hospitality       | (not used)                         |
-| Muse   | Divine inspiration                  | `model` â†’ `muse`                   |
+| Muse   | Divine inspiration                  | `model` â†?`muse`                   |
 
 ---
 

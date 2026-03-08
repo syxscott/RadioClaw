@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import type { ChannelGroupPolicy } from "../config/group-policy.js";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../config/runtime-group-policy.js";
 import type {
@@ -120,7 +120,7 @@ export const resolveTelegramRuntimeGroupPolicy = (params: {
 export const evaluateTelegramGroupPolicyAccess = (params: {
   isGroup: boolean;
   chatId: string | number;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   telegramCfg: TelegramAccountConfig;
   topicConfig?: TelegramTopicConfig;
   groupConfig?: TelegramGroupConfig;
@@ -168,7 +168,7 @@ export const evaluateTelegramGroupPolicyAccess = (params: {
     }
     // The chat is explicitly allowed when it has a dedicated entry in the groups
     // config (groupConfig is set).  A wildcard ("*") match alone does not count
-    // because it only enables the group â€” sender-level filtering still applies.
+    // because it only enables the group â€?sender-level filtering still applies.
     if (groupAllowlist.allowlistEnabled && groupAllowlist.allowed && groupAllowlist.groupConfig) {
       chatExplicitlyAllowed = true;
     }

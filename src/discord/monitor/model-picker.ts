@@ -16,7 +16,7 @@ import {
   buildModelsProviderData,
   type ModelsProviderData,
 } from "../../auto-reply/reply/commands-models.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 
 export const DISCORD_MODEL_PICKER_CUSTOM_ID_KEY = "mdlpk";
 export const DISCORD_CUSTOM_ID_MAX_CHARS = 100;
@@ -542,7 +542,7 @@ function buildModelRows(params: {
  * same provider/model resolver used by text and Telegram model commands.
  */
 export async function loadDiscordModelPickerData(
-  cfg: OpenClawConfig,
+  cfg: RadioClawConfig,
   agentId?: string,
 ): Promise<ModelsProviderData> {
   return buildModelsProviderData(cfg, agentId);
@@ -838,7 +838,7 @@ function formatRecentsButtonLabel(modelRef: string, suffix?: string): string {
     return label;
   }
   const trimmed = suffix
-    ? `${modelRef.slice(0, maxLen - suffix.length - 2)}â€¦ ${suffix}`
+    ? `${modelRef.slice(0, maxLen - suffix.length - 2)}â€?${suffix}`
     : `${modelRef.slice(0, maxLen - 1)}â€¦`;
   return trimmed;
 }
@@ -852,7 +852,7 @@ export function renderDiscordModelPickerRecentsView(
   // Dedupe: filter recents that match the default model.
   const dedupedQuickModels = params.quickModels.filter((modelRef) => modelRef !== defaultModelRef);
 
-  // Default model button â€” slot 1.
+  // Default model button â€?slot 1.
   rows.push(
     new Row([
       createModelPickerButton({
@@ -872,7 +872,7 @@ export function renderDiscordModelPickerRecentsView(
     ]),
   );
 
-  // Recent model buttons â€” slot 2+.
+  // Recent model buttons â€?slot 2+.
   for (let i = 0; i < dedupedQuickModels.length; i++) {
     const modelRef = dedupedQuickModels[i];
     rows.push(

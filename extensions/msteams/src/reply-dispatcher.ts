@@ -3,10 +3,10 @@ import {
   createTypingCallbacks,
   logTypingFailure,
   resolveChannelMediaMaxBytes,
-  type OpenClawConfig,
+  type RadioClawConfig,
   type MSTeamsReplyStyle,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/msteams";
+} from "RadioClaw/plugin-sdk/msteams";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type { StoredConversationReference } from "./conversation-store.js";
 import {
@@ -26,7 +26,7 @@ import { getMSTeamsRuntime } from "./runtime.js";
 import type { MSTeamsTurnContext } from "./sdk-types.js";
 
 export function createMSTeamsReplyDispatcher(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   agentId: string;
   accountId?: string;
   runtime: RuntimeEnv;
@@ -50,7 +50,7 @@ export function createMSTeamsReplyDispatcher(params: {
    *
    * First tries the live turn context (cheapest path).  When the context has
    * been revoked (debounced messages) we fall back to proactive messaging via
-   * the stored conversation reference so the user still sees the "â€¦" bubble.
+   * the stored conversation reference so the user still sees the "â€? bubble.
    */
   const sendTypingIndicator = async () => {
     await withRevokedProxyFallback({

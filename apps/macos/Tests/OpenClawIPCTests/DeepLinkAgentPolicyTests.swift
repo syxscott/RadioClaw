@@ -1,6 +1,6 @@
-import OpenClawKit
+import RadioClawKit
 import Testing
-@testable import OpenClaw
+@testable import RadioClaw
 
 @Suite struct DeepLinkAgentPolicyTests {
     @Test func validateMessageForHandleRejectsTooLongWhenUnkeyed() {

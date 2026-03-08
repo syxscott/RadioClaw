@@ -562,7 +562,7 @@ describe("gateway agent handler", () => {
     await vi.waitFor(() => expect(mocks.agentCommand).toHaveBeenCalled());
     expect(mocks.sessionsResetHandler).toHaveBeenCalledTimes(1);
     const call = readLastAgentCommandCall();
-    // Message is now dynamically built with current date â€” check key substrings
+    // Message is now dynamically built with current date â€?check key substrings
     expect(call?.message).toContain("Execute your Session Startup sequence now");
     expect(call?.message).toContain("Current time:");
     expect(call?.message).not.toBe(BARE_SESSION_RESET_PROMPT);

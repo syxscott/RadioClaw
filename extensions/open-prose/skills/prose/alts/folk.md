@@ -53,9 +53,9 @@ An alternative register for OpenProse that leans into literary, theatrical, and 
 | ---------- | ------------------ | ------------ | ----------------------------------- |
 | `repeat N` | `N times`          | Fairy tale   | "Three times she called..."         |
 | `for...in` | `for each...among` | Narrative    | Slightly more storytelling          |
-| `loop`     | `loop`             | â€”            | Already poetic, unchanged           |
-| `until`    | `until`            | â€”            | Already works, unchanged            |
-| `while`    | `while`            | â€”            | Already works, unchanged            |
+| `loop`     | `loop`             | â€?           | Already poetic, unchanged           |
+| `until`    | `until`            | â€?           | Already works, unchanged            |
+| `while`    | `while`            | â€?           | Already works, unchanged            |
 | `choice`   | `crossroads`       | Folklore     | Fateful decisions at the crossroads |
 | `option`   | `path`             | Journey      | Which path to take                  |
 | `if`       | `when`             | Narrative    | "When the moon rises..."            |
@@ -83,12 +83,12 @@ An alternative register for OpenProse that leans into literary, theatrical, and 
 
 These keywords already have poetic quality or are too functional to replace sensibly:
 
-- `**...**` discretion markers â€” already "breaking the fourth wall"
-- `loop`, `until`, `while` â€” already work narratively
-- `map`, `filter`, `reduce`, `pmap` â€” pipeline operators, functional is fine
-- `max` â€” constraint modifier
-- `as` â€” aliasing
-- Model names: `sonnet`, `opus`, `haiku` â€” already poetic
+- `**...**` discretion markers â€?already "breaking the fourth wall"
+- `loop`, `until`, `while` â€?already work narratively
+- `map`, `filter`, `reduce`, `pmap` â€?pipeline operators, functional is fine
+- `max` â€?constraint modifier
+- `as` â€?aliasing
+- Model names: `sonnet`, `opus`, `haiku` â€?already poetic
 
 ---
 
@@ -314,9 +314,9 @@ perform review("quantum computing")
 
 Preserved for benchmarking against the functional register. The functional register remains the primary path, but folk provides an interesting data point for:
 
-1. **Learnability** â€” Which is easier for newcomers?
-2. **Memorability** â€” Which sticks better?
-3. **Error rates** â€” Which leads to fewer mistakes?
-4. **Preference** â€” Which do users actually prefer?
+1. **Learnability** â€?Which is easier for newcomers?
+2. **Memorability** â€?Which sticks better?
+3. **Error rates** â€?Which leads to fewer mistakes?
+4. **Preference** â€?Which do users actually prefer?
 
 A future experiment could present both registers and measure outcomes.

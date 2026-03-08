@@ -129,7 +129,7 @@ export function collectDiscordStatusIssues(
         accountId,
         kind: "intent",
         message: "Message Content Intent is disabled. Bot may not see normal channel messages.",
-        fix: "Enable Message Content Intent in Discord Dev Portal â†’ Bot â†’ Privileged Gateway Intents, or require mention-only operation.",
+        fix: "Enable Message Content Intent in Discord Dev Portal â†?Bot â†?Privileged Gateway Intents, or require mention-only operation.",
       });
     }
 

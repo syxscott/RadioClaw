@@ -155,7 +155,7 @@ describe("bot-native-command-menu", () => {
     const accountId = `test-skip-${Date.now()}`;
     const commands = [{ command: "skip_test", description: "Skip test command" }];
 
-    // First sync â€” no cached hash, should call setMyCommands.
+    // First sync â€?no cached hash, should call setMyCommands.
     syncMenuCommandsWithMocks({
       deleteMyCommands,
       setMyCommands,
@@ -169,7 +169,7 @@ describe("bot-native-command-menu", () => {
       expect(setMyCommands).toHaveBeenCalledTimes(1);
     });
 
-    // Second sync with the same commands â€” hash is cached, should skip.
+    // Second sync with the same commands â€?hash is cached, should skip.
     syncMenuCommandsWithMocks({
       deleteMyCommands,
       setMyCommands,

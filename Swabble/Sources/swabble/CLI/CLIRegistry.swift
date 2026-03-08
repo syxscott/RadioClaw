@@ -39,7 +39,7 @@ enum CLIRegistry {
         let root = CommandDescriptor(
             name: "swabble",
             abstract: "Speech hook daemon",
-            discussion: "Local wake-word â†’ SpeechTranscriber â†’ hook",
+            discussion: "Local wake-word â†?SpeechTranscriber â†?hook",
             signature: rootSignature,
             subcommands: [
                 serveDesc,

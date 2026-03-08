@@ -102,8 +102,8 @@ describe("blockquote spacing", () => {
       const input = "> quote\n\n- item";
       const result = markdownToIR(input);
 
-      // The list item becomes "â€¢ item"
-      expect(result.text).toBe("quote\n\nâ€¢ item");
+      // The list item becomes "â€?item"
+      expect(result.text).toBe("quote\n\nâ€?item");
       expect(result.text).not.toContain("\n\n\n");
     });
 
@@ -188,7 +188,7 @@ describe("comparison with other block elements (control group)", () => {
     const result = markdownToIR(input);
 
     // Lists already work correctly
-    expect(result.text).toContain("â€¢ item 2\n\nparagraph");
+    expect(result.text).toContain("â€?item 2\n\nparagraph");
     expect(result.text).not.toContain("\n\n\n");
   });
 

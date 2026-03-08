@@ -1,6 +1,6 @@
 ---
 title: Formal Verification (Security Models)
-summary: Machine-checked security models for OpenClaw’s highest-risk paths.
+summary: Machine-checked security models for RadioClaw’s highest-risk paths.
 read_when:
   - Reviewing formal security model guarantees or limits
   - Reproducing or updating TLA+/TLC security model checks
@@ -9,11 +9,11 @@ permalink: /security/formal-verification/
 
 # Formal Verification (Security Models)
 
-This page tracks OpenClaw’s **formal security models** (TLA+/TLC today; more as needed).
+This page tracks RadioClaw’s **formal security models** (TLA+/TLC today; more as needed).
 
 > Note: some older links may refer to the previous project name.
 
-**Goal (north star):** provide a machine-checked argument that OpenClaw enforces its
+**Goal (north star):** provide a machine-checked argument that RadioClaw enforces its
 intended security policy (authorization, session isolation, tool gating, and
 misconfiguration safety), under explicit assumptions.
 
@@ -22,16 +22,16 @@ misconfiguration safety), under explicit assumptions.
 - Each claim has a runnable model-check over a finite state space.
 - Many claims have a paired **negative model** that produces a counterexample trace for a realistic bug class.
 
-**What this is not (yet):** a proof that “OpenClaw is secure in all respects” or that the full TypeScript implementation is correct.
+**What this is not (yet):** a proof that “OpenClaw is secure in all respects�?or that the full TypeScript implementation is correct.
 
 ## Where the models live
 
-Models are maintained in a separate repo: [vignesh07/openclaw-formal-models](https://github.com/vignesh07/openclaw-formal-models).
+Models are maintained in a separate repo: [vignesh07/RadioClaw-formal-models](https://github.com/vignesh07/RadioClaw-formal-models).
 
 ## Important caveats
 
 - These are **models**, not the full TypeScript implementation. Drift between model and code is possible.
-- Results are bounded by the state space explored by TLC; “green” does not imply security beyond the modeled assumptions and bounds.
+- Results are bounded by the state space explored by TLC; “green�?does not imply security beyond the modeled assumptions and bounds.
 - Some claims rely on explicit environmental assumptions (e.g., correct deployment, correct configuration inputs).
 
 ## Reproducing results
@@ -39,13 +39,13 @@ Models are maintained in a separate repo: [vignesh07/openclaw-formal-models](htt
 Today, results are reproduced by cloning the models repo locally and running TLC (see below). A future iteration could offer:
 
 - CI-run models with public artifacts (counterexample traces, run logs)
-- a hosted “run this model” workflow for small, bounded checks
+- a hosted “run this model�?workflow for small, bounded checks
 
 Getting started:
 
 ```bash
-git clone https://github.com/vignesh07/openclaw-formal-models
-cd openclaw-formal-models
+git clone https://github.com/vignesh07/RadioClaw-formal-models
+cd RadioClaw-formal-models
 
 # Java 11+ required (TLC runs on the JVM).
 # The repo vendors a pinned `tla2tools.jar` (TLA+ tools) and provides `bin/tlc` + Make targets.
@@ -89,7 +89,7 @@ See also: `docs/gateway-exposure-matrix.md` in the models repo.
 
 ### Ingress gating (mentions + control-command bypass)
 
-**Claim:** in group contexts requiring mention, an unauthorized “control command” cannot bypass mention gating.
+**Claim:** in group contexts requiring mention, an unauthorized “control command�?cannot bypass mention gating.
 
 - Green:
   - `make ingress-gating`
@@ -111,7 +111,7 @@ These are follow-on models that tighten fidelity around real-world failure modes
 
 ### Pairing store concurrency / idempotency
 
-**Claim:** a pairing store should enforce `MaxPending` and idempotency even under interleavings (i.e., “check-then-write” must be atomic / locked; refresh shouldn’t create duplicates).
+**Claim:** a pairing store should enforce `MaxPending` and idempotency even under interleavings (i.e., “check-then-write�?must be atomic / locked; refresh shouldn’t create duplicates).
 
 What it means:
 

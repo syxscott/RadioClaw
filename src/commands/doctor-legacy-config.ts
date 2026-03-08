@@ -1,5 +1,5 @@
 import { shouldMoveSingleAccountChannelKey } from "../channels/plugins/setup-helpers.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import {
   formatSlackStreamingBooleanMigrationMessage,
   formatSlackStreamModeMigrationMessage,
@@ -10,12 +10,12 @@ import {
 } from "../config/discord-preview-streaming.js";
 import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
 
-export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
-  config: OpenClawConfig;
+export function normalizeCompatibilityConfigValues(cfg: RadioClawConfig): {
+  config: RadioClawConfig;
   changes: string[];
 } {
   const changes: string[] = [];
-  let next: OpenClawConfig = cfg;
+  let next: RadioClawConfig = cfg;
 
   const isRecord = (value: unknown): value is Record<string, unknown> =>
     Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -52,7 +52,7 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
         delete dm.policy;
         dmChanged = true;
       }
-      changes.push(`Moved ${params.pathPrefix}.dm.policy â†’ ${params.pathPrefix}.dmPolicy.`);
+      changes.push(`Moved ${params.pathPrefix}.dm.policy â†?${params.pathPrefix}.dmPolicy.`);
     } else if (topDmPolicy !== undefined && legacyDmPolicy !== undefined) {
       if (topDmPolicy === legacyDmPolicy) {
         if (dm) {
@@ -72,7 +72,7 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
         delete dm.allowFrom;
         dmChanged = true;
       }
-      changes.push(`Moved ${params.pathPrefix}.dm.allowFrom â†’ ${params.pathPrefix}.allowFrom.`);
+      changes.push(`Moved ${params.pathPrefix}.dm.allowFrom â†?${params.pathPrefix}.allowFrom.`);
     } else if (topAllowFrom !== undefined && legacyAllowFrom !== undefined) {
       if (allowFromEqual(topAllowFrom, legacyAllowFrom)) {
         if (dm) {
@@ -128,14 +128,14 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
       updated = rest;
       changed = true;
       changes.push(
-        `Moved ${params.pathPrefix}.streamMode â†’ ${params.pathPrefix}.streaming (${resolved}).`,
+        `Moved ${params.pathPrefix}.streamMode â†?${params.pathPrefix}.streaming (${resolved}).`,
       );
     }
     if (typeof beforeStreaming === "boolean") {
-      changes.push(`Normalized ${params.pathPrefix}.streaming boolean â†’ enum (${resolved}).`);
+      changes.push(`Normalized ${params.pathPrefix}.streaming boolean â†?enum (${resolved}).`);
     } else if (typeof beforeStreaming === "string" && beforeStreaming !== resolved) {
       changes.push(
-        `Normalized ${params.pathPrefix}.streaming (${beforeStreaming}) â†’ (${resolved}).`,
+        `Normalized ${params.pathPrefix}.streaming (${beforeStreaming}) â†?(${resolved}).`,
       );
     }
 
@@ -185,7 +185,7 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
       );
     } else if (typeof legacyStreaming === "string" && legacyStreaming !== resolvedStreaming) {
       changes.push(
-        `Normalized ${params.pathPrefix}.streaming (${legacyStreaming}) â†’ (${resolvedStreaming}).`,
+        `Normalized ${params.pathPrefix}.streaming (${legacyStreaming}) â†?(${resolvedStreaming}).`,
       );
     }
 
@@ -357,7 +357,7 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
     }
     next = {
       ...next,
-      channels: nextChannels as OpenClawConfig["channels"],
+      channels: nextChannels as RadioClawConfig["channels"],
     };
   };
 
@@ -402,10 +402,10 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
 
     next = {
       ...next,
-      browser: migratedBrowser as OpenClawConfig["browser"],
+      browser: migratedBrowser as RadioClawConfig["browser"],
     };
     changes.push(
-      `Moved browser.ssrfPolicy.allowPrivateNetwork â†’ browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (${String(resolvedDangerousAllowPrivateNetwork)}).`,
+      `Moved browser.ssrfPolicy.allowPrivateNetwork â†?browser.ssrfPolicy.dangerouslyAllowPrivateNetwork (${String(resolvedDangerousAllowPrivateNetwork)}).`,
     );
   };
 
@@ -443,7 +443,7 @@ export function normalizeCompatibilityConfigValues(cfg: OpenClawConfig): {
         },
       };
       changes.push(
-        `Copied messages.ackReaction â†’ channels.whatsapp.ackReaction (scope: ${legacyScope}).`,
+        `Copied messages.ackReaction â†?channels.whatsapp.ackReaction (scope: ${legacyScope}).`,
       );
     }
   }

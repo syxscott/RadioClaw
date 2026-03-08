@@ -33,7 +33,7 @@ describe("buildTelegramMessageContext implicitMention forum service messages", (
             : {}),
           from: {
             id: params.replyFromId ?? BOT_ID,
-            first_name: "OpenClaw",
+            first_name: "RadioClaw",
             is_bot: params.replyFromIsBot ?? true,
           },
           ...params.replyToMessageExtra,
@@ -102,13 +102,13 @@ describe("buildTelegramMessageContext implicitMention forum service messages", (
       replyFromIsBot: true,
     });
 
-    // Real bot reply â†’ implicitMention fires â†’ message is NOT skipped.
+    // Real bot reply â†?implicitMention fires â†?message is NOT skipped.
     expect(ctx).not.toBeNull();
     expect(ctx?.ctxPayload?.WasMentioned).toBe(true);
   });
 
   it("DOES trigger implicitMention for bot media messages with caption", async () => {
-    // Media messages from the bot have caption but no text â€” they should
+    // Media messages from the bot have caption but no text â€?they should
     // still count as real bot replies, not service messages.
     const ctx = await buildGroupReplyCtx({
       replyToMessageText: undefined,
@@ -122,12 +122,12 @@ describe("buildTelegramMessageContext implicitMention forum service messages", (
 
   it("DOES trigger implicitMention for bot sticker/voice (no text, no caption, no service field)", async () => {
     // Stickers, voice notes, and captionless photos have neither text nor
-    // caption, but they are NOT service messages â€” they are legitimate bot
+    // caption, but they are NOT service messages â€?they are legitimate bot
     // replies that should trigger implicitMention.
     const ctx = await buildGroupReplyCtx({
       replyToMessageText: undefined,
       replyFromIsBot: true,
-      // No forum_topic_* fields â†’ not a service message
+      // No forum_topic_* fields â†?not a service message
     });
 
     expect(ctx).not.toBeNull();
@@ -141,7 +141,7 @@ describe("buildTelegramMessageContext implicitMention forum service messages", (
       replyFromId: 999,
     });
 
-    // Different user's message â†’ not an implicit mention â†’ skipped.
+    // Different user's message â†?not an implicit mention â†?skipped.
     expect(ctx).toBeNull();
   });
 });

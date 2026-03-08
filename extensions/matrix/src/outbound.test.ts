@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/matrix";
+import type { RadioClawConfig } from "RadioClaw/plugin-sdk/matrix";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
@@ -38,7 +38,7 @@ describe("matrixOutbound cfg threading", () => {
           accessToken: "resolved-token",
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await matrixOutbound.sendText!({
       cfg,
@@ -68,7 +68,7 @@ describe("matrixOutbound cfg threading", () => {
           accessToken: "resolved-token",
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await matrixOutbound.sendMedia!({
       cfg,
@@ -95,7 +95,7 @@ describe("matrixOutbound cfg threading", () => {
           accessToken: "resolved-token",
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
     const sendMatrix = vi.fn(async () => ({
       messageId: "evt-injected",
       roomId: "!room:example",
@@ -130,7 +130,7 @@ describe("matrixOutbound cfg threading", () => {
           accessToken: "resolved-token",
         },
       },
-    } as OpenClawConfig;
+    } as RadioClawConfig;
 
     await matrixOutbound.sendPoll!({
       cfg,

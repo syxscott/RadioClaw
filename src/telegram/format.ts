@@ -43,7 +43,7 @@ const FILE_EXTENSIONS_WITH_TLD = new Set([
   "cc", // C++ source (Cocos Islands)
 ]);
 
-/** Detects when markdown-it linkify auto-generated a link from a bare filename (e.g. README.md â†’ http://README.md) */
+/** Detects when markdown-it linkify auto-generated a link from a bare filename (e.g. README.md â†?http://README.md) */
 function isAutoLinkedFileRef(href: string, label: string): boolean {
   const stripped = href.replace(/^https?:\/\//i, "");
   if (stripped !== label) {
@@ -77,7 +77,7 @@ function buildTelegramLink(link: MarkdownLinkSpan, text: string) {
   if (link.start === link.end) {
     return null;
   }
-  // Suppress auto-linkified file references (e.g. README.md â†’ http://README.md)
+  // Suppress auto-linkified file references (e.g. README.md â†?http://README.md)
   const label = text.slice(link.start, link.end);
   if (isAutoLinkedFileRef(href, label)) {
     return null;

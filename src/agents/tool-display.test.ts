@@ -81,11 +81,11 @@ describe("tool display details", () => {
     const detail = formatToolDetail(
       resolveToolDisplay({
         name: "web_search",
-        args: { query: "OpenClaw docs", count: 3 },
+        args: { query: "RadioClaw docs", count: 3 },
       }),
     );
 
-    expect(detail).toBe('for "OpenClaw docs" (top 3)');
+    expect(detail).toBe('for "RadioClaw docs" (top 3)');
   });
 
   it("summarizes exec commands with context", () => {
@@ -94,14 +94,14 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command:
-            "set -euo pipefail\ngit -C /Users/adityasingh/.openclaw/workspace status --short | head -n 3",
-          workdir: "/Users/adityasingh/.openclaw/workspace",
+            "set -euo pipefail\ngit -C /Users/adityasingh/.RadioClaw/workspace status --short | head -n 3",
+          workdir: "/Users/adityasingh/.RadioClaw/workspace",
         },
       }),
     );
 
     expect(detail).toContain("check git status -> show first 3 lines");
-    expect(detail).toContain(".openclaw/workspace)");
+    expect(detail).toContain(".RadioClaw/workspace)");
   });
 
   it("moves cd path to context suffix and appends raw command", () => {
@@ -126,7 +126,7 @@ describe("tool display details", () => {
     );
 
     expect(detail).toBe(
-      "install dependencies â†’ run tests (in ~/my-project)\n\n`cd ~/my-project && npm install && npm test`",
+      "install dependencies â†?run tests (in ~/my-project)\n\n`cd ~/my-project && npm install && npm test`",
     );
   });
 
@@ -160,9 +160,9 @@ describe("tool display details", () => {
       }),
     );
 
-    // || means npm install runs when cd FAILS â€” cd should NOT be stripped as preamble.
+    // || means npm install runs when cd FAILS â€?cd should NOT be stripped as preamble.
     // Both stages are summarized; cd is not treated as context prefix.
-    expect(detail).toMatch(/^run cd \/app â†’ install dependencies/);
+    expect(detail).toMatch(/^run cd \/app â†?install dependencies/);
   });
 
   it("explicit workdir takes priority over cd path", () => {
@@ -185,7 +185,7 @@ describe("tool display details", () => {
     );
 
     expect(detail).toBe(
-      "fetch git changes â†’ rebase git branch\n\n`git fetch && git rebase origin/main`",
+      "fetch git changes â†?rebase git branch\n\n`git fetch && git rebase origin/main`",
     );
   });
 
@@ -219,8 +219,8 @@ describe("tool display details", () => {
       }),
     );
 
-    // "run cargo build" is generic, but "run tests" is known â€” keep joined summary
-    expect(detail).toMatch(/^run cargo build â†’ run tests/);
+    // "run cargo build" is generic, but "run tests" is known â€?keep joined summary
+    expect(detail).toMatch(/^run cargo build â†?run tests/);
   });
 
   it("handles standalone cd as raw command", () => {
@@ -231,7 +231,7 @@ describe("tool display details", () => {
       }),
     );
 
-    // standalone cd (no following command) â€” treated as raw since it's generic
+    // standalone cd (no following command) â€?treated as raw since it's generic
     expect(detail).toBe("cd /tmp");
   });
 
@@ -255,8 +255,7 @@ describe("tool display details", () => {
       }),
     );
 
-    // The && inside quotes must not be treated as a separator â€”
-    // summary line should be "print text", not "run export" (which would happen
+    // The && inside quotes must not be treated as a separator â€?    // summary line should be "print text", not "run export" (which would happen
     // if the quoted && was mistaken for a real separator).
     expect(detail).toMatch(/^print text/);
   });
@@ -267,7 +266,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "python3 <<PY\nprint('x')\nPY",
-          workdir: "/Users/adityasingh/.openclaw/workspace",
+          workdir: "/Users/adityasingh/.RadioClaw/workspace",
         },
       }),
     );
@@ -276,7 +275,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node --check /tmp/test.js",
-          workdir: "/Users/adityasingh/.openclaw/workspace",
+          workdir: "/Users/adityasingh/.RadioClaw/workspace",
         },
       }),
     );
@@ -285,7 +284,7 @@ describe("tool display details", () => {
         name: "exec",
         args: {
           command: "node -c /tmp/test.js",
-          workdir: "/Users/adityasingh/.openclaw/workspace",
+          workdir: "/Users/adityasingh/.RadioClaw/workspace",
         },
       }),
     );

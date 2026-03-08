@@ -16,7 +16,7 @@ import {
   writeScreenRecordToFile,
 } from "../../cli/nodes-screen.js";
 import { parseDurationMs } from "../../cli/parse-duration.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { parsePreparedSystemRunPayload } from "../../infra/system-run-approval-context.js";
 import { imageMimeFromFormat } from "../../media/mime.js";
 import type { GatewayMessageChannel } from "../../utils/message-channel.js";
@@ -158,7 +158,7 @@ export function createNodesTool(options?: {
   agentAccountId?: string;
   currentChannelId?: string;
   currentThreadTs?: string | number;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   modelHasVision?: boolean;
   allowMediaInvokeCommands?: boolean;
 }): AnyAgentTool {
@@ -690,7 +690,7 @@ export function createNodesTool(options?: {
               }
             }
 
-            // Node requires approval â€“ create a pending approval request on
+            // Node requires approval â€?create a pending approval request on
             // the gateway and wait for the user to approve/deny via the UI.
             const APPROVAL_TIMEOUT_MS = 120_000;
             const approvalId = crypto.randomUUID();

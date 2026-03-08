@@ -26,9 +26,9 @@ Last updated: 2025-12-11
 ## Error surface
 
 - If another process holds the port, startup throws `GatewayLockError("another gateway instance is already listening on ws://127.0.0.1:<port>")`.
-- Other bind failures surface as `GatewayLockError("failed to bind gateway socket on ws://127.0.0.1:<port>: â€¦")`.
+- Other bind failures surface as `GatewayLockError("failed to bind gateway socket on ws://127.0.0.1:<port>: â€?)`.
 
 ## Operational notes
 
-- If the port is occupied by _another_ process, the error is the same; free the port or choose another with `openclaw gateway --port <port>`.
+- If the port is occupied by _another_ process, the error is the same; free the port or choose another with `RadioClaw gateway --port <port>`.
 - The macOS app still maintains its own lightweight PID guard before spawning the gateway; the runtime lock is enforced by the WebSocket bind.

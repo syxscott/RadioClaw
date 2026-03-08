@@ -1,4 +1,4 @@
-# OpenClaw Threat Model v1.0
+# RadioClaw Threat Model v1.0
 
 ## MITRE ATLAS Framework
 
@@ -21,7 +21,7 @@ This threat model is built on [MITRE ATLAS](https://atlas.mitre.org/), the indus
 
 ### Contributing to This Threat Model
 
-This is a living document maintained by the OpenClaw community. See [CONTRIBUTING-THREAT-MODEL.md](/security/CONTRIBUTING-THREAT-MODEL) for guidelines on contributing:
+This is a living document maintained by the RadioClaw community. See [CONTRIBUTING-THREAT-MODEL.md](/security/CONTRIBUTING-THREAT-MODEL) for guidelines on contributing:
 
 - Reporting new threats
 - Updating existing threats
@@ -34,13 +34,13 @@ This is a living document maintained by the OpenClaw community. See [CONTRIBUTIN
 
 ### 1.1 Purpose
 
-This threat model documents adversarial threats to the OpenClaw AI agent platform and ClawHub skill marketplace, using the MITRE ATLAS framework designed specifically for AI/ML systems.
+This threat model documents adversarial threats to the RadioClaw AI agent platform and ClawHub skill marketplace, using the MITRE ATLAS framework designed specifically for AI/ML systems.
 
 ### 1.2 Scope
 
 | Component              | Included | Notes                                            |
 | ---------------------- | -------- | ------------------------------------------------ |
-| OpenClaw Agent Runtime | Yes      | Core agent execution, tool calls, sessions       |
+| RadioClaw Agent Runtime | Yes      | Core agent execution, tool calls, sessions       |
 | Gateway                | Yes      | Authentication, routing, channel integration     |
 | Channel Integrations   | Yes      | WhatsApp, Telegram, Discord, Signal, Slack, etc. |
 | ClawHub Marketplace    | Yes      | Skill publishing, moderation, distribution       |
@@ -58,69 +58,7 @@ Nothing is explicitly out of scope for this threat model.
 ### 2.1 Trust Boundaries
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    UNTRUSTED ZONE                                │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
-│  │  WhatsApp   │  │  Telegram   │  │   Discord   │  ...         │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘              │
-│         │                │                │                      │
-└─────────┼────────────────┼────────────────┼──────────────────────┘
-          │                │                │
-          ▼                ▼                ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 TRUST BOUNDARY 1: Channel Access                 │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │                      GATEWAY                              │   │
-│  │  • Device Pairing (30s grace period)                      │   │
-│  │  • AllowFrom / AllowList validation                       │   │
-│  │  • Token/Password/Tailscale auth                          │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 TRUST BOUNDARY 2: Session Isolation              │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │                   AGENT SESSIONS                          │   │
-│  │  • Session key = agent:channel:peer                       │   │
-│  │  • Tool policies per agent                                │   │
-│  │  • Transcript logging                                     │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 TRUST BOUNDARY 3: Tool Execution                 │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │                  EXECUTION SANDBOX                        │   │
-│  │  • Docker sandbox OR Host (exec-approvals)                │   │
-│  │  • Node remote execution                                  │   │
-│  │  • SSRF protection (DNS pinning + IP blocking)            │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 TRUST BOUNDARY 4: External Content               │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │              FETCHED URLs / EMAILS / WEBHOOKS             │   │
-│  │  • External content wrapping (XML tags)                   │   │
-│  │  • Security notice injection                              │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                 TRUST BOUNDARY 5: Supply Chain                   │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │                      CLAWHUB                              │   │
-│  │  • Skill publishing (semver, SKILL.md required)           │   │
-│  │  • Pattern-based moderation flags                         │   │
-│  │  • VirusTotal scanning (coming soon)                      │   │
-│  │  • GitHub account age verification                        │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-```
+┌─────────────────────────────────────────────────────────────────�?�?                   UNTRUSTED ZONE                                �?�? ┌─────────────�? ┌─────────────�? ┌─────────────�?             �?�? �? WhatsApp   �? �? Telegram   �? �?  Discord   �? ...         �?�? └──────┬──────�? └──────┬──────�? └──────┬──────�?             �?�?        �?               �?               �?                     �?└─────────┼────────────────┼────────────────┼──────────────────────�?          �?               �?               �?          �?               �?               �?┌─────────────────────────────────────────────────────────────────�?�?                TRUST BOUNDARY 1: Channel Access                 �?�? ┌──────────────────────────────────────────────────────────�?  �?�? �?                     GATEWAY                              �?  �?�? �? �?Device Pairing (30s grace period)                      �?  �?�? �? �?AllowFrom / AllowList validation                       �?  �?�? �? �?Token/Password/Tailscale auth                          �?  �?�? └──────────────────────────────────────────────────────────�?  �?└─────────────────────────────────────────────────────────────────�?                              �?                              �?┌─────────────────────────────────────────────────────────────────�?�?                TRUST BOUNDARY 2: Session Isolation              �?�? ┌──────────────────────────────────────────────────────────�?  �?�? �?                  AGENT SESSIONS                          �?  �?�? �? �?Session key = agent:channel:peer                       �?  �?�? �? �?Tool policies per agent                                �?  �?�? �? �?Transcript logging                                     �?  �?�? └──────────────────────────────────────────────────────────�?  �?└─────────────────────────────────────────────────────────────────�?                              �?                              �?┌─────────────────────────────────────────────────────────────────�?�?                TRUST BOUNDARY 3: Tool Execution                 �?�? ┌──────────────────────────────────────────────────────────�?  �?�? �?                 EXECUTION SANDBOX                        �?  �?�? �? �?Docker sandbox OR Host (exec-approvals)                �?  �?�? �? �?Node remote execution                                  �?  �?�? �? �?SSRF protection (DNS pinning + IP blocking)            �?  �?�? └──────────────────────────────────────────────────────────�?  �?└─────────────────────────────────────────────────────────────────�?                              �?                              �?┌─────────────────────────────────────────────────────────────────�?�?                TRUST BOUNDARY 4: External Content               �?�? ┌──────────────────────────────────────────────────────────�?  �?�? �?             FETCHED URLs / EMAILS / WEBHOOKS             �?  �?�? �? �?External content wrapping (XML tags)                   �?  �?�? �? �?Security notice injection                              �?  �?�? └──────────────────────────────────────────────────────────�?  �?└─────────────────────────────────────────────────────────────────�?                              �?                              �?┌─────────────────────────────────────────────────────────────────�?�?                TRUST BOUNDARY 5: Supply Chain                   �?�? ┌──────────────────────────────────────────────────────────�?  �?�? �?                     CLAWHUB                              �?  �?�? �? �?Skill publishing (semver, SKILL.md required)           �?  �?�? �? �?Pattern-based moderation flags                         �?  �?�? �? �?VirusTotal scanning (coming soon)                      �?  �?�? �? �?GitHub account age verification                        �?  �?�? └──────────────────────────────────────────────────────────�?  �?└─────────────────────────────────────────────────────────────────�?```
 
 ### 2.2 Data Flows
 
@@ -144,7 +82,7 @@ Nothing is explicitly out of scope for this threat model.
 | Attribute               | Value                                                                |
 | ----------------------- | -------------------------------------------------------------------- |
 | **ATLAS ID**            | AML.T0006 - Active Scanning                                          |
-| **Description**         | Attacker scans for exposed OpenClaw gateway endpoints                |
+| **Description**         | Attacker scans for exposed RadioClaw gateway endpoints                |
 | **Attack Vector**       | Network scanning, shodan queries, DNS enumeration                    |
 | **Affected Components** | Gateway, exposed API endpoints                                       |
 | **Current Mitigations** | Tailscale auth option, bind to loopback by default                   |
@@ -198,7 +136,7 @@ Nothing is explicitly out of scope for this threat model.
 | **ATLAS ID**            | AML.T0040 - AI Model Inference API Access                   |
 | **Description**         | Attacker steals authentication tokens from config files     |
 | **Attack Vector**       | Malware, unauthorized device access, config backup exposure |
-| **Affected Components** | ~/.openclaw/credentials/, config storage                    |
+| **Affected Components** | ~/.RadioClaw/credentials/, config storage                    |
 | **Current Mitigations** | File permissions                                            |
 | **Residual Risk**       | High - Tokens stored in plaintext                           |
 | **Recommendations**     | Implement token encryption at rest, add token rotation      |
@@ -507,22 +445,22 @@ Current patterns in `moderation.ts`:
 **Attack Chain 1: Skill-Based Data Theft**
 
 ```
-T-PERSIST-001 → T-EVADE-001 → T-EXFIL-003
-(Publish malicious skill) → (Evade moderation) → (Harvest credentials)
+T-PERSIST-001 �?T-EVADE-001 �?T-EXFIL-003
+(Publish malicious skill) �?(Evade moderation) �?(Harvest credentials)
 ```
 
 **Attack Chain 2: Prompt Injection to RCE**
 
 ```
-T-EXEC-001 → T-EXEC-004 → T-IMPACT-001
-(Inject prompt) → (Bypass exec approval) → (Execute commands)
+T-EXEC-001 �?T-EXEC-004 �?T-IMPACT-001
+(Inject prompt) �?(Bypass exec approval) �?(Execute commands)
 ```
 
 **Attack Chain 3: Indirect Injection via Fetched Content**
 
 ```
-T-EXEC-002 → T-EXFIL-001 → External exfiltration
-(Poison URL content) → (Agent fetches & follows instructions) → (Data sent to attacker)
+T-EXEC-002 �?T-EXFIL-001 �?External exfiltration
+(Poison URL content) �?(Agent fetches & follows instructions) �?(Data sent to attacker)
 ```
 
 ---
@@ -560,7 +498,7 @@ T-EXEC-002 → T-EXFIL-001 → External exfiltration
 
 ### 7.1 ATLAS Technique Mapping
 
-| ATLAS ID      | Technique Name                 | OpenClaw Threats                                                 |
+| ATLAS ID      | Technique Name                 | RadioClaw Threats                                                 |
 | ------------- | ------------------------------ | ---------------------------------------------------------------- |
 | AML.T0006     | Active Scanning                | T-RECON-001, T-RECON-002                                         |
 | AML.T0009     | Collection                     | T-EXFIL-001, T-EXFIL-002, T-EXFIL-003                            |
@@ -591,13 +529,13 @@ T-EXEC-002 → T-EXFIL-001 → External exfiltration
 | Term                 | Definition                                                |
 | -------------------- | --------------------------------------------------------- |
 | **ATLAS**            | MITRE's Adversarial Threat Landscape for AI Systems       |
-| **ClawHub**          | OpenClaw's skill marketplace                              |
-| **Gateway**          | OpenClaw's message routing and authentication layer       |
+| **ClawHub**          | RadioClaw's skill marketplace                              |
+| **Gateway**          | RadioClaw's message routing and authentication layer       |
 | **MCP**              | Model Context Protocol - tool provider interface          |
 | **Prompt Injection** | Attack where malicious instructions are embedded in input |
-| **Skill**            | Downloadable extension for OpenClaw agents                |
+| **Skill**            | Downloadable extension for RadioClaw agents                |
 | **SSRF**             | Server-Side Request Forgery                               |
 
 ---
 
-_This threat model is a living document. Report security issues to security@openclaw.ai_
+_This threat model is a living document. Report security issues to security@RadioClaw.ai_

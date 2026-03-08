@@ -30,7 +30,7 @@ export function normalizeMattermostMessagingTarget(raw: string): string | undefi
     // resolve the channel name to its Mattermost ID.
     return undefined;
   }
-  // Bare name without prefix â€” return undefined to allow directory lookup
+  // Bare name without prefix â€?return undefined to allow directory lookup
   return undefined;
 }
 

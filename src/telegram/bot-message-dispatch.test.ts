@@ -1600,7 +1600,7 @@ describe("dispatchTelegramMessage draft streaming", () => {
         await replyOptions?.onPartialReply?.({ text: "Let me check that file" });
         // Error payload should not edit the preview message
         await dispatcherOptions.deliver(
-          { text: "⚠️ 🛠️ Exec: cat /nonexistent failed: No such file", isError: true },
+          { text: "⚠️ 🛠�?Exec: cat /nonexistent failed: No such file", isError: true },
           { kind: "final" },
         );
         return { queuedFinal: true };
@@ -1632,7 +1632,7 @@ describe("dispatchTelegramMessage draft streaming", () => {
 
     await dispatchWithContext({ context: createContext() });
 
-    // Error payloads skip preview finalization — preview must be cleaned up
+    // Error payloads skip preview finalization �?preview must be cleaned up
     expect(draftStream.clear).toHaveBeenCalledTimes(1);
   });
 
@@ -1659,7 +1659,7 @@ describe("dispatchTelegramMessage draft streaming", () => {
 
     await dispatchWithContext({ context: createContext() });
 
-    // Preview contains stale partial text — must be cleaned up
+    // Preview contains stale partial text �?must be cleaned up
     expect(draftStream.clear).toHaveBeenCalledTimes(1);
   });
 
@@ -1744,7 +1744,7 @@ describe("dispatchTelegramMessage draft streaming", () => {
     );
   });
 
-  it("handles error block + response final — error delivered, response finalizes preview", async () => {
+  it("handles error block + response final �?error delivered, response finalizes preview", async () => {
     const draftStream = createDraftStream(999);
     createTelegramDraftStream.mockReturnValue(draftStream);
     editMessageTelegram.mockResolvedValue({ ok: true });
@@ -1789,7 +1789,7 @@ describe("dispatchTelegramMessage draft streaming", () => {
       }
       return { queuedFinal: false };
     });
-    // No preview message id → deliver goes through deliverReplies directly
+    // No preview message id �?deliver goes through deliverReplies directly
     // Primary delivery fails
     deliverReplies
       .mockRejectedValueOnce(new Error("network down"))

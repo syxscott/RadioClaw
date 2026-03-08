@@ -1,5 +1,5 @@
 ---
-summary: "Chrome extension: let OpenClaw drive your existing Chrome tab"
+summary: "Chrome extension: let RadioClaw drive your existing Chrome tab"
 read_when:
   - You want the agent to drive an existing Chrome tab (toolbar button)
   - You need remote Gateway + local browser automation via Tailscale
@@ -9,7 +9,7 @@ title: "Chrome Extension"
 
 # Chrome extension (browser relay)
 
-The OpenClaw Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate openclaw-managed Chrome profile.
+The RadioClaw Chrome extension lets the agent control your **existing Chrome tabs** (your normal Chrome window) instead of launching a separate RadioClaw-managed Chrome profile.
 
 Attach/detach happens via a **single Chrome toolbar button**.
 
@@ -21,56 +21,55 @@ There are three parts:
 - **Local relay server** (loopback CDP): bridges between the control server and the extension (`http://127.0.0.1:18792` by default)
 - **Chrome MV3 extension**: attaches to the active tab using `chrome.debugger` and pipes CDP messages to the relay
 
-OpenClaw then controls the attached tab through the normal `browser` tool surface (selecting the right profile).
+RadioClaw then controls the attached tab through the normal `browser` tool surface (selecting the right profile).
 
 ## Install / load (unpacked)
 
 1. Install the extension to a stable local path:
 
 ```bash
-openclaw browser extension install
+RadioClaw browser extension install
 ```
 
 2. Print the installed extension directory path:
 
 ```bash
-openclaw browser extension path
+RadioClaw browser extension path
 ```
 
-3. Chrome → `chrome://extensions`
+3. Chrome �?`chrome://extensions`
 
-- Enable “Developer mode”
-- “Load unpacked” → select the directory printed above
+- Enable “Developer mode�?- “Load unpacked�?�?select the directory printed above
 
 4. Pin the extension.
 
 ## Updates (no build step)
 
-The extension ships inside the OpenClaw release (npm package) as static files. There is no separate “build” step.
+The extension ships inside the RadioClaw release (npm package) as static files. There is no separate “build�?step.
 
-After upgrading OpenClaw:
+After upgrading RadioClaw:
 
-- Re-run `openclaw browser extension install` to refresh the installed files under your OpenClaw state directory.
-- Chrome → `chrome://extensions` → click “Reload” on the extension.
+- Re-run `RadioClaw browser extension install` to refresh the installed files under your RadioClaw state directory.
+- Chrome �?`chrome://extensions` �?click “Reload�?on the extension.
 
 ## Use it (set gateway token once)
 
-OpenClaw ships with a built-in browser profile named `chrome` that targets the extension relay on the default port.
+RadioClaw ships with a built-in browser profile named `chrome` that targets the extension relay on the default port.
 
 Before first attach, open extension Options and set:
 
 - `Port` (default `18792`)
-- `Gateway token` (must match `gateway.auth.token` / `OPENCLAW_GATEWAY_TOKEN`)
+- `Gateway token` (must match `gateway.auth.token` / `RadioClaw_GATEWAY_TOKEN`)
 
 Use it:
 
-- CLI: `openclaw browser --browser-profile chrome tabs`
+- CLI: `RadioClaw browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 If you want a different name or a different relay port, create your own profile:
 
 ```bash
-openclaw browser create-profile \
+RadioClaw browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -91,20 +90,20 @@ Configure the extension to use the derived relay port in the extension Options p
 
 ## Attach / detach (toolbar button)
 
-- Open the tab you want OpenClaw to control.
+- Open the tab you want RadioClaw to control.
 - Click the extension icon.
   - Badge shows `ON` when attached.
 - Click again to detach.
 
 ## Which tab does it control?
 
-- It does **not** automatically control “whatever tab you’re looking at”.
+- It does **not** automatically control “whatever tab you’re looking at�?
 - It controls **only the tab(s) you explicitly attached** by clicking the toolbar button.
 - To switch: open the other tab and click the extension icon there.
 
 ## Badge + common errors
 
-- `ON`: attached; OpenClaw can drive that tab.
+- `ON`: attached; RadioClaw can drive that tab.
 - `…`: connecting to the local relay.
 - `!`: relay not reachable/authenticated (most common: relay server not running, or gateway token missing/wrong).
 
@@ -115,12 +114,12 @@ If you see `!`:
 
 ## Remote Gateway (use a node host)
 
-### Local Gateway (same machine as Chrome) — usually **no extra steps**
+### Local Gateway (same machine as Chrome) �?usually **no extra steps**
 
 If the Gateway runs on the same machine as Chrome, it starts the browser control service on loopback
 and auto-starts the relay server. The extension talks to the local relay; the CLI/tool calls go to the Gateway.
 
-### Remote Gateway (Gateway runs elsewhere) — **run a node host**
+### Remote Gateway (Gateway runs elsewhere) �?**run a node host**
 
 If your Gateway runs on another machine, start a node host on the machine that runs Chrome.
 The Gateway will proxy browser actions to that node; the extension + relay stay local to the browser machine.
@@ -155,30 +154,30 @@ Options:
 
 Then ensure the tool isn’t denied by tool policy, and (if needed) call `browser` with `target="host"`.
 
-Debugging: `openclaw sandbox explain`
+Debugging: `RadioClaw sandbox explain`
 
 ## Remote access tips
 
 - Keep the Gateway and node host on the same tailnet; avoid exposing relay ports to LAN or public Internet.
 - Pair nodes intentionally; disable browser proxy routing if you don’t want remote control (`gateway.nodes.browser.mode="off"`).
 
-## How “extension path” works
+## How “extension path�?works
 
-`openclaw browser extension path` prints the **installed** on-disk directory containing the extension files.
+`RadioClaw browser extension path` prints the **installed** on-disk directory containing the extension files.
 
-The CLI intentionally does **not** print a `node_modules` path. Always run `openclaw browser extension install` first to copy the extension to a stable location under your OpenClaw state directory.
+The CLI intentionally does **not** print a `node_modules` path. Always run `RadioClaw browser extension install` first to copy the extension to a stable location under your RadioClaw state directory.
 
 If you move or delete that install directory, Chrome will mark the extension as broken until you reload it from a valid path.
 
 ## Security implications (read this)
 
-This is powerful and risky. Treat it like giving the model “hands on your browser”.
+This is powerful and risky. Treat it like giving the model “hands on your browser�?
 
 - The extension uses Chrome’s debugger API (`chrome.debugger`). When attached, the model can:
   - click/type/navigate in that tab
   - read page content
   - access whatever the tab’s logged-in session can access
-- **This is not isolated** like the dedicated openclaw-managed profile.
+- **This is not isolated** like the dedicated RadioClaw-managed profile.
   - If you attach to your daily-driver profile/tab, you’re granting access to that account state.
 
 Recommendations:

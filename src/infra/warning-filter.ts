@@ -1,4 +1,4 @@
-const warningFilterKey = Symbol.for("openclaw.warning-filter");
+const warningFilterKey = Symbol.for("RadioClaw.warning-filter");
 
 export type ProcessWarning = {
   code?: string;

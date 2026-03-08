@@ -9,8 +9,7 @@ const STALE_SIGKILL_WAIT_MS = 400;
 /**
  * After SIGKILL, the kernel may not release the TCP port immediately.
  * Poll until the port is confirmed free (or until the budget expires) before
- * returning control to the caller (typically `triggerOpenClawRestart` â†’
- * `systemctl restart`). Without this wait the new process races the dying
+ * returning control to the caller (typically `triggerRadioClawRestart` â†? * `systemctl restart`). Without this wait the new process races the dying
  * process for the port and systemd enters an EADDRINUSE restart loop.
  *
  * POLL_SPAWN_TIMEOUT_MS is intentionally much shorter than SPAWN_TIMEOUT_MS
@@ -51,8 +50,8 @@ function sleepSync(ms: number): void {
 }
 
 /**
- * Parse openclaw gateway PIDs from lsof -Fpc stdout.
- * Pure function â€” no I/O. Excludes the current process.
+ * Parse RadioClaw gateway PIDs from lsof -Fpc stdout.
+ * Pure function â€?no I/O. Excludes the current process.
  */
 function parsePidsFromLsofOutput(stdout: string): number[] {
   const pids: number[] = [];
@@ -60,7 +59,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
   let currentCmd: string | undefined;
   for (const line of stdout.split(/\r?\n/).filter(Boolean)) {
     if (line.startsWith("p")) {
-      if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("openclaw")) {
+      if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("RadioClaw")) {
         pids.push(currentPid);
       }
       const parsed = Number.parseInt(line.slice(1), 10);
@@ -70,7 +69,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
       currentCmd = line.slice(1);
     }
   }
-  if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("openclaw")) {
+  if (currentPid != null && currentCmd && currentCmd.toLowerCase().includes("RadioClaw")) {
     pids.push(currentPid);
   }
   // Deduplicate: dual-stack listeners (IPv4 + IPv6) cause lsof to emit the
@@ -80,7 +79,7 @@ function parsePidsFromLsofOutput(stdout: string): number[] {
 
 /**
  * Find PIDs of gateway processes listening on the given port using synchronous lsof.
- * Returns only PIDs that belong to openclaw gateway processes (not the current process).
+ * Returns only PIDs that belong to RadioClaw gateway processes (not the current process).
  */
 export function findGatewayPidsOnPortSync(
   port: number,
@@ -122,17 +121,16 @@ export function findGatewayPidsOnPortSync(
  *
  * Returns a discriminated union with four possible states:
  *
- *   { free: true }                      â€” port confirmed free
- *   { free: false }                     â€” port confirmed busy
- *   { free: null; permanent: false }    â€” transient error, keep retrying
- *   { free: null; permanent: true }     â€” lsof unavailable (ENOENT / EACCES),
+ *   { free: true }                      â€?port confirmed free
+ *   { free: false }                     â€?port confirmed busy
+ *   { free: null; permanent: false }    â€?transient error, keep retrying
+ *   { free: null; permanent: true }     â€?lsof unavailable (ENOENT / EACCES),
  *                                         no point retrying
  *
  * Separating transient from permanent errors is critical so that:
- *  1. A slow/timed-out lsof call (transient) does not abort the polling loop â€”
- *     the caller retries until the wall-clock budget expires.
+ *  1. A slow/timed-out lsof call (transient) does not abort the polling loop â€? *     the caller retries until the wall-clock budget expires.
  *  2. Non-zero lsof exits from runtime/permission failures (status > 1) are
- *     not misclassified as "port free" â€” they are inconclusive and retried.
+ *     not misclassified as "port free" â€?they are inconclusive and retried.
  *  3. A missing lsof binary (permanent) short-circuits cleanly rather than
  *     spinning the full budget pointlessly.
  */
@@ -153,7 +151,7 @@ function pollPortOnce(port: number): PollResult {
       return { free: null, permanent };
     }
     if (res.status === 1) {
-      // lsof canonical "no matching processes" exit â€” port is genuinely free.
+      // lsof canonical "no matching processes" exit â€?port is genuinely free.
       // Guard: on Linux containers with restricted /proc (AppArmor, seccomp,
       // user namespaces), lsof can exit 1 AND still emit some output for the
       // processes it could read. Parse stdout when non-empty to avoid false-free.
@@ -164,13 +162,12 @@ function pollPortOnce(port: number): PollResult {
       return { free: true };
     }
     if (res.status !== 0) {
-      // status > 1: runtime/permission/flag error. Cannot confirm port state â€”
-      // treat as a transient failure and keep polling rather than falsely
+      // status > 1: runtime/permission/flag error. Cannot confirm port state â€?      // treat as a transient failure and keep polling rather than falsely
       // reporting the port as free (which would recreate the EADDRINUSE race).
       return { free: null, permanent: false };
     }
     // status === 0: lsof found listeners. Parse pids from the stdout we
-    // already hold â€” no second lsof spawn, no new failure surface.
+    // already hold â€?no second lsof spawn, no new failure surface.
     const pids = parsePidsFromLsofOutput(res.stdout);
     return pids.length === 0 ? { free: true } : { free: false };
   } catch {
@@ -190,7 +187,7 @@ function terminateStaleProcessesSync(pids: number[]): number[] {
       process.kill(pid, "SIGTERM");
       killed.push(pid);
     } catch {
-      // ESRCH â€” already gone
+      // ESRCH â€?already gone
     }
   }
   if (killed.length === 0) {
@@ -220,11 +217,11 @@ function terminateStaleProcessesSync(pids: number[]): number[] {
  * result. Up to five independent lsof attempts fit within the budget.
  *
  * Exit conditions:
- *   - `pollPortOnce` returns `{ free: true }`                    â†’ port confirmed free
- *   - `pollPortOnce` returns `{ free: null, permanent: true }`   â†’ lsof unavailable, bail
- *   - `pollPortOnce` returns `{ free: false }`                   â†’ port busy, sleep + retry
- *   - `pollPortOnce` returns `{ free: null, permanent: false }`  â†’ transient error, sleep + retry
- *   - Wall-clock deadline exceeded                               â†’ log warning, proceed anyway
+ *   - `pollPortOnce` returns `{ free: true }`                    â†?port confirmed free
+ *   - `pollPortOnce` returns `{ free: null, permanent: true }`   â†?lsof unavailable, bail
+ *   - `pollPortOnce` returns `{ free: false }`                   â†?port busy, sleep + retry
+ *   - `pollPortOnce` returns `{ free: null, permanent: false }`  â†?transient error, sleep + retry
+ *   - Wall-clock deadline exceeded                               â†?log warning, proceed anyway
  */
 function waitForPortFreeSync(port: number): void {
   const deadline = getTimeMs() + PORT_FREE_TIMEOUT_MS;
@@ -234,12 +231,12 @@ function waitForPortFreeSync(port: number): void {
       return;
     }
     if (result.free === null && result.permanent) {
-      // lsof is permanently unavailable (ENOENT / EACCES) â€” bail immediately,
+      // lsof is permanently unavailable (ENOENT / EACCES) â€?bail immediately,
       // no point spinning the remaining budget.
       return;
     }
     // result.free === false: port still bound.
-    // result.free === null && !permanent: transient lsof error â€” keep polling.
+    // result.free === null && !permanent: transient lsof error â€?keep polling.
     sleepSync(PORT_FREE_POLL_INTERVAL_MS);
   }
   restartLog.warn(`port ${port} still in use after ${PORT_FREE_TIMEOUT_MS}ms; proceeding anyway`);
@@ -267,7 +264,7 @@ export function cleanStaleGatewayProcessesSync(portOverride?: number): number[] 
       `killing ${stalePids.length} stale gateway process(es) before restart: ${stalePids.join(", ")}`,
     );
     const killed = terminateStaleProcessesSync(stalePids);
-    // Wait for the port to be released before returning â€” called unconditionally
+    // Wait for the port to be released before returning â€?called unconditionally
     // even when `killed` is empty (all pids were already dead before SIGTERM).
     // A process can exit before our signal arrives yet still leave its socket
     // in TIME_WAIT / FIN_WAIT; polling is the only reliable way to confirm the

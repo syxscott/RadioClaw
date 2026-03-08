@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import { DEFAULT_MEMORY_FLUSH_PROMPT, resolveMemoryFlushPromptForRun } from "./memory-flush.js";
 
 describe("resolveMemoryFlushPromptForRun", () => {
@@ -10,7 +10,7 @@ describe("resolveMemoryFlushPromptForRun", () => {
         timeFormat: "12",
       },
     },
-  } as OpenClawConfig;
+  } as RadioClawConfig;
 
   it("replaces YYYY-MM-DD using user timezone and appends current time", () => {
     const prompt = resolveMemoryFlushPromptForRun({
@@ -21,7 +21,7 @@ describe("resolveMemoryFlushPromptForRun", () => {
 
     expect(prompt).toContain("memory/2026-02-16.md");
     expect(prompt).toContain(
-      "Current time: Monday, February 16th, 2026 â€” 10:00 AM (America/New_York) / 2026-02-16 15:00 UTC",
+      "Current time: Monday, February 16th, 2026 â€?10:00 AM (America/New_York) / 2026-02-16 15:00 UTC",
     );
   });
 

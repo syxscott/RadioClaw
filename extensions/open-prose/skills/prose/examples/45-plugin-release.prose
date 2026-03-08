@@ -79,9 +79,9 @@ let version = session: analyzer
     Requested: {release_type}
 
     Rules:
-    - Breaking changes â†’ major bump
-    - New features â†’ minor bump
-    - Fixes only â†’ patch bump
+    - Breaking changes â†?major bump
+    - New features â†?minor bump
+    - Fixes only â†?patch bump
     - If release_type specified, use it (but warn if it contradicts impact)
   """
   context: impact

@@ -1,18 +1,18 @@
 import Foundation
 import Observation
-import OpenClawKit
-import OpenClawProtocol
+import RadioClawKit
+import RadioClawProtocol
 import OSLog
 import SwiftUI
 
-private let onboardingWizardLogger = Logger(subsystem: "ai.openclaw", category: "onboarding.wizard")
+private let onboardingWizardLogger = Logger(subsystem: "ai.RadioClaw", category: "onboarding.wizard")
 
 // MARK: - Swift 6 AnyCodable Bridging Helpers
 
-// Bridge between OpenClawProtocol.AnyCodable and the local module to avoid
+// Bridge between RadioClawProtocol.AnyCodable and the local module to avoid
 // Swift 6 strict concurrency type conflicts.
 
-private typealias ProtocolAnyCodable = OpenClawProtocol.AnyCodable
+private typealias ProtocolAnyCodable = RadioClawProtocol.AnyCodable
 
 private func bridgeToLocal(_ value: ProtocolAnyCodable) -> AnyCodable {
     if let data = try? JSONEncoder().encode(value),
@@ -186,13 +186,13 @@ final class OnboardingWizardModel {
         self.sessionId = nil
         self.currentStep = nil
         self.status = nil
-        self.errorMessage = "Wizard session lost. Restartingâ€¦"
+        self.errorMessage = "Wizard session lost. Restartingâ€?
         Task { await self.startIfNeeded(mode: mode, workspace: self.lastStartWorkspace) }
         return true
     }
 
     private func shouldSkipWizard() -> Bool {
-        let root = OpenClawConfigFile.loadDict()
+        let root = RadioClawConfigFile.loadDict()
         if let wizard = root["wizard"] as? [String: Any], !wizard.isEmpty {
             return true
         }

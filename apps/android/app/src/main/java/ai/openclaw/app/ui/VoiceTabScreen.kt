@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui
+package ai.RadioClaw.app.ui
 
 import android.Manifest
 import android.app.Activity
@@ -66,9 +66,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import ai.openclaw.app.MainViewModel
-import ai.openclaw.app.voice.VoiceConversationEntry
-import ai.openclaw.app.voice.VoiceConversationRole
+import ai.RadioClaw.app.MainViewModel
+import ai.RadioClaw.app.voice.VoiceConversationEntry
+import ai.RadioClaw.app.voice.VoiceConversationRole
 import kotlin.math.max
 
 @Composable
@@ -345,12 +345,12 @@ private fun VoiceTurnBubble(entry: VoiceConversationEntry) {
         verticalArrangement = Arrangement.spacedBy(3.dp),
       ) {
         Text(
-          if (isUser) "You" else "OpenClaw",
+          if (isUser) "You" else "RadioClaw",
           style = mobileCaption2.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.6.sp),
           color = if (isUser) mobileAccent else mobileTextSecondary,
         )
         Text(
-          if (entry.isStreaming && entry.text.isBlank()) "Listening responseâ€¦" else entry.text,
+          if (entry.isStreaming && entry.text.isBlank()) "Listening responseâ€? else entry.text,
           style = mobileCallout,
           color = mobileText,
         )
@@ -374,7 +374,7 @@ private fun VoiceThinkingBubble() {
         verticalAlignment = Alignment.CenterVertically,
       ) {
         ThinkingDots(color = mobileTextSecondary)
-        Text("OpenClaw is thinkingâ€¦", style = mobileCallout, color = mobileTextSecondary)
+        Text("RadioClaw is thinkingâ€?, style = mobileCallout, color = mobileTextSecondary)
       }
     }
   }

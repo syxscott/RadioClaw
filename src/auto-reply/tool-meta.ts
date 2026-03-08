@@ -36,7 +36,7 @@ export function formatToolAggregate(
       rawSegments.push(m);
       continue;
     }
-    if (m.includes("â†’")) {
+    if (m.includes("â†?)) {
       rawSegments.push(m);
       continue;
     }

@@ -48,7 +48,7 @@ export const es: TranslationMap = {
     skills: "Gestionar disponibilidad de habilidades e inyección de claves API.",
     nodes: "Dispositivos emparejados, capacidades y exposición de comandos.",
     chat: "Sesión de chat directa con la puerta de enlace para intervenciones rápidas.",
-    config: "Editar ~/.openclaw/openclaw.json de forma segura.",
+    config: "Editar ~/.RadioClaw/RadioClaw.json de forma segura.",
     debug: "Instantáneas de la puerta de enlace, eventos y llamadas RPC manuales.",
     logs: "Seguimiento en vivo de los registros de la puerta de enlace.",
   },
@@ -101,7 +101,7 @@ export const es: TranslationMap = {
     pairing: {
       hint: "Este dispositivo necesita aprobación de emparejamiento del host de la puerta de enlace.",
       mobileHint:
-        "¿En el móvil? Copia la URL completa (incluyendo #token=...) desde openclaw dashboard --no-open en tu escritorio.",
+        "¿En el móvil? Copia la URL completa (incluyendo #token=...) desde RadioClaw dashboard --no-open en tu escritorio.",
     },
     insecure: {
       hint: "Esta página es HTTP, por lo que el navegador bloquea el acceso a la identidad del dispositivo. Usa HTTPS (Tailscale Serve) o abre {url} en el equipo host.",
@@ -120,7 +120,7 @@ export const es: TranslationMap = {
   },
   languages: {
     en: "Inglés (English)",
-    zhCN: "Chino simplificado (简体中文)",
+    zhCN: "Chino simplificado (简体中�?",
     zhTW: "Chino tradicional (繁體中文)",
     ptBR: "Portugués brasileño (Português)",
     de: "Deutsch (Alemán)",
@@ -220,7 +220,7 @@ export const es: TranslationMap = {
       timezonePlaceholder: "America/Los_Angeles",
       timezoneHelp: "Selecciona una zona horaria común o ingresa cualquier zona IANA válida.",
       jitterHelp:
-        "¿Necesitas variación? Usa Avanzado → Ventana de escalonamiento / Unidad de escalonamiento.",
+        "¿Necesitas variación? Usa Avanzado �?Ventana de escalonamiento / Unidad de escalonamiento.",
       execution: "Ejecución",
       executionSub: "Elige cuándo activar y qué debe hacer esta tarea.",
       session: "Sesión",

@@ -151,7 +151,7 @@ export function calculateAdaptiveColumnWidths(
  * Clean blocks for Descendant API with adaptive column widths.
  *
  * - Removes parent_id from all blocks
- * - Fixes children type (string â†’ array) for TableCell blocks
+ * - Fixes children type (string â†?array) for TableCell blocks
  * - Removes merge_info (read-only, causes API error)
  * - Calculates and applies adaptive column_width for tables
  *

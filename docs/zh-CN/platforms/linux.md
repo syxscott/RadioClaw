@@ -2,8 +2,7 @@
 read_when:
   - 查找 Linux 配套应用状态时
   - 规划平台覆盖或贡献时
-summary: Linux 支持 + 配套应用状态
-title: Linux 应用
+summary: Linux 支持 + 配套应用状�?title: Linux 应用
 x-i18n:
   generated_at: "2026-02-03T07:52:18Z"
   model: claude-opus-4-5
@@ -15,19 +14,14 @@ x-i18n:
 
 # Linux 应用
 
-Gateway 网关在 Linux 上完全支持。**Node 是推荐的运行时**。
-不推荐 Bun 用于 Gateway 网关（WhatsApp/Telegram 存在 bug）。
-
-原生 Linux 配套应用已在计划中。如果你想帮助构建，欢迎贡献。
-
-## 新手快速路径（VPS）
-
+Gateway 网关�?Linux 上完全支持�?*Node 是推荐的运行�?*�?不推�?Bun 用于 Gateway 网关（WhatsApp/Telegram 存在 bug）�?
+原生 Linux 配套应用已在计划中。如果你想帮助构建，欢迎贡献�?
+## 新手快速路径（VPS�?
 1. 安装 Node 22+
-2. `npm i -g openclaw@latest`
-3. `openclaw onboard --install-daemon`
+2. `npm i -g RadioClaw@latest`
+3. `RadioClaw onboard --install-daemon`
 4. 从你的笔记本电脑：`ssh -N -L 18789:127.0.0.1:18789 <user>@<host>`
-5. 打开 `http://127.0.0.1:18789/` 并粘贴你的令牌
-
+5. 打开 `http://127.0.0.1:18789/` 并粘贴你的令�?
 分步 VPS 指南：[exe.dev](/install/exe-dev)
 
 ## 安装
@@ -41,52 +35,44 @@ Gateway 网关在 Linux 上完全支持。**Node 是推荐的运行时**。
 - [Gateway 网关运行手册](/gateway)
 - [配置](/gateway/configuration)
 
-## Gateway 网关服务安装（CLI）
-
-使用以下任一方式：
-
+## Gateway 网关服务安装（CLI�?
+使用以下任一方式�?
 ```
-openclaw onboard --install-daemon
+RadioClaw onboard --install-daemon
 ```
 
 或：
 
 ```
-openclaw gateway install
+RadioClaw gateway install
 ```
 
 或：
 
 ```
-openclaw configure
+RadioClaw configure
 ```
 
-出现提示时选择 **Gateway service**。
-
-修复/迁移：
-
+出现提示时选择 **Gateway service**�?
+修复/迁移�?
 ```
-openclaw doctor
+RadioClaw doctor
 ```
 
-## 系统控制（systemd 用户单元）
-
-OpenClaw 默认安装 systemd **用户**服务。对于共享或常驻服务器使用**系统**
-服务。完整的单元示例和指南
-在 [Gateway 网关运行手册](/gateway) 中。
-
+## 系统控制（systemd 用户单元�?
+RadioClaw 默认安装 systemd **用户**服务。对于共享或常驻服务器使�?*系统**
+服务。完整的单元示例和指�?�?[Gateway 网关运行手册](/gateway) 中�?
 最小设置：
 
-创建 `~/.config/systemd/user/openclaw-gateway[-<profile>].service`：
-
+创建 `~/.config/systemd/user/RadioClaw-gateway[-<profile>].service`�?
 ```
 [Unit]
-Description=OpenClaw Gateway (profile: <profile>, v<version>)
+Description=RadioClaw Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/openclaw gateway --port 18789
+ExecStart=/usr/local/bin/RadioClaw gateway --port 18789
 Restart=always
 RestartSec=5
 
@@ -97,5 +83,5 @@ WantedBy=default.target
 启用它：
 
 ```
-systemctl --user enable --now openclaw-gateway[-<profile>].service
+systemctl --user enable --now RadioClaw-gateway[-<profile>].service
 ```

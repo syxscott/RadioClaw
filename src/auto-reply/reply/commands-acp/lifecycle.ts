@@ -27,7 +27,7 @@ import {
   resolveThreadBindingMaxAgeMsForChannel,
   resolveThreadBindingSpawnPolicy,
 } from "../../../channels/thread-bindings-policy.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { RadioClawConfig } from "../../../config/config.js";
 import type { SessionAcpMeta } from "../../../config/sessions/types.js";
 import { callGateway } from "../../../gateway/call.js";
 import {
@@ -226,7 +226,7 @@ async function bindSpawnedAcpSessionToThread(params: {
 }
 
 async function cleanupFailedSpawn(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   sessionKey: string;
   shouldDeleteSession: boolean;
   initializedRuntime?: AcpSpawnRuntimeCloseHandle;
@@ -345,7 +345,7 @@ export async function handleAcpSpawnAction(
   }
 
   const parts = [
-    `âœ… Spawned ACP session ${sessionKey} (${spawn.mode}, backend ${initializedBackend}).`,
+    `âœ?Spawned ACP session ${sessionKey} (${spawn.mode}, backend ${initializedBackend}).`,
   ];
   if (binding) {
     const currentConversationId = resolveAcpCommandConversationId(params)?.trim() || "";
@@ -383,7 +383,7 @@ export async function handleAcpSpawnAction(
 
 function resolveAcpSessionForCommandOrStop(params: {
   acpManager: ReturnType<typeof getAcpSessionManager>;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   sessionKey: string;
 }): CommandHandlerResult | null {
   const resolved = params.acpManager.resolveSession({
@@ -476,13 +476,13 @@ export async function handleAcpCancelAction(
           }),
         fallbackCode: "ACP_TURN_FAILED",
         fallbackMessage: "ACP cancel failed before completion.",
-        onSuccess: () => stopWithText(`âœ… Cancel requested for ACP session ${sessionKey}.`),
+        onSuccess: () => stopWithText(`âœ?Cancel requested for ACP session ${sessionKey}.`),
       }),
   });
 }
 
 async function runAcpSteer(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   sessionKey: string;
   instruction: string;
   requestId: string;
@@ -564,9 +564,9 @@ export async function handleAcpSteerAction(
     fallbackMessage: "ACP steer failed before completion.",
     onSuccess: (steerOutput) => {
       if (!steerOutput) {
-        return stopWithText(`âœ… ACP steer sent to ${target.sessionKey}.`);
+        return stopWithText(`âœ?ACP steer sent to ${target.sessionKey}.`);
       }
-      return stopWithText(`âœ… ACP steer sent to ${target.sessionKey}.\n${steerOutput}`);
+      return stopWithText(`âœ?ACP steer sent to ${target.sessionKey}.\n${steerOutput}`);
     },
   });
 }
@@ -605,7 +605,7 @@ export async function handleAcpCloseAction(
       });
 
       return stopWithText(
-        `âœ… Closed ACP session ${sessionKey}${runtimeNotice}. Removed ${removedBindings.length} binding${removedBindings.length === 1 ? "" : "s"}.`,
+        `âœ?Closed ACP session ${sessionKey}${runtimeNotice}. Removed ${removedBindings.length} binding${removedBindings.length === 1 ? "" : "s"}.`,
       );
     },
   });

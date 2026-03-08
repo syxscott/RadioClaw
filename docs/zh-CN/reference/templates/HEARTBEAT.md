@@ -1,7 +1,6 @@
 ---
 read_when:
-  - 手动引导工作区
-summary: HEARTBEAT.md 的工作区模板
+  - 手动引导工作�?summary: HEARTBEAT.md 的工作区模板
 x-i18n:
   generated_at: "2026-02-01T21:37:25Z"
   model: claude-opus-4-5
@@ -13,6 +12,5 @@ x-i18n:
 
 # HEARTBEAT.md
 
-# 保持此文件为空（或仅包含注释）以跳过心跳 API 调用。
-
-# 当你希望智能体定期检查某些内容时，在下方添加任务。
+# 保持此文件为空（或仅包含注释）以跳过心跳 API 调用�?
+# 当你希望智能体定期检查某些内容时，在下方添加任务�?

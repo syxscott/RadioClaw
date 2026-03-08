@@ -1,5 +1,5 @@
 /**
- * Sandbox security validation â€” blocks dangerous Docker configurations.
+ * Sandbox security validation â€?blocks dangerous Docker configurations.
  *
  * Threat model: local-trusted config, but protect against foot-guns and config injection.
  * Enforced at runtime when creating sandbox containers.
@@ -214,7 +214,7 @@ function formatBindBlockedError(params: { bind: string; reason: BlockedBindReaso
   if (params.reason.kind === "reserved_target") {
     return new Error(
       `Sandbox security: bind mount "${params.bind}" targets reserved container path "${params.reason.reservedPath}" ` +
-        `(resolved target: "${params.reason.targetPath}"). This can shadow OpenClaw sandbox mounts. ` +
+        `(resolved target: "${params.reason.targetPath}"). This can shadow RadioClaw sandbox mounts. ` +
         "Use a dangerous override only when you fully trust this runtime.",
     );
   }
@@ -227,7 +227,7 @@ function formatBindBlockedError(params: { bind: string; reason: BlockedBindReaso
 }
 
 /**
- * Validate bind mounts â€” throws if any source path is dangerous.
+ * Validate bind mounts â€?throws if any source path is dangerous.
  * Includes a symlink/realpath pass via existing ancestors so non-existent leaf
  * paths cannot bypass source-root and blocked-path checks.
  */

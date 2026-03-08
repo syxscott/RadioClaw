@@ -1,5 +1,5 @@
 import Observation
-import OpenClawProtocol
+import RadioClawProtocol
 import SwiftUI
 
 struct SkillsSettings: View {
@@ -187,7 +187,7 @@ private struct SkillRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Text(self.skill.emoji ?? "âœ¨")
+            Text(self.skill.emoji ?? "âœ?)
                 .font(.title2)
 
             VStack(alignment: .leading, spacing: 6) {
@@ -225,15 +225,15 @@ private struct SkillRow: View {
 
     private var sourceLabel: String {
         switch self.skill.source {
-        case "openclaw-bundled":
+        case "RadioClaw-bundled":
             "Bundled"
-        case "openclaw-managed":
+        case "RadioClaw-managed":
             "Managed"
-        case "openclaw-workspace":
+        case "RadioClaw-workspace":
             "Workspace"
-        case "openclaw-extra":
+        case "RadioClaw-extra":
             "Extra"
-        case "openclaw-plugin":
+        case "RadioClaw-plugin":
             "Plugin"
         default:
             self.skill.source
@@ -573,7 +573,7 @@ extension SkillsSettings {
         let skill = SkillStatus(
             name: "Test Skill",
             description: "Test description",
-            source: "openclaw-bundled",
+            source: "RadioClaw-bundled",
             filePath: "/tmp/skills/test",
             baseDir: "/tmp/skills",
             skillKey: "test",

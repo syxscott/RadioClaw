@@ -1,9 +1,9 @@
-package ai.openclaw.app.node
+package ai.RadioClaw.app.node
 
 import android.content.Context
-import ai.openclaw.app.CameraHudKind
-import ai.openclaw.app.BuildConfig
-import ai.openclaw.app.gateway.GatewaySession
+import ai.RadioClaw.app.CameraHudKind
+import ai.RadioClaw.app.BuildConfig
+import ai.RadioClaw.app.gateway.GatewaySession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
@@ -61,13 +61,13 @@ class CameraHandler(
       if (!BuildConfig.DEBUG) return
       val ts = java.text.SimpleDateFormat("HH:mm:ss.SSS", java.util.Locale.US).format(java.util.Date())
       logFile?.appendText("[$ts] $msg\n")
-      android.util.Log.w("openclaw", "camera.snap: $msg")
+      android.util.Log.w("RadioClaw", "camera.snap: $msg")
     }
     try {
       logFile?.writeText("") // clear
       camLog("starting, params=$paramsJson")
       camLog("calling showCameraHud")
-      showCameraHud("Taking photoâ€¦", CameraHudKind.Photo, null)
+      showCameraHud("Taking photoâ€?, CameraHudKind.Photo, null)
       camLog("calling triggerCameraFlash")
       triggerCameraFlash()
       val res =
@@ -99,7 +99,7 @@ class CameraHandler(
       if (!BuildConfig.DEBUG) return
       val ts = java.text.SimpleDateFormat("HH:mm:ss.SSS", java.util.Locale.US).format(java.util.Date())
       clipLogFile?.appendText("[CLIP $ts] $msg\n")
-      android.util.Log.w("openclaw", "camera.clip: $msg")
+      android.util.Log.w("RadioClaw", "camera.clip: $msg")
     }
     val includeAudio = parseIncludeAudio(paramsJson) ?: true
     if (includeAudio) externalAudioCaptureActive.value = true
@@ -107,7 +107,7 @@ class CameraHandler(
       clipLogFile?.writeText("") // clear
       clipLog("starting, params=$paramsJson includeAudio=$includeAudio")
       clipLog("calling showCameraHud")
-      showCameraHud("Recordingâ€¦", CameraHudKind.Recording, null)
+      showCameraHud("Recordingâ€?, CameraHudKind.Recording, null)
       val filePayload =
         try {
           clipLog("calling camera.clip()")

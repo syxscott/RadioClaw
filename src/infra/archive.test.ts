@@ -65,7 +65,7 @@ async function expectExtractedSizeBudgetExceeded(params: {
 }
 
 beforeAll(async () => {
-  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-archive-"));
+  fixtureRoot = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-archive-"));
 });
 
 afterAll(async () => {
@@ -121,7 +121,7 @@ describe("archive utils", () => {
     await withArchiveCase("zip", async ({ workDir, archivePath, extractDir }) => {
       const outsideDir = path.join(workDir, "outside");
       await fs.mkdir(outsideDir, { recursive: true });
-      // Use 'junction' on Windows â€” junctions target directories without
+      // Use 'junction' on Windows â€?junctions target directories without
       // requiring SeCreateSymbolicLinkPrivilege.
       await fs.symlink(
         outsideDir,

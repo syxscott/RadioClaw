@@ -1245,9 +1245,9 @@ describe("reactMessageTelegram", () => {
       testName: "sends emoji reactions",
       target: "telegram:123",
       messageId: "456",
-      emoji: "âœ…",
+      emoji: "âœ?,
       remove: false,
-      expected: [{ type: "emoji", emoji: "âœ…" }],
+      expected: [{ type: "emoji", emoji: "âœ? }],
     },
     {
       testName: "removes reactions when emoji is empty",
@@ -1261,7 +1261,7 @@ describe("reactMessageTelegram", () => {
       testName: "removes reactions when remove flag is set",
       target: "123",
       messageId: 456,
-      emoji: "âœ…",
+      emoji: "âœ?,
       remove: true,
       expected: [],
     },
@@ -1288,14 +1288,14 @@ describe("reactMessageTelegram", () => {
       getChat: typeof getChat;
     };
 
-    await reactMessageTelegram("@mychannel", 456, "âœ…", {
+    await reactMessageTelegram("@mychannel", 456, "âœ?, {
       token: "tok",
       api,
     });
 
     expect(getChat).toHaveBeenCalledWith("@mychannel");
     expect(setMessageReaction).toHaveBeenCalledWith("-100123", 456, [
-      { type: "emoji", emoji: "âœ…" },
+      { type: "emoji", emoji: "âœ? },
     ]);
     expect(maybePersistResolvedTelegramTarget).toHaveBeenCalledWith(
       expect.objectContaining({

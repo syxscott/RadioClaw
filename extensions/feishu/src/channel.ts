@@ -2,15 +2,15 @@ import {
   collectAllowlistProviderRestrictSendersWarnings,
   formatAllowFromLowercase,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+} from "RadioClaw/plugin-sdk/compat";
+import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "RadioClaw/plugin-sdk/feishu";
 import {
   buildProbeChannelStatusSummary,
   buildRuntimeAccountStatusSnapshot,
   createDefaultChannelRuntimeState,
   DEFAULT_ACCOUNT_ID,
   PAIRING_APPROVED_MESSAGE,
-} from "openclaw/plugin-sdk/feishu";
+} from "RadioClaw/plugin-sdk/feishu";
 import {
   resolveFeishuAccount,
   resolveFeishuCredentials,

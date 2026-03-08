@@ -87,14 +87,14 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       );
     });
 
-    it("parses openclaw-gateway pids and excludes the current process", () => {
+    it("parses RadioClaw-gateway pids and excludes the current process", () => {
       const stalePid = process.pid + 1;
       mockSpawnSync.mockReturnValue({
         error: null,
         status: 0,
         stdout: lsofOutput([
-          { pid: stalePid, cmd: "openclaw-gateway" },
-          { pid: process.pid, cmd: "openclaw-gateway" },
+          { pid: stalePid, cmd: "RadioClaw-gateway" },
+          { pid: process.pid, cmd: "RadioClaw-gateway" },
         ]),
         stderr: "",
       });
@@ -103,7 +103,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(pids).not.toContain(process.pid);
     });
 
-    it("excludes pids whose command does not include 'openclaw'", () => {
+    it("excludes pids whose command does not include 'RadioClaw'", () => {
       const otherPid = process.pid + 2;
       mockSpawnSync.mockReturnValue({
         error: null,
@@ -129,16 +129,16 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       // (once for the IPv4 socket, once for IPv6). Without dedup, terminateStaleProcessesSync
       // sends SIGTERM twice and returns killed=[pid, pid], corrupting the count.
       const stalePid = process.pid + 600;
-      const stdout = `p${stalePid}\ncopenclaw-gateway\np${stalePid}\ncopenclaw-gateway\n`;
+      const stdout = `p${stalePid}\ncRadioClaw-gateway\np${stalePid}\ncRadioClaw-gateway\n`;
       mockSpawnSync.mockReturnValue({ error: null, status: 0, stdout, stderr: "" });
       const result = findGatewayPidsOnPortSync(18789);
-      expect(result).toEqual([stalePid]); // deduped â€” not [pid, pid]
+      expect(result).toEqual([stalePid]); // deduped â€?not [pid, pid]
     });
 
     it("returns [] and skips lsof on win32", () => {
       // The entire describe block is skipped on Windows (isWindows guard at top),
       // so this test only runs on Linux/macOS. It mocks platform to win32 for the
-      // single assertion without needing to restore â€” the suite-level skipIf means
+      // single assertion without needing to restore â€?the suite-level skipIf means
       // this will never run on an actual Windows runner where the mock could leak.
       const origDescriptor = Object.getOwnPropertyDescriptor(process, "platform");
       Object.defineProperty(process, "platform", { value: "win32", configurable: true });
@@ -154,7 +154,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
   });
 
   // -------------------------------------------------------------------------
-  // parsePidsFromLsofOutput â€” pure unit tests (no I/O, driven via spawnSync mock)
+  // parsePidsFromLsofOutput â€?pure unit tests (no I/O, driven via spawnSync mock)
   // -------------------------------------------------------------------------
   describe("parsePidsFromLsofOutput (via findGatewayPidsOnPortSync stdout path)", () => {
     it("returns [] for empty lsof stdout (status 0, nothing listening)", () => {
@@ -162,15 +162,15 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(findGatewayPidsOnPortSync(18789)).toEqual([]);
     });
 
-    it("parses multiple openclaw pids from a single lsof output block", () => {
+    it("parses multiple RadioClaw pids from a single lsof output block", () => {
       const pid1 = process.pid + 10;
       const pid2 = process.pid + 11;
       mockSpawnSync.mockReturnValue({
         error: null,
         status: 0,
         stdout: lsofOutput([
-          { pid: pid1, cmd: "openclaw-gateway" },
-          { pid: pid2, cmd: "openclaw-gateway" },
+          { pid: pid1, cmd: "RadioClaw-gateway" },
+          { pid: pid2, cmd: "RadioClaw-gateway" },
         ]),
         stderr: "",
       });
@@ -179,9 +179,9 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(result).toContain(pid2);
     });
 
-    it("returns [] when status 0 but only non-openclaw pids present", () => {
+    it("returns [] when status 0 but only non-RadioClaw pids present", () => {
       // Port may be bound by an unrelated process. findGatewayPidsOnPortSync
-      // only tracks openclaw processes â€” non-openclaw listeners are ignored.
+      // only tracks RadioClaw processes â€?non-RadioClaw listeners are ignored.
       const otherPid = process.pid + 50;
       mockSpawnSync.mockReturnValue({
         error: null,
@@ -194,11 +194,11 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
   });
 
   // -------------------------------------------------------------------------
-  // pollPortOnce (via cleanStaleGatewayProcessesSync) â€” Codex P1 regression
+  // pollPortOnce (via cleanStaleGatewayProcessesSync) â€?Codex P1 regression
   // -------------------------------------------------------------------------
-  describe("pollPortOnce â€” no second lsof spawn (Codex P1 regression)", () => {
+  describe("pollPortOnce â€?no second lsof spawn (Codex P1 regression)", () => {
     it("treats lsof exit status 1 as port-free (no listeners)", () => {
-      // lsof exits with status 1 when no matching processes are found â€” this is
+      // lsof exits with status 1 when no matching processes are found â€?this is
       // the canonical "port is free" signal, not an error.
       const stalePid = process.pid + 500;
       let call = 0;
@@ -208,11 +208,11 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
-        // Poll returns status 1 â€” no listeners
+        // Poll returns status 1 â€?no listeners
         return { error: null, status: 1, stdout: "", stderr: "" };
       });
       vi.spyOn(process, "kill").mockReturnValue(true);
@@ -220,7 +220,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();
     });
 
-    it("treats lsof exit status >1 as inconclusive, not port-free â€” Codex P2 regression", () => {
+    it("treats lsof exit status >1 as inconclusive, not port-free â€?Codex P2 regression", () => {
       // Codex P2: non-zero lsof exits other than status 1 (e.g. permission denied,
       // bad flag, runtime error) must not be mapped to free:true. They are
       // inconclusive and should keep the polling loop running until budget expires.
@@ -234,12 +234,12 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
         if (call === 2) {
-          // Permission/runtime error â€” status 2, should NOT be treated as free
+          // Permission/runtime error â€?status 2, should NOT be treated as free
           events.push("error-poll");
           return { error: null, status: 2, stdout: "", stderr: "lsof: permission denied" };
         }
@@ -257,8 +257,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
     it("does not make a second lsof call when the first returns status 0", () => {
       // The bug: pollPortOnce previously called findGatewayPidsOnPortSync as a
       // second probe after getting status===0 from the first lsof. That second
-      // call collapses any error/timeout back into [], which maps to free:true â€”
-      // silently misclassifying an inconclusive result as "port is free".
+      // call collapses any error/timeout back into [], which maps to free:true â€?      // silently misclassifying an inconclusive result as "port is free".
       //
       // The fix: pollPortOnce now parses res.stdout directly from the first
       // spawnSync call. Exactly ONE lsof invocation per poll cycle.
@@ -267,20 +266,20 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       mockSpawnSync.mockImplementation(() => {
         spawnCount++;
         if (spawnCount === 1) {
-          // Initial findGatewayPidsOnPortSync â€” returns stale pid
+          // Initial findGatewayPidsOnPortSync â€?returns stale pid
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
         if (spawnCount === 2) {
-          // First waitForPortFreeSync poll â€” status 0, port busy (should parse inline, not spawn again)
+          // First waitForPortFreeSync poll â€?status 0, port busy (should parse inline, not spawn again)
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -297,10 +296,10 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(spawnCount).toBe(3);
     });
 
-    it("lsof status 1 with non-empty openclaw stdout is treated as busy, not free (Linux container edge case)", () => {
+    it("lsof status 1 with non-empty RadioClaw stdout is treated as busy, not free (Linux container edge case)", () => {
       // On Linux containers with restricted /proc (AppArmor, seccomp, user namespaces),
       // lsof can exit 1 AND still emit output for processes it could read.
-      // status 1 + non-empty openclaw stdout must not be treated as port-free.
+      // status 1 + non-empty RadioClaw stdout must not be treated as port-free.
       const stalePid = process.pid + 601;
       let call = 0;
       mockSpawnSync.mockImplementation(() => {
@@ -310,16 +309,16 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
         if (call === 2) {
-          // status 1 + openclaw pid in stdout â€” container-restricted lsof reports partial results
+          // status 1 + RadioClaw pid in stdout â€?container-restricted lsof reports partial results
           return {
             error: null,
             status: 1,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "lsof: WARNING: can't stat() fuse",
           };
         }
@@ -340,7 +339,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       const mockedResolveLsof = vi.mocked(resolveLsofCommandSync);
 
       mockedResolveLsof.mockImplementationOnce(() => {
-        // First call: initial findGatewayPidsOnPortSync â€” succeed normally
+        // First call: initial findGatewayPidsOnPortSync â€?succeed normally
         return "lsof";
       });
 
@@ -349,22 +348,22 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
         return {
           error: null,
           status: 0,
-          stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+          stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
           stderr: "",
         };
       });
 
-      // Second call: poll â€” resolveLsofCommandSync throws
+      // Second call: poll â€?resolveLsofCommandSync throws
       mockedResolveLsof.mockImplementationOnce(() => {
         throw new Error("lsof binary resolution failed");
       });
 
-      // Third call: poll â€” port is free
+      // Third call: poll â€?port is free
       mockedResolveLsof.mockImplementation(() => "lsof");
       mockSpawnSync.mockImplementation(() => ({ error: null, status: 1, stdout: "", stderr: "" }));
 
       vi.spyOn(process, "kill").mockReturnValue(true);
-      // Must not throw â€” the catch path returns transient inconclusive, loop continues
+      // Must not throw â€?the catch path returns transient inconclusive, loop continues
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();
     });
   });
@@ -389,7 +388,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -413,7 +412,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -427,7 +426,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(killSpy).toHaveBeenCalledWith(stalePid, "SIGKILL");
     });
 
-    it("polls until port is confirmed free before returning â€” regression for #33103", () => {
+    it("polls until port is confirmed free before returning â€?regression for #33103", () => {
       // Core regression: cleanStaleGatewayProcessesSync must not return while
       // the port is still bound. Previously it returned after a fixed 500ms
       // sleep regardless of port state, causing systemd's new process to hit
@@ -443,7 +442,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -452,7 +451,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -467,10 +466,10 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(events.filter((e) => e.startsWith("busy-poll")).length).toBeGreaterThan(0);
     });
 
-    it("bails immediately when lsof is permanently unavailable (ENOENT) â€” Greptile edge case", () => {
+    it("bails immediately when lsof is permanently unavailable (ENOENT) â€?Greptile edge case", () => {
       // Regression for the edge case identified in PR review: lsof returning an
       // error must not be treated as "port free". ENOENT means lsof is not
-      // installed â€” a permanent condition. The polling loop should bail
+      // installed â€?a permanent condition. The polling loop should bail
       // immediately on ENOENT rather than spinning the full 2-second budget.
       const stalePid = process.pid + 300;
       const events: string[] = [];
@@ -483,11 +482,11 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
-        // Permanent ENOENT â€” lsof is not installed
+        // Permanent ENOENT â€?lsof is not installed
         events.push(`enoent-poll-${call}`);
         const err = new Error("lsof not found") as NodeJS.ErrnoException;
         err.code = "ENOENT";
@@ -497,14 +496,14 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       vi.spyOn(process, "kill").mockReturnValue(true);
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();
 
-      // Must bail after first ENOENT poll â€” no point retrying a missing binary
+      // Must bail after first ENOENT poll â€?no point retrying a missing binary
       const enoentPolls = events.filter((e) => e.startsWith("enoent-poll"));
       expect(enoentPolls.length).toBe(1);
     });
 
-    it("bails immediately when lsof is permanently unavailable (EPERM) â€” SELinux/AppArmor", () => {
+    it("bails immediately when lsof is permanently unavailable (EPERM) â€?SELinux/AppArmor", () => {
       // EPERM occurs when lsof exists but a MAC policy (SELinux/AppArmor) blocks
-      // execution. Like ENOENT/EACCES, this is permanent â€” retrying is pointless.
+      // execution. Like ENOENT/EACCES, this is permanent â€?retrying is pointless.
       const stalePid = process.pid + 305;
       let call = 0;
       mockSpawnSync.mockImplementation(() => {
@@ -513,7 +512,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -523,12 +522,12 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       });
       vi.spyOn(process, "kill").mockReturnValue(true);
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();
-      // Must bail after exactly 1 EPERM poll â€” same as ENOENT/EACCES
+      // Must bail after exactly 1 EPERM poll â€?same as ENOENT/EACCES
       expect(call).toBe(2); // 1 initial find + 1 EPERM poll
     });
 
-    it("bails immediately when lsof is permanently unavailable (EACCES) â€” same as ENOENT", () => {
-      // EACCES and EPERM are also permanent conditions â€” lsof exists but the
+    it("bails immediately when lsof is permanently unavailable (EACCES) â€?same as ENOENT", () => {
+      // EACCES and EPERM are also permanent conditions â€?lsof exists but the
       // process has no permission to run it. No point retrying.
       const stalePid = process.pid + 302;
       let call = 0;
@@ -538,7 +537,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -552,7 +551,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(call).toBe(2); // 1 initial find + 1 EACCES poll
     });
 
-    it("proceeds with warning when polling budget is exhausted â€” fake clock, no real 2s wait", () => {
+    it("proceeds with warning when polling budget is exhausted â€?fake clock, no real 2s wait", () => {
       // Sub-agent audit HIGH finding: the original test relied on real wall-clock
       // time (Date.now() + 2000ms deadline), burning 2 full seconds of CI time
       // every run. Fix: expose dateNowOverride in __testing so the deadline can
@@ -567,7 +566,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
         return {
           error: null,
           status: 0,
-          stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+          stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
           stderr: "",
         };
       });
@@ -580,7 +579,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
     it("still polls for port-free when all stale pids were already dead at SIGTERM time", () => {
       // Sub-agent audit MEDIUM finding: if all pids from the initial scan are
       // already dead before SIGTERM runs (race), terminateStaleProcessesSync
-      // returns killed=[] â€” but cleanStaleGatewayProcessesSync MUST still call
+      // returns killed=[] â€?but cleanStaleGatewayProcessesSync MUST still call
       // waitForPortFreeSync. The process may have exited on its own while
       // leaving its socket in TIME_WAIT / FIN_WAIT. Skipping the poll would
       // silently recreate the EADDRINUSE race we are fixing.
@@ -596,16 +595,16 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
-        // Port is already free on first poll â€” pid was dead before SIGTERM
+        // Port is already free on first poll â€?pid was dead before SIGTERM
         events.push("poll-free");
         return { error: null, status: 1, stdout: "", stderr: "" };
       });
 
-      // All SIGTERMs throw ESRCH â€” pid already gone
+      // All SIGTERMs throw ESRCH â€?pid already gone
       vi.spyOn(process, "kill").mockImplementation(() => {
         throw Object.assign(new Error("ESRCH"), { code: "ESRCH" });
       });
@@ -616,7 +615,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
       expect(events).toContain("poll-free");
     });
 
-    it("continues polling on transient lsof errors (not ENOENT) â€” Codex P1 fix", () => {
+    it("continues polling on transient lsof errors (not ENOENT) â€?Codex P1 fix", () => {
       // A transient lsof error (spawnSync timeout, status 2, etc.) must NOT abort
       // the polling loop. The loop should keep retrying until the budget expires
       // or a definitive result is returned. Bailing on the first transient error
@@ -632,7 +631,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
@@ -675,16 +674,16 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
   });
 
   // -------------------------------------------------------------------------
-  // parsePidsFromLsofOutput â€” branch-coverage for mid-loop && short-circuits
+  // parsePidsFromLsofOutput â€?branch-coverage for mid-loop && short-circuits
   // -------------------------------------------------------------------------
-  describe("parsePidsFromLsofOutput â€” branch coverage (lines 67-69)", () => {
-    it("skips a mid-loop entry when the command does not include 'openclaw'", () => {
-      // Exercises the false branch of currentCmd.toLowerCase().includes("openclaw")
-      // inside the mid-loop flush: a non-openclaw cmd between two entries must not
-      // be pushed, but the following openclaw entry still must be.
+  describe("parsePidsFromLsofOutput â€?branch coverage (lines 67-69)", () => {
+    it("skips a mid-loop entry when the command does not include 'RadioClaw'", () => {
+      // Exercises the false branch of currentCmd.toLowerCase().includes("RadioClaw")
+      // inside the mid-loop flush: a non-RadioClaw cmd between two entries must not
+      // be pushed, but the following RadioClaw entry still must be.
       const stalePid = process.pid + 700;
-      // Mixed output: non-openclaw entry first, then openclaw entry
-      const stdout = `p${process.pid + 699}\ncnginx\np${stalePid}\ncopenclaw-gateway\n`;
+      // Mixed output: non-RadioClaw entry first, then RadioClaw entry
+      const stdout = `p${process.pid + 699}\ncnginx\np${stalePid}\ncRadioClaw-gateway\n`;
       mockSpawnSync.mockReturnValue({ error: null, status: 0, stdout, stderr: "" });
       const result = findGatewayPidsOnPortSync(18789);
       expect(result).toContain(stalePid);
@@ -693,35 +692,35 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
 
     it("skips a mid-loop entry when currentCmd is missing (two consecutive p-lines)", () => {
       // Exercises currentCmd falsy branch mid-loop: two 'p' lines in a row
-      // (no 'c' line between them) â€” the first PID must be skipped, the second handled.
+      // (no 'c' line between them) â€?the first PID must be skipped, the second handled.
       const stalePid = process.pid + 701;
       // Two consecutive p-lines: first has no c-line before the next p-line
-      const stdout = `p${process.pid + 702}\np${stalePid}\ncopenclaw-gateway\n`;
+      const stdout = `p${process.pid + 702}\np${stalePid}\ncRadioClaw-gateway\n`;
       mockSpawnSync.mockReturnValue({ error: null, status: 0, stdout, stderr: "" });
       const result = findGatewayPidsOnPortSync(18789);
       expect(result).toContain(stalePid);
     });
 
-    it("ignores a p-line with an invalid (non-positive) PID â€” ternary false branch", () => {
+    it("ignores a p-line with an invalid (non-positive) PID â€?ternary false branch", () => {
       // Exercises the `Number.isFinite(parsed) && parsed > 0 ? parsed : undefined`
       // false branch: a malformed 'p' line (e.g. 'p0' or 'pNaN') must not corrupt
       // currentPid and must not end up in the returned pids array.
       const stalePid = process.pid + 703;
-      // p0 is invalid (not > 0); the following valid openclaw entry must still be found.
-      const stdout = `p0\ncopenclaw-gateway\np${stalePid}\ncopenclaw-gateway\n`;
+      // p0 is invalid (not > 0); the following valid RadioClaw entry must still be found.
+      const stdout = `p0\ncRadioClaw-gateway\np${stalePid}\ncRadioClaw-gateway\n`;
       mockSpawnSync.mockReturnValue({ error: null, status: 0, stdout, stderr: "" });
       const result = findGatewayPidsOnPortSync(18789);
       expect(result).toContain(stalePid);
       expect(result).not.toContain(0);
     });
 
-    it("silently skips lines that start with neither 'p' nor 'c' â€” else-if false branch", () => {
+    it("silently skips lines that start with neither 'p' nor 'c' â€?else-if false branch", () => {
       // lsof -Fpc only emits 'p' and 'c' lines, but defensive handling of
       // unexpected output (e.g. 'f' for file descriptor in other lsof formats)
       // must not throw or corrupt the pid list. Unknown lines are just skipped.
       const stalePid = process.pid + 704;
-      // Intersperse an 'f' line (file descriptor marker) â€” not a 'p' or 'c' line
-      const stdout = `p${stalePid}\nf8\ncopenclaw-gateway\n`;
+      // Intersperse an 'f' line (file descriptor marker) â€?not a 'p' or 'c' line
+      const stdout = `p${stalePid}\nf8\ncRadioClaw-gateway\n`;
       mockSpawnSync.mockReturnValue({ error: null, status: 0, stdout, stderr: "" });
       const result = findGatewayPidsOnPortSync(18789);
       // The 'f' line must not corrupt parsing; stalePid must still be found
@@ -731,13 +730,13 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
   });
 
   // -------------------------------------------------------------------------
-  // pollPortOnce branch â€” status 1 + non-empty stdout with zero openclaw pids
+  // pollPortOnce branch â€?status 1 + non-empty stdout with zero RadioClaw pids
   // -------------------------------------------------------------------------
-  describe("pollPortOnce â€” status 1 + non-empty non-openclaw stdout (line 145)", () => {
-    it("treats status 1 + non-openclaw stdout as port-free (not an openclaw process)", () => {
-      // status 1 + non-empty stdout where no openclaw pids are present:
+  describe("pollPortOnce â€?status 1 + non-empty non-RadioClaw stdout (line 145)", () => {
+    it("treats status 1 + non-RadioClaw stdout as port-free (not an RadioClaw process)", () => {
+      // status 1 + non-empty stdout where no RadioClaw pids are present:
       // the port may be held by an unrelated process. From our perspective
-      // (we only kill openclaw pids) it is effectively free.
+      // (we only kill RadioClaw pids) it is effectively free.
       const stalePid = process.pid + 800;
       let call = 0;
       mockSpawnSync.mockImplementation(() => {
@@ -746,11 +745,11 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
           return {
             error: null,
             status: 0,
-            stdout: lsofOutput([{ pid: stalePid, cmd: "openclaw-gateway" }]),
+            stdout: lsofOutput([{ pid: stalePid, cmd: "RadioClaw-gateway" }]),
             stderr: "",
           };
         }
-        // status 1 + non-openclaw output â€” should be treated as free:true for our purposes
+        // status 1 + non-RadioClaw output â€?should be treated as free:true for our purposes
         return {
           error: null,
           status: 1,
@@ -759,7 +758,7 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
         };
       });
       vi.spyOn(process, "kill").mockReturnValue(true);
-      // Should complete cleanly â€” no openclaw pids in status-1 output â†’ free
+      // Should complete cleanly â€?no RadioClaw pids in status-1 output â†?free
       expect(() => cleanStaleGatewayProcessesSync()).not.toThrow();
       // Completed in exactly 2 calls (initial find + 1 free poll)
       expect(call).toBe(2);
@@ -767,9 +766,9 @@ describe.skipIf(isWindows)("restart-stale-pids", () => {
   });
 
   // -------------------------------------------------------------------------
-  // sleepSync â€” direct unit tests via __testing.callSleepSyncRaw
+  // sleepSync â€?direct unit tests via __testing.callSleepSyncRaw
   // -------------------------------------------------------------------------
-  describe("sleepSync â€” Atomics.wait paths", () => {
+  describe("sleepSync â€?Atomics.wait paths", () => {
     it("returns immediately when called with 0ms (timeoutMs <= 0 early return)", () => {
       // sleepSync(0) must short-circuit before touching Atomics.wait.
       // Verify it does not throw and returns synchronously.

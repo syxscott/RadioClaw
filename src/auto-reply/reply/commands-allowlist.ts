@@ -3,7 +3,7 @@ import { resolveChannelConfigWrites } from "../../channels/plugins/config-writes
 import { listPairingChannels } from "../../channels/plugins/pairing.js";
 import type { ChannelId } from "../../channels/plugins/types.js";
 import { normalizeChannelId } from "../../channels/registry.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { RadioClawConfig } from "../../config/config.js";
 import {
   readConfigFileSnapshot,
   validateConfigObjectWithPlugins,
@@ -153,7 +153,7 @@ function parseAllowlistCommand(raw: string): AllowlistCommand | null {
 }
 
 function normalizeAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   channelId: ChannelId;
   accountId?: string | null;
   values: Array<string | number>;
@@ -348,7 +348,7 @@ function mapResolvedAllowlistNames(entries: ResolvedAllowlistName[]): Map<string
 }
 
 async function resolveSlackNames(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
   entries: string[];
 }) {
@@ -362,7 +362,7 @@ async function resolveSlackNames(params: {
 }
 
 async function resolveDiscordNames(params: {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId?: string | null;
   entries: string[];
 }) {
@@ -716,7 +716,7 @@ export const handleAllowlistCommand: CommandHandler = async (params, allowTextCo
     }
 
     if (!configChanged && !shouldTouchStore) {
-      const message = parsed.action === "add" ? "✅ Already allowlisted." : "⚠️ Entry not found.";
+      const message = parsed.action === "add" ? "�?Already allowlisted." : "⚠️ Entry not found.";
       return { shouldContinue: false, reply: { text: message } };
     }
 
@@ -742,7 +742,7 @@ export const handleAllowlistCommand: CommandHandler = async (params, allowTextCo
     return {
       shouldContinue: false,
       reply: {
-        text: `✅ ${scopeLabel} allowlist ${actionLabel}: ${targetLabel}.`,
+        text: `�?${scopeLabel} allowlist ${actionLabel}: ${targetLabel}.`,
       },
     };
   }
@@ -765,6 +765,6 @@ export const handleAllowlistCommand: CommandHandler = async (params, allowTextCo
   const scopeLabel = scope === "dm" ? "DM" : "group";
   return {
     shouldContinue: false,
-    reply: { text: `✅ ${scopeLabel} allowlist ${actionLabel} in pairing store.` },
+    reply: { text: `�?${scopeLabel} allowlist ${actionLabel} in pairing store.` },
   };
 };

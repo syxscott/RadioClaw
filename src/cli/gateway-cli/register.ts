@@ -95,11 +95,11 @@ export function registerGatewayCli(program: Command) {
         "after",
         () =>
           `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-            ["openclaw gateway run", "Run the gateway in the foreground."],
-            ["openclaw gateway status", "Show service status and probe reachability."],
-            ["openclaw gateway discover", "Find local and wide-area gateway beacons."],
-            ["openclaw gateway call health", "Call a gateway RPC method directly."],
-          ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/gateway", "docs.openclaw.ai/cli/gateway")}\n`,
+            ["RadioClaw gateway run", "Run the gateway in the foreground."],
+            ["RadioClaw gateway status", "Show service status and probe reachability."],
+            ["RadioClaw gateway discover", "Find local and wide-area gateway beacons."],
+            ["RadioClaw gateway call health", "Call a gateway RPC method directly."],
+          ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/gateway", "docs.RadioClaw.ai/cli/gateway")}\n`,
       ),
   );
 
@@ -222,7 +222,7 @@ export function registerGatewayCli(program: Command) {
         const domains = ["local.", ...(wideAreaDomain ? [wideAreaDomain] : [])];
         const beacons = await withProgress(
           {
-            label: "Scanning for gatewaysâ€¦",
+            label: "Scanning for gatewaysâ€?,
             indeterminate: true,
             enabled: opts.json !== true,
             delayMs: 0,

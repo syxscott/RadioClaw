@@ -4,7 +4,7 @@ import {
   collectOpenGroupPolicyConfiguredRouteWarnings,
   createScopedAccountConfigAccessors,
   formatAllowFromLowercase,
-} from "openclaw/plugin-sdk/compat";
+} from "RadioClaw/plugin-sdk/compat";
 import {
   applyAccountNameToChannelSection,
   buildComputedAccountStatusSnapshot,
@@ -37,7 +37,7 @@ import {
   SlackConfigSchema,
   type ChannelPlugin,
   type ResolvedSlackAccount,
-} from "openclaw/plugin-sdk/slack";
+} from "RadioClaw/plugin-sdk/slack";
 import { getSlackRuntime } from "./runtime.js";
 
 const meta = getChatChannelMeta("slack");

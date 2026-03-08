@@ -9,7 +9,7 @@ import type { CronJob } from "./types.js";
 
 const noopLogger = createNoopLogger();
 const { makeStorePath } = createCronStoreHarness({
-  prefix: "openclaw-cron-reaper-finally-",
+  prefix: "RadioClaw-cron-reaper-finally-",
 });
 
 function createDueIsolatedJob(params: { id: string; nowMs: number }): CronJob {
@@ -75,7 +75,7 @@ describe("CronService - session reaper runs in finally block (#31946)", () => {
     await onTimer(state);
 
     // After onTimer finishes (even with a job error), state.running must be
-    // false â€” proving the finally block executed.
+    // false â€?proving the finally block executed.
     expect(state.running).toBe(false);
 
     // The timer must be re-armed.

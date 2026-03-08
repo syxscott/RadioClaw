@@ -1,4 +1,4 @@
-package ai.openclaw.app.ui.chat
+package ai.RadioClaw.app.ui.chat
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.horizontalScroll
@@ -46,17 +46,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ai.openclaw.app.ui.mobileAccent
-import ai.openclaw.app.ui.mobileAccentSoft
-import ai.openclaw.app.ui.mobileBorder
-import ai.openclaw.app.ui.mobileBorderStrong
-import ai.openclaw.app.ui.mobileCallout
-import ai.openclaw.app.ui.mobileCaption1
-import ai.openclaw.app.ui.mobileHeadline
-import ai.openclaw.app.ui.mobileSurface
-import ai.openclaw.app.ui.mobileText
-import ai.openclaw.app.ui.mobileTextSecondary
-import ai.openclaw.app.ui.mobileTextTertiary
+import ai.RadioClaw.app.ui.mobileAccent
+import ai.RadioClaw.app.ui.mobileAccentSoft
+import ai.RadioClaw.app.ui.mobileBorder
+import ai.RadioClaw.app.ui.mobileBorderStrong
+import ai.RadioClaw.app.ui.mobileCallout
+import ai.RadioClaw.app.ui.mobileCaption1
+import ai.RadioClaw.app.ui.mobileHeadline
+import ai.RadioClaw.app.ui.mobileSurface
+import ai.RadioClaw.app.ui.mobileText
+import ai.RadioClaw.app.ui.mobileTextSecondary
+import ai.RadioClaw.app.ui.mobileTextTertiary
 
 @Composable
 fun ChatComposer(
@@ -148,7 +148,7 @@ fun ChatComposer(
       Text(
         text = "Gateway is offline. Connect first in the Connect tab.",
         style = mobileCallout,
-        color = ai.openclaw.app.ui.mobileWarning,
+        color = ai.RadioClaw.app.ui.mobileWarning,
       )
     }
 
@@ -260,7 +260,7 @@ private fun ThinkingMenuItem(
     },
     trailingIcon = {
       if (value == current.trim().lowercase()) {
-        Text("âœ“", style = mobileCallout, color = mobileAccent)
+        Text("âœ?, style = mobileCallout, color = mobileAccent)
       } else {
         Spacer(modifier = Modifier.width(10.dp))
       }
@@ -346,7 +346,7 @@ private fun chatTextFieldColors() =
 @Composable
 private fun mobileBodyStyle() =
   MaterialTheme.typography.bodyMedium.copy(
-    fontFamily = ai.openclaw.app.ui.mobileFontFamily,
+    fontFamily = ai.RadioClaw.app.ui.mobileFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 15.sp,
     lineHeight = 22.sp,

@@ -1,42 +1,42 @@
 ---
 title: "Default AGENTS.md"
-summary: "Default OpenClaw agent instructions and skills roster for the personal assistant setup"
+summary: "Default RadioClaw agent instructions and skills roster for the personal assistant setup"
 read_when:
-  - Starting a new OpenClaw agent session
+  - Starting a new RadioClaw agent session
   - Enabling or auditing default skills
 ---
 
-# AGENTS.md ‚Äî OpenClaw Personal Assistant (default)
+# AGENTS.md ‚Ä?RadioClaw Personal Assistant (default)
 
 ## First run (recommended)
 
-OpenClaw uses a dedicated workspace directory for the agent. Default: `~/.openclaw/workspace` (configurable via `agents.defaults.workspace`).
+RadioClaw uses a dedicated workspace directory for the agent. Default: `~/.RadioClaw/workspace` (configurable via `agents.defaults.workspace`).
 
 1. Create the workspace (if it doesn‚Äôt already exist):
 
 ```bash
-mkdir -p ~/.openclaw/workspace
+mkdir -p ~/.RadioClaw/workspace
 ```
 
 2. Copy the default workspace templates into the workspace:
 
 ```bash
-cp docs/reference/templates/AGENTS.md ~/.openclaw/workspace/AGENTS.md
-cp docs/reference/templates/SOUL.md ~/.openclaw/workspace/SOUL.md
-cp docs/reference/templates/TOOLS.md ~/.openclaw/workspace/TOOLS.md
+cp docs/reference/templates/AGENTS.md ~/.RadioClaw/workspace/AGENTS.md
+cp docs/reference/templates/SOUL.md ~/.RadioClaw/workspace/SOUL.md
+cp docs/reference/templates/TOOLS.md ~/.RadioClaw/workspace/TOOLS.md
 ```
 
 3. Optional: if you want the personal assistant skill roster, replace AGENTS.md with this file:
 
 ```bash
-cp docs/reference/AGENTS.default.md ~/.openclaw/workspace/AGENTS.md
+cp docs/reference/AGENTS.default.md ~/.RadioClaw/workspace/AGENTS.md
 ```
 
 4. Optional: choose a different workspace by setting `agents.defaults.workspace` (supports `~`):
 
 ```json5
 {
-  agents: { defaults: { workspace: "~/.openclaw/workspace" } },
+  agents: { defaults: { workspace: "~/.RadioClaw/workspace" } },
 }
 ```
 
@@ -77,48 +77,48 @@ cp docs/reference/AGENTS.default.md ~/.openclaw/workspace/AGENTS.md
 
 ## Backup tip (recommended)
 
-If you treat this workspace as Clawd‚Äôs ‚Äúmemory‚Äù, make it a git repo (ideally private) so `AGENTS.md` and your memory files are backed up.
+If you treat this workspace as Clawd‚Äôs ‚Äúmemory‚Ä? make it a git repo (ideally private) so `AGENTS.md` and your memory files are backed up.
 
 ```bash
-cd ~/.openclaw/workspace
+cd ~/.RadioClaw/workspace
 git init
 git add AGENTS.md
 git commit -m "Add Clawd workspace"
 # Optional: add a private remote + push
 ```
 
-## What OpenClaw Does
+## What RadioClaw Does
 
 - Runs WhatsApp gateway + Pi coding agent so the assistant can read/write chats, fetch context, and run skills via the host Mac.
-- macOS app manages permissions (screen recording, notifications, microphone) and exposes the `openclaw` CLI via its bundled binary.
+- macOS app manages permissions (screen recording, notifications, microphone) and exposes the `RadioClaw` CLI via its bundled binary.
 - Direct chats collapse into the agent's `main` session by default; groups stay isolated as `agent:<agentId>:<channel>:group:<id>` (rooms/channels: `agent:<agentId>:<channel>:channel:<id>`); heartbeats keep background tasks alive.
 
-## Core Skills (enable in Settings ‚Üí Skills)
+## Core Skills (enable in Settings ‚Ü?Skills)
 
-- **mcporter** ‚Äî Tool server runtime/CLI for managing external skill backends.
-- **Peekaboo** ‚Äî Fast macOS screenshots with optional AI vision analysis.
-- **camsnap** ‚Äî Capture frames, clips, or motion alerts from RTSP/ONVIF security cams.
-- **oracle** ‚Äî OpenAI-ready agent CLI with session replay and browser control.
-- **eightctl** ‚Äî Control your sleep, from the terminal.
-- **imsg** ‚Äî Send, read, stream iMessage & SMS.
-- **wacli** ‚Äî WhatsApp CLI: sync, search, send.
-- **discord** ‚Äî Discord actions: react, stickers, polls. Use `user:<id>` or `channel:<id>` targets (bare numeric ids are ambiguous).
-- **gog** ‚Äî Google Suite CLI: Gmail, Calendar, Drive, Contacts.
-- **spotify-player** ‚Äî Terminal Spotify client to search/queue/control playback.
-- **sag** ‚Äî ElevenLabs speech with mac-style say UX; streams to speakers by default.
-- **Sonos CLI** ‚Äî Control Sonos speakers (discover/status/playback/volume/grouping) from scripts.
-- **blucli** ‚Äî Play, group, and automate BluOS players from scripts.
-- **OpenHue CLI** ‚Äî Philips Hue lighting control for scenes and automations.
-- **OpenAI Whisper** ‚Äî Local speech-to-text for quick dictation and voicemail transcripts.
-- **Gemini CLI** ‚Äî Google Gemini models from the terminal for fast Q&A.
-- **agent-tools** ‚Äî Utility toolkit for automations and helper scripts.
+- **mcporter** ‚Ä?Tool server runtime/CLI for managing external skill backends.
+- **Peekaboo** ‚Ä?Fast macOS screenshots with optional AI vision analysis.
+- **camsnap** ‚Ä?Capture frames, clips, or motion alerts from RTSP/ONVIF security cams.
+- **oracle** ‚Ä?OpenAI-ready agent CLI with session replay and browser control.
+- **eightctl** ‚Ä?Control your sleep, from the terminal.
+- **imsg** ‚Ä?Send, read, stream iMessage & SMS.
+- **wacli** ‚Ä?WhatsApp CLI: sync, search, send.
+- **discord** ‚Ä?Discord actions: react, stickers, polls. Use `user:<id>` or `channel:<id>` targets (bare numeric ids are ambiguous).
+- **gog** ‚Ä?Google Suite CLI: Gmail, Calendar, Drive, Contacts.
+- **spotify-player** ‚Ä?Terminal Spotify client to search/queue/control playback.
+- **sag** ‚Ä?ElevenLabs speech with mac-style say UX; streams to speakers by default.
+- **Sonos CLI** ‚Ä?Control Sonos speakers (discover/status/playback/volume/grouping) from scripts.
+- **blucli** ‚Ä?Play, group, and automate BluOS players from scripts.
+- **OpenHue CLI** ‚Ä?Philips Hue lighting control for scenes and automations.
+- **OpenAI Whisper** ‚Ä?Local speech-to-text for quick dictation and voicemail transcripts.
+- **Gemini CLI** ‚Ä?Google Gemini models from the terminal for fast Q&A.
+- **agent-tools** ‚Ä?Utility toolkit for automations and helper scripts.
 
 ## Usage Notes
 
-- Prefer the `openclaw` CLI for scripting; mac app handles permissions.
+- Prefer the `RadioClaw` CLI for scripting; mac app handles permissions.
 - Run installs from the Skills tab; it hides the button if a binary is already present.
 - Keep heartbeats enabled so the assistant can schedule reminders, monitor inboxes, and trigger camera captures.
 - Canvas UI runs full-screen with native overlays. Avoid placing critical controls in the top-left/top-right/bottom edges; add explicit gutters in the layout and don‚Äôt rely on safe-area insets.
-- For browser-driven verification, use `openclaw browser` (tabs/status/screenshot) with the OpenClaw-managed Chrome profile.
-- For DOM inspection, use `openclaw browser eval|query|dom|snapshot` (and `--json`/`--out` when you need machine output).
-- For interactions, use `openclaw browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run` (click/type require snapshot refs; use `evaluate` for CSS selectors).
+- For browser-driven verification, use `RadioClaw browser` (tabs/status/screenshot) with the RadioClaw-managed Chrome profile.
+- For DOM inspection, use `RadioClaw browser eval|query|dom|snapshot` (and `--json`/`--out` when you need machine output).
+- For interactions, use `RadioClaw browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run` (click/type require snapshot refs; use `evaluate` for CSS selectors).

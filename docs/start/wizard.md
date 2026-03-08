@@ -9,25 +9,25 @@ sidebarTitle: "Onboarding: CLI"
 
 # Onboarding Wizard (CLI)
 
-The onboarding wizard is the **recommended** way to set up OpenClaw on macOS,
+The onboarding wizard is the **recommended** way to set up RadioClaw on macOS,
 Linux, or Windows (via WSL2; strongly recommended).
 It configures a local Gateway or a remote Gateway connection, plus channels, skills,
 and workspace defaults in one guided flow.
 
 ```bash
-openclaw onboard
+RadioClaw onboard
 ```
 
 <Info>
 Fastest first chat: open the Control UI (no channel setup needed). Run
-`openclaw dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
+`RadioClaw dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
 </Info>
 
 To reconfigure later:
 
 ```bash
-openclaw configure
-openclaw agents add <name>
+RadioClaw configure
+RadioClaw agents add <name>
 ```
 
 <Note>
@@ -38,7 +38,7 @@ openclaw agents add <name>
 The onboarding wizard includes a web search step where you can pick a provider
 (Perplexity, Brave, Gemini, Grok, or Kimi) and paste your API key so the agent
 can use `web_search`. You can also configure this later with
-`openclaw configure --section web`. Docs: [Web tools](/tools/web).
+`RadioClaw configure --section web`. Docs: [Web tools](/tools/web).
 </Tip>
 
 ## QuickStart vs Advanced
@@ -65,28 +65,28 @@ The wizard starts with **QuickStart** (defaults) vs **Advanced** (full control).
 
 **Local mode (default)** walks you through these steps:
 
-1. **Model/Auth** â€” choose any supported provider/auth flow (API key, OAuth, or setup-token), including Custom Provider
+1. **Model/Auth** â€?choose any supported provider/auth flow (API key, OAuth, or setup-token), including Custom Provider
    (OpenAI-compatible, Anthropic-compatible, or Unknown auto-detect). Pick a default model.
    Security note: if this agent will run tools or process webhook/hooks content, prefer the strongest latest-generation model available and keep tool policy strict. Weaker/older tiers are easier to prompt-inject.
    For non-interactive runs, `--secret-input-mode ref` stores env-backed refs in auth profiles instead of plaintext API key values.
    In non-interactive `ref` mode, the provider env var must be set; passing inline key flags without that env var fails fast.
    In interactive runs, choosing secret reference mode lets you point at either an environment variable or a configured provider ref (`file` or `exec`), with a fast preflight validation before saving.
-2. **Workspace** â€” Location for agent files (default `~/.openclaw/workspace`). Seeds bootstrap files.
-3. **Gateway** â€” Port, bind address, auth mode, Tailscale exposure.
+2. **Workspace** â€?Location for agent files (default `~/.RadioClaw/workspace`). Seeds bootstrap files.
+3. **Gateway** â€?Port, bind address, auth mode, Tailscale exposure.
    In interactive token mode, choose default plaintext token storage or opt into SecretRef.
    Non-interactive token SecretRef path: `--gateway-token-ref-env <ENV_VAR>`.
-4. **Channels** â€” WhatsApp, Telegram, Discord, Google Chat, Mattermost, Signal, BlueBubbles, or iMessage.
-5. **Daemon** â€” Installs a LaunchAgent (macOS) or systemd user unit (Linux/WSL2).
+4. **Channels** â€?WhatsApp, Telegram, Discord, Google Chat, Mattermost, Signal, BlueBubbles, or iMessage.
+5. **Daemon** â€?Installs a LaunchAgent (macOS) or systemd user unit (Linux/WSL2).
    If token auth requires a token and `gateway.auth.token` is SecretRef-managed, daemon install validates it but does not persist the resolved token into supervisor service environment metadata.
    If token auth requires a token and the configured token SecretRef is unresolved, daemon install is blocked with actionable guidance.
    If both `gateway.auth.token` and `gateway.auth.password` are configured and `gateway.auth.mode` is unset, daemon install is blocked until mode is set explicitly.
-6. **Health check** â€” Starts the Gateway and verifies it's running.
-7. **Skills** â€” Installs recommended skills and optional dependencies.
+6. **Health check** â€?Starts the Gateway and verifies it's running.
+7. **Skills** â€?Installs recommended skills and optional dependencies.
 
 <Note>
 Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset** (or pass `--reset`).
 CLI `--reset` defaults to config, credentials, and sessions; use `--reset-scope full` to include workspace.
-If the config is invalid or contains legacy keys, the wizard asks you to run `openclaw doctor` first.
+If the config is invalid or contains legacy keys, the wizard asks you to run `RadioClaw doctor` first.
 </Note>
 
 **Remote mode** only configures the local client to connect to a Gateway elsewhere.
@@ -94,7 +94,7 @@ It does **not** install or change anything on the remote host.
 
 ## Add another agent
 
-Use `openclaw agents add <name>` to create a separate agent with its own workspace,
+Use `RadioClaw agents add <name>` to create a separate agent with its own workspace,
 sessions, and auth profiles. Running without `--workspace` launches the wizard.
 
 What it sets:
@@ -105,7 +105,7 @@ What it sets:
 
 Notes:
 
-- Default workspaces follow `~/.openclaw/workspace-<agentId>`.
+- Default workspaces follow `~/.RadioClaw/workspace-<agentId>`.
 - Add `bindings` to route inbound messages (the wizard can do this).
 - Non-interactive flags: `--model`, `--agent-dir`, `--bind`, `--non-interactive`.
 
@@ -117,7 +117,7 @@ RPC API, and a full list of config fields the wizard writes, see the
 
 ## Related docs
 
-- CLI command reference: [`openclaw onboard`](/cli/onboard)
+- CLI command reference: [`RadioClaw onboard`](/cli/onboard)
 - Onboarding overview: [Onboarding Overview](/start/onboarding-overview)
 - macOS app onboarding: [Onboarding](/start/onboarding)
 - Agent first-run ritual: [Agent Bootstrapping](/start/bootstrapping)

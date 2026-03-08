@@ -1,7 +1,7 @@
 /**
  * Detects inbound messages that are reflections of assistant-originated content.
  * These patterns indicate internal metadata leaked into a channel and then
- * bounced back as a new inbound message â€” creating an echo loop.
+ * bounced back as a new inbound message â€?creating an echo loop.
  */
 
 import { findCodeRegions, isInsideCode } from "../../shared/text/code-regions.js";

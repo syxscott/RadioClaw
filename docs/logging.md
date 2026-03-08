@@ -9,7 +9,7 @@ title: "Logging"
 
 # Logging
 
-OpenClaw logs in two places:
+RadioClaw logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -21,16 +21,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/openclaw/openclaw-YYYY-MM-DD.log`
+`/tmp/RadioClaw/RadioClaw-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.openclaw/openclaw.json`:
+You can override this in `~/.RadioClaw/RadioClaw.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/openclaw.log"
+    "file": "/path/to/RadioClaw.log"
   }
 }
 ```
@@ -42,7 +42,7 @@ You can override this in `~/.openclaw/openclaw.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-openclaw logs --follow
+RadioClaw logs --follow
 ```
 
 Output modes:
@@ -63,7 +63,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-openclaw doctor
+RadioClaw doctor
 ```
 
 ### Control UI (web)
@@ -76,7 +76,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-openclaw channels logs --channel whatsapp
+RadioClaw channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -98,13 +98,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.openclaw/openclaw.json`.
+All logging configuration lives under `logging` in `~/.RadioClaw/RadioClaw.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/openclaw/openclaw-YYYY-MM-DD.log",
+    "file": "/tmp/RadioClaw/RadioClaw-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -118,7 +118,7 @@ All logging configuration lives under `logging` in `~/.openclaw/openclaw.json`.
 - `logging.level`: **file logs** (JSONL) level.
 - `logging.consoleLevel`: **console** verbosity level.
 
-You can override both via the **`OPENCLAW_LOG_LEVEL`** environment variable (e.g. `OPENCLAW_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `openclaw.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `openclaw --log-level debug gateway run`), which overrides the environment variable for that command.
+You can override both via the **`RadioClaw_LOG_LEVEL`** environment variable (e.g. `RadioClaw_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `RadioClaw.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `RadioClaw --log-level debug gateway run`), which overrides the environment variable for that command.
 
 `--verbose` only affects console output; it does not change file log levels.
 
@@ -152,7 +152,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- OpenClaw exports via **OTLP/HTTP (protobuf)** today.
+- RadioClaw exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -212,7 +212,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-OPENCLAW_DIAGNOSTICS=telegram.http,telegram.payload
+RadioClaw_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -242,7 +242,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "openclaw-gateway",
+      "serviceName": "RadioClaw-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -255,7 +255,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 
 Notes:
 
-- You can also enable the plugin with `openclaw plugins enable diagnostics-otel`.
+- You can also enable the plugin with `RadioClaw plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -269,64 +269,64 @@ Notes:
 
 Model usage:
 
-- `openclaw.tokens` (counter, attrs: `openclaw.token`, `openclaw.channel`,
-  `openclaw.provider`, `openclaw.model`)
-- `openclaw.cost.usd` (counter, attrs: `openclaw.channel`, `openclaw.provider`,
-  `openclaw.model`)
-- `openclaw.run.duration_ms` (histogram, attrs: `openclaw.channel`,
-  `openclaw.provider`, `openclaw.model`)
-- `openclaw.context.tokens` (histogram, attrs: `openclaw.context`,
-  `openclaw.channel`, `openclaw.provider`, `openclaw.model`)
+- `RadioClaw.tokens` (counter, attrs: `RadioClaw.token`, `RadioClaw.channel`,
+  `RadioClaw.provider`, `RadioClaw.model`)
+- `RadioClaw.cost.usd` (counter, attrs: `RadioClaw.channel`, `RadioClaw.provider`,
+  `RadioClaw.model`)
+- `RadioClaw.run.duration_ms` (histogram, attrs: `RadioClaw.channel`,
+  `RadioClaw.provider`, `RadioClaw.model`)
+- `RadioClaw.context.tokens` (histogram, attrs: `RadioClaw.context`,
+  `RadioClaw.channel`, `RadioClaw.provider`, `RadioClaw.model`)
 
 Message flow:
 
-- `openclaw.webhook.received` (counter, attrs: `openclaw.channel`,
-  `openclaw.webhook`)
-- `openclaw.webhook.error` (counter, attrs: `openclaw.channel`,
-  `openclaw.webhook`)
-- `openclaw.webhook.duration_ms` (histogram, attrs: `openclaw.channel`,
-  `openclaw.webhook`)
-- `openclaw.message.queued` (counter, attrs: `openclaw.channel`,
-  `openclaw.source`)
-- `openclaw.message.processed` (counter, attrs: `openclaw.channel`,
-  `openclaw.outcome`)
-- `openclaw.message.duration_ms` (histogram, attrs: `openclaw.channel`,
-  `openclaw.outcome`)
+- `RadioClaw.webhook.received` (counter, attrs: `RadioClaw.channel`,
+  `RadioClaw.webhook`)
+- `RadioClaw.webhook.error` (counter, attrs: `RadioClaw.channel`,
+  `RadioClaw.webhook`)
+- `RadioClaw.webhook.duration_ms` (histogram, attrs: `RadioClaw.channel`,
+  `RadioClaw.webhook`)
+- `RadioClaw.message.queued` (counter, attrs: `RadioClaw.channel`,
+  `RadioClaw.source`)
+- `RadioClaw.message.processed` (counter, attrs: `RadioClaw.channel`,
+  `RadioClaw.outcome`)
+- `RadioClaw.message.duration_ms` (histogram, attrs: `RadioClaw.channel`,
+  `RadioClaw.outcome`)
 
 Queues + sessions:
 
-- `openclaw.queue.lane.enqueue` (counter, attrs: `openclaw.lane`)
-- `openclaw.queue.lane.dequeue` (counter, attrs: `openclaw.lane`)
-- `openclaw.queue.depth` (histogram, attrs: `openclaw.lane` or
-  `openclaw.channel=heartbeat`)
-- `openclaw.queue.wait_ms` (histogram, attrs: `openclaw.lane`)
-- `openclaw.session.state` (counter, attrs: `openclaw.state`, `openclaw.reason`)
-- `openclaw.session.stuck` (counter, attrs: `openclaw.state`)
-- `openclaw.session.stuck_age_ms` (histogram, attrs: `openclaw.state`)
-- `openclaw.run.attempt` (counter, attrs: `openclaw.attempt`)
+- `RadioClaw.queue.lane.enqueue` (counter, attrs: `RadioClaw.lane`)
+- `RadioClaw.queue.lane.dequeue` (counter, attrs: `RadioClaw.lane`)
+- `RadioClaw.queue.depth` (histogram, attrs: `RadioClaw.lane` or
+  `RadioClaw.channel=heartbeat`)
+- `RadioClaw.queue.wait_ms` (histogram, attrs: `RadioClaw.lane`)
+- `RadioClaw.session.state` (counter, attrs: `RadioClaw.state`, `RadioClaw.reason`)
+- `RadioClaw.session.stuck` (counter, attrs: `RadioClaw.state`)
+- `RadioClaw.session.stuck_age_ms` (histogram, attrs: `RadioClaw.state`)
+- `RadioClaw.run.attempt` (counter, attrs: `RadioClaw.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `openclaw.model.usage`
-  - `openclaw.channel`, `openclaw.provider`, `openclaw.model`
-  - `openclaw.sessionKey`, `openclaw.sessionId`
-  - `openclaw.tokens.*` (input/output/cache_read/cache_write/total)
-- `openclaw.webhook.processed`
-  - `openclaw.channel`, `openclaw.webhook`, `openclaw.chatId`
-- `openclaw.webhook.error`
-  - `openclaw.channel`, `openclaw.webhook`, `openclaw.chatId`,
-    `openclaw.error`
-- `openclaw.message.processed`
-  - `openclaw.channel`, `openclaw.outcome`, `openclaw.chatId`,
-    `openclaw.messageId`, `openclaw.sessionKey`, `openclaw.sessionId`,
-    `openclaw.reason`
-- `openclaw.session.stuck`
-  - `openclaw.state`, `openclaw.ageMs`, `openclaw.queueDepth`,
-    `openclaw.sessionKey`, `openclaw.sessionId`
+- `RadioClaw.model.usage`
+  - `RadioClaw.channel`, `RadioClaw.provider`, `RadioClaw.model`
+  - `RadioClaw.sessionKey`, `RadioClaw.sessionId`
+  - `RadioClaw.tokens.*` (input/output/cache_read/cache_write/total)
+- `RadioClaw.webhook.processed`
+  - `RadioClaw.channel`, `RadioClaw.webhook`, `RadioClaw.chatId`
+- `RadioClaw.webhook.error`
+  - `RadioClaw.channel`, `RadioClaw.webhook`, `RadioClaw.chatId`,
+    `RadioClaw.error`
+- `RadioClaw.message.processed`
+  - `RadioClaw.channel`, `RadioClaw.outcome`, `RadioClaw.chatId`,
+    `RadioClaw.messageId`, `RadioClaw.sessionKey`, `RadioClaw.sessionId`,
+    `RadioClaw.reason`
+- `RadioClaw.session.stuck`
+  - `RadioClaw.state`, `RadioClaw.ageMs`, `RadioClaw.queueDepth`,
+    `RadioClaw.sessionKey`, `RadioClaw.sessionId`
 
 ### Sampling + flushing
 
-- Trace sampling: `diagnostics.otel.sampleRate` (0.0â€“1.0, root spans only).
+- Trace sampling: `diagnostics.otel.sampleRate` (0.0â€?.0, root spans only).
 - Metric export interval: `diagnostics.otel.flushIntervalMs` (min 1000ms).
 
 ### Protocol notes
@@ -346,7 +346,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `openclaw doctor` first.
+- **Gateway not reachable?** Run `RadioClaw doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

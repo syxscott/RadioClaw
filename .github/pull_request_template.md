@@ -1,6 +1,6 @@
 ## Summary
 
-Describe the problem and fix in 2â€“5 bullets:
+Describe the problem and fix in 2â€? bullets:
 
 - Problem:
 - Why it matters:

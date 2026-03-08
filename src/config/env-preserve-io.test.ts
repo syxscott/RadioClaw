@@ -13,8 +13,8 @@ async function withTempConfig(
   configContent: string,
   run: (configPath: string) => Promise<void>,
 ): Promise<void> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-env-io-"));
-  const configPath = path.join(dir, "openclaw.json");
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "RadioClaw-env-io-"));
+  const configPath = path.join(dir, "RadioClaw.json");
   await fs.writeFile(configPath, configContent);
   try {
     await run(configPath);
@@ -26,8 +26,8 @@ async function withTempConfig(
 async function withWrapperEnvContext(configPath: string, run: () => Promise<void>): Promise<void> {
   await withEnvAsync(
     {
-      OPENCLAW_CONFIG_PATH: configPath,
-      OPENCLAW_DISABLE_CONFIG_CACHE: "1",
+      RadioClaw_CONFIG_PATH: configPath,
+      RadioClaw_DISABLE_CONFIG_CACHE: "1",
       MY_API_KEY: "original-key-123",
     },
     run,
@@ -77,7 +77,7 @@ describe("env snapshot TOCTOU via createConfigIO", () => {
       // Instance B: write config using explicit read context from A
       const ioB = createConfigIO({ configPath, env: env as unknown as NodeJS.ProcessEnv });
 
-      // Write the resolved config back â€” should restore ${MY_API_KEY}
+      // Write the resolved config back â€?should restore ${MY_API_KEY}
       await ioB.writeConfigFile(firstRead.snapshot.config, firstRead.writeOptions);
 
       // Verify the written file still has ${MY_API_KEY}, not the resolved value
@@ -99,16 +99,16 @@ describe("env snapshot TOCTOU via createConfigIO", () => {
 
       // Instance B: write WITHOUT snapshot bridging (simulates the old bug)
       const ioB = createConfigIO({ configPath, env: env as unknown as NodeJS.ProcessEnv });
-      // No explicit writeOptions â€” ioB uses live env
+      // No explicit writeOptions â€?ioB uses live env
 
       await ioB.writeConfigFile(snapshot.config);
 
       // The written file should have the raw value because the live env
-      // no longer matches â€” restoreEnvVarRefs won't find a match
+      // no longer matches â€?restoreEnvVarRefs won't find a match
       const written = await fs.readFile(configPath, "utf-8");
       const parsed = JSON.parse(written);
       // Without snapshot, the resolved value "original-key-123" doesn't match
-      // live env "mutated-key-456", so restoration fails â€” value is written as-is
+      // live env "mutated-key-456", so restoration fails â€?value is written as-is
       expect(parsed.gateway.remote.token).toBe("original-key-123");
     });
   });

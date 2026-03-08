@@ -10,7 +10,7 @@ title: "Gateway Protocol"
 # Gateway protocol (WebSocket)
 
 The Gateway WS protocol is the **single control plane + node transport** for
-OpenClaw. All clients (CLI, web UI, macOS app, iOS/Android nodes, headless
+RadioClaw. All clients (CLI, web UI, macOS app, iOS/Android nodes, headless
 nodes) connect over WebSocket and declare their **role** + **scope** at
 handshake time.
 
@@ -21,22 +21,22 @@ handshake time.
 
 ## Handshake (connect)
 
-Gateway â†’ Client (pre-connect challenge):
+Gateway â†?Client (pre-connect challenge):
 
 ```json
 {
   "type": "event",
   "event": "connect.challenge",
-  "payload": { "nonce": "â€¦", "ts": 1737264000000 }
+  "payload": { "nonce": "â€?, "ts": 1737264000000 }
 }
 ```
 
-Client â†’ Gateway:
+Client â†?Gateway:
 
 ```json
 {
   "type": "req",
-  "id": "â€¦",
+  "id": "â€?,
   "method": "connect",
   "params": {
     "minProtocol": 3,
@@ -52,26 +52,26 @@ Client â†’ Gateway:
     "caps": [],
     "commands": [],
     "permissions": {},
-    "auth": { "token": "â€¦" },
+    "auth": { "token": "â€? },
     "locale": "en-US",
-    "userAgent": "openclaw-cli/1.2.3",
+    "userAgent": "RadioClaw-cli/1.2.3",
     "device": {
       "id": "device_fingerprint",
-      "publicKey": "â€¦",
-      "signature": "â€¦",
+      "publicKey": "â€?,
+      "signature": "â€?,
       "signedAt": 1737264000000,
-      "nonce": "â€¦"
+      "nonce": "â€?
     }
   }
 }
 ```
 
-Gateway â†’ Client:
+Gateway â†?Client:
 
 ```json
 {
   "type": "res",
-  "id": "â€¦",
+  "id": "â€?,
   "ok": true,
   "payload": { "type": "hello-ok", "protocol": 3, "policy": { "tickIntervalMs": 15000 } }
 }
@@ -82,7 +82,7 @@ When a device token is issued, `hello-ok` also includes:
 ```json
 {
   "auth": {
-    "deviceToken": "â€¦",
+    "deviceToken": "â€?,
     "role": "operator",
     "scopes": ["operator.read", "operator.write"]
   }
@@ -94,7 +94,7 @@ When a device token is issued, `hello-ok` also includes:
 ```json
 {
   "type": "req",
-  "id": "â€¦",
+  "id": "â€?,
   "method": "connect",
   "params": {
     "minProtocol": 3,
@@ -110,15 +110,15 @@ When a device token is issued, `hello-ok` also includes:
     "caps": ["camera", "canvas", "screen", "location", "voice"],
     "commands": ["camera.snap", "canvas.navigate", "screen.record", "location.get"],
     "permissions": { "camera.capture": true, "screen.record": false },
-    "auth": { "token": "â€¦" },
+    "auth": { "token": "â€? },
     "locale": "en-US",
-    "userAgent": "openclaw-ios/1.2.3",
+    "userAgent": "RadioClaw-ios/1.2.3",
     "device": {
       "id": "device_fingerprint",
-      "publicKey": "â€¦",
-      "signature": "â€¦",
+      "publicKey": "â€?,
+      "signature": "â€?,
       "signedAt": 1737264000000,
-      "nonce": "â€¦"
+      "nonce": "â€?
     }
   }
 }
@@ -199,7 +199,7 @@ The Gateway treats these as **claims** and enforces server-side allowlists.
 
 ## Auth
 
-- If `OPENCLAW_GATEWAY_TOKEN` (or `--token`) is set, `connect.params.auth.token`
+- If `RadioClaw_GATEWAY_TOKEN` (or `--token`) is set, `connect.params.auth.token`
   must match or the socket is closed.
 - After pairing, the Gateway issues a **device token** scoped to the connection
   role + scopes. It is returned in `hello-ok.auth.deviceToken` and should be

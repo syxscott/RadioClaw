@@ -6,7 +6,7 @@ describe("memory hybrid helpers", () => {
     expect(buildFtsQuery("hello world")).toBe('"hello" AND "world"');
     expect(buildFtsQuery("FOO_bar baz-1")).toBe('"FOO_bar" AND "baz" AND "1"');
     expect(buildFtsQuery("金银价格")).toBe('"金银价格"');
-    expect(buildFtsQuery("価格 2026年")).toBe('"価格" AND "2026年"');
+    expect(buildFtsQuery("価格 2026�?)).toBe('"価格" AND "2026�?');
     expect(buildFtsQuery("   ")).toBeNull();
   });
 

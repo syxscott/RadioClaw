@@ -1,12 +1,12 @@
-package ai.openclaw.app.node
+package ai.RadioClaw.app.node
 
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import ai.openclaw.app.InstallResultReceiver
-import ai.openclaw.app.MainActivity
-import ai.openclaw.app.gateway.GatewayEndpoint
-import ai.openclaw.app.gateway.GatewaySession
+import ai.RadioClaw.app.InstallResultReceiver
+import ai.RadioClaw.app.MainActivity
+import ai.RadioClaw.app.gateway.GatewayEndpoint
+import ai.RadioClaw.app.gateway.GatewaySession
 import java.io.File
 import java.net.URI
 import java.security.MessageDigest
@@ -107,7 +107,7 @@ class AppUpdateHandler(
       val url = updateRequest.url
       val expectedSha256 = updateRequest.expectedSha256
 
-      android.util.Log.w("openclaw", "app.update: downloading from $url")
+      android.util.Log.w("RadioClaw", "app.update: downloading from $url")
 
       val notifId = 9001
       val channelId = "app_update"
@@ -135,7 +135,7 @@ class AppUpdateHandler(
           fun buildProgressNotif(progress: Int, max: Int, text: String): android.app.Notification {
             return android.app.Notification.Builder(appContext, channelId)
               .setSmallIcon(android.R.drawable.stat_sys_download)
-              .setContentTitle("OpenClaw Update")
+              .setContentTitle("RadioClaw Update")
               .setContentText(text)
               .setProgress(max, progress, max == 0)
               
@@ -199,11 +199,11 @@ class AppUpdateHandler(
             }
           }
 
-          android.util.Log.w("openclaw", "app.update: downloaded ${file.length()} bytes")
+          android.util.Log.w("RadioClaw", "app.update: downloaded ${file.length()} bytes")
           val actualSha256 = sha256Hex(file)
           if (actualSha256 != expectedSha256) {
             android.util.Log.e(
-              "openclaw",
+              "RadioClaw",
               "app.update: sha256 mismatch expected=$expectedSha256 actual=$actualSha256",
             )
             file.delete()
@@ -223,7 +223,7 @@ class AppUpdateHandler(
           // Verify file is a valid APK (basic check: ZIP magic bytes)
           val magic = file.inputStream().use { it.read().toByte() to it.read().toByte() }
           if (magic.first != 0x50.toByte() || magic.second != 0x4B.toByte()) {
-            android.util.Log.e("openclaw", "app.update: invalid APK (bad magic: ${magic.first}, ${magic.second})")
+            android.util.Log.e("RadioClaw", "app.update: invalid APK (bad magic: ${magic.first}, ${magic.second})")
             file.delete()
             notifManager.cancel(notifId)
             notifManager.notify(notifId, android.app.Notification.Builder(appContext, channelId)
@@ -236,7 +236,7 @@ class AppUpdateHandler(
             return@launch
           }
 
-          // Use PackageInstaller session API â€” works from background on API 34+
+          // Use PackageInstaller session API â€?works from background on API 34+
           // The system handles showing the install confirmation dialog
           notifManager.cancel(notifId)
           notifManager.notify(
@@ -256,20 +256,20 @@ class AppUpdateHandler(
           params.setSize(file.length())
           val sessionId = installer.createSession(params)
           val session = installer.openSession(sessionId)
-          session.openWrite("openclaw-update.apk", 0, file.length()).use { out ->
+          session.openWrite("RadioClaw-update.apk", 0, file.length()).use { out ->
             file.inputStream().use { inp -> inp.copyTo(out) }
             session.fsync(out)
           }
-          // Commit with FLAG_MUTABLE PendingIntent â€” system requires mutable for PackageInstaller status
+          // Commit with FLAG_MUTABLE PendingIntent â€?system requires mutable for PackageInstaller status
           val callbackIntent = android.content.Intent(appContext, InstallResultReceiver::class.java)
           val pi = android.app.PendingIntent.getBroadcast(
             appContext, sessionId, callbackIntent,
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_MUTABLE
           )
           session.commit(pi.intentSender)
-          android.util.Log.w("openclaw", "app.update: PackageInstaller session committed, waiting for user confirmation")
+          android.util.Log.w("RadioClaw", "app.update: PackageInstaller session committed, waiting for user confirmation")
         } catch (err: Throwable) {
-          android.util.Log.e("openclaw", "app.update: async error", err)
+          android.util.Log.e("RadioClaw", "app.update: async error", err)
           notifManager.cancel(notifId)
           notifManager.notify(notifId, android.app.Notification.Builder(appContext, channelId)
             .setSmallIcon(android.R.drawable.stat_notify_error)
@@ -281,14 +281,14 @@ class AppUpdateHandler(
         }
       }
 
-      // Return immediately â€” download happens in background
+      // Return immediately â€?download happens in background
       return GatewaySession.InvokeResult.ok(buildJsonObject {
           put("status", "downloading")
           put("url", url)
           put("sha256", expectedSha256)
         }.toString())
     } catch (err: Throwable) {
-      android.util.Log.e("openclaw", "app.update: error", err)
+      android.util.Log.e("RadioClaw", "app.update: error", err)
       return GatewaySession.InvokeResult.error(code = "UNAVAILABLE", message = err.message ?: "update failed")
     }
   }

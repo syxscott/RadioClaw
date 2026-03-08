@@ -7,7 +7,7 @@ read_when:
 
 # TOOLS.md - Local Notes
 
-Skills define _how_ tools work. This file is for _your_ specifics â€” the stuff that's unique to your setup.
+Skills define _how_ tools work. This file is for _your_ specifics â€?the stuff that's unique to your setup.
 
 ## What Goes Here
 
@@ -25,12 +25,12 @@ Things like:
 ```markdown
 ### Cameras
 
-- living-room â†’ Main area, 180Â° wide angle
-- front-door â†’ Entrance, motion-triggered
+- living-room â†?Main area, 180Â° wide angle
+- front-door â†?Entrance, motion-triggered
 
 ### SSH
 
-- home-server â†’ 192.168.1.100, user: admin
+- home-server â†?192.168.1.100, user: admin
 
 ### TTS
 

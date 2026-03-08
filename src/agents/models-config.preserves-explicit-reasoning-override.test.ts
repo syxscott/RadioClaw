@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import {
   installModelsConfigTestHooks,
   withModelsTempHome as withTempHome,
 } from "./models-config.e2e-harness.js";
-import { ensureOpenClawModelsJson } from "./models-config.js";
+import { ensureRadioClawModelsJson } from "./models-config.js";
 import { readGeneratedModelsJson } from "./models-config.test-utils.js";
 
 installModelsConfigTestHooks();
@@ -43,8 +43,8 @@ async function withMinimaxApiKey(run: () => Promise<void>) {
   }
 }
 
-async function generateAndReadMinimaxModel(cfg: OpenClawConfig): Promise<ModelEntry | undefined> {
-  await ensureOpenClawModelsJson(cfg);
+async function generateAndReadMinimaxModel(cfg: RadioClawConfig): Promise<ModelEntry | undefined> {
+  await ensureRadioClawModelsJson(cfg);
   const parsed = await readGeneratedModelsJson<ModelsJson>();
   return parsed.providers.minimax?.models?.find((model) => model.id === MINIMAX_MODEL_ID);
 }
@@ -55,7 +55,7 @@ describe("models-config: explicit reasoning override", () => {
     // User explicitly sets reasoning:false to avoid message-ordering conflicts.
     await withTempHome(async () => {
       await withMinimaxApiKey(async () => {
-        const cfg: OpenClawConfig = {
+        const cfg: RadioClawConfig = {
           models: {
             providers: {
               minimax: {
@@ -78,7 +78,7 @@ describe("models-config: explicit reasoning override", () => {
 
         const m25 = await generateAndReadMinimaxModel(cfg);
         expect(m25).toBeDefined();
-        // Must honour the explicit false â€” built-in true must NOT win.
+        // Must honour the explicit false â€?built-in true must NOT win.
         expect(m25?.reasoning).toBe(false);
       });
     });
@@ -98,7 +98,7 @@ describe("models-config: explicit reasoning override", () => {
           contextWindow: 1_000_000,
           maxTokens: 8192,
         };
-        const cfg: OpenClawConfig = {
+        const cfg: RadioClawConfig = {
           models: {
             providers: {
               minimax: {
@@ -112,7 +112,7 @@ describe("models-config: explicit reasoning override", () => {
 
         const m25 = await generateAndReadMinimaxModel(cfg);
         expect(m25).toBeDefined();
-        // Built-in catalog has reasoning:true â€” should be applied as default.
+        // Built-in catalog has reasoning:true â€?should be applied as default.
         expect(m25?.reasoning).toBe(true);
       });
     });

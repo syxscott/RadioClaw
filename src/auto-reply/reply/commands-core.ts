@@ -90,7 +90,7 @@ export async function emitResetCommandHooks(params: {
     }
   }
 
-  // Fire before_reset plugin hook â€” extract memories before session history is lost
+  // Fire before_reset plugin hook â€?extract memories before session history is lost
   const hookRunner = getGlobalHookRunner();
   if (hookRunner?.hasHooks("before_reset")) {
     const prevEntry = params.previousSessionEntry;
@@ -259,7 +259,7 @@ export async function handleCommands(params: HandleCommandsParams): Promise<Comm
         }
         return {
           shouldContinue: false,
-          reply: { text: "âœ… ACP session reset in place." },
+          reply: { text: "âœ?ACP session reset in place." },
         };
       }
       if (resetResult.skipped) {

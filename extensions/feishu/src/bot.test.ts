@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "RadioClaw/plugin-sdk/feishu";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createPluginRuntimeMock } from "../../test-utils/plugin-runtime-mock.js";
 import type { FeishuMessageEvent } from "./bot.js";
@@ -1969,7 +1969,7 @@ describe("broadcast dispatch", () => {
       runtime: createRuntimeEnv(),
     });
 
-    // No dispatch: requireMention=true and bot not mentioned â†’ returns early.
+    // No dispatch: requireMention=true and bot not mentioned â†?returns early.
     // The mentioned bot's handler (on another account or same account with
     // matching botOpenId) will handle broadcast dispatch for all agents.
     expect(mockDispatchReplyFromConfig).not.toHaveBeenCalled();

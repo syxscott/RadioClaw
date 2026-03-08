@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
-import type { OpenClawConfig } from "../config/config.js";
+import type { RadioClawConfig } from "../config/config.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { resolveControlUiRootSync } from "../infra/control-ui-assets.js";
 import { isWithinDir } from "../infra/path-safety.js";
@@ -33,7 +33,7 @@ const CONTROL_UI_ASSETS_MISSING_MESSAGE =
 
 export type ControlUiRequestOptions = {
   basePath?: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   agentId?: string;
   root?: ControlUiRootState;
 };
@@ -77,7 +77,7 @@ function contentTypeForExt(ext: string): string {
 /**
  * Extensions recognised as static assets.  Missing files with these extensions
  * return 404 instead of the SPA index.html fallback.  `.html` is intentionally
- * excluded â€” actual HTML files on disk are served earlier, and missing `.html`
+ * excluded â€?actual HTML files on disk are served earlier, and missing `.html`
  * paths should fall through to the SPA router (client-side routers may use
  * `.html`-suffixed routes).
  */

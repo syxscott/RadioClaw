@@ -100,7 +100,7 @@ export function toSanitizedMarkdownHtml(markdown: string): string {
   }
   const truncated = truncateText(input, MARKDOWN_CHAR_LIMIT);
   const suffix = truncated.truncated
-    ? `\n\nâ€¦ truncated (${truncated.total} chars, showing first ${truncated.text.length}).`
+    ? `\n\nâ€?truncated (${truncated.total} chars, showing first ${truncated.text.length}).`
     : "";
   if (truncated.text.length > MARKDOWN_PARSE_LIMIT) {
     const escaped = escapeHtml(`${truncated.text}${suffix}`);
@@ -120,7 +120,7 @@ export function toSanitizedMarkdownHtml(markdown: string): string {
     }) as string;
   } catch (err) {
     // Fall back to escaped plain text when marked.parse() throws (e.g.
-    // infinite recursion on pathological markdown patterns â€” #36213).
+    // infinite recursion on pathological markdown patterns â€?#36213).
     console.warn("[markdown] marked.parse failed, falling back to plain text:", err);
     const escaped = escapeHtml(`${truncated.text}${suffix}`);
     rendered = `<pre class="code-block">${escaped}</pre>`;

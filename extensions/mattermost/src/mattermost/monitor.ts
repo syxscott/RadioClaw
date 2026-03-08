@@ -1,10 +1,10 @@
 import type {
   ChannelAccountSnapshot,
   ChatType,
-  OpenClawConfig,
+  RadioClawConfig,
   ReplyPayload,
   RuntimeEnv,
-} from "openclaw/plugin-sdk/mattermost";
+} from "RadioClaw/plugin-sdk/mattermost";
 import {
   buildAgentMediaPayload,
   buildModelsProviderData,
@@ -29,7 +29,7 @@ import {
   warnMissingProviderGroupPolicyFallbackOnce,
   listSkillCommandsForAgents,
   type HistoryEntry,
-} from "openclaw/plugin-sdk/mattermost";
+} from "RadioClaw/plugin-sdk/mattermost";
 import { parseStrictPositiveInteger } from "../../../../src/infra/parse-finite-number.js";
 import { getMattermostRuntime } from "../runtime.js";
 import { resolveMattermostAccount } from "./accounts.js";
@@ -98,7 +98,7 @@ export type MonitorMattermostOpts = {
   botToken?: string;
   baseUrl?: string;
   accountId?: string;
-  config?: OpenClawConfig;
+  config?: RadioClawConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   statusSink?: (patch: Partial<ChannelAccountSnapshot>) => void;
@@ -189,7 +189,7 @@ function channelChatType(kind: ChatType): "direct" | "group" | "channel" {
 }
 
 export type MattermostRequireMentionResolverInput = {
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   channel: "mattermost";
   accountId: string;
   groupId: string;
@@ -198,7 +198,7 @@ export type MattermostRequireMentionResolverInput = {
 
 export type MattermostMentionGateInput = {
   kind: ChatType;
-  cfg: OpenClawConfig;
+  cfg: RadioClawConfig;
   accountId: string;
   channelId: string;
   threadRootId?: string;
@@ -345,10 +345,10 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     try {
       const teams = await fetchMattermostUserTeams(client, botUserId);
 
-      // Use the *runtime* listener port when available (e.g. `openclaw gateway run --port <port>`).
-      // The gateway sets OPENCLAW_GATEWAY_PORT when it boots, but the config file may still contain
+      // Use the *runtime* listener port when available (e.g. `RadioClaw gateway run --port <port>`).
+      // The gateway sets RadioClaw_GATEWAY_PORT when it boots, but the config file may still contain
       // a different port.
-      const envPortRaw = process.env.OPENCLAW_GATEWAY_PORT?.trim();
+      const envPortRaw = process.env.RadioClaw_GATEWAY_PORT?.trim();
       const envPort = parseStrictPositiveInteger(envPortRaw);
       const slashGatewayPort = envPort ?? cfg.gateway?.port ?? 18789;
 
@@ -1740,7 +1740,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     // Resolve the channel from broadcast or post to route to the correct agent session
     const channelId = payload.broadcast?.channel_id;
     if (!channelId) {
-      // Without a channel id we cannot verify DM/group policies â€” drop to be safe
+      // Without a channel id we cannot verify DM/group policies â€?drop to be safe
       logVerboseMessage(
         `mattermost: drop reaction (no channel_id in broadcast, cannot enforce policy)`,
       );
@@ -1748,7 +1748,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     }
     const channelInfo = await resolveChannelInfo(channelId);
     if (!channelInfo?.type) {
-      // Cannot determine channel type â€” drop to avoid policy bypass
+      // Cannot determine channel type â€?drop to avoid policy bypass
       logVerboseMessage(`mattermost: drop reaction (cannot resolve channel type for ${channelId})`);
       return;
     }

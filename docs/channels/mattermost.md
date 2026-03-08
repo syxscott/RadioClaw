@@ -1,5 +1,5 @@
 ---
-summary: "Mattermost bot setup and OpenClaw config"
+summary: "Mattermost bot setup and RadioClaw config"
 read_when:
   - Setting up Mattermost
   - Debugging Mattermost routing
@@ -19,17 +19,17 @@ Mattermost ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-openclaw plugins install @openclaw/mattermost
+RadioClaw plugins install @RadioClaw/mattermost
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-openclaw plugins install ./extensions/mattermost
+RadioClaw plugins install ./extensions/mattermost
 ```
 
 If you choose Mattermost during configure/onboarding and a git checkout is detected,
-OpenClaw will offer the local install path automatically.
+RadioClaw will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
@@ -38,7 +38,7 @@ Details: [Plugins](/tools/plugin)
 1. Install the Mattermost plugin.
 2. Create a Mattermost bot account and copy the **bot token**.
 3. Copy the Mattermost **base URL** (e.g., `https://chat.example.com`).
-4. Configure OpenClaw and start the gateway.
+4. Configure RadioClaw and start the gateway.
 
 Minimal config:
 
@@ -57,7 +57,7 @@ Minimal config:
 
 ## Native slash commands
 
-Native slash commands are opt-in. When enabled, OpenClaw registers `oc_*` slash commands via
+Native slash commands are opt-in. When enabled, RadioClaw registers `oc_*` slash commands via
 the Mattermost API and receives callback POSTs on the gateway HTTP server.
 
 ```json5
@@ -79,14 +79,14 @@ the Mattermost API and receives callback POSTs on the gateway HTTP server.
 Notes:
 
 - `native: "auto"` defaults to disabled for Mattermost. Set `native: true` to enable.
-- If `callbackUrl` is omitted, OpenClaw derives one from gateway host/port + `callbackPath`.
+- If `callbackUrl` is omitted, RadioClaw derives one from gateway host/port + `callbackPath`.
 - For multi-account setups, `commands` can be set at the top level or under
   `channels.mattermost.accounts.<id>.commands` (account values override top-level fields).
 - Command callbacks are validated with per-command tokens and fail closed when token checks fail.
 - Reachability requirement: the callback endpoint must be reachable from the Mattermost server.
-  - Do not set `callbackUrl` to `localhost` unless Mattermost runs on the same host/network namespace as OpenClaw.
-  - Do not set `callbackUrl` to your Mattermost base URL unless that URL reverse-proxies `/api/channels/mattermost/command` to OpenClaw.
-  - A quick check is `curl https://<gateway-host>/api/channels/mattermost/command`; a GET should return `405 Method Not Allowed` from OpenClaw, not `404`.
+  - Do not set `callbackUrl` to `localhost` unless Mattermost runs on the same host/network namespace as RadioClaw.
+  - Do not set `callbackUrl` to your Mattermost base URL unless that URL reverse-proxies `/api/channels/mattermost/command` to RadioClaw.
+  - A quick check is `curl https://<gateway-host>/api/channels/mattermost/command`; a GET should return `405 Method Not Allowed` from RadioClaw, not `404`.
 - Mattermost egress allowlist requirement:
   - If your callback targets private/tailnet/internal addresses, set Mattermost
     `ServiceSettings.AllowedUntrustedInternalConnections` to include the callback host/domain.
@@ -133,8 +133,8 @@ Notes:
 
 - Default: `channels.mattermost.dmPolicy = "pairing"` (unknown senders get a pairing code).
 - Approve via:
-  - `openclaw pairing list mattermost`
-  - `openclaw pairing approve mattermost <CODE>`
+  - `RadioClaw pairing list mattermost`
+  - `RadioClaw pairing approve mattermost <CODE>`
 - Public DMs: `channels.mattermost.dmPolicy="open"` plus `channels.mattermost.allowFrom=["*"]`.
 
 ## Channels (groups)
@@ -147,7 +147,7 @@ Notes:
 
 ## Targets for outbound delivery
 
-Use these target formats with `openclaw message send` or cron/webhooks:
+Use these target formats with `RadioClaw message send` or cron/webhooks:
 
 - `channel:<id>` for a channel
 - `user:<id>` for a DM
@@ -206,14 +206,14 @@ Button fields:
 
 When a user clicks a button:
 
-1. All buttons are replaced with a confirmation line (e.g., "âœ“ **Yes** selected by @user").
+1. All buttons are replaced with a confirmation line (e.g., "âœ?**Yes** selected by @user").
 2. The agent receives the selection as an inbound message and responds.
 
 Notes:
 
 - Button callbacks use HMAC-SHA256 verification (automatic, no config needed).
 - Mattermost strips callback data from its API responses (security feature), so all buttons
-  are removed on click â€” partial removal is not possible.
+  are removed on click â€?partial removal is not possible.
 - Action IDs containing hyphens or underscores are sanitized automatically
   (Mattermost routing limitation).
 
@@ -226,10 +226,10 @@ Config:
   reach the gateway at its bind host directly.
 - In multi-account setups, you can also set the same field under
   `channels.mattermost.accounts.<id>.interactions.callbackBaseUrl`.
-- If `interactions.callbackBaseUrl` is omitted, OpenClaw derives the callback URL from
+- If `interactions.callbackBaseUrl` is omitted, RadioClaw derives the callback URL from
   `gateway.customBindHost` + `gateway.port`, then falls back to `http://localhost:<port>`.
 - Reachability rule: the button callback URL must be reachable from the Mattermost server.
-  `localhost` only works when Mattermost and OpenClaw run on the same host/network namespace.
+  `localhost` only works when Mattermost and RadioClaw run on the same host/network namespace.
 - If your callback target is private/tailnet/internal, add its host/domain to Mattermost
   `ServiceSettings.AllowedUntrustedInternalConnections`.
 
@@ -250,7 +250,7 @@ the extension when possible; if posting raw JSON, follow these rules:
       {
         actions: [
           {
-            id: "mybutton01", // alphanumeric only â€” see below
+            id: "mybutton01", // alphanumeric only â€?see below
             type: "button", // required, or clicks are silently ignored
             name: "Approve", // display label
             style: "primary", // optional: "default", "primary", "danger"
@@ -274,13 +274,13 @@ the extension when possible; if posting raw JSON, follow these rules:
 **Critical rules:**
 
 1. Attachments go in `props.attachments`, not top-level `attachments` (silently ignored).
-2. Every action needs `type: "button"` â€” without it, clicks are swallowed silently.
-3. Every action needs an `id` field â€” Mattermost ignores actions without IDs.
+2. Every action needs `type: "button"` â€?without it, clicks are swallowed silently.
+3. Every action needs an `id` field â€?Mattermost ignores actions without IDs.
 4. Action `id` must be **alphanumeric only** (`[a-zA-Z0-9]`). Hyphens and underscores break
    Mattermost's server-side action routing (returns 404). Strip them before use.
 5. `context.action_id` must match the button's `id` so the confirmation message shows the
    button name (e.g., "Approve") instead of a raw ID.
-6. `context.action_id` is required â€” the interaction handler returns 400 without it.
+6. `context.action_id` is required â€?the interaction handler returns 400 without it.
 
 **HMAC token generation:**
 
@@ -288,7 +288,7 @@ The gateway verifies button clicks with HMAC-SHA256. External scripts must gener
 that match the gateway's verification logic:
 
 1. Derive the secret from the bot token:
-   `HMAC-SHA256(key="openclaw-mattermost-interactions", data=botToken)`
+   `HMAC-SHA256(key="RadioClaw-mattermost-interactions", data=botToken)`
 2. Build the context object with all fields **except** `_token`.
 3. Serialize with **sorted keys** and **no spaces** (the gateway uses `JSON.stringify`
    with sorted keys, which produces compact output).
@@ -301,7 +301,7 @@ Python example:
 import hmac, hashlib, json
 
 secret = hmac.new(
-    b"openclaw-mattermost-interactions",
+    b"RadioClaw-mattermost-interactions",
     bot_token.encode(), hashlib.sha256
 ).hexdigest()
 
@@ -318,7 +318,7 @@ Common HMAC pitfalls:
   `separators=(",", ":")` to match JavaScript's compact output (`{"key":"val"}`).
 - Always sign **all** context fields (minus `_token`). The gateway strips `_token` then
   signs everything remaining. Signing a subset causes silent verification failure.
-- Use `sort_keys=True` â€” the gateway sorts keys before signing, and Mattermost may
+- Use `sort_keys=True` â€?the gateway sorts keys before signing, and Mattermost may
   reorder context fields when storing the payload.
 - Derive the secret from the bot token (deterministic), not random bytes. The secret
   must be the same across the process that creates buttons and the gateway that verifies.
@@ -327,9 +327,9 @@ Common HMAC pitfalls:
 
 The Mattermost plugin includes a directory adapter that resolves channel and user names
 via the Mattermost API. This enables `#channel-name` and `@username` targets in
-`openclaw message send` and cron/webhook deliveries.
+`RadioClaw message send` and cron/webhook deliveries.
 
-No configuration is needed â€” the adapter uses the bot token from the account config.
+No configuration is needed â€?the adapter uses the bot token from the account config.
 
 ## Multi-account
 

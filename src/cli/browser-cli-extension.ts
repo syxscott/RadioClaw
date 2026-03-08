@@ -45,7 +45,7 @@ export async function installChromeExtension(opts?: {
 }): Promise<{ path: string }> {
   const src = opts?.sourceDir ?? resolveBundledExtensionRootDir();
   if (!hasManifest(src)) {
-    throw new Error("Bundled Chrome extension is missing. Reinstall OpenClaw and try again.");
+    throw new Error("Bundled Chrome extension is missing. Reinstall RadioClaw and try again.");
   }
 
   const stateDir = opts?.stateDir ?? resolveStateDir();
@@ -99,11 +99,11 @@ export function registerBrowserExtensionCommands(
           [
             copied ? "Copied to clipboard." : "Copy to clipboard unavailable.",
             "Next:",
-            `- Chrome → chrome://extensions → enable “Developer mode”`,
-            `- “Load unpacked” → select: ${displayPath}`,
-            `- Pin “OpenClaw Browser Relay”, then click it on the tab (badge shows ON)`,
+            `- Chrome �?chrome://extensions �?enable “Developer mode”`,
+            `- “Load unpacked�?�?select: ${displayPath}`,
+            `- Pin “OpenClaw Browser Relay�? then click it on the tab (badge shows ON)`,
             "",
-            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.openclaw.ai/tools/chrome-extension")}`,
+            `${theme.muted("Docs:")} ${formatDocsLink("/tools/chrome-extension", "docs.RadioClaw.ai/tools/chrome-extension")}`,
           ].join("\n"),
         ),
       );
@@ -119,8 +119,8 @@ export function registerBrowserExtensionCommands(
         defaultRuntime.error(
           danger(
             [
-              `Chrome extension is not installed. Run: "${formatCliCommand("openclaw browser extension install")}"`,
-              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.openclaw.ai/tools/chrome-extension")}`,
+              `Chrome extension is not installed. Run: "${formatCliCommand("RadioClaw browser extension install")}"`,
+              `Docs: ${formatDocsLink("/tools/chrome-extension", "docs.RadioClaw.ai/tools/chrome-extension")}`,
             ].join("\n"),
           ),
         );

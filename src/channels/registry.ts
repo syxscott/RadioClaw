@@ -22,7 +22,7 @@ export const CHANNEL_IDS = [...CHAT_CHANNEL_ORDER] as const;
 
 export type ChatChannelMeta = ChannelMeta;
 
-const WEBSITE_URL = "https://openclaw.ai";
+const WEBSITE_URL = "https://RadioClaw.ai";
 
 const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
   telegram: {
@@ -32,7 +32,7 @@ const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
     detailLabel: "Telegram Bot",
     docsPath: "/channels/telegram",
     docsLabel: "telegram",
-    blurb: "simplest way to get started â€” register a bot with @BotFather and get going.",
+    blurb: "simplest way to get started â€?register a bot with @BotFather and get going.",
     systemImage: "paperplane",
     selectionDocsPrefix: "",
     selectionDocsOmitLabel: true,
@@ -196,5 +196,5 @@ export function formatChannelSelectionLine(
     ? docsLink(meta.docsPath)
     : docsLink(meta.docsPath, docsLabel);
   const extras = (meta.selectionExtras ?? []).filter(Boolean).join(" ");
-  return `${meta.label} â€” ${meta.blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
+  return `${meta.label} â€?${meta.blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
 }

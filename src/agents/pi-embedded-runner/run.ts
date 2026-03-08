@@ -11,7 +11,7 @@ import { getGlobalHookRunner } from "../../plugins/hook-runner-global.js";
 import type { PluginHookBeforeAgentStartResult } from "../../plugins/types.js";
 import { enqueueCommandInLane } from "../../process/command-queue.js";
 import { isMarkdownCapableMessageChannel } from "../../utils/message-channel.js";
-import { resolveOpenClawAgentDir } from "../agent-paths.js";
+import { resolveRadioClawAgentDir } from "../agent-paths.js";
 import { hasConfiguredModelFallbacks } from "../agent-scope.js";
 import {
   isProfileInCooldown,
@@ -36,7 +36,7 @@ import {
   type ResolvedProviderAuth,
 } from "../model-auth.js";
 import { normalizeProviderId } from "../model-selection.js";
-import { ensureOpenClawModelsJson } from "../models-config.js";
+import { ensureRadioClawModelsJson } from "../models-config.js";
 import {
   formatBillingErrorMessage,
   classifyFailoverReason,
@@ -168,7 +168,7 @@ const mergeUsageIntoAccumulator = (
     (usage.input ?? 0) + (usage.output ?? 0) + (usage.cacheRead ?? 0) + (usage.cacheWrite ?? 0);
   // Track the most recent API call's cache fields for accurate context-size reporting.
   // Accumulated cache totals inflate context size when there are multiple tool-call round-trips,
-  // since each call reports cacheRead â‰ˆ current_context_size.
+  // since each call reports cacheRead â‰?current_context_size.
   target.lastCacheRead = usage.cacheRead ?? 0;
   target.lastCacheWrite = usage.cacheWrite ?? 0;
   target.lastInput = usage.input ?? 0;
@@ -186,9 +186,9 @@ const toNormalizedUsage = (usage: UsageAccumulator) => {
   }
   // Use the LAST API call's cache fields for context-size calculation.
   // The accumulated cacheRead/cacheWrite inflate context size because each tool-call
-  // round-trip reports cacheRead â‰ˆ current_context_size, and summing N calls gives
+  // round-trip reports cacheRead â‰?current_context_size, and summing N calls gives
   // N Ã— context_size which gets clamped to contextWindow (e.g. 200k).
-  // See: https://github.com/openclaw/openclaw/issues/13698
+  // See: https://github.com/RadioClaw/RadioClaw/issues/13698
   //
   // We use lastInput/lastCacheRead/lastCacheWrite (from the most recent API call) for
   // cache-related fields, but keep accumulated output (total generated text this turn).
@@ -291,13 +291,13 @@ export async function runEmbeddedPiAgent(
 
       let provider = (params.provider ?? DEFAULT_PROVIDER).trim() || DEFAULT_PROVIDER;
       let modelId = (params.model ?? DEFAULT_MODEL).trim() || DEFAULT_MODEL;
-      const agentDir = params.agentDir ?? resolveOpenClawAgentDir();
+      const agentDir = params.agentDir ?? resolveRadioClawAgentDir();
       const fallbackConfigured = hasConfiguredModelFallbacks({
         cfg: params.config,
         agentId: params.agentId,
         sessionKey: params.sessionKey,
       });
-      await ensureOpenClawModelsJson(params.config, agentDir);
+      await ensureRadioClawModelsJson(params.config, agentDir);
 
       // Run before_model_resolve hooks early so plugins can override the
       // provider/model before resolveModel().
@@ -1092,7 +1092,7 @@ export async function runEmbeddedPiAgent(
                   log.info(
                     `[context-overflow-recovery] Truncated ${truncResult.truncatedCount} tool result(s); retrying prompt`,
                   );
-                  // Do NOT reset overflowCompactionAttempts here â€” the global cap must remain
+                  // Do NOT reset overflowCompactionAttempts here â€?the global cap must remain
                   // enforced across all iterations to prevent unbounded compaction cycles (OC-65).
                   continue;
                 }
